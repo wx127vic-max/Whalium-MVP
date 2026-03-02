@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whalium 华里安 - 律所列表页</title>
+    
+    <style>
+        :root {
+            --navy: #0a1628;
+            --navy-mid: #112240;
+            --navy-light: #1a3355;
+            --teal: #00c8c8;
+            --teal-bright: #00e5e5;
+            --teal-glow: rgba(0, 200, 200, 0.15);
+            --teal-dim: rgba(0, 200, 200, 0.5);
+            --silver: #c8d8e8;
+            --silver-dim: rgba(200, 216, 232, 0.6);
+            --white: #f0f8ff;
+            --bg: #06101e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: var(--bg);
+            color: var(--white);
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Demo Header */
+        .demo-header {
+            background: linear-gradient(135deg, #050e1a 0%, #0a1628 100%);
+            border-bottom: 1px solid var(--teal-dim);
+            padding: 1.5rem 2rem;
+            text-align: center;
+        }
+        .demo-number { font-size: 0.85rem; color: var(--teal); opacity: 0.8; margin-bottom: 0.3rem; font-family: 'Verdana', sans-serif; letter-spacing: 0.1em; }
+        .demo-title { font-size: 2rem; font-weight: 800; font-family: 'Verdana', sans-serif; margin-bottom: 0.3rem; background: linear-gradient(135deg, #fff 0%, var(--teal) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .demo-subtitle { font-size: 0.95rem; color: var(--silver-dim); }
+
+        /* Header */
+        .header {
+            background: var(--navy);
+            border-bottom: 1px solid rgba(0, 200, 200, 0.2);
+            padding: 0.9rem 2.5rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo-section { display:flex; align-items:center; gap:0.85rem; text-decoration:none; }
+        .header-actions { display:flex; align-items:center; gap:0.75rem; flex-shrink:0; }
+
+        /* ── Whalium 品牌 Logo 区 ── */
+        /* ── Whalium Logo 品牌区 ── */
+        .logo-section { display:flex; align-items:center; gap:1.2rem; text-decoration:none; }
+        .whalium-logo { width:58px; height:58px; flex-shrink:0; }
+
+        .brand-wrap { display:flex; flex-direction:column; gap:0; line-height:1; }
+        .brand-row1 { display:flex; align-items:baseline; gap:0.55rem; }
+
+        /* Whalium: 混合大小写，第一字母真大写，粗体无衬线 */
+        .brand-name {
+            font-family: 'Verdana', 'Montserrat', 'Trebuchet MS', sans-serif;
+            font-size: 1.72rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            background: linear-gradient(160deg, #ffffff 0%, #cce8f4 55%, #88cce8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.05;
+        }
+
+        /* 华里安: 中文粗体，同等视觉重量 */
+        .brand-cn {
+            font-size: 1.42rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.04em;
+            line-height: 1.05;
+        }
+
+        /* Slogan: 斜体，淡蓝灰 */
+        .brand-slogan {
+            font-size: 0.72rem;
+            font-style: italic;
+            color: rgba(160, 215, 235, 0.75);
+            letter-spacing: 0.04em;
+            margin-top: 0.3rem;
+            white-space: nowrap;
+        }
+
+        /* header 内按钮强制白色系 */
+        .header a.btn { text-decoration:none !important; display:inline-flex; align-items:center; }
+        .header a.btn-login {
+            background:transparent !important;
+            border:1px solid rgba(255,255,255,0.32) !important;
+            color:#fff !important;
+        }
+        .header a.btn-login:hover { background:rgba(255,255,255,0.09) !important; }
+        .header a.btn-register {
+            background:linear-gradient(135deg,#00b8cc,#0078aa) !important;
+            border:none !important; color:#fff !important;
+        }
+        .header a.btn-register:hover { filter:brightness(1.12) !important; }
+
+        .header-actions { display: flex; gap: 0.8rem; }
+
+        .btn {
+            padding: 0.55rem 1.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-family: 'Verdana', sans-serif;
+        }
+        .btn-login {
+            background: transparent;
+            border: 1px solid var(--teal-dim);
+            color: var(--teal);
+        }
+        .btn-login:hover { background: var(--teal-glow); border-color: var(--teal); }
+        .btn-register {
+            background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%);
+            border: none;
+            color: var(--navy);
+            font-weight: 700;
+        }
+        .btn-register:hover { filter: brightness(1.1); }
+
+        /* AI Search Banner */
+        .ai-search-section {
+            background: linear-gradient(135deg, var(--navy) 0%, #0d1f3a 100%);
+            border-bottom: 1px solid rgba(0,200,200,0.15);
+            padding: 2.5rem 2.5rem 2rem;
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(0,200,200,0.15) 0%, rgba(0,110,158,0.15) 100%);
+            border: 1px solid var(--teal-dim);
+            border-radius: 20px;
+            padding: 0.3rem 0.9rem;
+            font-size: 0.75rem;
+            color: var(--teal);
+            font-family: 'Verdana', sans-serif;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+        }
+        .ai-badge .dot {
+            width: 6px; height: 6px;
+            background: var(--teal);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .ai-search-title {
+            font-family: 'Verdana', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+            color: var(--white);
+        }
+        .ai-search-sub {
+            font-size: 0.9rem;
+            color: var(--silver-dim);
+            margin-bottom: 1.5rem;
+        }
+
+        .ai-input-wrap {
+            position: relative;
+            margin-bottom: 1rem;
+        }
+        .ai-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            padding-right: 140px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(0,200,200,0.3);
+            border-radius: 8px;
+            color: var(--white);
+            font-size: 0.95rem;
+            font-family: 'Noto Sans SC', sans-serif;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .ai-input:focus {
+            border-color: var(--teal);
+            background: rgba(0,200,200,0.05);
+            box-shadow: 0 0 20px rgba(0,200,200,0.1);
+        }
+        .ai-input::placeholder { color: var(--silver-dim); }
+
+        .ai-send-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%);
+            color: var(--navy);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            font-family: 'Verdana', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .ai-chips {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        .ai-chip {
+            padding: 0.35rem 0.9rem;
+            background: rgba(0,200,200,0.08);
+            border: 1px solid rgba(0,200,200,0.2);
+            border-radius: 20px;
+            font-size: 0.78rem;
+            color: var(--silver);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .ai-chip:hover {
+            background: rgba(0,200,200,0.15);
+            border-color: var(--teal-dim);
+            color: var(--teal);
+        }
+
+        /* AI Response */
+        .ai-response {
+            margin-top: 1.2rem;
+            background: rgba(0,200,200,0.04);
+            border: 1px solid rgba(0,200,200,0.2);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+        }
+        .ai-response-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.8rem;
+            color: var(--teal);
+            font-family: 'Verdana', sans-serif;
+            letter-spacing: 0.05em;
+        }
+        .ai-response-text {
+            font-size: 0.9rem;
+            color: var(--silver);
+            line-height: 1.8;
+        }
+        .ai-highlight { color: var(--teal); font-weight: 500; }
+
+        /* Filter Section */
+        .filter-section {
+            background: var(--navy-mid);
+            padding: 1.5rem 2.5rem;
+            border-bottom: 1px solid rgba(0,200,200,0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .filter-group { flex: 1; }
+        .filter-group label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--silver-dim);
+            margin-bottom: 0.4rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-family: 'Verdana', sans-serif;
+        }
+        .filter-group select {
+            width: 100%;
+            padding: 0.65rem 0.9rem;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(0,200,200,0.2);
+            border-radius: 5px;
+            color: var(--white);
+            font-size: 0.88rem;
+            font-family: 'Noto Sans SC', sans-serif;
+            outline: none;
+            cursor: pointer;
+        }
+        .filter-group select option { background: var(--navy-mid); }
+
+        .search-btn {
+            padding: 0.65rem 2rem;
+            background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%);
+            color: var(--navy);
+            border: none;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            font-family: 'Verdana', sans-serif;
+            white-space: nowrap;
+        }
+
+        /* Results */
+        .results-area {
+            padding: 2rem 2.5rem;
+            background: var(--bg);
+        }
+
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .results-count { font-size: 0.9rem; color: var(--silver-dim); }
+        .results-count strong { color: var(--teal); font-size: 1rem; }
+        .results-filters-applied { font-size: 0.8rem; color: rgba(200,216,232,0.4); }
+
+        /* Firm Cards */
+        .firm-card {
+            background: var(--navy-mid);
+            border: 1px solid rgba(0,200,200,0.12);
+            border-radius: 10px;
+            padding: 1.8rem 2rem;
+            margin-bottom: 1.2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .firm-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal-dim), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .firm-card:hover {
+            border-color: rgba(0,200,200,0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 20px rgba(0,200,200,0.05);
+            transform: translateY(-2px);
+        }
+        .firm-card:hover::before { opacity: 1; }
+
+        .firm-card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .firm-badges {
+            display: flex;
+            gap: 0.4rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .badge {
+            padding: 0.2rem 0.7rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            font-family: 'Verdana', sans-serif;
+            letter-spacing: 0.05em;
+        }
+        .badge-hot { background: rgba(255,107,107,0.15); color: #ff8080; border: 1px solid rgba(255,107,107,0.3); }
+        .badge-value { background: rgba(0,200,200,0.12); color: var(--teal); border: 1px solid rgba(0,200,200,0.3); }
+        .badge-certified { background: rgba(100,180,255,0.12); color: #80ccff; border: 1px solid rgba(100,180,255,0.3); }
+
+        .firm-name {
+            font-family: 'Verdana', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 0.2rem;
+        }
+        .firm-name-cn { font-size: 0.85rem; color: var(--silver-dim); margin-bottom: 0.5rem; }
+        .firm-info { font-size: 0.83rem; color: var(--silver-dim); margin-bottom: 0.3rem; }
+
+        .firm-areas {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            margin: 0.8rem 0;
+            flex-wrap: wrap;
+        }
+        .areas-label { font-size: 0.75rem; color: rgba(200,216,232,0.4); }
+        .area-tag {
+            padding: 0.25rem 0.7rem;
+            background: rgba(0,200,200,0.08);
+            border: 1px solid rgba(0,200,200,0.15);
+            color: var(--silver);
+            border-radius: 3px;
+            font-size: 0.75rem;
+        }
+
+        .firm-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .firm-stats { display: flex; gap: 1.5rem; }
+        .stat-item { font-size: 0.82rem; color: var(--silver-dim); }
+        .rating { color: var(--teal); font-weight: 700; }
+
+        .firm-features { display: flex; gap: 1rem; }
+        .feature { font-size: 0.75rem; color: var(--silver-dim); }
+        .feature::before { content: '✓ '; color: var(--teal); }
+
+        .firm-actions { display: flex; gap: 0.8rem; margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        .btn-detail {
+            flex: 1;
+            padding: 0.7rem;
+            background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%);
+            color: var(--navy);
+            border: none;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+            cursor: pointer;
+            font-family: 'Verdana', sans-serif;
+        }
+        .btn-action {
+            padding: 0.7rem 1.2rem;
+            background: transparent;
+            color: var(--silver-dim);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 5px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-action:hover { border-color: var(--teal-dim); color: var(--teal); }
+
+        /* Footer Note */
+        .footer-note {
+            background: var(--navy);
+            border-top: 1px solid rgba(0,200,200,0.15);
+            padding: 1.5rem 2.5rem;
+            text-align: center;
+            font-size: 0.83rem;
+            color: var(--silver-dim);
+        }
+        .footer-note strong { color: var(--teal); }
+    
+        /* ── LIGHT THEME OVERRIDE ── */
+        :root {
+            --navy: #f0f2f5;
+            --navy-mid: #ffffff;
+            --navy-light: #e8ecf0;
+            --teal: #0099aa;
+            --teal-bright: #00b8c8;
+            --teal-dim: rgba(0,153,170,0.35);
+            --teal-glow: rgba(0,153,170,0.08);
+            --silver: #2c3e50;
+            --silver-dim: rgba(44,62,80,0.7);
+            --silver-faint: rgba(44,62,80,0.4);
+            --white: #1a2e4a;
+            --bg: #eef0f3;
+            --success: #1a8a4a;
+            --warn: #c07800;
+            --danger: #cc2233;
+        }
+        body { background: #eef0f3; color: #1a2e4a; }
+        /* Top bars & headers */
+        .top-bar, .header, .demo-header { background: #1a2e4a !important; }
+        .sidebar { background: #f8f9fa !important; border-right: 1px solid #dde2e8 !important; }
+        .nav-item { color: #4a6080 !important; }
+        .nav-item:hover { background: rgba(0,153,170,0.06) !important; color: #1a2e4a !important; }
+        .nav-item.active { background: linear-gradient(90deg, rgba(0,153,170,0.1) 0%, transparent 100%) !important; color: #0099aa !important; border-left-color: #0099aa !important; }
+        /* Cards */
+        .card, .form-card, .content-section, .stat-card, .ai-result-card,
+        .firm-card, .review-card, .task-item, .platform-data-card,
+        .payment-card, .register-card, .benefit-card, .pricing-card,
+        .mem-hero, .completion-hero, .ai-generating, .confirm-note { background: #ffffff !important; border-color: #dde2e8 !important; }
+        /* Search section */
+        .search-section, .page-container, .main-content, .page-content,
+        .content, .main-wrap, .benefits-section, .process-section { background: #eef0f3 !important; }
+        .pricing-section { background: #f0f2f5 !important; }
+        .stats-section { background: #f0f2f5 !important; border-color: #dde2e8 !important; }
+        /* Form inputs */
+        .form-input, .form-input2, .form-select, select, input[type="text"],
+        input[type="email"], input[type="number"], input[type="tel"],
+        input[type="password"], textarea { background: #f5f7fa !important; border-color: #c8d0db !important; color: #1a2e4a !important; }
+        .form-input:focus, .form-input2:focus { border-color: #0099aa !important; background: #fff !important; }
+        /* Domain cats */
+        .domain-cat { background: #f5f7fa !important; border-color: #d0d8e4 !important; }
+        .domain-cat:hover { border-color: rgba(0,153,170,0.4) !important; }
+        .domain-cat.on { background: rgba(0,153,170,0.08) !important; border-color: #0099aa !important; }
+        .cat-name { color: #1a2e4a !important; }
+        .domain-cat.on .cat-name { color: #0099aa !important; }
+        /* Tags */
+        .tag { background: #f0f4f8 !important; border-color: #c8d4e0 !important; color: #4a6080 !important; }
+        .tag.on { background: rgba(0,153,170,0.1) !important; border-color: #0099aa !important; color: #0099aa !important; }
+        .domain-tag, .review-tag { background: rgba(0,153,170,0.08) !important; border-color: rgba(0,153,170,0.2) !important; color: #0077aa !important; }
+        /* Texts */
+        .firm-name, .page-title, .step-title, .section-title, .demo-title,
+        .card-title, .card-title-right, .completion-title { color: #1a2e4a !important; }
+        .firm-info, .firm-name-cn, .step-desc, .page-subtitle,
+        .demo-subtitle, .form-label, .form-label2, .stat-label { color: #4a6080 !important; }
+        /* Badges in cards */
+        .badge-hot { background: rgba(200,50,50,0.08) !important; color: #cc2233 !important; border-color: rgba(200,50,50,0.2) !important; }
+        .badge-value { background: rgba(0,153,170,0.08) !important; color: #0077aa !important; border-color: rgba(0,153,170,0.25) !important; }
+        .badge-certified { background: rgba(50,100,200,0.08) !important; color: #3366bb !important; border-color: rgba(50,100,200,0.2) !important; }
+        /* Upload area */
+        .upload-area { border-color: rgba(0,153,170,0.3) !important; background: rgba(0,153,170,0.02) !important; }
+        .uploaded-file { background: rgba(26,138,74,0.05) !important; border-color: rgba(26,138,74,0.2) !important; }
+        /* Chart bars */
+        .bar { background: rgba(0,153,170,0.15) !important; }
+        .bar.hi { background: rgba(0,153,170,0.4) !important; }
+        .chart-bar { background: rgba(0,153,170,0.2) !important; }
+        /* Ring / progress */
+        .completion-track { background: rgba(0,0,0,0.06) !important; }
+        .ring-bg { stroke: rgba(0,0,0,0.06) !important; }
+        /* Sub-tags label */
+        .sub-tags-label { color: #0099aa !important; }
+        /* Premium banner */
+        .premium-banner { background: linear-gradient(135deg, rgba(0,153,170,0.12) 0%, rgba(0,119,170,0.12) 100%) !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Hero section */
+        .hero { background: linear-gradient(135deg, #1a2e4a 0%, #1e3a5a 100%) !important; }
+        /* Table */
+        thead { background: rgba(0,0,0,0.03) !important; }
+        th { color: #6a8090 !important; border-color: rgba(0,0,0,0.06) !important; }
+        td { color: #4a6080 !important; border-color: rgba(0,0,0,0.04) !important; }
+        .td-main { color: #1a2e4a !important; }
+        /* Lawyer mini */
+        .lawyer-mini, .lawyer-row { background: rgba(0,0,0,0.02) !important; border-color: rgba(0,0,0,0.05) !important; }
+        /* Progress bar wrap */
+        .progress-bar-wrap { background: #f0f2f5 !important; border-color: #dde2e8 !important; }
+        /* Step panel */
+        .prog-step.pending .prog-circle { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; }
+        /* Search input */
+        .search-input { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: #1a2e4a !important; }
+        /* Filter tabs */
+        .filter-tab { border-color: #d0d8e4 !important; color: #4a6080 !important; }
+        .filter-tab.on { background: rgba(0,153,170,0.1) !important; border-color: #0099aa !important; color: #0077aa !important; }
+        /* Invoice row */
+        .invoice-row { border-color: rgba(0,0,0,0.05) !important; }
+        /* Inquiry detail */
+        .inquiry-detail { background: rgba(0,153,170,0.03) !important; border-color: rgba(0,153,170,0.12) !important; }
+        .reply-box { background: rgba(0,0,0,0.02) !important; border-color: rgba(0,153,170,0.2) !important; color: #1a2e4a !important; }
+        /* Profile tabs */
+        .prof-tab.on { background: rgba(0,153,170,0.08) !important; border-color: rgba(0,153,170,0.2) !important; color: #0099aa !important; }
+        /* AI tasks */
+        .ai-task.done-task .ai-task-icon { background: rgba(26,138,74,0.1) !important; border-color: rgba(26,138,74,0.3) !important; }
+        .ai-task.doing-task .ai-task-icon { background: rgba(0,153,170,0.1) !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Dividers */
+        .divider { background: rgba(0,0,0,0.06) !important; }
+        /* Rank bar */
+        .ranking-bar { background: rgba(0,0,0,0.03) !important; }
+        /* Mem stats */
+        .mem-stat { background: rgba(0,0,0,0.04) !important; }
+        /* Benefits */
+        .benefit-item { background: #f8f9fa !important; border-color: #dde2e8 !important; }
+        /* Nav section label */
+        .nav-section-label { color: #8a9db0 !important; }
+        /* Mini stat */
+        .mini-stat { background: rgba(0,0,0,0.05) !important; }
+        /* Locked section */
+        .unlock-overlay { background: #ffffff !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Search container */
+        .search-container { background: #ffffff !important; }
+        /* Results */
+        .results-header { color: #4a6080 !important; }
+        /* Area tag */
+        .area-tag { background: #eef2f6 !important; color: #2c3e50 !important; }
+        /* Step number circles */
+        .step-number { background: linear-gradient(135deg, #0099aa 0%, #006e9e 100%) !important; }
+        /* process step */
+        .process-step .step-title { color: #1a2e4a !important; }
+        /* completion row */
+        .completion-row { background: rgba(0,153,170,0.04) !important; border-color: rgba(0,153,170,0.12) !important; }
+        /* Lawyer av */
+        .lawyer-av { background: linear-gradient(135deg, #0099aa, #006e9e) !important; }
+        /* Reviewer avatar */
+        .reviewer-avatar { background: linear-gradient(135deg, #1a3355, #2c4a72) !important; }
+        /* Review card border */
+        .review-card { border-left-color: #0099aa !important; background: rgba(0,153,170,0.03) !important; }
+        /* Data flow items */
+        .data-flow-item { background: rgba(0,153,170,0.04) !important; border-color: rgba(0,153,170,0.1) !important; }
+        /* Btn ghost */
+        .btn-ghost { color: #4a6080 !important; border-color: #d0d8e4 !important; }
+
+        /* ── 多选下拉组件 ── */
+        .multi-hint{font-style:normal;font-size:.66rem;color:#0099aa;font-weight:600;margin-left:.3rem}
+        .filter-select{width:100%;padding:.55rem .75rem;border:1px solid #c8d0db;border-radius:6px;background:#f5f7fa;color:#1a2e4a;font-size:.84rem;outline:none;cursor:pointer}
+        .filter-select:focus{border-color:#0099aa}
+        .msel-wrap{position:relative}
+        .msel-display{width:100%;padding:.55rem .75rem;background:#f5f7fa;border:1px solid #c8d0db;border-radius:6px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-size:.84rem;color:#1a2e4a;user-select:none;transition:border-color .18s;min-height:36px}
+        .msel-display:hover{border-color:#0099aa}
+        .msel-wrap.open .msel-display{border-color:#0099aa;border-radius:6px 6px 0 0;background:#fff}
+        .msel-arrow{font-size:.6rem;color:#8a9db0;transition:transform .18s;margin-left:.4rem;flex-shrink:0}
+        .msel-wrap.open .msel-arrow{transform:rotate(180deg)}
+        .msel-drop{display:none;position:absolute;top:100%;left:0;right:0;z-index:9999;background:#fff;border:1px solid #0099aa;border-top:none;border-radius:0 0 8px 8px;max-height:280px;overflow-y:auto;box-shadow:0 10px 30px rgba(0,0,0,.13)}
+        .msel-wrap.open .msel-drop{display:block}
+        .msel-search{padding:.5rem .7rem;border-bottom:1px solid #eef0f3;position:sticky;top:0;background:#fff;z-index:1}
+        .msel-search input{width:100%;padding:.32rem .6rem;border:1px solid #c8d0db;border-radius:4px;font-size:.78rem;outline:none;color:#1a2e4a}
+        .msel-group{padding:.28rem .8rem;font-size:.65rem;font-weight:700;color:#8a9db0;letter-spacing:.06em;text-transform:uppercase;background:#f8f9fa;border-bottom:1px solid #f0f2f5}
+        .msel-opt{display:flex;align-items:center;gap:.55rem;padding:.42rem .8rem;font-size:.83rem;color:#1a2e4a;cursor:pointer;transition:background .12s}
+        .msel-opt:hover{background:rgba(0,153,170,.06)}
+        .msel-opt input[type=checkbox]{accent-color:#0099aa;width:14px;height:14px;flex-shrink:0;cursor:pointer}
+        .msel-tag{display:inline-flex;align-items:center;background:rgba(0,153,170,.1);border:1px solid rgba(0,153,170,.22);color:#006e8a;padding:.08rem .4rem;border-radius:3px;font-size:.7rem;font-weight:500}
+        /* Header 按钮强制白色（header背景是深色） */
+        .header a.btn-login,.header a.btn-register{text-decoration:none!important;display:inline-flex;align-items:center}
+        .header a.btn-login{background:transparent!important;border:1px solid rgba(255,255,255,.35)!important;color:#fff!important}
+        .header a.btn-login:hover{background:rgba(255,255,255,.1)!important;border-color:rgba(255,255,255,.6)!important}
+        .header a.btn-register{background:linear-gradient(135deg,#00b8c8,#0077aa)!important;border:none!important;color:#fff!important}
+        .header a.btn-register:hover{filter:brightness(1.12)!important}
+
+        /* ── Mobile Responsive ── */
+        @media (max-width: 768px) {
+            .header { padding: 0 1rem; height: 54px; }
+            .header-actions { gap: 0.5rem; }
+            .btn { padding: 0.45rem 0.9rem; font-size: 0.8rem; }
+            .search-section { padding: 1rem; }
+            .search-container { padding: 1rem; }
+            .filters { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+            .firm-card { padding: 1.2rem; }
+            .firm-actions { flex-wrap: wrap; gap: 0.5rem; }
+            .firm-actions .btn-detail { width: 100%; }
+            .firm-stats { flex-wrap: wrap; gap: 0.75rem; }
+            .results-header { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+            .firm-features { flex-wrap: wrap; gap: 0.5rem; }
+        }
+        @media (max-width: 480px) {
+            .filters { grid-template-columns: 1fr; }
+            .firm-areas { flex-wrap: wrap; }
+            .brand-name { font-size: 1rem; }
+        }
+
+        </style>
+</head>
+<body>
+    <!-- Demo Header -->
+        <h1 class="demo-title">律所列表页</h1>
+        <p class="demo-subtitle">Law Firm Listing — AI智能检索 + 筛选全球律所</p>
+    </div>
+
+    <!-- Header -->
+    <div class="header" style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;padding:0.9rem 2.5rem;background:var(--navy);border-bottom:1px solid rgba(0,200,200,0.2);position:sticky;top:0;z-index:100;">
+        <a href="whalium_1_index.html" style="display:flex;align-items:center;gap:0.85rem;text-decoration:none;">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="whalium-logo" style="width:58px;height:58px">
+  <defs>
+    <radialGradient id="wbgV6" cx="45%" cy="45%" r="60%">
+      <stop offset="0%" stop-color="#1c3d5c"/>
+      <stop offset="100%" stop-color="#070f1c"/>
+    </radialGradient>
+    <linearGradient id="wtailV6" x1="15%" y1="5%" x2="85%" y2="95%">
+      <stop offset="0%" stop-color="#80eef8"/>
+      <stop offset="40%" stop-color="#22ccde"/>
+      <stop offset="100%" stop-color="#0a8eb0"/>
+    </linearGradient>
+    <linearGradient id="wringV6" x1="10%" y1="0%" x2="90%" y2="100%">
+      <stop offset="0%" stop-color="#5598ba"/>
+      <stop offset="30%" stop-color="#a8cede"/>
+      <stop offset="60%" stop-color="#6aacc8"/>
+      <stop offset="100%" stop-color="#3a7898"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- 背景圆（深色填充） -->
+  <circle cx="100" cy="100" r="88" fill="url(#wbgV6)"/>
+
+  <!-- 外环（截图：右下角有缺口，像瞄准镜） -->
+  <circle cx="100" cy="100" r="88" fill="none" stroke="url(#wringV6)"
+          stroke-width="6"
+          stroke-dasharray="478 78"
+          stroke-dashoffset="-20"
+          stroke-linecap="round"/>
+
+  <!-- 内装饰细环 -->
+  <circle cx="100" cy="100" r="80" fill="none"
+          stroke="rgba(80,180,210,0.22)" stroke-width="1.2"/>
+
+  <!-- 四角电路方块 -->
+  <rect x="86" y="3"   width="12" height="10" rx="2" fill="#58b8d8" opacity="0.9"/>
+  <rect x="100" y="3"  width="8"  height="7"  rx="1.5" fill="#3898b8" opacity="0.65"/>
+  <rect x="86" y="187" width="12" height="10" rx="2" fill="#58b8d8" opacity="0.9"/>
+  <rect x="100" y="190" width="8" height="7"  rx="1.5" fill="#3898b8" opacity="0.65"/>
+  <rect x="3"  y="86"  width="10" height="12" rx="2" fill="#58b8d8" opacity="0.9"/>
+  <rect x="3"  y="100" width="7"  height="8"  rx="1.5" fill="#3898b8" opacity="0.65"/>
+  <rect x="187" y="86" width="10" height="12" rx="2" fill="#58b8d8" opacity="0.9"/>
+  <rect x="190" y="100" width="7" height="8"  rx="1.5" fill="#3898b8" opacity="0.65"/>
+
+  <!-- 十字准线短线（截图可见） -->
+  <line x1="100" y1="11"  x2="100" y2="22" stroke="#5ab8d8" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="100" y1="178" x2="100" y2="189" stroke="#5ab8d8" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="11"  y1="100" x2="22"  y2="100" stroke="#5ab8d8" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="178" y1="100" x2="189" y2="100" stroke="#5ab8d8" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- 鲸鱼尾巴左叶 -->
+  <path d="M100 130
+           C85 140, 62 147, 44 137
+           C29 128, 32 110, 44 101
+           C56 92, 76 97, 100 110"
+        fill="url(#wtailV6)" filter="url(#glow)"/>
+
+  <!-- 鲸鱼尾巴右叶 -->
+  <path d="M100 130
+           C115 140, 138 147, 156 137
+           C171 128, 168 110, 156 101
+           C144 92, 124 97, 100 110"
+        fill="url(#wtailV6)" filter="url(#glow)"/>
+
+  <!-- 中间 V 形缺口 -->
+  <path d="M100 110 C94 120, 94 127, 100 130 C106 127, 106 120, 100 110"
+        fill="#070f1c"/>
+
+  <!-- 顶鳍（细长水滴） -->
+  <path d="M100 110 C96 95, 93 78, 100 67 C107 78, 104 95, 100 110"
+        fill="url(#wtailV6)" opacity="0.88" filter="url(#glow)"/>
+</svg>
+            <div class="brand-wrap">
+                <div class="brand-row1">
+                    <span class="brand-name">Whalium</span>
+                    <span class="brand-cn">华里安</span>
+                </div>
+                <div class="brand-slogan">Global Insights, Secure Navigation.</div>
+            </div>
+        </a>
+        <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
+            <a href="whalium_2_login.html" class="btn btn-login">登录</a>
+            <a href="whalium_3_register.html" class="btn btn-register">注册</a>
+        </div>
+    </div>
+    </div>
+
+    <!-- AI Search Section -->
+    <div class="ai-search-section">
+        <div class="ai-badge">
+            <span class="dot"></span>
+            AI 智能检索
+        </div>
+        <h2 class="ai-search-title">用自然语言描述您的法律需求</h2>
+        <p class="ai-search-sub">无需知道具体术语，直接告诉我们您的情况，AI 将为您匹配最合适的律所</p>
+
+        <div class="ai-input-wrap">
+            <input type="text" class="ai-input" 
+                placeholder="例如：我在深圳有一家科技公司，想在美国注册商标保护我们的品牌，预算大概 5000 元人民币..." 
+                value="我需要在美国注册商标，主要是软件类产品，有中文服务优先">
+            <button class="ai-send-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                AI 检索
+            </button>
+        </div>
+
+
+
+        <!-- AI Response -->
+        <div class="ai-response">
+            <div class="ai-response-header">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#00c8c8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                WHALIUM AI 分析结果
+            </div>
+            <div class="ai-response-text">
+                根据您的需求，我为您筛选出 <span class="ai-highlight">5 家</span> 专注于<span class="ai-highlight">美国知识产权</span>且提供<span class="ai-highlight">中文服务</span>的律所。
+                推荐优先考虑 <span class="ai-highlight">Morrison IP Law</span>（性价比高，商标注册经验丰富）和 <span class="ai-highlight">Sterling & Partners</span>（评分最高，适合复杂商标案件）。
+                软件类产品通常需要注册 <span class="ai-highlight">第9类</span> 商标，官费约 $350/类，律师费用区间已在卡片中标注。
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Filter Section -->
+    <div class="filter-section">
+        <div class="filter-row">
+
+            <!-- 国家/地区：多选 -->
+            <div class="filter-group">
+                <label>国家/地区 <em class="multi-hint">可多选</em></label>
+                <div class="msel-wrap" id="msel-country">
+                    <div class="msel-display" onclick="mselToggle('msel-country')">
+                        <span class="msel-text">全部国家</span><span class="msel-arrow">▾</span>
+                    </div>
+                    <div class="msel-drop">
+                        <div class="msel-search"><input placeholder="搜索国家…" oninput="mselSearch(this)"></div>
+                        <div class="msel-group">北美</div>
+                        <label class="msel-opt"><input type="checkbox" value="美国"><span>🇺🇸 美国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="加拿大"><span>🇨🇦 加拿大</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="墨西哥"><span>🇲🇽 墨西哥</span></label>
+                        <div class="msel-group">欧洲</div>
+                        <label class="msel-opt"><input type="checkbox" value="欧盟"><span>🇪🇺 欧盟</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="英国"><span>🇬🇧 英国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="德国"><span>🇩🇪 德国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="法国"><span>🇫🇷 法国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="荷兰"><span>🇳🇱 荷兰</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="西班牙"><span>🇪🇸 西班牙</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="意大利"><span>🇮🇹 意大利</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="波兰"><span>🇵🇱 波兰</span></label>
+                        <div class="msel-group">东亚</div>
+                        <label class="msel-opt"><input type="checkbox" value="日本"><span>🇯🇵 日本</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="韩国"><span>🇰🇷 韩国</span></label>
+                        <div class="msel-group">东南亚</div>
+                        <label class="msel-opt"><input type="checkbox" value="新加坡"><span>🇸🇬 新加坡</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="印度尼西亚"><span>🇮🇩 印度尼西亚</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="越南"><span>🇻🇳 越南</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="泰国"><span>🇹🇭 泰国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="马来西亚"><span>🇲🇾 马来西亚</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="菲律宾"><span>🇵🇭 菲律宾</span></label>
+                        <div class="msel-group">南亚</div>
+                        <label class="msel-opt"><input type="checkbox" value="印度"><span>🇮🇳 印度</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="孟加拉国"><span>🇧🇩 孟加拉国</span></label>
+                        <div class="msel-group">中东</div>
+                        <label class="msel-opt"><input type="checkbox" value="阿联酋"><span>🇦🇪 阿联酋</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="沙特阿拉伯"><span>🇸🇦 沙特阿拉伯</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="以色列"><span>🇮🇱 以色列</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="土耳其"><span>🇹🇷 土耳其</span></label>
+                        <div class="msel-group">非洲</div>
+                        <label class="msel-opt"><input type="checkbox" value="南非"><span>🇿🇦 南非</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="尼日利亚"><span>🇳🇬 尼日利亚</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="埃及"><span>🇪🇬 埃及</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="肯尼亚"><span>🇰🇪 肯尼亚</span></label>
+                        <div class="msel-group">拉丁美洲</div>
+                        <label class="msel-opt"><input type="checkbox" value="巴西"><span>🇧🇷 巴西</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="智利"><span>🇨🇱 智利</span></label>
+                        <div class="msel-group">大洋洲</div>
+                        <label class="msel-opt"><input type="checkbox" value="澳大利亚"><span>🇦🇺 澳大利亚</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="新西兰"><span>🇳🇿 新西兰</span></label>
+                        <div class="msel-group">其他</div>
+                        <label class="msel-opt"><input type="checkbox" value="其他"><span>🌐 其他</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 服务领域：多选 -->
+            <div class="filter-group">
+                <label>服务领域 <em class="multi-hint">可多选</em></label>
+                <div class="msel-wrap" id="msel-area">
+                    <div class="msel-display" onclick="mselToggle('msel-area')">
+                        <span class="msel-text">全部领域</span><span class="msel-arrow">▾</span>
+                    </div>
+                    <div class="msel-drop">
+                        <label class="msel-opt"><input type="checkbox" value="知识产权保护"><span>🛡️ 知识产权保护</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="出海设立架构"><span>🚀 出海设立 &amp; 架构</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="贸易产品合规"><span>📦 贸易 &amp; 产品合规</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="数据隐私合规"><span>🔒 数据 &amp; 隐私合规</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="商业诚信风险"><span>⚖️ 商业诚信 &amp; 风险</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="融资并购"><span>💼 融资 &amp; 并购</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="其他"><span>✏️ 其他</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 综合评分：单选 -->
+            <div class="filter-group">
+                <label>综合评分</label>
+                <select class="filter-select">
+                    <option value="">全部评分</option>
+                    <option value="4.5+">⭐ 4.5 分以上</option>
+                    <option value="4.0-4.5">⭐ 4.0 – 4.5 分</option>
+                    <option value="3.5-4.0">⭐ 3.5 – 4.0 分</option>
+                    <option value="3.0-3.5">⭐ 3.0 – 3.5 分</option>
+                </select>
+            </div>
+
+            <!-- 特色服务：多选 -->
+            <div class="filter-group">
+                <label>特色服务 <em class="multi-hint">可多选</em></label>
+                <div class="msel-wrap" id="msel-feat">
+                    <div class="msel-display" onclick="mselToggle('msel-feat')">
+                        <span class="msel-text">全部特色</span><span class="msel-arrow">▾</span>
+                    </div>
+                    <div class="msel-drop">
+                        <label class="msel-opt"><input type="checkbox" value="中文服务"><span>🇨🇳 全程中文服务</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="中国律师"><span>👤 中国/华裔律师</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="双语合同"><span>📄 中英双语合同</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="24h响应"><span>⚡ 24小时响应</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="固定报价"><span>💰 固定报价透明</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="免费咨询"><span>🆓 免费初次咨询</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="Chambers认证"><span>🏆 Chambers 认证</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="Legal500"><span>🏅 Legal 500 认证</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="中国律所合作"><span>🤝 与中国律所合作</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="跨境电商"><span>🛒 跨境电商经验</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <button class="search-btn" onclick="applyFilters()">筛 选</button>
+        </div>
+    </div>
+
+    <!-- Results -->
+    <div class="results-area">
+        <div class="results-header">
+            <div class="results-count">共找到 <strong>3</strong> 家律所</div>
+            <div class="results-filters-applied">显示全部律所</div>
+        </div>
+
+        <div class="firm-card">
+            <div class="firm-badges">
+                <span class="badge badge-hot">🔥 热门</span>
+                <span class="badge badge-value">⭐ 高性价比</span>
+                <span class="badge badge-certified">🏆 Chambers认证</span>
+            </div>
+            <div class="firm-card-top">
+                <div>
+                    <div class="firm-name">Morrison IP Law</div>
+                    <div class="firm-name-cn">莫里森知识产权律师事务所</div>
+                    <div class="firm-info">📍 美国 · 加利福尼亚州 · 洛杉矶</div>
+                    <div class="firm-info">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7d14131b123d10120f0f140e121350140d531e1210">[email&#160;protected]</a></div>
+                </div>
+            </div>
+            <div class="firm-areas">
+                <span class="areas-label">专业领域</span>
+                <span class="area-tag">商标注册</span>
+                <span class="area-tag">驳回答辩</span>
+                <span class="area-tag">专利申请</span>
+            </div>
+            <div class="firm-bottom">
+                <div class="firm-stats">
+                    <div class="stat-item"><span class="rating">⭐ 4.2</span> (18条评价)</div>
+                    <div class="stat-item">💰 $800–1,200</div>
+                </div>
+                <div class="firm-features">
+                    <div class="feature">中文服务</div>
+                    <div class="feature">24h响应</div>
+                    <div class="feature">Chambers Band 2</div>
+                </div>
+            </div>
+            <div class="firm-actions">
+                <button class="btn-detail" onclick="goDetail()">查看详情</button>
+                <button class="btn-action">对比</button>
+                <button class="btn-action">♡ 收藏</button>
+            </div>
+        </div>
+
+        <div class="firm-card">
+            <div class="firm-badges">
+                <span class="badge badge-hot">🔥 热门</span>
+                <span class="badge badge-certified">🏆 权威认证</span>
+            </div>
+            <div class="firm-card-top">
+                <div>
+                    <div class="firm-name">Sterling &amp; Partners LLP</div>
+                    <div class="firm-name-cn">斯特林合伙人律师事务所</div>
+                    <div class="firm-info">📍 美国 · 纽约州 · 纽约</div>
+                    <div class="firm-info">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5e3d31302a3f3d2a1e2d2a3b2c32373039323f29703d3133">[email&#160;protected]</a></div>
+                </div>
+            </div>
+            <div class="firm-areas">
+                <span class="areas-label">专业领域</span>
+                <span class="area-tag">公司设立</span>
+                <span class="area-tag">税务筹划</span>
+                <span class="area-tag">合同审查</span>
+            </div>
+            <div class="firm-bottom">
+                <div class="firm-stats">
+                    <div class="stat-item"><span class="rating">⭐ 4.6</span> (32条评价)</div>
+                    <div class="stat-item">💰 $1,200–5,000</div>
+                </div>
+                <div class="firm-features">
+                    <div class="feature">中文服务</div>
+                    <div class="feature">12h响应</div>
+                    <div class="feature">Chambers Band 1</div>
+                </div>
+            </div>
+            <div class="firm-actions">
+                <button class="btn-detail" onclick="goDetail()">查看详情</button>
+                <button class="btn-action">对比</button>
+                <button class="btn-action">♡ 收藏</button>
+            </div>
+        </div>
+
+        <div class="firm-card">
+            <div class="firm-badges">
+                <span class="badge badge-value">⭐ 高性价比</span>
+            </div>
+            <div class="firm-card-top">
+                <div>
+                    <div class="firm-name">Asia Pacific Legal Group</div>
+                    <div class="firm-name-cn">亚太法律集团</div>
+                    <div class="firm-info">📍 新加坡 · 新加坡</div>
+                    <div class="firm-info">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e48c8188888ba485948881838588ca9783">[email&#160;protected]</a></div>
+                </div>
+            </div>
+            <div class="firm-areas">
+                <span class="areas-label">专业领域</span>
+                <span class="area-tag">新加坡商标</span>
+                <span class="area-tag">公司注册</span>
+                <span class="area-tag">东盟合同</span>
+            </div>
+            <div class="firm-bottom">
+                <div class="firm-stats">
+                    <div class="stat-item"><span class="rating">⭐ 4.5</span> (28条评价)</div>
+                    <div class="stat-item">💰 $600–2,500</div>
+                </div>
+                <div class="firm-features">
+                    <div class="feature">中文服务</div>
+                    <div class="feature">6h响应</div>
+                    <div class="feature">Legal 500认证</div>
+                </div>
+            </div>
+            <div class="firm-actions">
+                <button class="btn-detail" onclick="goDetail()">查看详情</button>
+                <button class="btn-action">对比</button>
+                <button class="btn-action">♡ 收藏</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <strong>Whalium · 华里安</strong> &nbsp;·&nbsp; 洞察全球律所，安行海外航路
+    </div>
+
+    <!-- 所有 JS 放在最底部，确保 DOM 已加载 -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // ── 多选下拉 ──────────────────────────────────────────
+    function mselToggle(id) {
+        var wrap = document.getElementById(id);
+        var isOpen = wrap.classList.contains('open');
+        document.querySelectorAll('.msel-wrap').forEach(function(w) { w.classList.remove('open'); });
+        if (!isOpen) wrap.classList.add('open');
+    }
+
+    function mselSearch(input) {
+        var q = input.value.toLowerCase();
+        var drop = input.closest('.msel-drop');
+        drop.querySelectorAll('.msel-opt').forEach(function(opt) {
+            opt.style.display = opt.textContent.toLowerCase().includes(q) ? '' : 'none';
+        });
+        drop.querySelectorAll('.msel-group').forEach(function(g) {
+            var sib = g.nextElementSibling;
+            var any = false;
+            while (sib && !sib.classList.contains('msel-group')) {
+                if (sib.style.display !== 'none') any = true;
+                sib = sib.nextElementSibling;
+            }
+            g.style.display = any ? '' : 'none';
+        });
+    }
+
+    function mselUpdateDisplay(wrap) {
+        var checked = Array.from(wrap.querySelectorAll('input:checked'));
+        var display = wrap.querySelector('.msel-text');
+        var id = wrap.id;
+        if (checked.length === 0) {
+            display.textContent = id === 'msel-country' ? '全部国家' : id === 'msel-area' ? '全部领域' : '全部特色';
+        } else if (checked.length <= 2) {
+            display.innerHTML = checked.map(function(cb) {
+                return '<span class="msel-tag">' + cb.closest('.msel-opt').querySelector('span').textContent.trim() + '</span>';
+            }).join(' ');
+        } else {
+            display.innerHTML = '<span class="msel-tag">已选 ' + checked.length + ' 项</span>';
+        }
+    }
+
+    // checkbox 变化时更新显示
+    document.querySelectorAll('.msel-opt input').forEach(function(cb) {
+        cb.addEventListener('change', function() {
+            mselUpdateDisplay(cb.closest('.msel-wrap'));
+        });
+    });
+
+    // 点击页面其他地方关闭下拉
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.msel-wrap')) {
+            document.querySelectorAll('.msel-wrap').forEach(function(w) { w.classList.remove('open'); });
+        }
+    });
+
+    // ── 筛选按钮 ─────────────────────────────────────────
+    function applyFilters() {
+        var countries = Array.from(document.querySelectorAll('#msel-country input:checked')).map(function(c){return c.value;});
+        var areas     = Array.from(document.querySelectorAll('#msel-area input:checked')).map(function(c){return c.value;});
+        var features  = Array.from(document.querySelectorAll('#msel-feat input:checked')).map(function(c){return c.value;});
+        var rating    = document.querySelector('.filter-select') ? document.querySelector('.filter-select').value : '';
+        var parts = [];
+        if (countries.length) parts.push(countries.slice(0,2).join('、') + (countries.length > 2 ? ' 等' + countries.length + '个地区' : ''));
+        if (areas.length)     parts.push(areas.length + '个服务领域');
+        if (rating)           parts.push(rating.replace('+',' 分以上'));
+        if (features.length)  parts.push(features.length + '项特色');
+        var summary = document.querySelector('.results-filters-applied');
+        if (summary) summary.textContent = parts.length ? '已筛选：' + parts.join(' · ') : '显示全部律所';
+    }
+    </script>
+
+
+<script>
+function goDetail() {
+    window.location.href = 'whalium_4_firm-detail.html';
+}
+</script>
+
+</body>
+</html>

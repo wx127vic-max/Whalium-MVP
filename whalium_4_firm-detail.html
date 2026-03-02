@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morrison IP Law · 律所详情 — Whalium 华里安</title>
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" crossorigin>
+    <style>
+        :root {
+            --navy:    #1a2e4a;
+            --navy-2:  #243548;
+            --teal:    #0099aa;
+            --teal-b:  #00b8c8;
+            --teal-dim: rgba(0,153,170,0.28);
+            --teal-glow: rgba(0,153,170,0.08);
+            --bg:      #eef0f3;
+            --card:    #ffffff;
+            --border:  #dde2e8;
+            --text:    #1a2e4a;
+            --muted:   #5a7090;
+            --faint:   #8a9db0;
+            --gold:    #c8900a;
+            --danger:  #cc2233;
+            --green:   #1a8a4a;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ══ HEADER ══════════════════════════════════════════ */
+        .header {
+            background: var(--navy);
+            padding: 0 2.5rem;
+            height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+        }
+        .logo-section { display:flex; align-items:center; gap:1rem; text-decoration:none; }
+        .whalium-logo { width:46px; height:46px; flex-shrink:0; }
+        .brand-wrap { display:flex; flex-direction:column; line-height:1; }
+        .brand-row1 { display:flex; align-items:baseline; gap:0.45rem; }
+        .brand-name {
+            font-family: 'Syne','Montserrat','Trebuchet MS',sans-serif;
+            font-size:1.32rem; font-weight:800; letter-spacing:0.06em;
+            background: linear-gradient(160deg,#fff 0%,#cce8f4 55%,#88cce8 100%);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+            background-clip:text; line-height:1.05;
+        }
+        .brand-cn { font-size:1.05rem; font-weight:700; color:#fff; letter-spacing:0.04em; }
+        .brand-slogan { font-size:0.54rem; font-style:italic; color:rgba(160,215,235,0.68); letter-spacing:0.04em; margin-top:0.22rem; }
+        .header-nav { display:flex; align-items:center; gap:1.5rem; }
+        .header-nav a { color:rgba(255,255,255,0.65); font-size:0.83rem; text-decoration:none; transition:color .18s; }
+        .header-nav a:hover { color:#fff; }
+        .breadcrumb { display:flex; align-items:center; gap:0.4rem; font-size:0.8rem; color:rgba(255,255,255,0.5); }
+        .breadcrumb a { color:rgba(160,215,235,0.75); text-decoration:none; }
+        .breadcrumb a:hover { color:#fff; }
+        .breadcrumb span { opacity:0.4; }
+        .header-actions { display:flex; gap:0.7rem; align-items:center; }
+        .btn { padding:0.45rem 1.1rem; border-radius:5px; font-size:0.82rem; font-weight:600; cursor:pointer; transition:all .18s; text-decoration:none; display:inline-flex; align-items:center; gap:0.3rem; }
+        .btn-ghost { background:transparent; border:1px solid rgba(255,255,255,0.28); color:#fff; }
+        .btn-ghost:hover { background:rgba(255,255,255,0.09); }
+        .btn-teal { background:linear-gradient(135deg,#00b8cc,#0078aa); border:none; color:#fff; }
+        .btn-teal:hover { filter:brightness(1.12); }
+
+        /* ══ HERO BAND ════════════════════════════════════════ */
+        .firm-hero {
+            background: linear-gradient(135deg, var(--navy) 0%, #1e3858 60%, #162d4a 100%);
+            padding: 2.2rem 3rem 2rem;
+            position: relative; overflow: hidden;
+        }
+        .firm-hero::before {
+            content:''; position:absolute; inset:0;
+            background: radial-gradient(ellipse 60% 80% at 90% 50%, rgba(0,180,200,0.08) 0%, transparent 70%);
+        }
+        .hero-inner { max-width:1100px; margin:0 auto; position:relative; }
+        .hero-top { display:flex; justify-content:space-between; align-items:flex-start; gap:2rem; }
+        .hero-left { flex:1; }
+        .hero-badges { display:flex; gap:0.4rem; margin-bottom:0.85rem; flex-wrap:wrap; }
+        .badge {
+            padding:0.22rem 0.65rem; border-radius:3px;
+            font-size:0.68rem; font-weight:700; letter-spacing:0.04em;
+        }
+        .badge-hot   { background:rgba(255,100,100,0.15); color:#ff8888; border:1px solid rgba(255,100,100,0.3); }
+        .badge-value { background:rgba(200,144,10,0.15);  color:#e0a820; border:1px solid rgba(200,144,10,0.3); }
+        .badge-cert  { background:rgba(80,180,255,0.12);  color:#80ccff; border:1px solid rgba(80,180,255,0.25); }
+        .firm-name-en { font-size:2rem; font-weight:800; color:#fff; letter-spacing:0.02em; line-height:1.1; margin-bottom:0.2rem; }
+        .firm-name-cn { font-size:1rem; color:rgba(200,225,240,0.65); margin-bottom:0.9rem; }
+        .hero-meta { display:flex; flex-wrap:wrap; gap:1rem; }
+        .meta-item { display:flex; align-items:center; gap:0.35rem; font-size:0.82rem; color:rgba(200,225,240,0.7); }
+        .meta-item svg { opacity:0.6; flex-shrink:0; }
+        .hero-right { display:flex; flex-direction:column; gap:0.6rem; align-items:flex-end; flex-shrink:0; }
+        .hero-rating {
+            background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+            border-radius:10px; padding:1rem 1.4rem; text-align:center; backdrop-filter:blur(8px);
+        }
+        .rating-big { font-size:2.2rem; font-weight:800; color:#fff; line-height:1; }
+        .rating-stars { font-size:0.9rem; margin:0.2rem 0; letter-spacing:0.05em; }
+        .rating-count { font-size:0.72rem; color:rgba(200,225,240,0.55); }
+        .btn-inquiry {
+            background:linear-gradient(135deg,#00c8d8 0%,#0088b8 100%);
+            color:#fff; border:none; padding:0.85rem 2rem;
+            border-radius:8px; font-size:0.95rem; font-weight:700;
+            cursor:pointer; width:100%; text-align:center;
+            box-shadow:0 4px 16px rgba(0,180,200,0.35);
+            transition:all .2s; letter-spacing:0.02em;
+        }
+        .btn-inquiry:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(0,180,200,0.45); }
+        .btn-save {
+            background:transparent; border:1px solid rgba(255,255,255,0.25);
+            color:rgba(255,255,255,0.75); padding:0.55rem 1.2rem;
+            border-radius:6px; font-size:0.82rem; font-weight:500;
+            cursor:pointer; transition:all .18s;
+        }
+        .btn-save:hover { background:rgba(255,255,255,0.08); color:#fff; }
+
+        /* ══ QUICK STATS BAR ══════════════════════════════════ */
+        .stats-bar {
+            background:#fff; border-bottom:1px solid var(--border);
+            padding:0 3rem;
+        }
+        .stats-inner {
+            max-width:1100px; margin:0 auto;
+            display:flex; justify-content:space-between;
+        }
+        .stat-cell {
+            padding:1rem 0; text-align:center; flex:1;
+            border-right:1px solid var(--border);
+        }
+        .stat-cell:last-child { border-right:none; }
+        .stat-num { font-size:1.4rem; font-weight:800; color:var(--teal); line-height:1; }
+        .stat-lbl { font-size:0.7rem; color:var(--faint); margin-top:0.25rem; text-transform:uppercase; letter-spacing:0.06em; }
+
+        /* ══ LAYOUT ═══════════════════════════════════════════ */
+        .page-body { max-width:1100px; margin:0 auto; padding:2rem 3rem 4rem; display:grid; grid-template-columns:1fr 310px; gap:1.8rem; align-items:start; }
+
+        /* ══ CARDS ════════════════════════════════════════════ */
+        .card {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:10px; overflow:hidden;
+            box-shadow:0 1px 6px rgba(0,0,0,0.05);
+            margin-bottom:1.4rem;
+        }
+        .card-header {
+            padding:1.1rem 1.6rem; border-bottom:1px solid var(--border);
+            display:flex; align-items:center; gap:0.5rem;
+        }
+        .card-title { font-size:0.92rem; font-weight:700; color:var(--text); }
+        .card-body { padding:1.6rem; }
+        .card-body-sm { padding:1.2rem 1.6rem; }
+
+        /* ══ INTRO ════════════════════════════════════════════ */
+        .intro-text { font-size:0.9rem; line-height:1.9; color:var(--muted); }
+        .intro-text strong { color:var(--text); font-weight:600; }
+        .tag-list { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.1rem; }
+        .tag {
+            padding:0.3rem 0.75rem; border-radius:5px;
+            background:rgba(0,153,170,0.07); border:1px solid rgba(0,153,170,0.18);
+            color:var(--teal); font-size:0.78rem; font-weight:500;
+        }
+
+        /* ══ SERVICES ═════════════════════════════════════════ */
+        .service-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; }
+        .service-item {
+            background:#f7f9fb; border:1px solid var(--border);
+            border-radius:8px; padding:1rem 1.1rem;
+            border-left:3px solid var(--teal);
+            transition:border-color .18s, box-shadow .18s;
+        }
+        .service-item:hover { box-shadow:0 3px 12px rgba(0,153,170,0.1); border-left-color:var(--teal-b); }
+        .service-name { font-size:0.88rem; font-weight:700; color:var(--text); margin-bottom:0.3rem; }
+        .service-desc { font-size:0.77rem; color:var(--muted); line-height:1.6; }
+        .service-price { font-size:0.75rem; color:var(--teal); font-weight:600; margin-top:0.45rem; }
+
+        /* ══ RATINGS ══════════════════════════════════════════ */
+        .rating-row { display:flex; align-items:center; gap:0.9rem; margin-bottom:0.8rem; }
+        .rating-label { width:72px; font-size:0.8rem; color:var(--muted); flex-shrink:0; }
+        .bar-track { flex:1; height:5px; background:#eef0f3; border-radius:3px; overflow:hidden; }
+        .bar-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--teal),var(--teal-b)); }
+        .rating-score { width:32px; text-align:right; font-size:0.82rem; font-weight:700; color:var(--teal); }
+
+        /* ══ PRICING (LOCKED) ═════════════════════════════════ */
+        .locked-wrap { position:relative; }
+        .locked-content { filter:blur(4px); opacity:0.3; pointer-events:none; user-select:none; }
+        .lock-gate {
+            position:absolute; inset:0;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            gap:0.6rem; background:rgba(255,255,255,0.7); backdrop-filter:blur(2px);
+            border-radius:8px;
+        }
+        .lock-icon { font-size:2rem; }
+        .lock-title { font-size:0.92rem; font-weight:700; color:var(--text); }
+        .lock-desc { font-size:0.78rem; color:var(--muted); text-align:center; max-width:220px; line-height:1.5; }
+        .btn-unlock {
+            background:linear-gradient(135deg,var(--teal),#006e9e);
+            color:#fff; border:none; padding:0.65rem 1.6rem;
+            border-radius:6px; font-size:0.85rem; font-weight:700;
+            cursor:pointer; margin-top:0.3rem; transition:filter .18s;
+        }
+        .btn-unlock:hover { filter:brightness(1.1); }
+        .price-table { width:100%; border-collapse:collapse; font-size:0.83rem; }
+        .price-table th { padding:0.7rem 0.9rem; text-align:left; color:var(--faint); font-weight:600; font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; background:#f8f9fb; border-bottom:1px solid var(--border); }
+        .price-table td { padding:0.75rem 0.9rem; border-bottom:1px solid #f0f2f5; }
+        .price-table tr:last-child td { border-bottom:none; }
+        .price-hl { color:var(--teal); font-weight:700; }
+        .price-note { font-size:0.72rem; color:var(--faint); }
+
+        /* ══ REVIEWS ══════════════════════════════════════════ */
+        .review-card {
+            border:1px solid var(--border); border-radius:8px;
+            padding:1.2rem 1.3rem; margin-bottom:0.9rem;
+            border-left:3px solid var(--teal);
+            background:#fafcfd;
+            transition:box-shadow .15s;
+        }
+        .review-card:hover { box-shadow:0 3px 12px rgba(0,0,0,0.07); }
+        .rev-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:0.55rem; }
+        .rev-name { font-size:0.88rem; font-weight:700; color:var(--text); }
+        .rev-stars { font-size:0.82rem; color:#e8a010; }
+        .rev-date { font-size:0.72rem; color:var(--faint); margin-top:0.1rem; }
+        .rev-tag { display:inline-block; padding:0.18rem 0.6rem; background:rgba(0,153,170,0.07); border:1px solid rgba(0,153,170,0.15); border-radius:3px; font-size:0.72rem; color:var(--teal); margin-bottom:0.6rem; }
+        .rev-text { font-size:0.84rem; color:var(--muted); line-height:1.75; }
+        .rev-firm-reply { margin-top:0.8rem; padding:0.7rem 0.9rem; background:#f0f7f9; border-radius:6px; border-left:2px solid var(--teal); }
+        .rev-reply-label { font-size:0.7rem; color:var(--teal); font-weight:700; margin-bottom:0.25rem; }
+        .rev-reply-text { font-size:0.78rem; color:var(--muted); line-height:1.65; }
+
+        /* ══ SIDEBAR ══════════════════════════════════════════ */
+        .sidebar { position:sticky; top:80px; }
+        .contact-card {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:10px; overflow:hidden;
+            box-shadow:0 2px 12px rgba(0,0,0,0.07);
+            margin-bottom:1.2rem;
+        }
+        .contact-header {
+            background:linear-gradient(135deg,var(--navy),#1e3858);
+            padding:1rem 1.3rem; color:#fff;
+        }
+        .contact-header-title { font-size:0.88rem; font-weight:700; margin-bottom:0.15rem; }
+        .contact-header-sub { font-size:0.72rem; color:rgba(200,225,240,0.65); }
+        .contact-body { padding:1.2rem; }
+        .btn-inquiry-big {
+            width:100%; padding:0.9rem;
+            background:linear-gradient(135deg,#00c8d8,#0088b8);
+            color:#fff; border:none; border-radius:8px;
+            font-size:0.92rem; font-weight:700; cursor:pointer;
+            box-shadow:0 3px 12px rgba(0,180,200,0.3);
+            transition:all .2s; margin-bottom:0.7rem;
+            display:block; text-align:center;
+        }
+        .btn-inquiry-big:hover { transform:translateY(-1px); box-shadow:0 5px 18px rgba(0,180,200,0.4); }
+        .contact-divider { text-align:center; font-size:0.72rem; color:var(--faint); margin:0.6rem 0; }
+        .contact-locked {
+            background:#f7f9fb; border:1px dashed var(--border);
+            border-radius:7px; padding:1rem; text-align:center;
+        }
+        .contact-locked-icon { font-size:1.5rem; margin-bottom:0.4rem; }
+        .contact-locked-text { font-size:0.78rem; color:var(--muted); line-height:1.5; margin-bottom:0.7rem; }
+        .btn-unlock-sm {
+            width:100%; padding:0.65rem;
+            background:linear-gradient(135deg,var(--teal),#006e9e);
+            color:#fff; border:none; border-radius:6px;
+            font-size:0.82rem; font-weight:700; cursor:pointer; transition:filter .18s;
+        }
+        .btn-unlock-sm:hover { filter:brightness(1.1); }
+        .contact-info-row { display:flex; align-items:center; gap:0.6rem; padding:0.6rem 0; border-bottom:1px solid #f0f2f5; font-size:0.82rem; }
+        .contact-info-row:last-child { border-bottom:none; }
+        .contact-info-icon { width:28px; height:28px; background:var(--teal-glow); border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:0.85rem; flex-shrink:0; }
+        .contact-info-label { font-size:0.7rem; color:var(--faint); }
+        .contact-info-val { font-size:0.82rem; color:var(--text); font-weight:500; }
+
+        /* 侧边小信息卡 */
+        .side-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1.1rem 1.2rem; margin-bottom:1rem; }
+        .side-card-title { font-size:0.78rem; font-weight:700; color:var(--text); margin-bottom:0.85rem; text-transform:uppercase; letter-spacing:0.05em; }
+        .feature-row { display:flex; align-items:center; gap:0.55rem; padding:0.35rem 0; font-size:0.82rem; color:var(--muted); }
+        .feature-dot { width:6px; height:6px; border-radius:50%; background:var(--teal); flex-shrink:0; }
+        .cert-badge { display:flex; align-items:center; gap:0.5rem; padding:0.45rem 0.7rem; background:#f0f7f9; border-radius:6px; margin-bottom:0.5rem; }
+        .cert-icon { font-size:1.1rem; }
+        .cert-text { font-size:0.78rem; }
+        .cert-name { font-weight:700; color:var(--text); }
+        .cert-desc { color:var(--faint); font-size:0.7rem; }
+
+        /* ══ SIMILAR FIRMS ════════════════════════════════════ */
+        .similar-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:1rem; }
+        .similar-card {
+            background:var(--card); border:1px solid var(--border);
+            border-radius:8px; padding:1rem 1.1rem;
+            cursor:pointer; transition:all .18s;
+        }
+        .similar-card:hover { border-color:var(--teal); box-shadow:0 4px 14px rgba(0,153,170,0.1); transform:translateY(-2px); }
+        .sim-name { font-size:0.85rem; font-weight:700; color:var(--text); margin-bottom:0.2rem; }
+        .sim-loc  { font-size:0.72rem; color:var(--faint); margin-bottom:0.5rem; }
+        .sim-tags { display:flex; gap:0.3rem; flex-wrap:wrap; margin-bottom:0.5rem; }
+        .sim-tag  { padding:0.15rem 0.45rem; background:var(--teal-glow); border-radius:3px; font-size:0.68rem; color:var(--teal); }
+        .sim-bottom { display:flex; justify-content:space-between; align-items:center; }
+        .sim-rating { font-size:0.78rem; color:#e8a010; font-weight:600; }
+        .sim-price  { font-size:0.72rem; color:var(--faint); }
+
+        /* ══ ANIMATIONS ═══════════════════════════════════════ */
+        @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+        .card, .contact-card, .side-card { animation: fadeUp .35s ease both; }
+        .card:nth-child(1) { animation-delay:.05s; }
+        .card:nth-child(2) { animation-delay:.10s; }
+        .card:nth-child(3) { animation-delay:.15s; }
+        .card:nth-child(4) { animation-delay:.20s; }
+
+        /* ══ FOOTER ═══════════════════════════════════════════ */
+        .footer { background:#fff; border-top:1px solid var(--border); padding:1.2rem 3rem; text-align:center; font-size:0.75rem; color:var(--faint); }
+    </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════ -->
+<header class="header">
+    <a href="whalium_1_v6.html" class="logo-section">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="whalium-logo">
+            <defs>
+                <radialGradient id="wbg2" cx="45%" cy="45%" r="60%"><stop offset="0%" stop-color="#1c3d5c"/><stop offset="100%" stop-color="#070f1c"/></radialGradient>
+                <linearGradient id="wt2" x1="15%" y1="5%" x2="85%" y2="95%"><stop offset="0%" stop-color="#80eef8"/><stop offset="40%" stop-color="#22ccde"/><stop offset="100%" stop-color="#0a8eb0"/></linearGradient>
+                <linearGradient id="wr2" x1="10%" y1="0%" x2="90%" y2="100%"><stop offset="0%" stop-color="#5598ba"/><stop offset="30%" stop-color="#a8cede"/><stop offset="60%" stop-color="#6aacc8"/><stop offset="100%" stop-color="#3a7898"/></linearGradient>
+                <filter id="glow2"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            </defs>
+            <circle cx="100" cy="100" r="88" fill="url(#wbg2)"/>
+            <circle cx="100" cy="100" r="88" fill="none" stroke="url(#wr2)" stroke-width="6" stroke-dasharray="478 78" stroke-dashoffset="-20" stroke-linecap="round"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(80,180,210,0.22)" stroke-width="1.2"/>
+            <rect x="86" y="3"   width="12" height="10" rx="2" fill="#58b8d8" opacity="0.9"/>
+            <rect x="100" y="3"  width="8"  height="7"  rx="1.5" fill="#3898b8" opacity="0.65"/>
+            <rect x="86" y="187" width="12" height="10" rx="2" fill="#58b8d8" opacity="0.9"/>
+            <rect x="3"  y="86"  width="10" height="12" rx="2" fill="#58b8d8" opacity="0.9"/>
+            <rect x="187" y="86" width="10" height="12" rx="2" fill="#58b8d8" opacity="0.9"/>
+            <line x1="100" y1="11" x2="100" y2="22" stroke="#5ab8d8" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="100" y1="178" x2="100" y2="189" stroke="#5ab8d8" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="11" y1="100" x2="22" y2="100" stroke="#5ab8d8" stroke-width="2.5" stroke-linecap="round"/>
+            <line x1="178" y1="100" x2="189" y2="100" stroke="#5ab8d8" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M100 130 C85 140,62 147,44 137 C29 128,32 110,44 101 C56 92,76 97,100 110" fill="url(#wt2)" filter="url(#glow2)"/>
+            <path d="M100 130 C115 140,138 147,156 137 C171 128,168 110,156 101 C144 92,124 97,100 110" fill="url(#wt2)" filter="url(#glow2)"/>
+            <path d="M100 110 C94 120,94 127,100 130 C106 127,106 120,100 110" fill="#070f1c"/>
+            <path d="M100 110 C96 95,93 78,100 67 C107 78,104 95,100 110" fill="url(#wt2)" opacity="0.88" filter="url(#glow2)"/>
+        </svg>
+        <div class="brand-wrap">
+            <div class="brand-row1">
+                <span class="brand-name">Whalium</span>
+                <span class="brand-cn">华里安</span>
+            </div>
+            <div class="brand-slogan">Global Insights, Secure Navigation.</div>
+        </div>
+    </a>
+    <nav class="breadcrumb">
+        <a href="whalium_1_v6.html">律所列表</a>
+        <span>›</span>
+        <span style="color:rgba(255,255,255,0.75)">Morrison IP Law</span>
+    </nav>
+    <div class="header-actions">
+        <a href="whalium_login.html" class="btn btn-ghost">登录</a>
+        <a href="whalium_4_final.html" class="btn btn-teal">注册</a>
+    </div>
+</header>
+
+<!-- ══ HERO BAND ═══════════════════════════════════════════ -->
+<div class="firm-hero">
+    <div class="hero-inner">
+        <div class="hero-top">
+            <div class="hero-left">
+                <div class="hero-badges">
+                    <span class="badge badge-hot">🔥 热门</span>
+                    <span class="badge badge-value">⭐ 高性价比</span>
+                    <span class="badge badge-cert">🏆 Chambers Band 2</span>
+                    <span class="badge badge-cert">✓ 已认证</span>
+                </div>
+                <div class="firm-name-en">Morrison IP Law</div>
+                <div class="firm-name-cn">莫里森知识产权律师事务所</div>
+                <div class="hero-meta">
+                    <div class="meta-item">
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                        美国 · 加利福尼亚州 · 洛杉矶
+                    </div>
+                    <div class="meta-item">
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+                        成立于 2008 年 · 16 年经验
+                    </div>
+                    <div class="meta-item">
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        团队 12 名律师 · 中国客户占比 35%
+                    </div>
+                    <div class="meta-item">
+                        <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        响应时间 ≤ 24 小时
+                    </div>
+                </div>
+            </div>
+            <div class="hero-right">
+                <div class="hero-rating">
+                    <div class="rating-big">4.2</div>
+                    <div class="rating-stars" style="color:#e8a010">★★★★☆</div>
+                    <div class="rating-count">基于 18 条真实评价</div>
+                </div>
+                <button class="btn-inquiry" onclick="document.getElementById('inquiry-modal').style.display='flex'">📩 立即询盘</button>
+                <button class="btn-save">♡ 收藏律所</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ STATS BAR ════════════════════════════════════════════ -->
+<div class="stats-bar">
+    <div class="stats-inner">
+        <div class="stat-cell"><div class="stat-num">330<span style="font-size:1rem">+</span></div><div class="stat-lbl">年处理案件</div></div>
+        <div class="stat-cell"><div class="stat-num">92<span style="font-size:1rem">%</span></div><div class="stat-lbl">客户推荐率</div></div>
+        <div class="stat-cell"><div class="stat-num">35<span style="font-size:1rem">%</span></div><div class="stat-lbl">中国客户占比</div></div>
+        <div class="stat-cell"><div class="stat-num">16<span style="font-size:1rem">年</span></div><div class="stat-lbl">执业经验</div></div>
+        <div class="stat-cell"><div class="stat-num">$800<span style="font-size:1rem">起</span></div><div class="stat-lbl">商标服务起价</div></div>
+    </div>
+</div>
+
+<!-- ══ MAIN BODY ════════════════════════════════════════════ -->
+<div class="page-body">
+
+    <!-- 左侧主内容 -->
+    <div class="main-col">
+
+        <!-- 律所简介 -->
+        <div class="card">
+            <div class="card-header">
+                <span style="font-size:1rem">🏛️</span>
+                <span class="card-title">律所简介</span>
+            </div>
+            <div class="card-body">
+                <p class="intro-text">
+                    <strong>Morrison IP Law</strong> 成立于 2008 年，是洛杉矶专注知识产权领域的精品律所。深耕美国商标、专利和版权业务超过 16 年，服务超过 1,200 家跨国企业，其中中国出海企业客户超过 400 家。
+                </p>
+                <p class="intro-text" style="margin-top:0.85rem">
+                    律所创始合伙人 David Morrison 曾任职 USPTO（美国专利商标局），对审查流程有深刻理解，尤其擅长处理<strong>驳回答辩</strong>和复杂商标纠纷案件。团队配备 <strong>2 名中文流利的华裔律师</strong>，全程中文沟通，无语言障碍。
+                </p>
+                <div class="tag-list">
+                    <span class="tag">🛡️ 知识产权保护</span>
+                    <span class="tag">🇺🇸 美国商标注册</span>
+                    <span class="tag">📋 驳回答辩</span>
+                    <span class="tag">💡 专利申请</span>
+                    <span class="tag">©️ 版权登记</span>
+                    <span class="tag">🇨🇳 中文服务</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 服务项目 -->
+        <div class="card">
+            <div class="card-header">
+                <span style="font-size:1rem">⚖️</span>
+                <span class="card-title">服务项目</span>
+            </div>
+            <div class="card-body">
+                <div class="service-grid">
+                    <div class="service-item">
+                        <div class="service-name">🏷️ 美国商标注册</div>
+                        <div class="service-desc">全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。</div>
+                        <div class="service-price">💰 $800 – $1,200 / 类</div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-name">📋 驳回答辩</div>
+                        <div class="service-desc">针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。</div>
+                        <div class="service-price">💰 $1,500 – $2,500</div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-name">💡 发明专利申请</div>
+                        <div class="service-desc">发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。</div>
+                        <div class="service-price">💰 $3,000 – $6,000</div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-name">⚔️ 商标侵权维权</div>
+                        <div class="service-desc">电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。</div>
+                        <div class="service-price">💰 按案件报价</div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-name">©️ 版权登记</div>
+                        <div class="service-desc">软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。</div>
+                        <div class="service-price">💰 $300 – $500</div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-name">🌐 国际商标延伸</div>
+                        <div class="service-desc">马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。</div>
+                        <div class="service-price">💰 $500 – $900 / 国</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 评分详情 -->
+        <div class="card">
+            <div class="card-header">
+                <span style="font-size:1rem">📊</span>
+                <span class="card-title">客户评分详情</span>
+                <span style="margin-left:auto;font-size:0.78rem;color:var(--faint)">基于 18 条真实评价</span>
+            </div>
+            <div class="card-body">
+                <div class="rating-row">
+                    <span class="rating-label">专业度</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
+                    <span class="rating-score">4.5</span>
+                </div>
+                <div class="rating-row">
+                    <span class="rating-label">响应速度</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+                    <span class="rating-score">4.0</span>
+                </div>
+                <div class="rating-row">
+                    <span class="rating-label">性价比</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:86%"></div></div>
+                    <span class="rating-score">4.3</span>
+                </div>
+                <div class="rating-row">
+                    <span class="rating-label">中文沟通</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+                    <span class="rating-score">4.4</span>
+                </div>
+                <div class="rating-row">
+                    <span class="rating-label">流程透明</span>
+                    <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+                    <span class="rating-score">4.1</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 收费参考（付费墙） -->
+        <div class="card">
+            <div class="card-header">
+                <span style="font-size:1rem">💰</span>
+                <span class="card-title">收费参考</span>
+                <span style="margin-left:auto;padding:0.18rem 0.55rem;background:rgba(0,153,170,0.08);border:1px solid rgba(0,153,170,0.2);border-radius:3px;font-size:0.68rem;color:var(--teal);font-weight:600">基于真实成交价</span>
+            </div>
+            <div class="card-body" style="padding-bottom:0">
+                <div class="locked-wrap">
+                    <div class="locked-content">
+                        <table class="price-table">
+                            <thead>
+                                <tr><th>服务项目</th><th>价格区间</th><th>说明</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>美国商标注册（1类）</td><td class="price-hl">$800–$1,200</td><td class="price-note">不含 USPTO 官费 $250/类</td></tr>
+                                <tr><td>商标驳回答辩（简单）</td><td class="price-hl">$1,500–$2,000</td><td class="price-note">Likelihood of Confusion 为主</td></tr>
+                                <tr><td>商标驳回答辩（复杂）</td><td class="price-hl">$2,000–$2,500</td><td class="price-note">含证据收集、证人证词</td></tr>
+                                <tr><td>发明专利申请</td><td class="price-hl">$3,500–$5,000</td><td class="price-note">含检索、撰写、提交</td></tr>
+                                <tr><td>版权登记（单件）</td><td class="price-hl">$300–$500</td><td class="price-note">标准通道 3-6 个月出证</td></tr>
+                                <tr><td style="color:var(--faint)">⚠️ 隐藏费用提醒</td><td>—</td><td class="price-note" style="color:var(--faint)">会员专属内容…</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="lock-gate">
+                        <div class="lock-icon">🔒</div>
+                        <div class="lock-title">查看详细报价</div>
+                        <div class="lock-desc">开通会员解锁真实成交价区间、隐藏费用提醒和历史价格趋势</div>
+                        <button class="btn-unlock" onclick="location.href='whalium_3_light_v2.html'">开通会员 · ¥365/年</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 客户评价 -->
+        <div class="card">
+            <div class="card-header">
+                <span style="font-size:1rem">💬</span>
+                <span class="card-title">客户评价</span>
+                <span style="margin-left:auto;font-size:0.78rem;color:var(--faint)">共 18 条</span>
+            </div>
+            <div class="card-body">
+                <div class="review-card">
+                    <div class="rev-top">
+                        <div>
+                            <div class="rev-name">深圳某科技公司 · 张总</div>
+                            <div class="rev-date">2024年1月 · 已验证服务</div>
+                        </div>
+                        <div class="rev-stars">★★★★★ 5.0</div>
+                    </div>
+                    <div class="rev-tag">📌 美国商标注册 · 实际支付 $950</div>
+                    <div class="rev-text">非常专业，响应迅速。帮我们成功注册了 3 个类别的商标，整个过程透明清晰，没有任何隐藏费用。全程有中文律师对接，沟通零障碍。强烈推荐！</div>
+                    <div class="rev-firm-reply">
+                        <div class="rev-reply-label">律所回复</div>
+                        <div class="rev-reply-text">感谢张总的信任！您的商标现已在全美受到保护，如有品类扩展需求随时联系我们。</div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="rev-top">
+                        <div>
+                            <div class="rev-name">广州某贸易公司 · 李经理</div>
+                            <div class="rev-date">2023年12月 · 已验证服务</div>
+                        </div>
+                        <div class="rev-stars">★★★★☆ 4.0</div>
+                    </div>
+                    <div class="rev-tag">📌 商标驳回答辩 · 实际支付 $1,800</div>
+                    <div class="rev-text">律师很专业，最终帮我们拿到了商标注册。但过程中沟通稍有延迟，有时要等 2 天才回复，希望能改进响应速度。结果满意，下次还会来。</div>
+                </div>
+
+                <div class="review-card">
+                    <div class="rev-top">
+                        <div>
+                            <div class="rev-name">北京某电商创业者 · 王女士</div>
+                            <div class="rev-date">2023年11月 · 已验证服务</div>
+                        </div>
+                        <div class="rev-stars">★★★★★ 5.0</div>
+                    </div>
+                    <div class="rev-tag">📌 发明专利申请 · 实际支付 $4,200</div>
+                    <div class="rev-text">第一次申请美国专利，Morrison 团队非常耐心地解释每个步骤，权利要求写得很扎实。6 个月就拿到了授权，比预期快很多！</div>
+                </div>
+
+                <!-- 其余评价加锁 -->
+                <div class="locked-wrap" style="margin-top:0.5rem">
+                    <div class="locked-content" style="min-height:100px">
+                        <div class="review-card" style="opacity:0.5">
+                            <div class="rev-name">上海某公司 · 陈先生</div>
+                            <div class="rev-text">更多评价内容…</div>
+                        </div>
+                    </div>
+                    <div class="lock-gate">
+                        <div class="lock-icon">🔒</div>
+                        <div class="lock-title">还有 15 条评价</div>
+                        <div class="lock-desc">含 2 条差评和避雷建议，开通会员全部可见</div>
+                        <button class="btn-unlock" onclick="location.href='whalium_3_light_v2.html'">开通会员查看全部</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 相似律所推荐 -->
+        <div class="card">
+            <div class="card-header">
+                <span style="font-size:1rem">🔍</span>
+                <span class="card-title">相似律所推荐</span>
+            </div>
+            <div class="card-body">
+                <div class="similar-grid">
+                    <div class="similar-card" onclick="location.href='whalium_1_v6.html'">
+                        <div class="sim-name">Sterling &amp; Partners LLP</div>
+                        <div class="sim-loc">📍 美国 · 纽约</div>
+                        <div class="sim-tags"><span class="sim-tag">公司设立</span><span class="sim-tag">税务</span></div>
+                        <div class="sim-bottom">
+                            <span class="sim-rating">★ 4.6</span>
+                            <span class="sim-price">$1,200起</span>
+                        </div>
+                    </div>
+                    <div class="similar-card" onclick="location.href='whalium_1_v6.html'">
+                        <div class="sim-name">Pacific IP Group</div>
+                        <div class="sim-loc">📍 美国 · 旧金山</div>
+                        <div class="sim-tags"><span class="sim-tag">商标</span><span class="sim-tag">专利</span></div>
+                        <div class="sim-bottom">
+                            <span class="sim-rating">★ 4.4</span>
+                            <span class="sim-price">$700起</span>
+                        </div>
+                    </div>
+                    <div class="similar-card" onclick="location.href='whalium_1_v6.html'">
+                        <div class="sim-name">Asia Pacific Legal</div>
+                        <div class="sim-loc">📍 新加坡</div>
+                        <div class="sim-tags"><span class="sim-tag">东南亚商标</span></div>
+                        <div class="sim-bottom">
+                            <span class="sim-rating">★ 4.5</span>
+                            <span class="sim-price">$600起</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /main-col -->
+
+    <!-- 右侧边栏 -->
+    <div class="sidebar">
+
+        <!-- 联系卡片 -->
+        <div class="contact-card">
+            <div class="contact-header">
+                <div class="contact-header-title">📩 发送询盘</div>
+                <div class="contact-header-sub">律所通常在 24 小时内回复</div>
+            </div>
+            <div class="contact-body">
+                <button class="btn-inquiry-big" onclick="document.getElementById('inquiry-modal').style.display='flex'">立即发送询盘</button>
+                <div class="contact-divider">— 或直接联系 —</div>
+                <div class="contact-locked">
+                    <div class="contact-locked-icon">🔒</div>
+                    <div class="contact-locked-text">开通会员查看邮箱、电话和直接预约链接</div>
+                    <button class="btn-unlock-sm" onclick="location.href='whalium_3_light_v2.html'">开通会员 · ¥365/年</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 基本信息 -->
+        <div class="side-card">
+            <div class="side-card-title">基本信息</div>
+            <div class="contact-info-row">
+                <div class="contact-info-icon">📍</div>
+                <div><div class="contact-info-label">地址</div><div class="contact-info-val">洛杉矶，加利福尼亚州</div></div>
+            </div>
+            <div class="contact-info-row">
+                <div class="contact-info-icon">🕐</div>
+                <div><div class="contact-info-label">响应时间</div><div class="contact-info-val">≤ 24 小时</div></div>
+            </div>
+            <div class="contact-info-row">
+                <div class="contact-info-icon">👥</div>
+                <div><div class="contact-info-label">团队规模</div><div class="contact-info-val">12 名律师</div></div>
+            </div>
+            <div class="contact-info-row">
+                <div class="contact-info-icon">🌐</div>
+                <div><div class="contact-info-label">官方网站</div><div class="contact-info-val" style="color:var(--teal)">morrison-ip.com</div></div>
+            </div>
+        </div>
+
+        <!-- 特色服务 -->
+        <div class="side-card">
+            <div class="side-card-title">特色服务</div>
+            <div class="feature-row"><div class="feature-dot"></div>全程中文服务</div>
+            <div class="feature-row"><div class="feature-dot"></div>华裔律师对接</div>
+            <div class="feature-row"><div class="feature-dot"></div>固定报价透明</div>
+            <div class="feature-row"><div class="feature-dot"></div>免费初次咨询（30分钟）</div>
+            <div class="feature-row"><div class="feature-dot"></div>支持人民币付款</div>
+            <div class="feature-row"><div class="feature-dot"></div>24小时响应保证</div>
+        </div>
+
+        <!-- 认证资质 -->
+        <div class="side-card">
+            <div class="side-card-title">认证资质</div>
+            <div class="cert-badge">
+                <div class="cert-icon">🏆</div>
+                <div class="cert-text"><div class="cert-name">Chambers USA</div><div class="cert-desc">Band 2 · IP: Trademark</div></div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">🏅</div>
+                <div class="cert-text"><div class="cert-name">Legal 500 US</div><div class="cert-desc">Recommended Firm 2024</div></div>
+            </div>
+            <div class="cert-badge">
+                <div class="cert-icon">✅</div>
+                <div class="cert-text"><div class="cert-name">Whalium 已认证</div><div class="cert-desc">信息经人工核实</div></div>
+            </div>
+        </div>
+
+    </div><!-- /sidebar -->
+</div><!-- /page-body -->
+
+<div class="footer">© 2025 Whalium 华里安 &nbsp;·&nbsp; 洞察全球律所，安行海外航路 &nbsp;·&nbsp; 律所信息由 Whalium 编辑团队核实</div>
+
+<!-- ══ 询盘 MODAL ════════════════════════════════════════════ -->
+<div id="inquiry-modal" style="display:none;position:fixed;inset:0;background:rgba(10,22,40,0.65);z-index:500;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+    <div style="background:#fff;border-radius:14px;width:100%;max-width:480px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.25)">
+        <div style="background:linear-gradient(135deg,#1a2e4a,#1e3858);padding:1.3rem 1.6rem;display:flex;justify-content:space-between;align-items:center">
+            <div>
+                <div style="color:#fff;font-size:1rem;font-weight:700">发送询盘 · Morrison IP Law</div>
+                <div style="color:rgba(200,225,240,0.6);font-size:0.75rem;margin-top:0.15rem">律所通常在 24 小时内回复</div>
+            </div>
+            <button onclick="document.getElementById('inquiry-modal').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:1.4rem;cursor:pointer;line-height:1">×</button>
+        </div>
+        <div style="padding:1.5rem">
+            <div style="margin-bottom:1rem">
+                <label style="display:block;font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.05em">您的姓名</label>
+                <input type="text" placeholder="请输入姓名" style="width:100%;padding:0.65rem 0.85rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.88rem;outline:none;color:var(--text)">
+            </div>
+            <div style="margin-bottom:1rem">
+                <label style="display:block;font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.05em">邮箱地址</label>
+                <input type="email" placeholder="your@email.com" style="width:100%;padding:0.65rem 0.85rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.88rem;outline:none;color:var(--text)">
+            </div>
+            <div style="margin-bottom:1rem">
+                <label style="display:block;font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.05em">需求描述</label>
+                <textarea rows="4" placeholder="请描述您的法律需求，例如：想注册美国商标，类别是软件产品，预算约 $1,000..." style="width:100%;padding:0.65rem 0.85rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.88rem;outline:none;color:var(--text);resize:vertical;font-family:inherit"></textarea>
+            </div>
+            <div id="inq-msg" style="display:none;padding:0.65rem 0.85rem;border-radius:6px;font-size:0.82rem;margin-bottom:0.8rem;text-align:center"></div>
+            <button onclick="submitInquiry()" style="width:100%;padding:0.85rem;background:linear-gradient(135deg,#00c8d8,#0088b8);color:#fff;border:none;border-radius:8px;font-size:0.92rem;font-weight:700;cursor:pointer;transition:filter .18s">发送询盘</button>
+        </div>
+    </div>
+</div>
+
+<script>
+function submitInquiry() {
+    var msg = document.getElementById('inq-msg');
+    msg.style.display = 'block';
+    msg.style.background = 'rgba(26,138,74,0.08)';
+    msg.style.border = '1px solid rgba(26,138,74,0.2)';
+    msg.style.color = '#1a8a4a';
+    msg.textContent = '✓ 询盘已发送！律所将在 24 小时内通过邮件回复您。';
+    setTimeout(function() {
+        document.getElementById('inquiry-modal').style.display = 'none';
+        msg.style.display = 'none';
+    }, 2000);
+}
+// 点外部关闭
+document.getElementById('inquiry-modal').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+});
+// 评分条动画
+window.addEventListener('load', function() {
+    document.querySelectorAll('.bar-fill').forEach(function(bar) {
+        var w = bar.style.width;
+        bar.style.width = '0';
+        setTimeout(function() {
+            bar.style.transition = 'width 0.8s cubic-bezier(0.4,0,0.2,1)';
+            bar.style.width = w;
+        }, 300);
+    });
+});
+</script>
+
+</body>
+</html>
