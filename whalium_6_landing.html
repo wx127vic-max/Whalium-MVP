@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whalium 华里安 - 律所入驻引导页</title>
+    
+    <style>
+        :root {
+            --navy: #0a1628; --navy-mid: #112240; --teal: #00c8c8;
+            --teal-dim: rgba(0,200,200,0.5); --teal-glow: rgba(0,200,200,0.1);
+            --silver: #c8d8e8; --silver-dim: rgba(200,216,232,0.6); --white: #f0f8ff; --bg: #06101e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif; background: var(--bg); color: var(--white); width: 1200px; margin: 0 auto; }
+
+        .demo-header { background: var(--navy); border-bottom: 1px solid var(--teal-dim); padding: 1.5rem; text-align: center; }
+        .demo-number { font-size: 0.85rem; color: var(--teal); font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; letter-spacing: 0.1em; }
+        .demo-title { font-size: 2rem; font-weight: 800; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; background: linear-gradient(135deg, #fff 0%, var(--teal) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .demo-subtitle { font-size: 0.95rem; color: var(--silver-dim); }
+
+        /* Hero */
+        .hero {
+            background: radial-gradient(ellipse at 30% 50%, rgba(0,200,200,0.08) 0%, transparent 60%),
+                        linear-gradient(135deg, var(--navy) 0%, #0d1f3a 100%);
+            padding: 4rem 3rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(0,200,200,0.12);
+        }
+        .hero-eyebrow { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,200,200,0.1); border: 1px solid var(--teal-dim); border-radius: 20px; padding: 0.3rem 1rem; font-size: 0.78rem; color: var(--teal); font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+        .hero-title { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 2.8rem; font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+        .hero-highlight { color: var(--teal); }
+        .hero-subtitle { font-size: 1rem; color: var(--silver-dim); margin-bottom: 2rem; line-height: 1.7; }
+        .cta-buttons { display: flex; gap: 1rem; justify-content: center; }
+        .btn-primary { padding: 0.9rem 2.5rem; background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%); color: var(--navy); border: none; border-radius: 6px; font-size: 1rem; font-weight: 800; cursor: pointer; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; }
+        .btn-secondary { padding: 0.9rem 2.5rem; background: transparent; color: var(--teal); border: 1px solid var(--teal-dim); border-radius: 6px; font-size: 1rem; font-weight: 700; cursor: pointer; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; }
+
+        /* Stats */
+        .stats-section { background: var(--navy-mid); border-bottom: 1px solid rgba(0,200,200,0.1); padding: 1.5rem 3rem; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
+        .stat-card { text-align: center; }
+        .stat-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+        .stat-number { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--teal); }
+        .stat-label { font-size: 0.8rem; color: var(--silver-dim); margin-top: 0.2rem; }
+
+        /* Benefits */
+        .benefits-section { padding: 3rem; background: var(--bg); }
+        .section-header { text-align: center; margin-bottom: 2.5rem; }
+        .section-title { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--white); margin-bottom: 0.5rem; }
+        .section-subtitle { font-size: 0.95rem; color: var(--silver-dim); }
+
+        .benefits-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+        .benefit-card { background: var(--navy-mid); border: 1px solid rgba(0,200,200,0.1); padding: 1.8rem; border-radius: 10px; transition: all 0.3s; }
+        .benefit-card:hover { border-color: rgba(0,200,200,0.3); transform: translateY(-3px); }
+        .benefit-icon { width: 52px; height: 52px; background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem; }
+        .benefit-title { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.6rem; }
+        .benefit-desc { font-size: 0.83rem; color: var(--silver-dim); line-height: 1.6; }
+
+        /* Pricing */
+        .pricing-section { padding: 3rem; background: var(--navy-mid); }
+        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; max-width: 1020px; margin: 0 auto; }
+        .pricing-card { background: var(--navy); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 2rem; text-align: center; position: relative; }
+        .pricing-card.featured { border-color: var(--teal-dim); box-shadow: 0 0 30px rgba(0,200,200,0.1); }
+        .pricing-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%); color: var(--navy); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 800; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; white-space: nowrap; }
+        .pricing-name { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 0.8rem; }
+        .pricing-price { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--teal); }
+        .pricing-period { font-size: 0.83rem; color: var(--silver-dim); margin-bottom: 1.2rem; }
+        .pricing-features { text-align: left; margin-bottom: 1.2rem; }
+        .pricing-divider { height: 1px; background: rgba(0,0,0,0.07); margin: 1rem 0; }
+        .pricing-feature { padding: 0.45rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); font-size: 0.8rem; color: var(--silver-dim); }
+        .fi { color: var(--teal); margin-right: 0.4rem; }
+        .fi.dis { color: rgba(0,0,0,0.18); }
+        .btn-plan { width: 100%; padding: 0.8rem; background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%); color: var(--navy); border: none; border-radius: 6px; font-weight: 800; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; cursor: pointer; }
+        .btn-plan.outline { background: transparent; border: 1px solid rgba(255,255,255,0.15); color: var(--silver-dim); }
+
+        /* Process */
+        .process-section { padding: 3rem; background: var(--bg); }
+        .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; max-width: 900px; margin: 0 auto; }
+        .process-step { text-align: center; }
+        .step-number { width: 60px; height: 60px; background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--navy); margin: 0 auto 1rem; }
+        .step-title { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; }
+        .step-desc { font-size: 0.8rem; color: var(--silver-dim); }
+
+        .footer-note { background: var(--navy); border-top: 1px solid rgba(0,200,200,0.15); padding: 1.5rem 2.5rem; text-align: center; font-size: 0.83rem; color: var(--silver-dim); }
+        .footer-note strong { color: var(--teal); }
+    
+        /* ── LIGHT THEME OVERRIDE ── */
+        :root {
+            --navy: #f0f2f5;
+            --navy-mid: #ffffff;
+            --navy-light: #e8ecf0;
+            --teal: #0099aa;
+            --teal-bright: #00b8c8;
+            --teal-dim: rgba(0,153,170,0.35);
+            --teal-glow: rgba(0,153,170,0.08);
+            --silver: #2c3e50;
+            --silver-dim: rgba(44,62,80,0.7);
+            --silver-faint: rgba(44,62,80,0.4);
+            --white: #1a2e4a;
+            --bg: #eef0f3;
+            --success: #1a8a4a;
+            --warn: #c07800;
+            --danger: #cc2233;
+        }
+        body { background: #eef0f3; color: #1a2e4a; }
+        /* Top bars & headers */
+        .top-bar, .header, .demo-header { background: #1a2e4a !important; }
+        .sidebar { background: #f8f9fa !important; border-right: 1px solid #dde2e8 !important; }
+        .nav-item { color: #4a6080 !important; }
+        .nav-item:hover { background: rgba(0,153,170,0.06) !important; color: #1a2e4a !important; }
+        .nav-item.active { background: linear-gradient(90deg, rgba(0,153,170,0.1) 0%, transparent 100%) !important; color: #0099aa !important; border-left-color: #0099aa !important; }
+        /* Cards */
+        .card, .form-card, .content-section, .stat-card, .ai-result-card,
+        .firm-card, .review-card, .task-item, .platform-data-card,
+        .payment-card, .register-card, .benefit-card, .pricing-card,
+        .mem-hero, .completion-hero, .ai-generating, .confirm-note { background: #ffffff !important; border-color: #dde2e8 !important; }
+        /* Search section */
+        .search-section, .page-container, .main-content, .page-content,
+        .content, .main-wrap, .benefits-section, .process-section { background: #eef0f3 !important; }
+        .pricing-section { background: #f0f2f5 !important; }
+        .stats-section { background: #f0f2f5 !important; border-color: #dde2e8 !important; }
+        /* Form inputs */
+        .form-input, .form-input2, .form-select, select, input[type="text"],
+        input[type="email"], input[type="number"], input[type="tel"],
+        input[type="password"], textarea { background: #f5f7fa !important; border-color: #c8d0db !important; color: #1a2e4a !important; }
+        .form-input:focus, .form-input2:focus { border-color: #0099aa !important; background: #fff !important; }
+        /* Domain cats */
+        .domain-cat { background: #f5f7fa !important; border-color: #d0d8e4 !important; }
+        .domain-cat:hover { border-color: rgba(0,153,170,0.4) !important; }
+        .domain-cat.on { background: rgba(0,153,170,0.08) !important; border-color: #0099aa !important; }
+        .cat-name { color: #1a2e4a !important; }
+        .domain-cat.on .cat-name { color: #0099aa !important; }
+        /* Tags */
+        .tag { background: #f0f4f8 !important; border-color: #c8d4e0 !important; color: #4a6080 !important; }
+        .tag.on { background: rgba(0,153,170,0.1) !important; border-color: #0099aa !important; color: #0099aa !important; }
+        .domain-tag, .review-tag { background: rgba(0,153,170,0.08) !important; border-color: rgba(0,153,170,0.2) !important; color: #0077aa !important; }
+        /* Texts */
+        .firm-name, .page-title, .step-title, .section-title, .demo-title,
+        .card-title, .card-title-right, .completion-title { color: #1a2e4a !important; }
+        .firm-info, .firm-name-cn, .step-desc, .page-subtitle,
+        .demo-subtitle, .form-label, .form-label2, .stat-label { color: #4a6080 !important; }
+        /* Badges in cards */
+        .badge-hot { background: rgba(200,50,50,0.08) !important; color: #cc2233 !important; border-color: rgba(200,50,50,0.2) !important; }
+        .badge-value { background: rgba(0,153,170,0.08) !important; color: #0077aa !important; border-color: rgba(0,153,170,0.25) !important; }
+        .badge-certified { background: rgba(50,100,200,0.08) !important; color: #3366bb !important; border-color: rgba(50,100,200,0.2) !important; }
+        /* Upload area */
+        .upload-area { border-color: rgba(0,153,170,0.3) !important; background: rgba(0,153,170,0.02) !important; }
+        .uploaded-file { background: rgba(26,138,74,0.05) !important; border-color: rgba(26,138,74,0.2) !important; }
+        /* Chart bars */
+        .bar { background: rgba(0,153,170,0.15) !important; }
+        .bar.hi { background: rgba(0,153,170,0.4) !important; }
+        .chart-bar { background: rgba(0,153,170,0.2) !important; }
+        /* Ring / progress */
+        .completion-track { background: rgba(0,0,0,0.06) !important; }
+        .ring-bg { stroke: rgba(0,0,0,0.06) !important; }
+        /* Sub-tags label */
+        .sub-tags-label { color: #0099aa !important; }
+        /* Premium banner */
+        .premium-banner { background: linear-gradient(135deg, rgba(0,153,170,0.12) 0%, rgba(0,119,170,0.12) 100%) !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Hero section */
+        .hero { background: linear-gradient(135deg, #1a2e4a 0%, #1e3a5a 100%) !important; }
+        /* Table */
+        thead { background: rgba(0,0,0,0.03) !important; }
+        th { color: #6a8090 !important; border-color: rgba(0,0,0,0.06) !important; }
+        td { color: #4a6080 !important; border-color: rgba(0,0,0,0.04) !important; }
+        .td-main { color: #1a2e4a !important; }
+        /* Lawyer mini */
+        .lawyer-mini, .lawyer-row { background: rgba(0,0,0,0.02) !important; border-color: rgba(0,0,0,0.05) !important; }
+        /* Progress bar wrap */
+        .progress-bar-wrap { background: #f0f2f5 !important; border-color: #dde2e8 !important; }
+        /* Step panel */
+        .prog-step.pending .prog-circle { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; }
+        /* Search input */
+        .search-input { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: #1a2e4a !important; }
+        /* Filter tabs */
+        .filter-tab { border-color: #d0d8e4 !important; color: #4a6080 !important; }
+        .filter-tab.on { background: rgba(0,153,170,0.1) !important; border-color: #0099aa !important; color: #0077aa !important; }
+        /* Invoice row */
+        .invoice-row { border-color: rgba(0,0,0,0.05) !important; }
+        /* Inquiry detail */
+        .inquiry-detail { background: rgba(0,153,170,0.03) !important; border-color: rgba(0,153,170,0.12) !important; }
+        .reply-box { background: rgba(0,0,0,0.02) !important; border-color: rgba(0,153,170,0.2) !important; color: #1a2e4a !important; }
+        /* Profile tabs */
+        .prof-tab.on { background: rgba(0,153,170,0.08) !important; border-color: rgba(0,153,170,0.2) !important; color: #0099aa !important; }
+        /* AI tasks */
+        .ai-task.done-task .ai-task-icon { background: rgba(26,138,74,0.1) !important; border-color: rgba(26,138,74,0.3) !important; }
+        .ai-task.doing-task .ai-task-icon { background: rgba(0,153,170,0.1) !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Dividers */
+        .divider { background: rgba(0,0,0,0.06) !important; }
+        /* Rank bar */
+        .ranking-bar { background: rgba(0,0,0,0.03) !important; }
+        /* Mem stats */
+        .mem-stat { background: rgba(0,0,0,0.04) !important; }
+        /* Benefits */
+        .benefit-item { background: #f8f9fa !important; border-color: #dde2e8 !important; }
+        /* Nav section label */
+        .nav-section-label { color: #8a9db0 !important; }
+        /* Mini stat */
+        .mini-stat { background: rgba(0,0,0,0.05) !important; }
+        /* Locked section */
+        .unlock-overlay { background: #ffffff !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Search container */
+        .search-container { background: #ffffff !important; }
+        /* Results */
+        .results-header { color: #4a6080 !important; }
+        /* Area tag */
+        .area-tag { background: #eef2f6 !important; color: #2c3e50 !important; }
+        /* Step number circles */
+        .step-number { background: linear-gradient(135deg, #0099aa 0%, #006e9e 100%) !important; }
+        /* process step */
+        .process-step .step-title { color: #1a2e4a !important; }
+        /* completion row */
+        .completion-row { background: rgba(0,153,170,0.04) !important; border-color: rgba(0,153,170,0.12) !important; }
+        /* Lawyer av */
+        .lawyer-av { background: linear-gradient(135deg, #0099aa, #006e9e) !important; }
+        /* Reviewer avatar */
+        .reviewer-avatar { background: linear-gradient(135deg, #1a3355, #2c4a72) !important; }
+        /* Review card border */
+        .review-card { border-left-color: #0099aa !important; background: rgba(0,153,170,0.03) !important; }
+        /* Data flow items */
+        .data-flow-item { background: rgba(0,153,170,0.04) !important; border-color: rgba(0,153,170,0.1) !important; }
+        /* Btn ghost */
+        .btn-ghost { color: #4a6080 !important; border-color: #d0d8e4 !important; }
+</style>
+    <!-- 字体加载：多源保障，国内外均可访问 -->
+    <style>
+        /* === 字体方案说明 ===
+           Noto Sans SC（思源黑体）：中文主字体，走国内镜像
+           Syne：英文标题字体，走 cdnjs（国内可访问）或降级到几何无衬线
+        */
+
+        /* 英文标题字体 Syne - 从 cdnjs 加载（国内稳定） */
+        @font-face {
+            font-family: 'Syne';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2') format('woff2');
+        }
+
+        /* 降级字体栈：Syne不可用时自动切换 */
+        :root {
+            --font-display: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Arial Narrow', 'Arial', sans-serif;
+            --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+        }
+    </style>
+    <!-- Noto Sans SC 思源黑体：使用 loli.net 镜像（国内可访问） -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" crossorigin>
+    <!-- 备用：若 loli.net 不可用，走 字节跳动 CDN -->
+    <script>
+        (function() {
+            var testFont = new FontFace('NotoSansSCTest', 'url(https://fonts.loli.net/css2?family=Noto+Sans+SC)');
+            testFont.load().catch(function() {
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap';
+                document.head.appendChild(link);
+            });
+        })();
+    </script>
+</head>
+<body>
+    <div class="demo-header">
+        <div class="demo-number">WHALIUM DEMO — PAGE 5 / 7</div>
+        <h1 class="demo-title">律所入驻引导页</h1>
+        <p class="demo-subtitle">Law Firm Landing — 说服律所加入平台</p>
+    </div>
+
+    <div class="hero">
+        <div class="hero-eyebrow">🌊 WHALIUM · 华里安</div>
+        <h1 class="hero-title">连接全球<span class="hero-highlight">中国客户</span><br>拓展您的国际业务</h1>
+        <p class="hero-subtitle">Whalium 是中国企业寻找海外法律服务的首选平台<br>已有 287 家全球律所入驻，每月服务 2,000+ 中国客户</p>
+        <div class="cta-buttons">
+            <button class="btn-primary">免费入驻</button>
+            <button class="btn-secondary">了解详情</button>
+        </div>
+    </div>
+
+    <div class="stats-section">
+        <div class="stat-card"><div class="stat-icon">🇨🇳</div><div class="stat-number">2,000+</div><div class="stat-label">月活跃中国客户</div></div>
+        <div class="stat-card"><div class="stat-icon">💼</div><div class="stat-number">5,000+</div><div class="stat-label">月询盘量</div></div>
+        <div class="stat-card"><div class="stat-icon">🌍</div><div class="stat-number">35+</div><div class="stat-label">覆盖国家</div></div>
+        <div class="stat-card"><div class="stat-icon">⭐</div><div class="stat-number">95%</div><div class="stat-label">客户满意度</div></div>
+    </div>
+
+    <div class="benefits-section">
+        <div class="section-header">
+            <h2 class="section-title">为什么选择 Whalium？</h2>
+            <p class="section-subtitle">专为服务中国客户的律所打造的专业平台</p>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card"><div class="benefit-icon">🎯</div><h3 class="benefit-title">精准客户匹配</h3><p class="benefit-desc">客户都是有明确法律服务需求的中国企业，询盘质量高，转化率可达 30% 以上。</p></div>
+            <div class="benefit-card"><div class="benefit-icon">🤖</div><h3 class="benefit-title">AI 智能推荐</h3><p class="benefit-desc">平台 AI 检索系统自动将客户需求与最匹配的律所对接，精准触达潜在客户。</p></div>
+            <div class="benefit-card"><div class="benefit-icon">💰</div><h3 class="benefit-title">降低获客成本</h3><p class="benefit-desc">客户主动找到您，平均获客成本降低 60%，ROI 显著提升。</p></div>
+        </div>
+    </div>
+
+    <div class="pricing-section">
+        <div class="section-header">
+            <h2 class="section-title">灵活的收费模式</h2>
+            <p class="section-subtitle">选择最适合您的入驻方案</p>
+        </div>
+        <div class="pricing-grid">
+            <!-- 基础版 -->
+            <div class="pricing-card">
+                <div class="pricing-name">基础版</div>
+                <div class="pricing-price">免费</div>
+                <div class="pricing-period">永久免费</div>
+                <div class="pricing-divider"></div>
+                <div class="pricing-features">
+                    <div class="pricing-feature"><span class="fi">✓</span>律所 Profile 公开展示</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>每月 <strong>5</strong> 条询盘通知</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>基础搜索收录</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>客户评价展示</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>搜索结果优先排名</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>AI 智能推荐流量</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>询盘数据分析</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>案例认证徽章</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>专属客服支持</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>季度行业报告</div>
+                </div>
+                <button class="btn-plan outline">免费入驻</button>
+            </div>
+
+            <!-- 初级会员 -->
+            <div class="pricing-card">
+                <div class="pricing-name">初级会员</div>
+                <div class="pricing-price">¥2,800</div>
+                <div class="pricing-period">/年 · 约 ¥233/月</div>
+                <div class="pricing-divider"></div>
+                <div class="pricing-features">
+                    <div class="pricing-feature"><span class="fi">✓</span>律所 Profile 公开展示</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>每月 <strong>30</strong> 条询盘通知</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>搜索结果 <strong>优先排名</strong></div>
+                    <div class="pricing-feature"><span class="fi">✓</span>客户评价展示 & 回复</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>基础询盘数据统计</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>案例认证徽章</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>AI 智能推荐优先流量</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>竞品对比分析报告</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>专属客服支持</div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span>季度行业报告</div>
+                </div>
+                <button class="btn-plan outline" style="border-color:rgba(0,200,200,0.4);color:var(--teal)" onclick="openPayModal('starter')">选择初级会员</button>
+            </div>
+
+            <!-- 高级会员 -->
+            <div class="pricing-card featured">
+                <div class="pricing-badge">🔥 最受欢迎</div>
+                <div class="pricing-name">高级会员</div>
+                <div class="pricing-price">¥8,000</div>
+                <div class="pricing-period">/年 · 约 ¥667/月</div>
+                <div class="pricing-divider"></div>
+                <div class="pricing-features">
+                    <div class="pricing-feature"><span class="fi">✓</span>律所 Profile 公开展示</div>
+                    <div class="pricing-feature"><span class="fi">✓</span><strong>无限</strong> 询盘接收</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>搜索结果 <strong>顶部优先</strong> 排名</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>客户评价展示 & 回复</div>
+                    <div class="pricing-feature"><span class="fi">✓</span><strong>AI 优先推荐</strong> 高权重流量</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>完整询盘数据 & 转化分析</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>案例认证 & 「热门」徽章</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>竞品对比分析报告</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>专属客服 7×24 支持</div>
+                    <div class="pricing-feature"><span class="fi">✓</span>季度中国出海行业报告</div>
+                </div>
+                <button class="btn-plan" onclick="openPayModal('premium')">立即升级高级会员</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="process-section">
+        <div class="section-header">
+            <h2 class="section-title">入驻流程</h2>
+            <p class="section-subtitle">4步完成注册，开始接收中国客户</p>
+        </div>
+        <div class="process-steps">
+            <div class="process-step"><div class="step-number">1</div><h3 class="step-title">注册账号</h3><p class="step-desc">填写律所基本信息</p></div>
+            <div class="process-step"><div class="step-number">2</div><h3 class="step-title">完善 Profile</h3><p class="step-desc">上传执业证书、填写专业领域</p></div>
+            <div class="process-step"><div class="step-number">3</div><h3 class="step-title">平台审核</h3><p class="step-desc">1-2个工作日完成资质审核</p></div>
+            <div class="process-step"><div class="step-number">4</div><h3 class="step-title">上线接单</h3><p class="step-desc">审核通过即可开始接收询盘</p></div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <strong>核心功能展示：</strong>平台优势展示 · 收费模式对比（免费 vs ¥8,000/年）· 4步入驻流程 · CTA行动召唤
+    </div>
+    <!-- ══ PAYMENT MODAL ══ -->
+    <div id="payModal" style="display:none;position:fixed;inset:0;background:rgba(10,22,40,0.7);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:1rem">
+        <div style="background:#fff;border-radius:14px;width:100%;max-width:680px;max-height:92vh;overflow-y:auto;position:relative;box-shadow:0 24px 80px rgba(0,0,0,0.25)">
+
+            <!-- Modal Header -->
+            <div style="background:#1a2e4a;border-radius:14px 14px 0 0;padding:1.4rem 2rem;display:flex;align-items:center;justify-content:space-between">
+                <div>
+                    <div id="modalPlanName" style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#fff"></div>
+                    <div id="modalPlanPrice" style="font-size:0.82rem;color:rgba(200,216,232,0.6);margin-top:0.15rem"></div>
+                </div>
+                <button onclick="closePayModal()" style="background:rgba(255,255,255,0.1);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center">✕</button>
+            </div>
+
+            <div style="padding:1.8rem 2rem">
+
+                <!-- 律所信息 -->
+                <div style="margin-bottom:1.5rem">
+                    <div style="font-family:'Syne',sans-serif;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:#6a8090;margin-bottom:0.8rem">律所信息</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem">
+                        <div>
+                            <label style="font-size:0.7rem;color:#6a8090;display:block;margin-bottom:0.3rem;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:0.05em">律所名称 <span style="color:#cc2233">*</span></label>
+                            <input type="text" placeholder="Law Firm Name" style="width:100%;padding:0.7rem 0.9rem;border:1px solid #c8d0db;border-radius:6px;font-size:0.85rem;color:#1a2e4a;background:#f5f7fa;outline:none;font-family:'Noto Sans SC',sans-serif">
+                        </div>
+                        <div>
+                            <label style="font-size:0.7rem;color:#6a8090;display:block;margin-bottom:0.3rem;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:0.05em">联系邮箱 <span style="color:#cc2233">*</span></label>
+                            <input type="email" placeholder="billing@yourfirm.com" style="width:100%;padding:0.7rem 0.9rem;border:1px solid #c8d0db;border-radius:6px;font-size:0.85rem;color:#1a2e4a;background:#f5f7fa;outline:none;font-family:'Noto Sans SC',sans-serif">
+                        </div>
+                    </div>
+                </div>
+
+                <div style="height:1px;background:#eef0f3;margin-bottom:1.5rem"></div>
+
+                <!-- 支付方式 Tabs -->
+                <div style="font-family:'Syne',sans-serif;font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:#6a8090;margin-bottom:0.8rem">支付方式</div>
+                <div style="display:flex;border:1px solid #dde2e8;border-radius:8px;overflow:hidden;margin-bottom:1.2rem">
+                    <button class="ptab on" onclick="switchModalTab(this,'intl')" style="flex:1;padding:0.65rem;border:none;font-size:0.82rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:all 0.2s;background:linear-gradient(135deg,#0099aa,#006e9e);color:#fff">🌍 海外支付</button>
+                    <button class="ptab" onclick="switchModalTab(this,'cn')" style="flex:1;padding:0.65rem;border:none;font-size:0.82rem;font-weight:700;font-family:'Syne',sans-serif;cursor:pointer;transition:all 0.2s;background:#f5f7fa;color:#6a8090">🇨🇳 国内支付</button>
+                </div>
+
+                <!-- 海外支付面板 -->
+                <div id="mpay-intl">
+                    <!-- 支付方式选择 -->
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:1.2rem">
+                        <div class="mmethod on" onclick="selectMMethod(this)" style="border:2px solid #0099aa;border-radius:8px;padding:0.9rem 0.6rem;text-align:center;cursor:pointer;background:rgba(0,153,170,0.05)">
+                            <div style="font-size:1.5rem;margin-bottom:0.3rem">💳</div>
+                            <div style="font-size:0.78rem;font-weight:700;color:#1a2e4a;font-family:'Syne',sans-serif">信用卡</div>
+                            <div style="font-size:0.65rem;color:#6a8090;margin-top:0.1rem">Visa · MC · Amex</div>
+                        </div>
+                        <div class="mmethod" onclick="selectMMethod(this)" style="border:2px solid #dde2e8;border-radius:8px;padding:0.9rem 0.6rem;text-align:center;cursor:pointer;background:#fafbfc">
+                            <div style="font-size:1.5rem;margin-bottom:0.3rem">🏦</div>
+                            <div style="font-size:0.78rem;font-weight:700;color:#1a2e4a;font-family:'Syne',sans-serif">借记卡</div>
+                            <div style="font-size:0.65rem;color:#6a8090;margin-top:0.1rem">Visa · 银联</div>
+                        </div>
+                        <div class="mmethod" onclick="selectMMethod(this)" style="border:2px solid #dde2e8;border-radius:8px;padding:0.9rem 0.6rem;text-align:center;cursor:pointer;background:#fafbfc">
+                            <div style="font-size:1.5rem;margin-bottom:0.3rem">🅿️</div>
+                            <div style="font-size:0.78rem;font-weight:700;color:#1a2e4a;font-family:'Syne',sans-serif">PayPal</div>
+                            <div style="font-size:0.65rem;color:#6a8090;margin-top:0.1rem">跳转授权</div>
+                        </div>
+                    </div>
+
+                    <!-- 卡片表单 -->
+                    <div id="cardForm">
+                        <div style="margin-bottom:0.8rem">
+                            <label style="font-size:0.7rem;color:#6a8090;display:block;margin-bottom:0.3rem;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:0.05em">卡号 <span style="color:#cc2233">*</span></label>
+                            <div style="position:relative">
+                                <input type="text" id="cardNum" placeholder="1234  5678  9012  3456" maxlength="19" oninput="fmtCard(this)" style="width:100%;padding:0.7rem 3rem 0.7rem 0.9rem;border:1px solid #c8d0db;border-radius:6px;font-size:0.9rem;color:#1a2e4a;background:#f5f7fa;outline:none;font-family:monospace;letter-spacing:0.05em">
+                                <span style="position:absolute;right:0.9rem;top:50%;transform:translateY(-50%);font-size:0.9rem;display:flex;gap:3px" id="cardBrandIcons">💳</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom:0.8rem">
+                            <label style="font-size:0.7rem;color:#6a8090;display:block;margin-bottom:0.3rem;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:0.05em">持卡人姓名 <span style="color:#cc2233">*</span></label>
+                            <input type="text" placeholder="NAME AS ON CARD" style="width:100%;padding:0.7rem 0.9rem;border:1px solid #c8d0db;border-radius:6px;font-size:0.85rem;color:#1a2e4a;background:#f5f7fa;outline:none;text-transform:uppercase;font-family:'Noto Sans SC',sans-serif">
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-bottom:0.8rem">
+                            <div>
+                                <label style="font-size:0.7rem;color:#6a8090;display:block;margin-bottom:0.3rem;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:0.05em">有效期 <span style="color:#cc2233">*</span></label>
+                                <input type="text" placeholder="MM / YY" maxlength="7" oninput="fmtExpiry(this)" style="width:100%;padding:0.7rem 0.9rem;border:1px solid #c8d0db;border-radius:6px;font-size:0.85rem;color:#1a2e4a;background:#f5f7fa;outline:none;font-family:monospace">
+                            </div>
+                            <div>
+                                <label style="font-size:0.7rem;color:#6a8090;display:block;margin-bottom:0.3rem;font-family:'Syne',sans-serif;text-transform:uppercase;letter-spacing:0.05em">CVV <span style="color:#cc2233">*</span> <span style="font-size:0.62rem;color:#8a9db0;text-transform:none;letter-spacing:0">背面3-4位</span></label>
+                                <input type="password" placeholder="···" maxlength="4" style="width:100%;padding:0.7rem 0.9rem;border:1px solid #c8d0db;border-radius:6px;font-size:0.85rem;color:#1a2e4a;background:#f5f7fa;outline:none;font-family:monospace">
+                            </div>
+                        </div>
+                        <!-- Card brand logos -->
+                        <div style="display:flex;gap:0.4rem;margin-bottom:0.8rem">
+                            <span style="font-size:0.62rem;font-weight:800;font-family:'Syne',sans-serif;padding:0.15rem 0.5rem;border:1px solid #c8d0db;border-radius:3px;color:#6a8090">VISA</span>
+                            <span style="font-size:0.62rem;font-weight:800;font-family:'Syne',sans-serif;padding:0.15rem 0.5rem;border:1px solid #c8d0db;border-radius:3px;color:#6a8090">MASTERCARD</span>
+                            <span style="font-size:0.62rem;font-weight:800;font-family:'Syne',sans-serif;padding:0.15rem 0.5rem;border:1px solid #c8d0db;border-radius:3px;color:#6a8090">AMEX</span>
+                            <span style="font-size:0.62rem;font-weight:800;font-family:'Syne',sans-serif;padding:0.15rem 0.5rem;border:1px solid #c8d0db;border-radius:3px;color:#6a8090">银联</span>
+                        </div>
+                    </div>
+
+                    <!-- PayPal note -->
+                    <div id="paypalNote" style="display:none;background:#f0f7ff;border:1px solid #cce0f5;border-radius:8px;padding:1rem 1.2rem;font-size:0.83rem;color:#2c5282;line-height:1.6;margin-bottom:0.8rem">
+                        点击下方「确认支付」后，将跳转至 PayPal 安全授权页面完成付款。授权完成后自动返回并激活会员。
+                    </div>
+                </div>
+
+                <!-- 国内支付面板 -->
+                <div id="mpay-cn" style="display:none">
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:1.2rem">
+                        <div class="cmethod on" onclick="selectCMethod(this)" style="border:2px solid #0099aa;border-radius:8px;padding:0.9rem 0.6rem;text-align:center;cursor:pointer;background:rgba(0,153,170,0.05)">
+                            <div style="font-size:1.5rem;margin-bottom:0.3rem">💚</div>
+                            <div style="font-size:0.78rem;font-weight:700;color:#1a2e4a;font-family:'Syne',sans-serif">微信支付</div>
+                        </div>
+                        <div class="cmethod" onclick="selectCMethod(this)" style="border:2px solid #dde2e8;border-radius:8px;padding:0.9rem 0.6rem;text-align:center;cursor:pointer;background:#fafbfc">
+                            <div style="font-size:1.5rem;margin-bottom:0.3rem">💙</div>
+                            <div style="font-size:0.78rem;font-weight:700;color:#1a2e4a;font-family:'Syne',sans-serif">支付宝</div>
+                        </div>
+                        <div class="cmethod" onclick="selectCMethod(this)" style="border:2px solid #dde2e8;border-radius:8px;padding:0.9rem 0.6rem;text-align:center;cursor:pointer;background:#fafbfc">
+                            <div style="font-size:1.5rem;margin-bottom:0.3rem">🏦</div>
+                            <div style="font-size:0.78rem;font-weight:700;color:#1a2e4a;font-family:'Syne',sans-serif">借记卡</div>
+                            <div style="font-size:0.65rem;color:#6a8090;margin-top:0.1rem">银联储蓄卡</div>
+                        </div>
+                    </div>
+                    <div style="background:#f5f7fa;border:1px dashed #c8d0db;border-radius:8px;padding:1.5rem;text-align:center;font-size:0.82rem;color:#6a8090;margin-bottom:0.8rem">
+                        选择支付方式后将显示二维码，扫码完成支付
+                    </div>
+                </div>
+
+                <!-- Order summary -->
+                <div style="background:#f5f7fa;border:1px solid #eef0f3;border-radius:8px;padding:1rem 1.2rem;margin-bottom:1.2rem">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem">
+                        <span style="font-size:0.82rem;color:#6a8090" id="modalSummaryName"></span>
+                        <span style="font-family:'Syne',sans-serif;font-weight:700;color:#1a2e4a" id="modalSummaryPrice"></span>
+                    </div>
+                    <div style="height:1px;background:#e8ecf0;margin:0.5rem 0"></div>
+                    <div style="display:flex;justify-content:space-between;align-items:center">
+                        <span style="font-size:0.85rem;font-weight:700;color:#1a2e4a;font-family:'Syne',sans-serif">合计</span>
+                        <span style="font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#0099aa" id="modalTotal"></span>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <button onclick="submitPay()" style="width:100%;padding:1rem;background:linear-gradient(135deg,#0099aa 0%,#006e9e 100%);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:800;font-family:'Syne',sans-serif;cursor:pointer;letter-spacing:0.02em" id="submitBtn">确认支付</button>
+                <div style="text-align:center;margin-top:0.7rem;font-size:0.75rem;color:#8a9db0">🔒 SSL 加密传输 · 符合 PCI DSS 安全标准</div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+    const plans = {
+        starter: { name: '初级会员', price: '¥2,800', summary: '初级会员 · 年费', total: '¥2,800' },
+        premium: { name: '高级会员', price: '¥8,000 /年', summary: '高级会员 · 年费', total: '¥8,000' }
+    };
+
+    function openPayModal(plan) {
+        const p = plans[plan];
+        document.getElementById('modalPlanName').textContent = '🎉 ' + p.name + ' 开通';
+        document.getElementById('modalPlanPrice').textContent = p.price;
+        document.getElementById('modalSummaryName').textContent = p.summary;
+        document.getElementById('modalSummaryPrice').textContent = p.total;
+        document.getElementById('modalTotal').textContent = p.total;
+        const modal = document.getElementById('payModal');
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closePayModal() {
+        document.getElementById('payModal').style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    function switchModalTab(btn, panel) {
+        document.querySelectorAll('.ptab').forEach(t => {
+            t.style.background = '#f5f7fa'; t.style.color = '#6a8090';
+        });
+        btn.style.background = 'linear-gradient(135deg,#0099aa,#006e9e)';
+        btn.style.color = '#fff';
+        document.getElementById('mpay-intl').style.display = panel === 'intl' ? 'block' : 'none';
+        document.getElementById('mpay-cn').style.display = panel === 'cn' ? 'block' : 'none';
+    }
+
+    function selectMMethod(el) {
+        document.querySelectorAll('.mmethod').forEach(m => {
+            m.style.borderColor = '#dde2e8'; m.style.background = '#fafbfc';
+        });
+        el.style.borderColor = '#0099aa'; el.style.background = 'rgba(0,153,170,0.05)';
+        const isPaypal = el.querySelector('.mmethod div:first-child')?.textContent === '🅿️'
+            || el.textContent.includes('PayPal');
+        document.getElementById('cardForm').style.display = isPaypal ? 'none' : 'block';
+        document.getElementById('paypalNote').style.display = isPaypal ? 'block' : 'none';
+        document.getElementById('submitBtn').textContent = isPaypal ? '跳转 PayPal 支付' : '确认支付';
+    }
+
+    function selectCMethod(el) {
+        document.querySelectorAll('.cmethod').forEach(m => {
+            m.style.borderColor = '#dde2e8'; m.style.background = '#fafbfc';
+        });
+        el.style.borderColor = '#0099aa'; el.style.background = 'rgba(0,153,170,0.05)';
+    }
+
+    function fmtCard(input) {
+        let v = input.value.replace(/\D/g,'').substring(0,16);
+        input.value = v.replace(/(.{4})/g,'$1  ').trim();
+    }
+    function fmtExpiry(input) {
+        let v = input.value.replace(/\D/g,'').substring(0,4);
+        if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+        input.value = v;
+    }
+
+    function submitPay() {
+        const btn = document.getElementById('submitBtn');
+        btn.textContent = '处理中…';
+        btn.style.opacity = '0.7';
+        setTimeout(() => {
+            btn.textContent = '✓ 支付成功！正在激活会员…';
+            btn.style.background = 'linear-gradient(135deg,#1a8a4a,#0d6640)';
+            btn.style.opacity = '1';
+            setTimeout(() => closePayModal(), 2000);
+        }, 1500);
+    }
+
+    document.getElementById('payModal').addEventListener('click', function(e) {
+        if (e.target === this) closePayModal();
+    });
+    </script>
+</body>

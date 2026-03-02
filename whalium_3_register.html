@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whalium 华里安 - 客户注册页</title>
+    
+    <style>
+        :root {
+            --navy: #0a1628; --navy-mid: #112240; --teal: #00c8c8;
+            --teal-dim: rgba(0,200,200,0.5); --silver: #c8d8e8;
+            --silver-dim: rgba(200,216,232,0.6); --white: #f0f8ff; --bg: #06101e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif; background: var(--bg); color: var(--white); width: 1200px; margin: 0 auto; }
+
+        .demo-header { background: var(--navy); border-bottom: 1px solid var(--teal-dim); padding: 1.5rem; text-align: center; }
+        .demo-number { font-size: 0.85rem; color: var(--teal); font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; letter-spacing: 0.1em; }
+        .demo-title { font-size: 2rem; font-weight: 800; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; background: linear-gradient(135deg, #fff 0%, var(--teal) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .demo-subtitle { font-size: 0.95rem; color: var(--silver-dim); }
+
+        .page-content {
+            background: radial-gradient(ellipse at top, #0d2040 0%, var(--bg) 60%);
+            padding: 3rem 2.5rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .register-container { width: 100%; max-width: 520px; }
+
+        .logo-section { text-align: center; margin-bottom: 2rem; }
+        .logo-svg { width: 50px; height: 50px; margin: 0 auto 0.8rem; display: block; }
+        .brand-name { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #fff 0%, var(--teal) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand-cn { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--silver-dim); }
+
+        .register-card {
+            background: var(--navy-mid); border: 1px solid rgba(0,200,200,0.15);
+            border-radius: 12px; padding: 2.5rem; position: relative; overflow: hidden;
+        }
+        .register-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--teal), transparent);
+        }
+        .register-title { font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; font-size: 1.6rem; font-weight: 800; text-align: center; color: var(--white); margin-bottom: 0.3rem; }
+        .register-subtitle { color: var(--silver-dim); text-align: center; margin-bottom: 2rem; font-size: 0.85rem; }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-label { font-size: 0.75rem; color: var(--silver-dim); margin-bottom: 0.4rem; display: block; text-transform: uppercase; letter-spacing: 0.05em; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif; }
+        .required { color: #ff6b6b; margin-left: 0.2rem; }
+        .form-input {
+            width: 100%; padding: 0.8rem 1rem;
+            background: rgba(255,255,255,0.04); border: 1px solid rgba(0,200,200,0.2);
+            border-radius: 6px; color: var(--white); font-size: 0.88rem;
+            font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif; outline: none;
+        }
+        .form-input:focus { border-color: var(--teal); box-shadow: 0 0 12px rgba(0,200,200,0.08); }
+        .form-input::placeholder { color: rgba(200,216,232,0.25); }
+
+        .phone-group { display: grid; grid-template-columns: 110px 1fr; gap: 0.5rem; }
+        .verification-group { display: grid; grid-template-columns: 1fr auto; gap: 0.5rem; }
+        .btn-verify {
+            padding: 0.8rem 1.2rem; background: rgba(0,200,200,0.15); border: 1px solid var(--teal-dim);
+            color: var(--teal); border-radius: 6px; cursor: pointer; font-size: 0.82rem;
+            font-weight: 600; white-space: nowrap; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif;
+        }
+
+        .checkbox-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem; margin-top: 0.5rem; }
+        .checkbox-item { display: flex; align-items: center; gap: 0.5rem; }
+        .checkbox-item input { width: 16px; height: 16px; accent-color: var(--teal); }
+        .checkbox-item label { font-size: 0.85rem; color: var(--silver-dim); cursor: pointer; }
+
+        .password-strength { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 0.4rem; overflow: hidden; }
+        .strength-bar { height: 100%; background: linear-gradient(90deg, var(--teal), #006e9e); width: 75%; }
+        .password-hint { font-size: 0.75rem; color: var(--teal); margin-top: 0.2rem; }
+
+        .agreement { display: flex; gap: 0.5rem; margin-bottom: 1.2rem; align-items: flex-start; }
+        .agreement input { margin-top: 0.2rem; width: 16px; height: 16px; accent-color: var(--teal); flex-shrink: 0; }
+        .agreement-text { font-size: 0.8rem; color: var(--silver-dim); line-height: 1.5; }
+        .agreement-text a { color: var(--teal); text-decoration: none; }
+
+        .btn-register {
+            width: 100%; padding: 1rem;
+            background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%);
+            color: var(--navy); border: none; border-radius: 7px;
+            font-size: 1rem; font-weight: 800; cursor: pointer; font-family: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Century Gothic', 'Arial Narrow', sans-serif;
+        }
+        .login-link { text-align: center; margin-top: 1.2rem; font-size: 0.85rem; color: var(--silver-dim); }
+        .login-link a { color: var(--teal); text-decoration: none; }
+
+        .footer-note { background: var(--navy); border-top: 1px solid rgba(0,200,200,0.15); padding: 1.5rem 2.5rem; text-align: center; font-size: 0.83rem; color: var(--silver-dim); }
+        .footer-note strong { color: var(--teal); }
+    
+        /* ── LIGHT THEME OVERRIDE ── */
+        :root {
+            --navy: #f0f2f5;
+            --navy-mid: #ffffff;
+            --navy-light: #e8ecf0;
+            --teal: #0099aa;
+            --teal-bright: #00b8c8;
+            --teal-dim: rgba(0,153,170,0.35);
+            --teal-glow: rgba(0,153,170,0.08);
+            --silver: #2c3e50;
+            --silver-dim: rgba(44,62,80,0.7);
+            --silver-faint: rgba(44,62,80,0.4);
+            --white: #1a2e4a;
+            --bg: #eef0f3;
+            --success: #1a8a4a;
+            --warn: #c07800;
+            --danger: #cc2233;
+        }
+        body { background: #eef0f3; color: #1a2e4a; }
+        /* Top bars & headers */
+        .top-bar, .header, .demo-header { background: #1a2e4a !important; }
+        .sidebar { background: #f8f9fa !important; border-right: 1px solid #dde2e8 !important; }
+        .nav-item { color: #4a6080 !important; }
+        .nav-item:hover { background: rgba(0,153,170,0.06) !important; color: #1a2e4a !important; }
+        .nav-item.active { background: linear-gradient(90deg, rgba(0,153,170,0.1) 0%, transparent 100%) !important; color: #0099aa !important; border-left-color: #0099aa !important; }
+        /* Cards */
+        .card, .form-card, .content-section, .stat-card, .ai-result-card,
+        .firm-card, .review-card, .task-item, .platform-data-card,
+        .payment-card, .register-card, .benefit-card, .pricing-card,
+        .mem-hero, .completion-hero, .ai-generating, .confirm-note { background: #ffffff !important; border-color: #dde2e8 !important; }
+        /* Search section */
+        .search-section, .page-container, .main-content, .page-content,
+        .content, .main-wrap, .benefits-section, .process-section { background: #eef0f3 !important; }
+        .pricing-section { background: #f0f2f5 !important; }
+        .stats-section { background: #f0f2f5 !important; border-color: #dde2e8 !important; }
+        /* Form inputs */
+        .form-input, .form-input2, .form-select, select, input[type="text"],
+        input[type="email"], input[type="number"], input[type="tel"],
+        input[type="password"], textarea { background: #f5f7fa !important; border-color: #c8d0db !important; color: #1a2e4a !important; }
+        .form-input:focus, .form-input2:focus { border-color: #0099aa !important; background: #fff !important; }
+        /* Domain cats */
+        .domain-cat { background: #f5f7fa !important; border-color: #d0d8e4 !important; }
+        .domain-cat:hover { border-color: rgba(0,153,170,0.4) !important; }
+        .domain-cat.on { background: rgba(0,153,170,0.08) !important; border-color: #0099aa !important; }
+        .cat-name { color: #1a2e4a !important; }
+        .domain-cat.on .cat-name { color: #0099aa !important; }
+        /* Tags */
+        .tag { background: #f0f4f8 !important; border-color: #c8d4e0 !important; color: #4a6080 !important; }
+        .tag.on { background: rgba(0,153,170,0.1) !important; border-color: #0099aa !important; color: #0099aa !important; }
+        .domain-tag, .review-tag { background: rgba(0,153,170,0.08) !important; border-color: rgba(0,153,170,0.2) !important; color: #0077aa !important; }
+        /* Texts */
+        .firm-name, .page-title, .step-title, .section-title, .demo-title,
+        .card-title, .card-title-right, .completion-title { color: #1a2e4a !important; }
+        .firm-info, .firm-name-cn, .step-desc, .page-subtitle,
+        .demo-subtitle, .form-label, .form-label2, .stat-label { color: #4a6080 !important; }
+        /* Badges in cards */
+        .badge-hot { background: rgba(200,50,50,0.08) !important; color: #cc2233 !important; border-color: rgba(200,50,50,0.2) !important; }
+        .badge-value { background: rgba(0,153,170,0.08) !important; color: #0077aa !important; border-color: rgba(0,153,170,0.25) !important; }
+        .badge-certified { background: rgba(50,100,200,0.08) !important; color: #3366bb !important; border-color: rgba(50,100,200,0.2) !important; }
+        /* Upload area */
+        .upload-area { border-color: rgba(0,153,170,0.3) !important; background: rgba(0,153,170,0.02) !important; }
+        .uploaded-file { background: rgba(26,138,74,0.05) !important; border-color: rgba(26,138,74,0.2) !important; }
+        /* Chart bars */
+        .bar { background: rgba(0,153,170,0.15) !important; }
+        .bar.hi { background: rgba(0,153,170,0.4) !important; }
+        .chart-bar { background: rgba(0,153,170,0.2) !important; }
+        /* Ring / progress */
+        .completion-track { background: rgba(0,0,0,0.06) !important; }
+        .ring-bg { stroke: rgba(0,0,0,0.06) !important; }
+        /* Sub-tags label */
+        .sub-tags-label { color: #0099aa !important; }
+        /* Premium banner */
+        .premium-banner { background: linear-gradient(135deg, rgba(0,153,170,0.12) 0%, rgba(0,119,170,0.12) 100%) !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Hero section */
+        .hero { background: linear-gradient(135deg, #1a2e4a 0%, #1e3a5a 100%) !important; }
+        /* Table */
+        thead { background: rgba(0,0,0,0.03) !important; }
+        th { color: #6a8090 !important; border-color: rgba(0,0,0,0.06) !important; }
+        td { color: #4a6080 !important; border-color: rgba(0,0,0,0.04) !important; }
+        .td-main { color: #1a2e4a !important; }
+        /* Lawyer mini */
+        .lawyer-mini, .lawyer-row { background: rgba(0,0,0,0.02) !important; border-color: rgba(0,0,0,0.05) !important; }
+        /* Progress bar wrap */
+        .progress-bar-wrap { background: #f0f2f5 !important; border-color: #dde2e8 !important; }
+        /* Step panel */
+        .prog-step.pending .prog-circle { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; }
+        /* Search input */
+        .search-input { background: rgba(0,0,0,0.04) !important; border-color: rgba(0,0,0,0.1) !important; color: #1a2e4a !important; }
+        /* Filter tabs */
+        .filter-tab { border-color: #d0d8e4 !important; color: #4a6080 !important; }
+        .filter-tab.on { background: rgba(0,153,170,0.1) !important; border-color: #0099aa !important; color: #0077aa !important; }
+        /* Invoice row */
+        .invoice-row { border-color: rgba(0,0,0,0.05) !important; }
+        /* Inquiry detail */
+        .inquiry-detail { background: rgba(0,153,170,0.03) !important; border-color: rgba(0,153,170,0.12) !important; }
+        .reply-box { background: rgba(0,0,0,0.02) !important; border-color: rgba(0,153,170,0.2) !important; color: #1a2e4a !important; }
+        /* Profile tabs */
+        .prof-tab.on { background: rgba(0,153,170,0.08) !important; border-color: rgba(0,153,170,0.2) !important; color: #0099aa !important; }
+        /* AI tasks */
+        .ai-task.done-task .ai-task-icon { background: rgba(26,138,74,0.1) !important; border-color: rgba(26,138,74,0.3) !important; }
+        .ai-task.doing-task .ai-task-icon { background: rgba(0,153,170,0.1) !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Dividers */
+        .divider { background: rgba(0,0,0,0.06) !important; }
+        /* Rank bar */
+        .ranking-bar { background: rgba(0,0,0,0.03) !important; }
+        /* Mem stats */
+        .mem-stat { background: rgba(0,0,0,0.04) !important; }
+        /* Benefits */
+        .benefit-item { background: #f8f9fa !important; border-color: #dde2e8 !important; }
+        /* Nav section label */
+        .nav-section-label { color: #8a9db0 !important; }
+        /* Mini stat */
+        .mini-stat { background: rgba(0,0,0,0.05) !important; }
+        /* Locked section */
+        .unlock-overlay { background: #ffffff !important; border-color: rgba(0,153,170,0.3) !important; }
+        /* Search container */
+        .search-container { background: #ffffff !important; }
+        /* Results */
+        .results-header { color: #4a6080 !important; }
+        /* Area tag */
+        .area-tag { background: #eef2f6 !important; color: #2c3e50 !important; }
+        /* Step number circles */
+        .step-number { background: linear-gradient(135deg, #0099aa 0%, #006e9e 100%) !important; }
+        /* process step */
+        .process-step .step-title { color: #1a2e4a !important; }
+        /* completion row */
+        .completion-row { background: rgba(0,153,170,0.04) !important; border-color: rgba(0,153,170,0.12) !important; }
+        /* Lawyer av */
+        .lawyer-av { background: linear-gradient(135deg, #0099aa, #006e9e) !important; }
+        /* Reviewer avatar */
+        .reviewer-avatar { background: linear-gradient(135deg, #1a3355, #2c4a72) !important; }
+        /* Review card border */
+        .review-card { border-left-color: #0099aa !important; background: rgba(0,153,170,0.03) !important; }
+        /* Data flow items */
+        .data-flow-item { background: rgba(0,153,170,0.04) !important; border-color: rgba(0,153,170,0.1) !important; }
+        /* Btn ghost */
+        .btn-ghost { color: #4a6080 !important; border-color: #d0d8e4 !important; }
+</style>
+    <!-- 字体加载：多源保障，国内外均可访问 -->
+    <style>
+        /* === 字体方案说明 ===
+           Noto Sans SC（思源黑体）：中文主字体，走国内镜像
+           Syne：英文标题字体，走 cdnjs（国内可访问）或降级到几何无衬线
+        */
+
+        /* 英文标题字体 Syne - 从 cdnjs 加载（国内稳定） */
+        @font-face {
+            font-family: 'Syne';
+            font-style: normal;
+            font-weight: 400;
+            font-display: swap;
+            src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/webfonts/fa-regular-400.woff2') format('woff2');
+        }
+
+        /* 降级字体栈：Syne不可用时自动切换 */
+        :root {
+            --font-display: 'Syne', 'DIN Alternate', 'Bahnschrift', 'Arial Narrow', 'Arial', sans-serif;
+            --font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Hiragino Sans GB', sans-serif;
+        }
+    </style>
+    <!-- Noto Sans SC 思源黑体：使用 loli.net 镜像（国内可访问） -->
+    <link rel="preconnect" href="https://fonts.loli.net">
+    <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" crossorigin>
+    <!-- 备用：若 loli.net 不可用，走 字节跳动 CDN -->
+    <script>
+        (function() {
+            var testFont = new FontFace('NotoSansSCTest', 'url(https://fonts.loli.net/css2?family=Noto+Sans+SC)');
+            testFont.load().catch(function() {
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap';
+                document.head.appendChild(link);
+            });
+        })();
+    </script>
+</head>
+<body>
+    <div class="demo-header">
+        <div class="demo-number">WHALIUM DEMO — PAGE 4 / 7</div>
+        <h1 class="demo-title">客户注册页面</h1>
+        <p class="demo-subtitle">Client Registration — 用户注册流程</p>
+    </div>
+
+    <div class="page-content">
+        <div class="register-container">
+            <div class="logo-section">
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="tgLL" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#00c8c8"/><stop offset="100%" style="stop-color:#0077aa"/></linearGradient>
+        <linearGradient id="ringLL" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#b0bec5"/><stop offset="100%" style="stop-color:#78909c"/></linearGradient>
+    </defs>
+    <circle cx="50" cy="50" r="48" fill="none" stroke="url(#ringLL)" stroke-width="3"/>
+    <circle cx="50" cy="4" r="2.5" fill="#90a4ae"/>
+    <circle cx="50" cy="96" r="2.5" fill="#90a4ae"/>
+    <circle cx="4" cy="50" r="2.5" fill="#90a4ae"/>
+    <circle cx="96" cy="50" r="2.5" fill="#90a4ae"/>
+    <circle cx="18" cy="18" r="1.8" fill="#b0bec5"/>
+    <circle cx="82" cy="18" r="1.8" fill="#b0bec5"/>
+    <circle cx="18" cy="82" r="1.8" fill="#b0bec5"/>
+    <circle cx="82" cy="82" r="1.8" fill="#b0bec5"/>
+    <line x1="50" y1="7" x2="50" y2="14" stroke="#90a4ae" stroke-width="1.2"/>
+    <line x1="50" y1="86" x2="50" y2="93" stroke="#90a4ae" stroke-width="1.2"/>
+    <line x1="7" y1="50" x2="14" y2="50" stroke="#90a4ae" stroke-width="1.2"/>
+    <line x1="86" y1="50" x2="93" y2="50" stroke="#90a4ae" stroke-width="1.2"/>
+    <circle cx="50" cy="50" r="40" fill="#1a2e4a"/>
+    <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(0,200,200,0.3)" stroke-width="1"/>
+    <path d="M50 62 C43 67, 32 72, 23 66 C16 60, 19 51, 26 47 C33 43, 43 46, 50 51" fill="url(#tgLL)" opacity="0.95"/>
+    <path d="M50 62 C57 67, 68 72, 77 66 C84 60, 81 51, 74 47 C67 43, 57 46, 50 51" fill="url(#tgLL)" opacity="0.95"/>
+    <path d="M50 51 C48 56, 48 60, 50 62 C52 60, 52 56, 50 51" fill="#1a2e4a"/>
+    <path d="M50 51 C47 42, 45 33, 50 28 C55 33, 53 42, 50 51" fill="url(#tgLL)" opacity="0.8"/>
+</svg>
+                <div class="brand-name">WHALIUM</div>
+                <div class="brand-cn">华 里 安</div>
+            </div>
+
+            <div class="register-card">
+                <h1 class="register-title">客户注册</h1>
+                <p class="register-subtitle">创建账号，开始寻找全球律所</p>
+
+                <div class="form-group"><label class="form-label">姓名<span class="required">*</span></label><input type="text" class="form-input" placeholder="请输入您的真实姓名"></div>
+                <div class="form-group"><label class="form-label">邮箱<span class="required">*</span></label><input type="email" class="form-input" placeholder="your@email.com"></div>
+                <div class="form-group"><label class="form-label">公司名称<span class="required">*</span></label><input type="text" class="form-input" placeholder="请输入公司名称"></div>
+
+                <div class="form-group">
+                    <label class="form-label">手机号<span class="required">*</span></label>
+                    <div class="phone-group">
+                        <select class="form-input"><option>🇨🇳 +86</option><option>🇺🇸 +1</option><option>🇬🇧 +44</option></select>
+                        <input type="tel" class="form-input" placeholder="138 xxxx xxxx">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">验证码<span class="required">*</span></label>
+                    <div class="verification-group">
+                        <input type="text" class="form-input" placeholder="请输入验证码">
+                        <button class="btn-verify">发送验证码</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">需求领域<span class="required">*</span> <span style="font-weight:400;color:rgba(200,216,232,0.35);text-transform:none;letter-spacing:0">(可多选)</span></label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-item"><input type="checkbox" id="ip" checked><label for="ip">🛡️ 知识产权保护</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="setup"><label for="setup">🚀 出海设立 & 架构</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="trade"><label for="trade">📦 贸易 & 产品合规</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="data"><label for="data">🔒 数据 & 隐私合规</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="risk"><label for="risk">⚖️ 商业诚信 & 风险</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="ma"><label for="ma">💼 融资 & 并购</label></div>
+                        <div class="checkbox-item"><input type="checkbox" id="other"><label for="other">✏️ 其他</label></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">密码<span class="required">*</span></label>
+                    <input type="password" class="form-input" placeholder="至少8位，包含字母和数字">
+                    <div class="password-strength"><div class="strength-bar"></div></div>
+                    <div class="password-hint">密码强度：强</div>
+                </div>
+                <div class="form-group"><label class="form-label">确认密码<span class="required">*</span></label><input type="password" class="form-input" placeholder="请再次输入密码"></div>
+
+                <div class="agreement">
+                    <input type="checkbox" id="agreement" checked>
+                    <label class="agreement-text" for="agreement">我已阅读并同意 <a href="#">《用户服务协议》</a> 和 <a href="#">《隐私政策》</a></label>
+                </div>
+
+                <button class="btn-register">立即注册</button>
+                <div class="login-link">已有账号？<a href="#">立即登录</a></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        <strong>核心功能展示：</strong>完整注册表单 · 国际区号选择 · 验证码发送 · 需求领域多选 · 密码强度检测 · 表单验证
+    </div>
+</body>
+</html>
