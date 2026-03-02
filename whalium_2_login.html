@@ -124,7 +124,7 @@
         .whalium-logo { filter:drop-shadow(0 2px 8px rgba(0,200,220,0.3)); }
         .brand-wrap { display:flex; flex-direction:column; line-height:1; }
         .brand-name {
-            font-family:'Syne','Bahnschrift','Copperplate Gothic','Arial Narrow',sans-serif;
+            font-family:'Verdana','Bahnschrift','Copperplate Gothic','Arial Narrow',sans-serif;
             font-size:1.28rem; font-weight:900; font-variant:small-caps;
             letter-spacing:0.12em;
             background:linear-gradient(160deg,#fff 0%,#d0f0f8 60%,#90d8ec 100%);
@@ -140,13 +140,24 @@
             color:rgba(160,220,235,0.65); letter-spacing:0.04em;
             margin-top:0.2rem; white-space:nowrap;
         }
-</style>
+
+        /* ── Mobile Responsive ── */
+        @media (max-width: 480px) {
+            .header { padding: 0 1rem; height: 52px; }
+            .brand-name { font-size: 1rem; }
+            .brand-cn { font-size: 0.65rem; }
+            .main { padding: 1.5rem 0.75rem; }
+            .login-card { padding: 1.8rem 1.4rem 1.5rem; border-radius: 10px; }
+            .card-title { font-size: 1.15rem; }
+        }
+
+    </style>
 </head>
 <body>
 
     <!-- Header -->
     <div class="header">
-        <a href="whalium_1_v4.html" class="logo-section">
+        <a href="whalium_1_index.html" class="logo-section">
             <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="whalium-logo" style="width:42px;height:42px">
   <defs>
     <radialGradient id="wbg" cx="50%" cy="50%" r="50%">
@@ -225,7 +236,7 @@
                 <div class="brand-cn">华 里 安</div>
             </div>
         </a>
-        <div class="header-right">没有账号？<a href="whalium_4_final.html">立即注册</a></div>
+        <div class="header-right">没有账号？<a href="whalium_3_register.html">立即注册</a></div>
     </div>
 
     <!-- Main -->
@@ -267,7 +278,7 @@
             </button>
 
             <div class="register-link">
-                还没有账号？<a href="whalium_4_final.html">免费注册</a>
+                还没有账号？<a href="whalium_3_register.html">免费注册</a>
             </div>
         </div>
     </div>
@@ -309,7 +320,7 @@
             btn.style.background = 'linear-gradient(135deg,#1a8a4a,#0d6640)';
             btn.style.opacity = '1';
             setTimeout(function() {
-                window.location.href = 'whalium_1_v4.html';
+                window.location.href = 'whalium_1_index.html';
             }, 1000);
         }, 900);
     }

@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Morrison IP Law · 律所详情 — Whalium 华里安</title>
-    <link rel="preconnect" href="https://fonts.loli.net">
-    <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" crossorigin>
+    
+    
     <style>
         :root {
             --navy:    #1a2e4a;
@@ -46,7 +46,7 @@
         .brand-wrap { display:flex; flex-direction:column; line-height:1; }
         .brand-row1 { display:flex; align-items:baseline; gap:0.45rem; }
         .brand-name {
-            font-family: 'Syne','Montserrat','Trebuchet MS',sans-serif;
+            font-family: 'Verdana','Montserrat','Trebuchet MS',sans-serif;
             font-size:1.32rem; font-weight:800; letter-spacing:0.06em;
             background: linear-gradient(160deg,#fff 0%,#cce8f4 55%,#88cce8 100%);
             -webkit-background-clip:text; -webkit-text-fill-color:transparent;
@@ -311,13 +311,38 @@
 
         /* ══ FOOTER ═══════════════════════════════════════════ */
         .footer { background:#fff; border-top:1px solid var(--border); padding:1.2rem 3rem; text-align:center; font-size:0.75rem; color:var(--faint); }
-    </style>
+    
+        /* ── Mobile Responsive ── */
+        @media (max-width: 900px) {
+            .detail-layout { flex-direction: column; }
+            .detail-sidebar { width: 100%; position: static; }
+        }
+        @media (max-width: 768px) {
+            .header { padding: 0 1rem; height: 52px; }
+            .header-nav { display: none; }
+            .hero-inner { padding: 1.2rem 1rem; }
+            .hero-top { flex-direction: column; gap: 1rem; }
+            .hero-actions { flex-direction: row; flex-wrap: wrap; }
+            .card { padding: 1.2rem 1rem; }
+            .price-table { font-size: 0.8rem; }
+            .price-table th, .price-table td { padding: 0.5rem 0.4rem; }
+            .detail-layout { padding: 1rem; gap: 1rem; }
+            .tab-bar { overflow-x: auto; white-space: nowrap; }
+        }
+        @media (max-width: 480px) {
+            .hero-badges { flex-wrap: wrap; }
+            .firm-name-en { font-size: 1.3rem; }
+            .stats-bar { flex-wrap: wrap; gap: 0.5rem; }
+            .inquiry-modal-inner { margin: 0 0.5rem; }
+        }
+
+        </style>
 </head>
 <body>
 
 <!-- ══ HEADER ══════════════════════════════════════════════ -->
 <header class="header">
-    <a href="whalium_1_v6.html" class="logo-section">
+    <a href="whalium_1_index.html" class="logo-section">
         <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="whalium-logo">
             <defs>
                 <radialGradient id="wbg2" cx="45%" cy="45%" r="60%"><stop offset="0%" stop-color="#1c3d5c"/><stop offset="100%" stop-color="#070f1c"/></radialGradient>
@@ -351,13 +376,13 @@
         </div>
     </a>
     <nav class="breadcrumb">
-        <a href="whalium_1_v6.html">律所列表</a>
+        <a href="whalium_1_index.html">律所列表</a>
         <span>›</span>
         <span style="color:rgba(255,255,255,0.75)">Morrison IP Law</span>
     </nav>
     <div class="header-actions">
-        <a href="whalium_login.html" class="btn btn-ghost">登录</a>
-        <a href="whalium_4_final.html" class="btn btn-teal">注册</a>
+        <a href="whalium_2_login.html" class="btn btn-ghost">登录</a>
+        <a href="whalium_3_register.html" class="btn btn-teal">注册</a>
     </div>
 </header>
 
@@ -553,7 +578,7 @@
                         <div class="lock-icon">🔒</div>
                         <div class="lock-title">查看详细报价</div>
                         <div class="lock-desc">开通会员解锁真实成交价区间、隐藏费用提醒和历史价格趋势</div>
-                        <button class="btn-unlock" onclick="location.href='whalium_3_light_v2.html'">开通会员 · ¥365/年</button>
+                        <button class="btn-unlock" onclick="location.href='whalium_5_payment.html'">开通会员 · ¥365/年</button>
                     </div>
                 </div>
             </div>
@@ -619,7 +644,7 @@
                         <div class="lock-icon">🔒</div>
                         <div class="lock-title">还有 15 条评价</div>
                         <div class="lock-desc">含 2 条差评和避雷建议，开通会员全部可见</div>
-                        <button class="btn-unlock" onclick="location.href='whalium_3_light_v2.html'">开通会员查看全部</button>
+                        <button class="btn-unlock" onclick="location.href='whalium_5_payment.html'">开通会员查看全部</button>
                     </div>
                 </div>
             </div>
@@ -633,7 +658,7 @@
             </div>
             <div class="card-body">
                 <div class="similar-grid">
-                    <div class="similar-card" onclick="location.href='whalium_1_v6.html'">
+                    <div class="similar-card" onclick="location.href='whalium_1_index.html'">
                         <div class="sim-name">Sterling &amp; Partners LLP</div>
                         <div class="sim-loc">📍 美国 · 纽约</div>
                         <div class="sim-tags"><span class="sim-tag">公司设立</span><span class="sim-tag">税务</span></div>
@@ -642,7 +667,7 @@
                             <span class="sim-price">$1,200起</span>
                         </div>
                     </div>
-                    <div class="similar-card" onclick="location.href='whalium_1_v6.html'">
+                    <div class="similar-card" onclick="location.href='whalium_1_index.html'">
                         <div class="sim-name">Pacific IP Group</div>
                         <div class="sim-loc">📍 美国 · 旧金山</div>
                         <div class="sim-tags"><span class="sim-tag">商标</span><span class="sim-tag">专利</span></div>
@@ -651,7 +676,7 @@
                             <span class="sim-price">$700起</span>
                         </div>
                     </div>
-                    <div class="similar-card" onclick="location.href='whalium_1_v6.html'">
+                    <div class="similar-card" onclick="location.href='whalium_1_index.html'">
                         <div class="sim-name">Asia Pacific Legal</div>
                         <div class="sim-loc">📍 新加坡</div>
                         <div class="sim-tags"><span class="sim-tag">东南亚商标</span></div>
@@ -681,7 +706,7 @@
                 <div class="contact-locked">
                     <div class="contact-locked-icon">🔒</div>
                     <div class="contact-locked-text">开通会员查看邮箱、电话和直接预约链接</div>
-                    <button class="btn-unlock-sm" onclick="location.href='whalium_3_light_v2.html'">开通会员 · ¥365/年</button>
+                    <button class="btn-unlock-sm" onclick="location.href='whalium_5_payment.html'">开通会员 · ¥365/年</button>
                 </div>
             </div>
         </div>
@@ -771,16 +796,16 @@
 
 <script>
 function submitInquiry() {
-    var msg = document.getElementById('inq-msg');
-    msg.style.display = 'block';
-    msg.style.background = 'rgba(26,138,74,0.08)';
-    msg.style.border = '1px solid rgba(26,138,74,0.2)';
-    msg.style.color = '#1a8a4a';
-    msg.textContent = '✓ 询盘已发送！律所将在 24 小时内通过邮件回复您。';
-    setTimeout(function() {
-        document.getElementById('inquiry-modal').style.display = 'none';
-        msg.style.display = 'none';
-    }, 2000);
+    var subj = document.getElementById('inq-subject') || {value: '一般咨询'};
+    var msg  = document.getElementById('inq-msg');
+    var body = document.getElementById('inq-body') || document.querySelector('#inquiry-modal textarea');
+    if (body && !body.value.trim()) {
+        if (msg) { msg.style.display='block'; msg.style.color='#cc2233'; msg.style.background='rgba(204,34,51,0.08)'; msg.style.border='1px solid rgba(204,34,51,0.2)'; msg.textContent='请填写询盘内容再发送'; }
+        return;
+    }
+    // Show success overlay
+    document.getElementById('inquiry-modal').style.display = 'none';
+    document.getElementById('inquiry-success').style.display = 'flex';
 }
 // 点外部关闭
 document.getElementById('inquiry-modal').addEventListener('click', function(e) {
@@ -798,6 +823,37 @@ window.addEventListener('load', function() {
     });
 });
 </script>
+
+
+<!-- ── Inquiry Success Modal ── -->
+<div id="inquiry-success" style="display:none;position:fixed;inset:0;background:rgba(10,22,40,0.7);z-index:600;align-items:center;justify-content:center;backdrop-filter:blur(4px)">
+    <div style="background:#fff;border-radius:16px;padding:2.5rem 2rem;max-width:400px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+        <div style="width:64px;height:64px;background:linear-gradient(135deg,#00c8a0,#0099aa);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;font-size:1.8rem">✓</div>
+        <h2 style="font-size:1.2rem;color:#1a2e4a;margin-bottom:0.6rem;font-weight:700">询盘已成功发送！</h2>
+        <p style="font-size:0.85rem;color:#6a8090;line-height:1.6;margin-bottom:1.5rem">
+            <strong>Morrison IP Law</strong> 通常在 <strong>24 小时内</strong>通过邮件回复。<br>
+            请留意您的邮箱（包括垃圾邮件文件夹）。
+        </p>
+        <div style="background:#f0f7ff;border-radius:8px;padding:0.9rem 1rem;margin-bottom:1.5rem;text-align:left">
+            <div style="font-size:0.75rem;color:#4a6080;font-weight:600;margin-bottom:0.4rem">📋 接下来您可以：</div>
+            <div style="font-size:0.82rem;color:#2a4060;line-height:1.8">
+                ✅ 在邮箱等待律所回复<br>
+                ✅ 对比其他律所报价<br>
+                ✅ 收藏此律所方便对比
+            </div>
+        </div>
+        <div style="display:flex;gap:0.75rem">
+            <button onclick="document.getElementById('inquiry-success').style.display='none'" 
+                style="flex:1;padding:0.8rem;background:#f0f4f8;color:#1a2e4a;border:none;border-radius:8px;font-size:0.88rem;font-weight:600;cursor:pointer">
+                继续浏览详情
+            </button>
+            <button onclick="location.href='whalium_1_index.html'" 
+                style="flex:1;padding:0.8rem;background:linear-gradient(135deg,#0099aa,#006e9e);color:#fff;border:none;border-radius:8px;font-size:0.88rem;font-weight:700;cursor:pointer">
+                返回律所列表
+            </button>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Whalium 华里安 - 会员支付</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
 :root{--navy:#1a2e4a;--teal:#0099aa;--bg:#eef0f3;--card:#fff;--border:#e0e5ea;--borderlt:#f0f2f4;--text:#1a2e4a;--muted:#5a7090;--faint:#8a9db0;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -156,12 +156,25 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--bg);co
 
 /* FOOTER */
 .footer{text-align:center;padding:1.4rem;font-size:.7rem;color:var(--faint);}
-</style>
+
+        /* ── Mobile Responsive ── */
+        @media (max-width: 768px) {
+            .page { flex-direction: column; padding: 1rem; }
+            .left-col, .right-col { width: 100%; }
+            .pay-methods { gap: 0.75rem; }
+        }
+        @media (max-width: 480px) {
+            header { padding: 0 1rem; height: 52px; }
+            .page { padding: 0.75rem; }
+            .card { padding: 1rem; }
+        }
+
+        </style>
 </head>
 <body>
 
 <header class="hdr">
-  <a href="whalium_1_v7.html" class="logo-a">
+  <a href="whalium_1_index.html" class="logo-a">
     <svg viewBox="0 0 200 200" class="lsvg" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="wbg" cx="45%" cy="45%" r="60%"><stop offset="0%" stop-color="#1c3d5c"/><stop offset="100%" stop-color="#070f1c"/></radialGradient>
@@ -185,7 +198,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--bg);co
       <div class="bsl">Global Insights, Secure Navigation.</div>
     </div>
   </a>
-  <a href="whalium_1_v7.html" class="hbk">← 返回律所列表</a>
+  <a href="whalium_1_index.html" class="hbk">← 返回律所列表</a>
 </header>
 
 <div class="page">
@@ -468,7 +481,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--bg);co
       <div class="mrow"><span class="k">实付金额</span><span class="v">¥365.00</span></div>
       <div class="mrow hi"><span class="k">会员到期</span><span class="v" id="r-expire">—</span></div>
     </div>
-    <button class="mbtn" onclick="location.href='whalium_1_v7.html'">开始探索律所 →</button>
+    <button class="mbtn" onclick="location.href='whalium_1_index.html'">开始探索律所 →</button>
   </div>
 </div>
 
