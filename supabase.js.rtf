@@ -1,0 +1,378 @@
+{\rtf1\ansi\ansicpg936\cocoartf2868
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue-Bold;\f1\fnil\fcharset0 HelveticaNeue;\f2\fnil\fcharset134 .CJKSymbolsFallbackSC-Regular;
+}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\pardirnatural\partightenfactor0
+
+\f0\b\fs40 \cf0 \
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f1\b0\fs26 \cf0 /**\
+ * \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+ *  Whalium \'b7 Supabase \uc0\u20840 \u23616 \u37197 \u32622  & \u24037 \u20855 \u24211 \
+ *  supabase.js  \'97  \uc0\u25152 \u26377 \u39029 \u38754 \u20849 \u29992 \u65292 \u25918 \u22312 \u21516 \u19968 \u30446 \u24405 \u19979 \
+ * \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+ *\
+ *  \uc0\u9888 \u65039   \u25509 \u20837 \u21069 \u24517 \u22635 \u65306 \
+ *      1. \uc0\u30331 \u24405  https://supabase.com \u8594  \u36827 \u20837 \u20320 \u30340 \u39033 \u30446 \
+ *      2. Settings \uc0\u8594  API \u8594  \u22797 \u21046  Project URL \u21644  anon public key\
+ *      3. \uc0\u22635 \u20837 \u19979 \u26041 \u20004 \u20010 \u21464 \u37327 \u65292 \u20445 \u23384 \u21363 \u21487 \
+ */\
+\
+// \uc0\u9472 \u9472 \u9472  \u12304 \u24517 \u22635 \u12305 \u20320 \u30340  Supabase \u39033 \u30446 \u20449 \u24687  \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+const SUPABASE_URL  = '{\field{\*\fldinst{HYPERLINK "https://cenmhxewrmjpibkokuls.supabase.co"}}{\fldrslt https://cenmhxewrmjpibkokuls.supabase.co}}';   // \uc0\u8592  \u26367 \u25442 \
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8'; // \uc0\u8592  \u26367 \u25442 \
+// \uc0\u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+\
+// \uc0\u9472 \u9472 \u9472  \u21021 \u22987 \u21270 \u23458 \u25143 \u31471 \u65288 \u33258 \u21160 \u20174  CDN \u21152 \u36733  SDK\u65289 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \u9472 \
+let _sb = null;\
+\
+async function getSB() \{\
+    if (_sb) return _sb;\
+    if (!window.supabase) \{\
+        await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js');\
+    \}\
+    _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);\
+    return _sb;\
+\}\
+\
+function loadScript(src) \{\
+    return new Promise((res, rej) => \{\
+        const s = document.createElement('script');\
+        s.src = src; s.onload = res; s.onerror = rej;\
+        document.head.appendChild(s);\
+    \});\
+\}\
+\
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+//  AUTH  \uc0\u29992 \u25143 \u35748 \u35777 \
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+\
+const Auth = \{\
+\
+    /** \uc0\u37038 \u31665 \u27880 \u20876  */\
+    async signUp(email, password, meta = \{\}) \{\
+        const sb = await getSB();\
+        const \{ data, error \} = await sb.auth.signUp(\{\
+            email, password,\
+            options: \{ data: meta \}   // \uc0\u23384  full_name / role \u31561 \
+        \});\
+        if (error) throw error;\
+        return data;\
+    \},\
+\
+    /** \uc0\u37038 \u31665 \u30331 \u24405  */\
+    async signIn(email, password) \{\
+        const sb = await getSB();\
+        const \{ data, error \} = await sb.auth.signInWithPassword(\{ email, password \});\
+        if (error) throw error;\
+        return data;\
+    \},\
+\
+    /** \uc0\u36864 \u20986 \u30331 \u24405  */\
+    async signOut() \{\
+        const sb = await getSB();\
+        await sb.auth.signOut();\
+        window.location.href = 'login.html';\
+    \},\
+\
+    /** \uc0\u33719 \u21462 \u24403 \u21069 \u30331 \u24405 \u29992 \u25143 \u65288 null \u34920 \u31034 \u26410 \u30331 \u24405 \u65289 */\
+    async current() \{\
+        const sb = await getSB();\
+        const \{ data \} = await sb.auth.getUser();\
+        return data?.user ?? null;\
+    \},\
+\
+    /** \uc0\u38656 \u35201 \u30331 \u24405 \u25165 \u33021 \u35775 \u38382 \u30340 \u39029 \u38754 \u35843 \u29992 \u27492 \u26041 \u27861  */\
+    async requireLogin(redirectTo = 'login.html') \{\
+        const user = await this.current();\
+        if (!user) \{ window.location.href = redirectTo; return null; \}\
+        return user;\
+    \},\
+\
+    /** \uc0\u24050 \u30331 \u24405 \u21017 \u36339 \u36208 \u65288 \u29992 \u20110 \u30331 \u24405 /\u27880 \u20876 \u39029 \u38450 \u27490 \u37325 \u22797 \u30331 \u24405 \u65289 */\
+    async redirectIfLoggedIn(to = 'index.html') \{\
+        const user = await this.current();\
+        if (user) window.location.href = to;\
+    \},\
+\
+    /** \uc0\u24536 \u35760 \u23494 \u30721  \u8594  \u21457 \u37325 \u32622 \u37038 \u20214  */\
+    async resetPassword(email) \{\
+        const sb = await getSB();\
+        const \{ error \} = await sb.auth.resetPasswordForEmail(email, \{\
+            redirectTo: window.location.origin + '/reset-password.html'\
+        \});\
+        if (error) throw error;\
+    \}\
+\};\
+\
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+//  FIRMS  \uc0\u24459 \u25152 \u30456 \u20851 \u25805 \u20316 \
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+\
+const Firms = \{\
+\
+    /**\
+     * \uc0\u26597 \u35810 \u24459 \u25152 \u21015 \u34920 \u65288 \u24102 \u31579 \u36873  + \u20998 \u39029 \u65289 \
+     * filters: \{ country, area, rating_min, feature, keyword \}\
+     */\
+    async list(\{ country, area, rating_min, feature, keyword, page = 1, pageSize = 10 \} = \{\}) \{\
+        const sb = await getSB();\
+        let q = sb\
+            .from('firms')\
+            .select(`\
+                id, name_en, name_cn, country, city, address,\
+                email, phone, website, areas, features,\
+                rating, review_count, price_min, price_max,\
+                badges, is_verified, logo_url, created_at\
+            `, \{ count: 'exact' \})\
+            .eq('status', 'approved')          // \uc0\u21482 \u26174 \u31034 \u24050 \u23457 \u26680 \
+            .order('rating', \{ ascending: false \});\
+\
+        if (country)    q = q.eq('country', country);\
+        if (area)       q = q.contains('areas', [area]);\
+        if (rating_min) q = q.gte('rating', parseFloat(rating_min));\
+        if (feature)    q = q.contains('features', [feature]);\
+        if (keyword)    q = q.or(`name_en.ilike.%$\{keyword\}%,name_cn.ilike.%$\{keyword\}%,city.ilike.%$\{keyword\}%`);\
+\
+        // \uc0\u20998 \u39029 \
+        const from = (page - 1) * pageSize;\
+        q = q.range(from, from + pageSize - 1);\
+\
+        const \{ data, error, count \} = await q;\
+        if (error) throw error;\
+        return \{ firms: data, total: count, page, pageSize \};\
+    \},\
+\
+    /** \uc0\u33719 \u21462 \u21333 \u20010 \u24459 \u25152 \u35814 \u24773 \u65288 \u21547 \u35780 \u20215 \u65289  */\
+    async get(id) \{\
+        const sb = await getSB();\
+        const \{ data, error \} = await sb\
+            .from('firms')\
+            .select(`\
+                *,\
+                reviews ( id, rating, content, created_at,\
+                          profiles ( full_name, avatar_url ) )\
+            `)\
+            .eq('id', id)\
+            .eq('status', 'approved')\
+            .single();\
+        if (error) throw error;\
+        return data;\
+    \},\
+\
+    /** \uc0\u24459 \u25152 \u20837 \u39547 \u30003 \u35831 \u65288 \u20889 \u20837  firm_applications \u34920 \u65292 \u24453 \u23457 \u26680 \u65289 */\
+    async apply(formData) \{\
+        const sb  = await getSB();\
+        const user = await Auth.current();\
+        const \{ data, error \} = await sb\
+            .from('firm_applications')\
+            .insert(\{\
+                ...formData,\
+                applicant_id: user?.id ?? null,\
+                status: 'pending',\
+                submitted_at: new Date().toISOString()\
+            \})\
+            .select()\
+            .single();\
+        if (error) throw error;\
+        return data;\
+    \},\
+\
+    /** \uc0\u25910 \u34255  / \u21462 \u28040 \u25910 \u34255  */\
+    async toggleFavorite(firmId) \{\
+        const sb   = await getSB();\
+        const user = await Auth.requireLogin();\
+        if (!user) return;\
+\
+        // \uc0\u26597 \u26159 \u21542 \u24050 \u25910 \u34255 \
+        const \{ data: existing \} = await sb\
+            .from('favorites')\
+            .select('id')\
+            .eq('user_id', user.id)\
+            .eq('firm_id', firmId)\
+            .single();\
+\
+        if (existing) \{\
+            await sb.from('favorites').delete().eq('id', existing.id);\
+            return false; // \uc0\u21462 \u28040 \u25910 \u34255 \
+        \} else \{\
+            await sb.from('favorites').insert(\{ user_id: user.id, firm_id: firmId \});\
+            return true;  // \uc0\u24050 \u25910 \u34255 \
+        \}\
+    \},\
+\
+    /** \uc0\u33719 \u21462 \u29992 \u25143 \u25910 \u34255 \u21015 \u34920  */\
+    async myFavorites() \{\
+        const sb   = await getSB();\
+        const user = await Auth.requireLogin();\
+        if (!user) return [];\
+        const \{ data, error \} = await sb\
+            .from('favorites')\
+            .select('firm_id, firms ( id, name_en, name_cn, country, city, rating )')\
+            .eq('user_id', user.id);\
+        if (error) throw error;\
+        return data.map(d => d.firms);\
+    \}\
+\};\
+\
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+//  REVIEWS  \uc0\u35780 \u20215 \u25805 \u20316 \
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+\
+const Reviews = \{\
+\
+    /** \uc0\u25552 \u20132 \u35780 \u20215  */\
+    async submit(firmId, \{ rating, content \}) \{\
+        const sb   = await getSB();\
+        const user = await Auth.requireLogin();\
+        if (!user) return;\
+\
+        const \{ data, error \} = await sb\
+            .from('reviews')\
+            .insert(\{\
+                firm_id: firmId,\
+                user_id: user.id,\
+                rating: parseInt(rating),\
+                content\
+            \})\
+            .select()\
+            .single();\
+        if (error) throw error;\
+\
+        // \uc0\u26356 \u26032 \u24459 \u25152 \u24179 \u22343 \u20998 \u65288 \u30001  Supabase DB \u35302 \u21457 \u22120 \u33258 \u21160 \u23436 \u25104 \u65292 \u36825 \u37324 \u20165 \u36820 \u22238 \u65289 \
+        return data;\
+    \}\
+\};\
+\
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+//  MEMBERS  \uc0\u20250 \u21592  & \u25903 \u20184 \u35760 \u24405 \
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+\
+const Members = \{\
+\
+    /** \uc0\u33719 \u21462 \u24403 \u21069 \u29992 \u25143 \u20250 \u21592 \u29366 \u24577  */\
+    async status() \{\
+        const sb   = await getSB();\
+        const user = await Auth.current();\
+        if (!user) return null;\
+        const \{ data \} = await sb\
+            .from('memberships')\
+            .select('*')\
+            .eq('user_id', user.id)\
+            .order('expires_at', \{ ascending: false \})\
+            .limit(1)\
+            .single();\
+        return data;\
+    \},\
+\
+    /** \uc0\u35760 \u24405 \u25903 \u20184 \u65288 \u30495 \u23454 \u25903 \u20184 \u22238 \u35843 \u21518 \u30001 \u21518 \u31471 \u20889 \u20837 \u65292 \u36825 \u37324 \u26159 \u21069 \u31471  demo \u21344 \u20301 \u65289 */\
+    async recordPayment(method, amount = 365) \{\
+        const sb   = await getSB();\
+        const user = await Auth.requireLogin();\
+        if (!user) return;\
+\
+        const expiresAt = new Date();\
+        expiresAt.setFullYear(expiresAt.getFullYear() + 1);\
+\
+        const \{ data, error \} = await sb\
+            .from('memberships')\
+            .insert(\{\
+                user_id:    user.id,\
+                plan:       'annual',\
+                amount,\
+                currency:   'CNY',\
+                method,\
+                expires_at: expiresAt.toISOString(),\
+                status:     'active'\
+            \})\
+            .select()\
+            .single();\
+        if (error) throw error;\
+        return data;\
+    \},\
+\
+    /** \uc0\u29992 \u25143 \u26159 \u21542 \u26159 \u26377 \u25928 \u20250 \u21592  */\
+    async isActive() \{\
+        const m = await this.status();\
+        if (!m) return false;\
+        return m.status === 'active' && new Date(m.expires_at) > new Date();\
+    \}\
+\};\
+\
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+//  PROFILES  \uc0\u29992 \u25143 \u36164 \u26009 \
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+\
+const Profiles = \{\
+\
+    /** \uc0\u33719 \u21462 \u24403 \u21069 \u29992 \u25143  profile */\
+    async get() \{\
+        const sb   = await getSB();\
+        const user = await Auth.current();\
+        if (!user) return null;\
+        const \{ data \} = await sb\
+            .from('profiles')\
+            .select('*')\
+            .eq('id', user.id)\
+            .single();\
+        return data;\
+    \},\
+\
+    /** \uc0\u26356 \u26032 \u29992 \u25143 \u36164 \u26009  */\
+    async update(fields) \{\
+        const sb   = await getSB();\
+        const user = await Auth.requireLogin();\
+        if (!user) return;\
+        const \{ error \} = await sb\
+            .from('profiles')\
+            .upsert(\{ id: user.id, ...fields, updated_at: new Date().toISOString() \});\
+        if (error) throw error;\
+    \}\
+\};\
+\
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+//  \uc0\u24037 \u20855 \u20989 \u25968 \
+// \uc0\u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \u9552 \
+\
+/** \uc0\u32479 \u19968 \u38169 \u35823 \u25552 \u31034 \u65288 \u21487 \u26367 \u25442 \u20026  toast \u32452 \u20214 \u65289 */\
+function showError(msg, elId = null) \{\
+    console.error('[Whalium]', msg);\
+    if (elId) \{\
+        const el = document.getElementById(elId);\
+        if (el) \{\
+            el.style.cssText = 'display:block;padding:.7rem .9rem;border-radius:6px;font-size:.83rem;margin-bottom:1rem;text-align:center;background:rgba(204,34,51,.08);color:#cc2233;border:1px solid rgba(204,34,51,.2)';\
+            el.textContent = msg;\
+        \}\
+    \}\
+\}\
+\
+function showSuccess(msg, elId) \{\
+    if (!elId) return;\
+    const el = document.getElementById(elId);\
+    if (el) \{\
+        el.style.cssText = 'display:block;padding:.7rem .9rem;border-radius:6px;font-size:.83rem;margin-bottom:1rem;text-align:center;background:rgba(0,153,170,.08);color:#006e8a;border:1px solid rgba(0,153,170,.2)';\
+        el.textContent = msg;\
+    \}\
+\}\
+\
+/** \uc0\u33719 \u21462  URL \u21442 \u25968  */\
+function getParam(key) \{\
+    return new URLSearchParams(window.location.search).get(key);\
+\}\
+\
+/** \uc0\u26684 \u24335 \u21270 \u26143 \u32423  */\
+function stars(rating) \{\
+    const full  = Math.floor(rating);\
+    const half  = rating % 1 >= 0.5;\
+    return '\uc0\u9733 '.repeat(full) + (half ? '\'bd' : '') + '\u9734 '.repeat(5 - full - (half ? 1 : 0));\
+\}\
+\
+console.log('
+\f2 [
+\f1 Whalium
+\f2 ]
+\f1  supabase.js loaded \uc0\u10003 ');}
