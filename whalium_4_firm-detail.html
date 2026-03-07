@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -376,13 +376,14 @@
         </div>
     </a>
     <nav class="breadcrumb">
-        <a href="whalium_1_index.html">律所列表</a>
+        <a href="whalium_1_index.html"><span class="t" data-zh="律所列表" data-en="Listings">律所列表</span></a>
         <span>›</span>
         <span style="color:rgba(255,255,255,0.75)">Morrison IP Law</span>
     </nav>
     <div class="header-actions">
-        <a href="whalium_2_login.html" class="btn btn-ghost">登录</a>
-        <a href="whalium_3_register.html" class="btn btn-teal">注册</a>
+        <button id="lang-btn" onclick="toggleLang()" style="font-family:Arial,sans-serif;font-size:0.82rem;font-weight:600;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.28);border-radius:5px;padding:0.38rem 0.85rem;cursor:pointer;white-space:nowrap;">EN</button>
+    <a href="whalium_2_login.html" class="btn btn-ghost"><span class="t" data-zh="登录" data-en="Login">登录</span></a>
+        <a href="whalium_3_register.html" class="btn btn-teal"><span class="t" data-zh="注册" data-en="Register">注册</span></a>
     </div>
 </header>
 
@@ -452,7 +453,7 @@
         <div class="card">
             <div class="card-header">
                 <span style="font-size:1rem">🏛️</span>
-                <span class="card-title">律所简介</span>
+                <span class="card-title"><span class="t" data-zh="律所简介" data-en="About">律所简介</span></span>
             </div>
             <div class="card-body">
                 <p class="intro-text">
@@ -789,7 +790,7 @@
                 <textarea rows="4" placeholder="请描述您的法律需求，例如：想注册美国商标，类别是软件产品，预算约 $1,000..." style="width:100%;padding:0.65rem 0.85rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.88rem;outline:none;color:var(--text);resize:vertical;font-family:inherit"></textarea>
             </div>
             <div id="inq-msg" style="display:none;padding:0.65rem 0.85rem;border-radius:6px;font-size:0.82rem;margin-bottom:0.8rem;text-align:center"></div>
-            <button onclick="submitInquiry()" style="width:100%;padding:0.85rem;background:linear-gradient(135deg,#00c8d8,#0088b8);color:#fff;border:none;border-radius:8px;font-size:0.92rem;font-weight:700;cursor:pointer;transition:filter .18s">发送询盘</button>
+            <button onclick="submitInquiry()" style="width:100%;padding:0.85rem;background:linear-gradient(135deg,#00c8d8,#0088b8);color:#fff;border:none;border-radius:8px;font-size:0.92rem;font-weight:700;cursor:pointer;transition:filter .18s"><span class="t" data-zh="发送询盘" data-en="Send Inquiry">发送询盘</span></button>
         </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -412,6 +412,63 @@
             });
         })();
     </script>
+    <script>
+/**
+ * Whalium · 全站语言切换库
+ * 所有页面引入此文件即可实现中英文切换
+ * 用法：页面 body 内所有需切换的文字用 <span class="t"> 包裹
+ *       并加 data-zh="中文" data-en="English" 属性
+ */
+
+(function() {
+    // 读取上次用户选择（跨页面记忆）
+    var STORAGE_KEY = 'whalium_lang';
+
+    // 每个页面声明自己的默认语言
+    // <html lang="zh"> 或 <html lang="en">
+    var pageLang = document.documentElement.getAttribute('lang') || 'zh';
+    var currentLang = localStorage.getItem(STORAGE_KEY) || pageLang;
+
+    function applyLang(lang) {
+        currentLang = lang;
+        localStorage.setItem(STORAGE_KEY, lang);
+        var idx = lang === 'zh' ? 0 : 1;
+
+        // 切换所有 .t span
+        document.querySelectorAll('.t').forEach(function(el) {
+            var txt = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+            if (txt !== null) el.textContent = txt;
+        });
+
+        // 切换所有 placeholder
+        document.querySelectorAll('[data-ph-zh]').forEach(function(el) {
+            el.placeholder = lang === 'zh' ? el.getAttribute('data-ph-zh') : el.getAttribute('data-ph-en');
+        });
+
+        // 更新按钮文字
+        var btn = document.getElementById('lang-btn');
+        if (btn) btn.textContent = lang === 'zh' ? 'EN' : '中文';
+
+        // 更新 html lang 属性
+        document.documentElement.setAttribute('lang', lang);
+    }
+
+    function toggleLang() {
+        applyLang(currentLang === 'zh' ? 'en' : 'zh');
+    }
+
+    // 页面加载完成后自动应用语言
+    document.addEventListener('DOMContentLoaded', function() {
+        applyLang(currentLang);
+    });
+
+    // 暴露全局
+    window.toggleLang = toggleLang;
+    window.applyLang  = applyLang;
+    window.getCurrentLang = function() { return currentLang; };
+})();
+
+    </script>
 </head>
 <body>
 
@@ -468,14 +525,14 @@
     <!-- Sidebar -->
     <aside class="sidebar">
         <div class="nav-section-label">主菜单</div>
-        <div class="nav-item active" onclick="showPanel('overview')"><span>📊</span><span>数据概览</span></div>
+        <div class="nav-item active" onclick="showPanel('overview')"><span>📊</span><span><span class="t" data-zh="数据概览" data-en="Overview">Overview</span></span></div>
         <div class="nav-item" onclick="showPanel('inquiries')"><span>📬</span><span>客户询盘</span><span class="nav-badge">5</span></div>
         <div class="nav-item" onclick="showPanel('reviews')"><span>⭐</span><span>客户评价</span></div>
         <div class="nav-section-label">设置</div>
         <div class="nav-item" onclick="showPanel('profile')"><span>⚙️</span><span>管理Profile</span></div>
         <div class="nav-item" onclick="showPanel('membership')"><span>💎</span><span>会员中心</span></div>
-        <div class="nav-section-label">律所管理</div>
-        <div class="nav-item" onclick="showPanel('myfirm')"><span>🏢</span><span>我的律所</span></div>
+        <div class="nav-section-label"><span class="t" data-zh="律所管理" data-en="My Firm">My Firm</span></div>
+        <div class="nav-item" onclick="showPanel('myfirm')"><span>🏢</span><span><span class="t" data-zh="我的律所" data-en="My Firm">My Firm</span></span></div>
         <div class="nav-item" onclick="location.href='whalium_7_submit-firm.html'"><span>➕</span><span>入驻 / 修改资料</span></div>
     </aside>
 
@@ -484,7 +541,7 @@
         <!-- ══ OVERVIEW ══ -->
         <div class="panel active" id="panel-overview">
             <div class="page-header">
-                <h1 class="page-title">数据概览</h1>
+                <h1 class="page-title"><span class="t" data-zh="数据概览" data-en="Overview">Overview</span></h1>
                 <p class="page-subtitle">欢迎回来！以下是您本月的业务数据 · 2026年2月</p>
             </div>
 
@@ -512,7 +569,7 @@
                     </div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label">综合评分</div>
+                    <div class="stat-label"><span class="t" data-zh="综合评分" data-en="Rating">Rating</span></div>
                     <div class="stat-value">4.2</div>
                     <div class="stat-change">↑ 0.1 较上月</div>
                     <div class="mini-chart">
@@ -554,7 +611,7 @@
                     <div class="chart-col"><div class="chart-bar" style="height:88px;background:rgba(0,200,200,0.33)"></div><div class="chart-xlabel">21日</div></div>
                     <div class="chart-col"><div class="chart-bar" style="height:110px;background:rgba(0,200,200,0.42)"></div><div class="chart-xlabel">23日</div></div>
                     <div class="chart-col"><div class="chart-bar" style="height:105px;background:rgba(0,200,200,0.4)"></div><div class="chart-xlabel">25日</div></div>
-                    <div class="chart-col"><div class="chart-bar" style="height:115px;background:rgba(0,200,200,0.45);border:1px solid rgba(0,200,200,0.5)"></div><div class="chart-xlabel">今日</div></div>
+                    <div class="chart-col"><div class="chart-bar" style="height:115px;background:rgba(0,200,200,0.45);border:1px solid rgba(0,200,200,0.5)"></div><div class="chart-xlabel"><span class="t" data-zh="今日" data-en="Today">Today</span></div></div>
                 </div>
             </div>
 
@@ -1032,7 +1089,7 @@
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1rem;margin-bottom:1.5rem">
                 <div class="stat-card"><div class="stat-value">1,240</div><div class="stat-label">本月浏览量</div></div>
                 <div class="stat-card"><div class="stat-value">38</div><div class="stat-label">收到询盘</div></div>
-                <div class="stat-card"><div class="stat-value">4.2 ★</div><div class="stat-label">综合评分</div></div>
+                <div class="stat-card"><div class="stat-value">4.2 ★</div><div class="stat-label"><span class="t" data-zh="综合评分" data-en="Rating">Rating</span></div></div>
                 <div class="stat-card"><div class="stat-value">18</div><div class="stat-label">累计评价</div></div>
             </div>
 

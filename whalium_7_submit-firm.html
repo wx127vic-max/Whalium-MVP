@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -945,6 +945,63 @@
         }
 
         </style>
+    <script>
+/**
+ * Whalium · 全站语言切换库
+ * 所有页面引入此文件即可实现中英文切换
+ * 用法：页面 body 内所有需切换的文字用 <span class="t"> 包裹
+ *       并加 data-zh="中文" data-en="English" 属性
+ */
+
+(function() {
+    // 读取上次用户选择（跨页面记忆）
+    var STORAGE_KEY = 'whalium_lang';
+
+    // 每个页面声明自己的默认语言
+    // <html lang="zh"> 或 <html lang="en">
+    var pageLang = document.documentElement.getAttribute('lang') || 'zh';
+    var currentLang = localStorage.getItem(STORAGE_KEY) || pageLang;
+
+    function applyLang(lang) {
+        currentLang = lang;
+        localStorage.setItem(STORAGE_KEY, lang);
+        var idx = lang === 'zh' ? 0 : 1;
+
+        // 切换所有 .t span
+        document.querySelectorAll('.t').forEach(function(el) {
+            var txt = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+            if (txt !== null) el.textContent = txt;
+        });
+
+        // 切换所有 placeholder
+        document.querySelectorAll('[data-ph-zh]').forEach(function(el) {
+            el.placeholder = lang === 'zh' ? el.getAttribute('data-ph-zh') : el.getAttribute('data-ph-en');
+        });
+
+        // 更新按钮文字
+        var btn = document.getElementById('lang-btn');
+        if (btn) btn.textContent = lang === 'zh' ? 'EN' : '中文';
+
+        // 更新 html lang 属性
+        document.documentElement.setAttribute('lang', lang);
+    }
+
+    function toggleLang() {
+        applyLang(currentLang === 'zh' ? 'en' : 'zh');
+    }
+
+    // 页面加载完成后自动应用语言
+    document.addEventListener('DOMContentLoaded', function() {
+        applyLang(currentLang);
+    });
+
+    // 暴露全局
+    window.toggleLang = toggleLang;
+    window.applyLang  = applyLang;
+    window.getCurrentLang = function() { return currentLang; };
+})();
+
+    </script>
 </head>
 <body>
 

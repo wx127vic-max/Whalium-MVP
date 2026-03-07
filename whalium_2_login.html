@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh" lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -236,7 +236,8 @@
                 <div class="brand-cn">华 里 安</div>
             </div>
         </a>
-        <div class="header-right">没有账号？<a href="whalium_3_register.html">立即注册</a></div>
+        <div class="header-right">没有账号？<button id="lang-btn" onclick="toggleLang()" style="font-family:Arial,sans-serif;font-size:0.82rem;font-weight:600;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.28);border-radius:5px;padding:0.38rem 0.85rem;cursor:pointer;white-space:nowrap;">EN</button>
+    <a href="whalium_3_register.html">立即注册</a></div>
     </div>
 
     <!-- Main -->
@@ -249,12 +250,12 @@
             <div id="login-msg"></div>
 
             <div class="form-group">
-                <label class="form-label">邮箱地址</label>
+                <label class="form-label"><span class="t" data-zh="邮箱地址" data-en="Email Address">邮箱地址</span></label>
                 <input id="email" type="email" class="form-input" placeholder="your@email.com" autocomplete="email">
             </div>
 
             <div class="form-group">
-                <label class="form-label">密码</label>
+                <label class="form-label"><span class="t" data-zh="密码" data-en="Password">密码</span></label>
                 <div class="pw-wrap">
                     <input id="password" type="password" class="form-input" placeholder="请输入密码" autocomplete="current-password">
                     <button class="pw-toggle" onclick="togglePw()" type="button" id="pw-eye">👁</button>
@@ -265,7 +266,7 @@
                 <label class="remember">
                     <input type="checkbox" checked> 记住我
                 </label>
-                <a href="#" class="forgot-link">忘记密码？</a>
+                <a href="#" class="forgot-link"><span class="t" data-zh="忘记密码？" data-en="Forgot Password?">忘记密码？</span></a>
             </div>
 
             <button class="btn-login-submit" onclick="handleLogin()">登 录</button>
@@ -278,7 +279,7 @@
             </button>
 
             <div class="register-link">
-                还没有账号？<a href="whalium_3_register.html">免费注册</a>
+                还没有账号？<a href="whalium_3_register.html"><span class="t" data-zh="免费注册" data-en="Sign Up Free">免费注册</span></a>
             </div>
         </div>
     </div>

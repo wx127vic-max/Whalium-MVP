@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh" lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -174,7 +174,8 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--bg);co
 <body>
 
 <header class="hdr">
-  <a href="whalium_1_index.html" class="logo-a">
+  <button id="lang-btn" onclick="toggleLang()" style="font-family:Arial,sans-serif;font-size:0.82rem;font-weight:600;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.28);border-radius:5px;padding:0.38rem 0.85rem;cursor:pointer;white-space:nowrap;">EN</button>
+    <a href="whalium_1_index.html" class="logo-a">
     <svg viewBox="0 0 200 200" class="lsvg" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="wbg" cx="45%" cy="45%" r="60%"><stop offset="0%" stop-color="#1c3d5c"/><stop offset="100%" stop-color="#070f1c"/></radialGradient>
@@ -228,7 +229,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--bg);co
   <!-- RIGHT -->
   <div class="pcard">
     <div class="pband">
-      <div class="plbl">年度会员</div>
+      <div class="plbl"><span class="t" data-zh="年度会员" data-en="Annual Plan">年度会员</span></div>
       <div class="pbig">¥365<span> /年</span></div>
       <div class="porig">原价 ¥999</div>
       <div class="pbadge">🎉 限时立省 ¥634</div>
@@ -477,7 +478,7 @@ body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--bg);co
     <div class="msub">欢迎加入 Whalium 年度会员<br>您的权益已立即生效</div>
     <div class="mrec">
       <div class="mrow"><span class="k">订单号</span><span class="v" id="r-order">—</span></div>
-      <div class="mrow"><span class="k">支付方式</span><span class="v" id="r-method">—</span></div>
+      <div class="mrow"><span class="k"><span class="t" data-zh="支付方式" data-en="Payment Method">支付方式</span></span><span class="v" id="r-method">—</span></div>
       <div class="mrow"><span class="k">实付金额</span><span class="v">¥365.00</span></div>
       <div class="mrow hi"><span class="k">会员到期</span><span class="v" id="r-expire">—</span></div>
     </div>

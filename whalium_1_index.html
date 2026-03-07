@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Whalium 华里安 - 律所列表页</title>
+    <title>Whalium 华里安 - Law Firm Listing</title>
     
     <style>
         :root {
@@ -716,11 +716,68 @@
         .hdr-btn-register:hover { filter: brightness(1.12); }
 
         </style>
+    <script>
+/**
+ * Whalium · 全站语言切换库
+ * 所有页面引入此文件即可实现中英文切换
+ * 用法：页面 body 内所有需切换的文字用 <span class="t"> 包裹
+ *       并加 data-zh="中文" data-en="English" 属性
+ */
+
+(function() {
+    // 读取上次用户选择（跨页面记忆）
+    var STORAGE_KEY = 'whalium_lang';
+
+    // 每个页面声明自己的默认语言
+    // <html lang="zh"> 或 <html lang="en">
+    var pageLang = document.documentElement.getAttribute('lang') || 'zh';
+    var currentLang = localStorage.getItem(STORAGE_KEY) || pageLang;
+
+    function applyLang(lang) {
+        currentLang = lang;
+        localStorage.setItem(STORAGE_KEY, lang);
+        var idx = lang === 'zh' ? 0 : 1;
+
+        // 切换所有 .t span
+        document.querySelectorAll('.t').forEach(function(el) {
+            var txt = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+            if (txt !== null) el.textContent = txt;
+        });
+
+        // 切换所有 placeholder
+        document.querySelectorAll('[data-ph-zh]').forEach(function(el) {
+            el.placeholder = lang === 'zh' ? el.getAttribute('data-ph-zh') : el.getAttribute('data-ph-en');
+        });
+
+        // 更新按钮文字
+        var btn = document.getElementById('lang-btn');
+        if (btn) btn.textContent = lang === 'zh' ? 'EN' : '中文';
+
+        // 更新 html lang 属性
+        document.documentElement.setAttribute('lang', lang);
+    }
+
+    function toggleLang() {
+        applyLang(currentLang === 'zh' ? 'en' : 'zh');
+    }
+
+    // 页面加载完成后自动应用语言
+    document.addEventListener('DOMContentLoaded', function() {
+        applyLang(currentLang);
+    });
+
+    // 暴露全局
+    window.toggleLang = toggleLang;
+    window.applyLang  = applyLang;
+    window.getCurrentLang = function() { return currentLang; };
+})();
+
+    </script>
 </head>
 <body>
     <!-- Demo Header -->
-        <h1 class="demo-title">律所列表页</h1>
-        <p class="demo-subtitle">Law Firm Listing — AI智能检索 + 筛选全球律所</p>
+        <h1 class="demo-title"><span class="t" data-zh="律所列表页" data-en="Law Firm Listing">律所列表页</span></h1>
+        <p class="demo-subtitle">Law Firm Listing — <span class="t" data-zh="AI智能检索 + 筛选全球律所" data-en="AI-Powered Search + Global Firm Filter">AI智能检索 + 筛选全球律所</span></p>
     </div>
 
     <!-- Header -->
@@ -803,16 +860,17 @@
     </svg>
     <div style="line-height:1.3;">
       <div style="display:flex;align-items:baseline;gap:0.35rem;">
-        <span style="font-family:Arial,sans-serif;font-size:1.2rem;font-weight:900;color:#ffffff;">Whalium</span>
-        <span style="font-family:Arial,sans-serif;font-size:0.88rem;font-weight:700;color:#a8d8e0;">华里安</span>
+        <span style="font-family:Arial,sans-serif;font-size:1.2rem;font-weight:900;color:#ffffff;">Whalium
+        <span style="font-family:Arial,sans-serif;font-size:0.88rem;font-weight:700;color:#a8d8e0;">华里安
       </div>
     </div>
   </a>
   <div style="display:flex;align-items:center;gap:0.75rem;flex-shrink:0;">
-    <a href="whalium_6_landing.html" style="font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.75);text-decoration:none;padding:0.4rem 0.85rem;border-radius:5px;background:rgba(255,255,255,0.07);">律所入驻</a>
+    <a href="whalium_6_landing.html" style="font-family:Arial,sans-serif;font-size:0.85rem;color:rgba(255,255,255,0.75);text-decoration:none;padding:0.4rem 0.85rem;border-radius:5px;background:rgba(255,255,255,0.07);"><span class="t" data-zh="律所入驻" data-en="Join Us">律所入驻</span></a>
     <div style="width:1px;height:18px;background:rgba(255,255,255,0.2);"></div>
-    <a href="whalium_2_login.html" style="font-family:Arial,sans-serif;font-size:0.85rem;font-weight:600;color:#a8d8e0;text-decoration:none;padding:0.4rem 1.1rem;border:1px solid rgba(168,216,224,0.45);border-radius:5px;">登录</a>
-    <a href="whalium_3_register.html" style="font-family:Arial,sans-serif;font-size:0.85rem;font-weight:700;color:#0a1628;text-decoration:none;padding:0.4rem 1.1rem;background:linear-gradient(135deg,#00c8c8,#0099aa);border-radius:5px;">注册</a>
+    <button id="lang-btn" onclick="toggleLang()" style="font-family:Arial,sans-serif;font-size:0.82rem;font-weight:600;color:#fff;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.28);border-radius:5px;padding:0.38rem 0.85rem;cursor:pointer;white-space:nowrap;">EN</button>
+    <a href="whalium_2_login.html" style="font-family:Arial,sans-serif;font-size:0.85rem;font-weight:600;color:#a8d8e0;text-decoration:none;padding:0.4rem 1.1rem;border:1px solid rgba(168,216,224,0.45);border-radius:5px;"><span class="t" data-zh="登录" data-en="Login">登录</span></a>
+    <a href="whalium_3_register.html" style="font-family:Arial,sans-serif;font-size:0.85rem;font-weight:700;color:#0a1628;text-decoration:none;padding:0.4rem 1.1rem;background:linear-gradient(135deg,#00c8c8,#0099aa);border-radius:5px;"><span class="t" data-zh="注册" data-en="Register">注册</span></a>
   </div>
 </div>
 
@@ -821,16 +879,16 @@
     <!-- AI Search Section -->
     <div class="ai-search-section">
         <div class="ai-badge">
-            <span class="dot"></span>
+            <span class="dot">
             AI 智能检索
         </div>
-        <h2 class="ai-search-title">用自然语言描述您的法律需求</h2>
-        <p class="ai-search-sub">无需知道具体术语，直接告诉我们您的情况，AI 将为您匹配最合适的律所</p>
+        <h2 class="ai-search-title"><span class="t" data-zh="用自然语言描述您的法律需求" data-en="Describe your legal need in plain language">用自然语言描述您的法律需求</span></h2>
+        <p class="ai-search-sub"><span class="t" data-zh="无需知道具体术语，直接告诉我们您的情况，AI 将为您匹配最合适的律所" data-en="No legal jargon needed — just describe your situation and AI will match the best firms">无需知道具体术语，直接告诉我们您的情况，AI 将为您匹配最合适的律所</span></p>
 
         <div class="ai-input-wrap">
             <input type="text" class="ai-input" 
-                placeholder="例如：我在深圳有一家科技公司，想在美国注册商标保护我们的品牌，预算大概 5000 元人民币..." 
-                value="我需要在美国注册商标，主要是软件类产品，有中文服务优先">
+                id="ai-placeholder" placeholder="例如：我在深圳有一家科技公司，想在美国注册商标保护我们的品牌，预算大概 5000 元人民币..." 
+                id="ai-default-val" value="我需要在美国注册商标，主要是软件类产品，有中文服务优先">
             <button class="ai-send-btn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                 AI 检索
@@ -846,9 +904,9 @@
                 WHALIUM AI 分析结果
             </div>
             <div class="ai-response-text">
-                根据您的需求，我为您筛选出 <span class="ai-highlight">5 家</span> 专注于<span class="ai-highlight">美国知识产权</span>且提供<span class="ai-highlight">中文服务</span>的律所。
-                推荐优先考虑 <span class="ai-highlight">Morrison IP Law</span>（性价比高，商标注册经验丰富）和 <span class="ai-highlight">Sterling & Partners</span>（评分最高，适合复杂商标案件）。
-                软件类产品通常需要注册 <span class="ai-highlight">第9类</span> 商标，官费约 $350/类，律师费用区间已在卡片中标注。
+                根据您的需求，我为您筛选出 <span class="ai-highlight">5 家 专注于<span class="ai-highlight">美国知识产权且提供<span class="ai-highlight">中文服务的律所。
+                推荐优先考虑 <span class="ai-highlight">Morrison IP Law（性价比高，商标注册经验丰富）和 <span class="ai-highlight">Sterling & Partners（评分最高，适合复杂商标案件）。
+                软件类产品通常需要注册 <span class="ai-highlight">第9类 商标，官费约 $350/类，律师费用区间已在卡片中标注。
             </div>
         </div>
     </div>
@@ -860,144 +918,144 @@
 
             <!-- 国家/地区：多选 -->
             <div class="filter-group">
-                <label>国家/地区 <em class="multi-hint">可多选</em></label>
+                <label>国家/地区 <em class="multi-hint"><span class="t" data-zh="可多选" data-en="Multi-select">可多选</span></em></label>
                 <div class="msel-wrap" id="msel-country">
                     <div class="msel-display" onclick="mselToggle('msel-country')">
-                        <span class="msel-text">全部国家</span><span class="msel-arrow">▾</span>
+                        <span class="msel-text">全部国家<span class="msel-arrow">▾
                     </div>
                     <div class="msel-drop">
                         <div class="msel-search"><input placeholder="搜索国家…" oninput="mselSearch(this)"></div>
-                        <div class="msel-group">北美</div>
-                        <label class="msel-opt"><input type="checkbox" value="美国"><span>🇺🇸 美国</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="加拿大"><span>🇨🇦 加拿大</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="墨西哥"><span>🇲🇽 墨西哥</span></label>
-                        <div class="msel-group">欧洲</div>
-                        <label class="msel-opt"><input type="checkbox" value="欧盟"><span>🇪🇺 欧盟</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="英国"><span>🇬🇧 英国</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="德国"><span>🇩🇪 德国</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="法国"><span>🇫🇷 法国</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="荷兰"><span>🇳🇱 荷兰</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="西班牙"><span>🇪🇸 西班牙</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="意大利"><span>🇮🇹 意大利</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="波兰"><span>🇵🇱 波兰</span></label>
-                        <div class="msel-group">东亚</div>
-                        <label class="msel-opt"><input type="checkbox" value="日本"><span>🇯🇵 日本</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="韩国"><span>🇰🇷 韩国</span></label>
-                        <div class="msel-group">东南亚</div>
-                        <label class="msel-opt"><input type="checkbox" value="新加坡"><span>🇸🇬 新加坡</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="印度尼西亚"><span>🇮🇩 印度尼西亚</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="越南"><span>🇻🇳 越南</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="泰国"><span>🇹🇭 泰国</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="马来西亚"><span>🇲🇾 马来西亚</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="菲律宾"><span>🇵🇭 菲律宾</span></label>
-                        <div class="msel-group">南亚</div>
-                        <label class="msel-opt"><input type="checkbox" value="印度"><span>🇮🇳 印度</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="孟加拉国"><span>🇧🇩 孟加拉国</span></label>
-                        <div class="msel-group">中东</div>
-                        <label class="msel-opt"><input type="checkbox" value="阿联酋"><span>🇦🇪 阿联酋</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="沙特阿拉伯"><span>🇸🇦 沙特阿拉伯</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="以色列"><span>🇮🇱 以色列</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="土耳其"><span>🇹🇷 土耳其</span></label>
-                        <div class="msel-group">非洲</div>
-                        <label class="msel-opt"><input type="checkbox" value="南非"><span>🇿🇦 南非</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="尼日利亚"><span>🇳🇬 尼日利亚</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="埃及"><span>🇪🇬 埃及</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="肯尼亚"><span>🇰🇪 肯尼亚</span></label>
-                        <div class="msel-group">拉丁美洲</div>
-                        <label class="msel-opt"><input type="checkbox" value="巴西"><span>🇧🇷 巴西</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="智利"><span>🇨🇱 智利</span></label>
-                        <div class="msel-group">大洋洲</div>
-                        <label class="msel-opt"><input type="checkbox" value="澳大利亚"><span>🇦🇺 澳大利亚</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="新西兰"><span>🇳🇿 新西兰</span></label>
-                        <div class="msel-group">其他</div>
-                        <label class="msel-opt"><input type="checkbox" value="其他"><span>🌐 其他</span></label>
+                        <div class="msel-group"><span class="t" data-zh="北美" data-en="North America">北美</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="美国"><span><span class="t" data-zh="🇺🇸 美国" data-en="🇺🇸 USA">🇺🇸 美国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="加拿大"><span><span class="t" data-zh="🇨🇦 加拿大" data-en="🇨🇦 Canada">🇨🇦 加拿大</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="墨西哥"><span><span class="t" data-zh="🇲🇽 墨西哥" data-en="🇲🇽 Mexico">🇲🇽 墨西哥</span></label>
+                        <div class="msel-group"><span class="t" data-zh="欧洲" data-en="Europe">欧洲</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="欧盟"><span><span class="t" data-zh="🇪🇺 欧盟" data-en="🇪🇺 EU">🇪🇺 欧盟</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="英国"><span><span class="t" data-zh="🇬🇧 英国" data-en="🇬🇧 UK">🇬🇧 英国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="德国"><span><span class="t" data-zh="🇩🇪 德国" data-en="🇩🇪 Germany">🇩🇪 德国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="法国"><span><span class="t" data-zh="🇫🇷 法国" data-en="🇫🇷 France">🇫🇷 法国</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="荷兰"><span><span class="t" data-zh="🇳🇱 荷兰" data-en="🇳🇱 Netherlands">🇳🇱 荷兰</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="西班牙"><span><span class="t" data-zh="🇪🇸 西班牙" data-en="🇪🇸 Spain">🇪🇸 西班牙</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="意大利"><span><span class="t" data-zh="🇮🇹 意大利" data-en="🇮🇹 Italy">🇮🇹 意大利</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="波兰"><span><span class="t" data-zh="🇵🇱 波兰" data-en="🇵🇱 Poland">🇵🇱 波兰</span></label>
+                        <div class="msel-group"><span class="t" data-zh="东亚" data-en="East Asia">东亚</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="日本"><span><span class="t" data-zh="🇯🇵 日本" data-en="🇯🇵 Japan">🇯🇵 日本</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="韩国"><span><span class="t" data-zh="🇰🇷 韩国" data-en="🇰🇷 Korea">🇰🇷 韩国</span></label>
+                        <div class="msel-group"><span class="t" data-zh="东南亚" data-en="Southeast Asia">东南亚</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="新加坡"><span><span class="t" data-zh="🇸🇬 新加坡" data-en="🇸🇬 Singapore">🇸🇬 新加坡</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="印度尼西亚"><span><span class="t" data-zh="🇮🇩 印度尼西亚" data-en="🇮🇩 Indonesia">🇮🇩 印度尼西亚</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="越南"><span><span class="t" data-zh="🇻🇳 越南" data-en="🇻🇳 Vietnam">🇻🇳 越南</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="泰国"><span><span class="t" data-zh="🇹🇭 泰国" data-en="🇹🇭 Thailand">🇹🇭 泰国</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="马来西亚"><span><span class="t" data-zh="🇲🇾 马来西亚" data-en="🇲🇾 Malaysia">🇲🇾 马来西亚</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="菲律宾"><span><span class="t" data-zh="🇵🇭 菲律宾" data-en="🇵🇭 Philippines">🇵🇭 菲律宾</span></span></label>
+                        <div class="msel-group"><span class="t" data-zh="南亚" data-en="South Asia">南亚</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="印度"><span><span class="t" data-zh="🇮🇳 印度" data-en="🇮🇳 India">🇮🇳 印度</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="孟加拉国"><span><span class="t" data-zh="🇧🇩 孟加拉国" data-en="🇧🇩 Bangladesh">🇧🇩 孟加拉国</span></span></label>
+                        <div class="msel-group"><span class="t" data-zh="中东" data-en="Middle East">中东</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="阿联酋"><span><span class="t" data-zh="🇦🇪 阿联酋" data-en="🇦🇪 UAE">🇦🇪 阿联酋</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="沙特阿拉伯"><span><span class="t" data-zh="🇸🇦 沙特阿拉伯" data-en="🇸🇦 Saudi Arabia">🇸🇦 沙特阿拉伯</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="以色列"><span><span class="t" data-zh="🇮🇱 以色列" data-en="🇮🇱 Israel">🇮🇱 以色列</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="土耳其"><span><span class="t" data-zh="🇹🇷 土耳其" data-en="🇹🇷 Turkey">🇹🇷 土耳其</span></span></label>
+                        <div class="msel-group"><span class="t" data-zh="非洲" data-en="Africa">非洲</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="南非"><span><span class="t" data-zh="🇿🇦 南非" data-en="🇿🇦 South Africa">🇿🇦 南非</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="尼日利亚"><span><span class="t" data-zh="🇳🇬 尼日利亚" data-en="🇳🇬 Nigeria">🇳🇬 尼日利亚</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="埃及"><span><span class="t" data-zh="🇪🇬 埃及" data-en="🇪🇬 Egypt">🇪🇬 埃及</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="肯尼亚"><span><span class="t" data-zh="🇰🇪 肯尼亚" data-en="🇰🇪 Kenya">🇰🇪 肯尼亚</span></span></label>
+                        <div class="msel-group"><span class="t" data-zh="拉丁美洲" data-en="Latin America">拉丁美洲</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="巴西"><span><span class="t" data-zh="🇧🇷 巴西" data-en="🇧🇷 Brazil">🇧🇷 巴西</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="智利"><span><span class="t" data-zh="🇨🇱 智利" data-en="🇨🇱 Chile">🇨🇱 智利</span></span></label>
+                        <div class="msel-group"><span class="t" data-zh="大洋洲" data-en="Oceania">大洋洲</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="澳大利亚"><span><span class="t" data-zh="🇦🇺 澳大利亚" data-en="🇦🇺 Australia">🇦🇺 澳大利亚</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="新西兰"><span><span class="t" data-zh="🇳🇿 新西兰" data-en="🇳🇿 New Zealand">🇳🇿 新西兰</span></span></label>
+                        <div class="msel-group"><span class="t" data-zh="其他" data-en="Other">其他</span></div>
+                        <label class="msel-opt"><input type="checkbox" value="其他"><span><span class="t" data-zh="🌐 其他" data-en="🌐 Other">🌐 其他</span></span></label>
                     </div>
                 </div>
             </div>
 
             <!-- 服务领域：多选 -->
             <div class="filter-group">
-                <label>服务领域 <em class="multi-hint">可多选</em></label>
+                <label>服务领域 <em class="multi-hint"><span class="t" data-zh="可多选" data-en="Multi-select">可多选</span></em></label>
                 <div class="msel-wrap" id="msel-area">
                     <div class="msel-display" onclick="mselToggle('msel-area')">
                         <span class="msel-text">全部领域</span><span class="msel-arrow">▾</span>
                     </div>
                     <div class="msel-drop">
-                        <label class="msel-opt"><input type="checkbox" value="知识产权保护"><span>🛡️ 知识产权保护</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="出海设立架构"><span>🚀 出海设立 &amp; 架构</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="贸易产品合规"><span>📦 贸易 &amp; 产品合规</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="数据隐私合规"><span>🔒 数据 &amp; 隐私合规</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="商业诚信风险"><span>⚖️ 商业诚信 &amp; 风险</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="融资并购"><span>💼 融资 &amp; 并购</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="其他"><span>✏️ 其他</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="知识产权保护"><span><span class="t" data-zh="🛡️ 知识产权保护" data-en="🛡️ IP Protection">🛡️ 知识产权保护</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="出海设立架构"><span><span class="t" data-zh="🚀 出海设立 &amp; 架构" data-en="🚀 Overseas Setup">🚀 出海设立 &amp; 架构</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="贸易产品合规"><span><span class="t" data-zh="📦 贸易 &amp; 产品合规" data-en="📦 Trade &amp; Compliance">📦 贸易 &amp; 产品合规</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="数据隐私合规"><span><span class="t" data-zh="🔒 数据 &amp; 隐私合规" data-en="🔒 Data &amp; Privacy">🔒 数据 &amp; 隐私合规</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="商业诚信风险"><span><span class="t" data-zh="⚖️ 商业诚信 &amp; 风险" data-en="⚖️ Business Integrity">⚖️ 商业诚信 &amp; 风险</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="融资并购"><span><span class="t" data-zh="💼 融资 &amp; 并购" data-en="💼 M&amp;A &amp; Financing">💼 融资 &amp; 并购</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="其他"><span><span class="t" data-zh="✏️ 其他" data-en="✏️ Other">✏️ 其他</span></span></label>
                     </div>
                 </div>
             </div>
 
             <!-- 综合评分：单选 -->
             <div class="filter-group">
-                <label>综合评分</label>
+                <label><span class="t" data-zh="综合评分" data-en="Rating">综合评分</span></span></label>
                 <select class="filter-select">
-                    <option value="">全部评分</option>
-                    <option value="4.5+">⭐ 4.5 分以上</option>
-                    <option value="4.0-4.5">⭐ 4.0 – 4.5 分</option>
-                    <option value="3.5-4.0">⭐ 3.5 – 4.0 分</option>
-                    <option value="3.0-3.5">⭐ 3.0 – 3.5 分</option>
+                    <option value=""><span class="t" data-zh="全部评分" data-en="All Ratings">全部评分</span></option>
+                    <option value="4.5+"><span class="t" data-zh="⭐ 4.5 分以上" data-en="⭐ 4.5+ Stars">⭐ 4.5 分以上</span></option>
+                    <option value="4.0-4.5"><span class="t" data-zh="⭐ 4.0 – 4.5 分" data-en="⭐ 4.0 – 4.5 Stars">⭐ 4.0 – 4.5 分</span></option>
+                    <option value="3.5-4.0"><span class="t" data-zh="⭐ 3.5 – 4.0 分" data-en="⭐ 3.5 – 4.0 Stars">⭐ 3.5 – 4.0 分</span></option>
+                    <option value="3.0-3.5"><span class="t" data-zh="⭐ 3.0 – 3.5 分" data-en="⭐ 3.0 – 3.5 Stars">⭐ 3.0 – 3.5 分</span></option>
                 </select>
             </div>
 
             <!-- 特色服务：多选 -->
             <div class="filter-group">
-                <label>特色服务 <em class="multi-hint">可多选</em></label>
+                <label>特色服务 <em class="multi-hint"><span class="t" data-zh="可多选" data-en="Multi-select">可多选</span></em></label>
                 <div class="msel-wrap" id="msel-feat">
                     <div class="msel-display" onclick="mselToggle('msel-feat')">
                         <span class="msel-text">全部特色</span><span class="msel-arrow">▾</span>
                     </div>
                     <div class="msel-drop">
-                        <label class="msel-opt"><input type="checkbox" value="中文服务"><span>🇨🇳 全程中文服务</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="中国律师"><span>👤 中国/华裔律师</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="双语合同"><span>📄 中英双语合同</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="24h响应"><span>⚡ 24小时响应</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="固定报价"><span>💰 固定报价透明</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="免费咨询"><span>🆓 免费初次咨询</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="Chambers认证"><span>🏆 Chambers 认证</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="Legal500"><span>🏅 Legal 500 认证</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="中国律所合作"><span>🤝 与中国律所合作</span></label>
-                        <label class="msel-opt"><input type="checkbox" value="跨境电商"><span>🛒 跨境电商经验</span></label>
+                        <label class="msel-opt"><input type="checkbox" value="中文服务"><span><span class="t" data-zh="🇨🇳 全程中文服务" data-en="🇨🇳 Chinese Service">🇨🇳 全程中文服务</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="中国律师"><span><span class="t" data-zh="👤 中国/华裔律师" data-en="👤 Chinese Attorney">👤 中国/华裔律师</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="双语合同"><span><span class="t" data-zh="📄 中英双语合同" data-en="📄 Bilingual Contracts">📄 中英双语合同</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="24h响应"><span><span class="t" data-zh="⚡ 24小时响应" data-en="⚡ 24hr Response">⚡ 24小时响应</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="固定报价"><span><span class="t" data-zh="💰 固定报价透明" data-en="💰 Fixed Pricing">💰 固定报价透明</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="免费咨询"><span><span class="t" data-zh="🆓 免费初次咨询" data-en="🆓 Free Consultation">🆓 免费初次咨询</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="Chambers认证"><span><span class="t" data-zh="🏆 Chambers 认证" data-en="🏆 Chambers Certified">🏆 Chambers 认证</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="Legal500"><span><span class="t" data-zh="🏅 Legal 500 认证" data-en="🏅 Legal 500 Certified">🏅 Legal 500 认证</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="中国律所合作"><span><span class="t" data-zh="🤝 与中国律所合作" data-en="🤝 China Firm Partner">🤝 与中国律所合作</span></span></label>
+                        <label class="msel-opt"><input type="checkbox" value="跨境电商"><span><span class="t" data-zh="🛒 跨境电商经验" data-en="🛒 Cross-border E-commerce">🛒 跨境电商经验</span></span></label>
                     </div>
                 </div>
             </div>
 
-            <button class="search-btn" onclick="applyFilters()">筛 选</button>
+            <button class="search-btn" onclick="applyFilters()"><span class="t" data-zh="筛 选" data-en="Filter">筛 选</span></button>
         </div>
     </div>
 
     <!-- Results -->
     <div class="results-area">
         <div class="results-header">
-            <div class="results-count">共找到 <strong>3</strong> 家律所</div>
-            <div class="results-filters-applied">显示全部律所</div>
+            <div class="results-count"><span></span> <strong>3</strong> <span></span></div>
+            <div class="results-filters-applied"><span class="t" data-zh="显示全部律所" data-en="Show All Firms">显示全部律所</span></div>
         </div>
 
         <div class="firm-card">
             <div class="firm-badges">
-                <span class="badge badge-hot">🔥 热门</span>
-                <span class="badge badge-value">⭐ 高性价比</span>
-                <span class="badge badge-certified">🏆 Chambers认证</span>
+                <span class="badge badge-hot"><span class="t" data-zh="🔥 热门" data-en="🔥 Popular">🔥 热门</span></span>
+                <span class="badge badge-value"><span class="t" data-zh="⭐ 高性价比" data-en="⭐ Best Value">⭐ 高性价比</span></span>
+                <span class="badge badge-certified"><span class="t" data-zh="🏆 Chambers认证" data-en="🏆 Chambers Certified">🏆 Chambers认证</span></span>
             </div>
             <div class="firm-card-top">
                 <div>
                     <div class="firm-name">Morrison IP Law</div>
-                    <div class="firm-name-cn">莫里森知识产权律师事务所</div>
-                    <div class="firm-info">📍 美国 · 加利福尼亚州 · 洛杉矶</div>
+                    <div class="firm-name-cn"><span class="t" data-zh="莫里森知识产权律师事务所" data-en="Morrison IP Law (US)">莫里森知识产权律师事务所</span></div>
+                    <div class="firm-info"><span class="t" data-zh="📍 美国 · 加利福尼亚州 · 洛杉矶" data-en="📍 USA · California · Los Angeles">📍 美国 · 加利福尼亚州 · 洛杉矶</span></div>
                     <div class="firm-info">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7d14131b123d10120f0f140e121350140d531e1210">[email&#160;protected]</a></div>
                 </div>
             </div>
             <div class="firm-areas">
-                <span class="areas-label">专业领域</span>
-                <span class="area-tag">商标注册</span>
-                <span class="area-tag">驳回答辩</span>
-                <span class="area-tag">专利申请</span>
+                <span class="areas-label"><span class="t" data-zh="专业领域" data-en="Practice Areas">专业领域</span></span>
+                <span class="area-tag"><span class="t" data-zh="商标注册" data-en="Trademark Reg.">商标注册</span></span>
+                <span class="area-tag"><span class="t" data-zh="驳回答辩" data-en="Office Action">驳回答辩</span></span>
+                <span class="area-tag"><span class="t" data-zh="专利申请" data-en="Patent Filing">专利申请</span></span>
             </div>
             <div class="firm-bottom">
                 <div class="firm-stats">
@@ -1005,36 +1063,36 @@
                     <div class="stat-item">💰 $800–1,200</div>
                 </div>
                 <div class="firm-features">
-                    <div class="feature">中文服务</div>
-                    <div class="feature">24h响应</div>
+                    <div class="feature"><span class="t" data-zh="中文服务" data-en="CN Service">中文服务</span></div>
+                    <div class="feature"><span class="t" data-zh="24h响应" data-en="24h Response">24h响应</span></div>
                     <div class="feature">Chambers Band 2</div>
                 </div>
             </div>
             <div class="firm-actions">
-                <button class="btn-detail" onclick="goDetail()">查看详情</button>
-                <button class="btn-action">对比</button>
-                <button class="btn-action">♡ 收藏</button>
+                <button class="btn-detail" onclick="goDetail()"><span class="t" data-zh="查看详情" data-en="View Details">查看详情</span></span></button>
+                <button class="btn-action"><span class="t" data-zh="对比" data-en="Compare">对比</span></span></button>
+                <button class="btn-action"><span class="t" data-zh="♡ 收藏" data-en="♡ Save">♡ 收藏</span></button>
             </div>
         </div>
 
         <div class="firm-card">
             <div class="firm-badges">
-                <span class="badge badge-hot">🔥 热门</span>
-                <span class="badge badge-certified">🏆 权威认证</span>
+                <span class="badge badge-hot"><span class="t" data-zh="🔥 热门" data-en="🔥 Popular">🔥 热门</span></span>
+                <span class="badge badge-certified"><span class="t" data-zh="🏆 权威认证" data-en="🏆 Certified">🏆 权威认证</span></span>
             </div>
             <div class="firm-card-top">
                 <div>
                     <div class="firm-name">Sterling &amp; Partners LLP</div>
-                    <div class="firm-name-cn">斯特林合伙人律师事务所</div>
-                    <div class="firm-info">📍 美国 · 纽约州 · 纽约</div>
+                    <div class="firm-name-cn"><span class="t" data-zh="斯特林合伙人律师事务所" data-en="Sterling & Partners LLP">斯特林合伙人律师事务所</span></div>
+                    <div class="firm-info"><span class="t" data-zh="📍 美国 · 纽约州 · 纽约" data-en="📍 USA · New York · NYC">📍 美国 · 纽约州 · 纽约</span></div>
                     <div class="firm-info">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5e3d31302a3f3d2a1e2d2a3b2c32373039323f29703d3133">[email&#160;protected]</a></div>
                 </div>
             </div>
             <div class="firm-areas">
-                <span class="areas-label">专业领域</span>
-                <span class="area-tag">公司设立</span>
-                <span class="area-tag">税务筹划</span>
-                <span class="area-tag">合同审查</span>
+                <span class="areas-label"><span class="t" data-zh="专业领域" data-en="Practice Areas">专业领域</span></span>
+                <span class="area-tag"><span class="t" data-zh="公司设立" data-en="Company Setup">公司设立</span></span>
+                <span class="area-tag"><span class="t" data-zh="税务筹划" data-en="Tax Planning">税务筹划</span></span>
+                <span class="area-tag"><span class="t" data-zh="合同审查" data-en="Contract Review">合同审查</span></span>
             </div>
             <div class="firm-bottom">
                 <div class="firm-stats">
@@ -1042,35 +1100,35 @@
                     <div class="stat-item">💰 $1,200–5,000</div>
                 </div>
                 <div class="firm-features">
-                    <div class="feature">中文服务</div>
-                    <div class="feature">12h响应</div>
+                    <div class="feature"><span class="t" data-zh="中文服务" data-en="CN Service">中文服务</span></div>
+                    <div class="feature"><span class="t" data-zh="12h响应" data-en="12h Response">12h响应</span></div>
                     <div class="feature">Chambers Band 1</div>
                 </div>
             </div>
             <div class="firm-actions">
-                <button class="btn-detail" onclick="goDetail()">查看详情</button>
-                <button class="btn-action">对比</button>
-                <button class="btn-action">♡ 收藏</button>
+                <button class="btn-detail" onclick="goDetail()"><span class="t" data-zh="查看详情" data-en="View Details">查看详情</span></span></button>
+                <button class="btn-action"><span class="t" data-zh="对比" data-en="Compare">对比</span></span></button>
+                <button class="btn-action"><span class="t" data-zh="♡ 收藏" data-en="♡ Save">♡ 收藏</span></button>
             </div>
         </div>
 
         <div class="firm-card">
             <div class="firm-badges">
-                <span class="badge badge-value">⭐ 高性价比</span>
+                <span class="badge badge-value"><span class="t" data-zh="⭐ 高性价比" data-en="⭐ Best Value">⭐ 高性价比</span></span>
             </div>
             <div class="firm-card-top">
                 <div>
                     <div class="firm-name">Asia Pacific Legal Group</div>
-                    <div class="firm-name-cn">亚太法律集团</div>
-                    <div class="firm-info">📍 新加坡 · 新加坡</div>
+                    <div class="firm-name-cn"><span class="t" data-zh="亚太法律集团" data-en="Asia Pacific Legal Group">亚太法律集团</span></div>
+                    <div class="firm-info"><span class="t" data-zh="📍 新加坡 · 新加坡" data-en="📍 Singapore · Singapore">📍 新加坡 · 新加坡</span></div>
                     <div class="firm-info">📧 <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e48c8188888ba485948881838588ca9783">[email&#160;protected]</a></div>
                 </div>
             </div>
             <div class="firm-areas">
-                <span class="areas-label">专业领域</span>
-                <span class="area-tag">新加坡商标</span>
-                <span class="area-tag">公司注册</span>
-                <span class="area-tag">东盟合同</span>
+                <span class="areas-label"><span class="t" data-zh="专业领域" data-en="Practice Areas">专业领域</span></span>
+                <span class="area-tag"><span class="t" data-zh="新加坡商标" data-en="SG Trademark">新加坡商标</span></span>
+                <span class="area-tag"><span class="t" data-zh="公司注册" data-en="Company Reg.">公司注册</span></span>
+                <span class="area-tag"><span class="t" data-zh="东盟合同" data-en="ASEAN Contracts">东盟合同</span></span>
             </div>
             <div class="firm-bottom">
                 <div class="firm-stats">
@@ -1078,21 +1136,21 @@
                     <div class="stat-item">💰 $600–2,500</div>
                 </div>
                 <div class="firm-features">
-                    <div class="feature">中文服务</div>
-                    <div class="feature">6h响应</div>
-                    <div class="feature">Legal 500认证</div>
+                    <div class="feature"><span class="t" data-zh="中文服务" data-en="CN Service">中文服务</span></div>
+                    <div class="feature"><span class="t" data-zh="6h响应" data-en="6h Response">6h响应</span></div>
+                    <div class="feature"><span class="t" data-zh="Legal 500认证" data-en="Legal 500">Legal 500认证</span></div>
                 </div>
             </div>
             <div class="firm-actions">
-                <button class="btn-detail" onclick="goDetail()">查看详情</button>
-                <button class="btn-action">对比</button>
-                <button class="btn-action">♡ 收藏</button>
+                <button class="btn-detail" onclick="goDetail()"><span class="t" data-zh="查看详情" data-en="View Details">查看详情</span></span></button>
+                <button class="btn-action"><span class="t" data-zh="对比" data-en="Compare">对比</span></span></button>
+                <button class="btn-action"><span class="t" data-zh="♡ 收藏" data-en="♡ Save">♡ 收藏</span></button>
             </div>
         </div>
     </div>
 
     <div class="footer-note">
-        <strong>Whalium · 华里安</strong> &nbsp;·&nbsp; 洞察全球律所，安行海外航路
+        <strong>Whalium · 华里安</strong> &nbsp;·&nbsp; <span class="t" data-zh="洞察全球律所，安行海外航路" data-en="Global Insights, Secure Navigation">洞察全球律所，安行海外航路</span>
     </div>
 
     <!-- 所有 JS 放在最底部，确保 DOM 已加载 -->
@@ -1127,7 +1185,12 @@
         var display = wrap.querySelector('.msel-text');
         var id = wrap.id;
         if (checked.length === 0) {
-            display.textContent = id === 'msel-country' ? '全部国家' : id === 'msel-area' ? '全部领域' : '全部特色';
+            var lang = window.getCurrentLang ? window.getCurrentLang() : 'zh';
+        display.textContent = id === 'msel-country'
+            ? (lang==='zh' ? '全部国家' : 'All Countries')
+            : id === 'msel-area'
+            ? (lang==='zh' ? '全部领域' : 'All Areas')
+            : (lang==='zh' ? '全部特色' : 'All Features');
         } else if (checked.length <= 2) {
             display.innerHTML = checked.map(function(cb) {
                 return '<span class="msel-tag">' + cb.closest('.msel-opt').querySelector('span').textContent.trim() + '</span>';
@@ -1163,7 +1226,7 @@
         if (rating)           parts.push(rating.replace('+',' 分以上'));
         if (features.length)  parts.push(features.length + '项特色');
         var summary = document.querySelector('.results-filters-applied');
-        if (summary) summary.textContent = parts.length ? '已筛选：' + parts.join(' · ') : '显示全部律所';
+        if (summary) { var l=window.getCurrentLang?window.getCurrentLang():'zh'; summary.textContent = parts.length ? (l==='zh'?'已筛选：':'Filtered: ') + parts.join(' · ') : (l==='zh'?'显示全部律所':'Show All Firms'); }
     }
     </script>
 
@@ -1172,6 +1235,81 @@
 function goDetail() {
     window.location.href = 'whalium_4_firm-detail.html';
 }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<script>
+(function(){
+    var _orig = window.applyLang;
+    window.applyLang = function(lang) {
+        if (_orig) _orig(lang);
+        var isEn = (lang === 'en');
+
+        // AI search placeholder
+        var ph = document.getElementById('ai-placeholder');
+        if (ph) ph.placeholder = isEn
+            ? 'e.g. I run a tech company and need to register a trademark in the US for software...'
+            : '例如：我在深圳有一家科技公司，想在美国注册商标保护我们的品牌，预算大概 5000 元人民币...';
+
+        // AI search default value
+        var dv = document.getElementById('ai-default-val');
+        if (dv) dv.value = isEn
+            ? 'I need to register a trademark in the US for software products, prefer Chinese-speaking attorneys'
+            : '我需要在美国注册商标，主要是软件类产品，有中文服务优先';
+
+        // Dropdown display texts (the visible selected label)
+        var dropMap = {
+            'msel-country': [isEn ? 'All Countries' : '全部国家', isEn ? 'All Countries' : '全部国家'],
+            'msel-area':    [isEn ? 'All Areas' : '全部领域',     isEn ? 'All Areas' : '全部领域'],
+            'msel-feature': [isEn ? 'All Features' : '全部特色',  isEn ? 'All Features' : '全部特色'],
+        };
+        Object.keys(dropMap).forEach(function(id){
+            var wrap = document.getElementById(id);
+            if (!wrap) return;
+            var display = wrap.querySelector('.msel-display');
+            if (!display) return;
+            var checked = wrap.querySelectorAll('input[type=checkbox]:checked');
+            if (checked.length === 0) {
+                display.textContent = dropMap[id][0];
+            } else {
+                display.innerHTML = isEn ? checked.length + ' selected' : '已选 ' + checked.length + ' 项';
+            }
+        });
+
+        // Rating select
+        var ratingEl = document.getElementById('filter-rating');
+        if (ratingEl) {
+            var ratingMap = {
+                '': isEn ? 'All Ratings' : '全部评分',
+                '4.5+': isEn ? '⭐ 4.5+ Stars' : '⭐ 4.5 分以上',
+                '4.0': isEn ? '⭐ 4.0-4.5 Stars' : '⭐ 4.0 – 4.5 分',
+                '3.5': isEn ? '⭐ 3.5-4.0 Stars' : '⭐ 3.5 – 4.0 分',
+                '3.0': isEn ? '⭐ 3.0-3.5 Stars' : '⭐ 3.0 – 3.5 分',
+            };
+            Array.from(ratingEl.options).forEach(function(opt){
+                var key = opt.value || '';
+                if (ratingMap[key]) opt.textContent = ratingMap[key];
+            });
+        }
+
+        // Results summary
+        var summary = document.getElementById('filter-summary');
+        if (summary && summary.textContent) {
+            if (summary.textContent.includes('显示全部') || summary.textContent.includes('Show All')) {
+                summary.textContent = isEn ? 'Show All Firms' : '显示全部律所';
+            }
+        }
+    };
+})();
 </script>
 
 </body>

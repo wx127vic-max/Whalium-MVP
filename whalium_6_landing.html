@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -277,6 +277,63 @@
             });
         })();
     </script>
+    <script>
+/**
+ * Whalium · 全站语言切换库
+ * 所有页面引入此文件即可实现中英文切换
+ * 用法：页面 body 内所有需切换的文字用 <span class="t"> 包裹
+ *       并加 data-zh="中文" data-en="English" 属性
+ */
+
+(function() {
+    // 读取上次用户选择（跨页面记忆）
+    var STORAGE_KEY = 'whalium_lang';
+
+    // 每个页面声明自己的默认语言
+    // <html lang="zh"> 或 <html lang="en">
+    var pageLang = document.documentElement.getAttribute('lang') || 'zh';
+    var currentLang = localStorage.getItem(STORAGE_KEY) || pageLang;
+
+    function applyLang(lang) {
+        currentLang = lang;
+        localStorage.setItem(STORAGE_KEY, lang);
+        var idx = lang === 'zh' ? 0 : 1;
+
+        // 切换所有 .t span
+        document.querySelectorAll('.t').forEach(function(el) {
+            var txt = lang === 'zh' ? el.getAttribute('data-zh') : el.getAttribute('data-en');
+            if (txt !== null) el.textContent = txt;
+        });
+
+        // 切换所有 placeholder
+        document.querySelectorAll('[data-ph-zh]').forEach(function(el) {
+            el.placeholder = lang === 'zh' ? el.getAttribute('data-ph-zh') : el.getAttribute('data-ph-en');
+        });
+
+        // 更新按钮文字
+        var btn = document.getElementById('lang-btn');
+        if (btn) btn.textContent = lang === 'zh' ? 'EN' : '中文';
+
+        // 更新 html lang 属性
+        document.documentElement.setAttribute('lang', lang);
+    }
+
+    function toggleLang() {
+        applyLang(currentLang === 'zh' ? 'en' : 'zh');
+    }
+
+    // 页面加载完成后自动应用语言
+    document.addEventListener('DOMContentLoaded', function() {
+        applyLang(currentLang);
+    });
+
+    // 暴露全局
+    window.toggleLang = toggleLang;
+    window.applyLang  = applyLang;
+    window.getCurrentLang = function() { return currentLang; };
+})();
+
+    </script>
 </head>
 <body>
     <div class="demo-header">
@@ -290,7 +347,7 @@
         <h1 class="hero-title">连接全球<span class="hero-highlight">中国客户</span><br>拓展您的国际业务</h1>
         <p class="hero-subtitle">Whalium 是中国企业寻找海外法律服务的首选平台<br>已有 287 家全球律所入驻，每月服务 2,000+ 中国客户</p>
         <div class="cta-buttons">
-            <button class="btn-primary" onclick="location.href='whalium_7_submit-firm.html'">免费入驻</button>
+            <button class="btn-primary" onclick="location.href='whalium_7_submit-firm.html'"><span class="t" data-zh="免费入驻" data-en="List for Free">List for Free</span></button>
             <button class="btn-secondary" onclick="location.href='whalium_1_index.html'">了解详情</button>
         </div>
     </div>
@@ -338,7 +395,7 @@
                     <div class="pricing-feature"><span class="fi dis">✗</span>专属客服支持</div>
                     <div class="pricing-feature"><span class="fi dis">✗</span>季度行业报告</div>
                 </div>
-                <button class="btn-plan outline" onclick="location.href='whalium_7_submit-firm.html'">免费入驻</button>
+                <button class="btn-plan outline" onclick="location.href='whalium_7_submit-firm.html'"><span class="t" data-zh="免费入驻" data-en="List for Free">List for Free</span></button>
             </div>
 
             <!-- 初级会员 -->
@@ -388,7 +445,7 @@
 
     <div class="process-section">
         <div class="section-header">
-            <h2 class="section-title">入驻流程</h2>
+            <h2 class="section-title"><span class="t" data-zh="入驻流程" data-en="How It Works">How It Works</span></h2>
             <p class="section-subtitle">4步完成注册，开始接收中国客户</p>
         </div>
         <div class="process-steps">
