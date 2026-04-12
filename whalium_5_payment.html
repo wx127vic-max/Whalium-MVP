@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- Whalium: China-accessible fonts via loli.net mirror -->
+  <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style id="wh-fonts">
+    :root { --wh-font: 'Inter','Noto Sans SC','PingFang SC','Microsoft YaHei','Hiragino Sans GB',sans-serif; }
+    body,input,select,textarea,button { font-family: var(--wh-font) !important; }
+  
+    /* ── Universal Header ── */
+    .wh-header{background:linear-gradient(135deg,#0a1628 0%,#1a2e4a 100%);color:#fff;padding:0.85rem 2rem;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,0.35);}
+    .wh-logo{display:flex;align-items:center;gap:0.65rem;text-decoration:none;flex-shrink:0;}
+    .wh-brand{font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#fff 0%,#22ccde 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.01em;}
+    .wh-nav{display:flex;align-items:center;gap:0.15rem;margin:0 auto;}
+    .wh-nl{padding:0.4rem 0.8rem;color:rgba(255,255,255,0.68);font-size:0.84rem;border-radius:6px;text-decoration:none;transition:all 0.18s;white-space:nowrap;}
+    .wh-nl:hover{color:#fff;background:rgba(255,255,255,0.09);}
+    .wh-nl.active{color:#22ccde;font-weight:600;}
+    .wh-actions{display:flex;align-items:center;gap:0.55rem;flex-shrink:0;}
+    .wh-lang{background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.82);padding:0.3rem 0.65rem;border-radius:5px;font-size:0.79rem;cursor:pointer;font-family:inherit;}
+    .wh-login{border:1px solid rgba(255,255,255,0.28);color:rgba(255,255,255,0.82);padding:0.38rem 0.85rem;border-radius:6px;font-size:0.82rem;text-decoration:none;white-space:nowrap;}
+    .wh-login:hover{background:rgba(255,255,255,0.07);}
+    .wh-join{background:linear-gradient(135deg,#d4af37 0%,#f39c12 100%);color:#0a1628;padding:0.38rem 1rem;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;white-space:nowrap;}
+    .wh-join:hover{opacity:0.9;}
+    @media(max-width:700px){.wh-nav{display:none;}.wh-brand{font-size:1rem;}}
+
+    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Whalium - Payment</title>
+
+<style>
+:root{--navy:#1a2e4a;--teal:#0099aa;--bg:#eef0f3;--card:#fff;--border:#e0e5ea;--borderlt:#f0f2f4;--text:#1a2e4a;--muted:#5a7090;--faint:#8a9db0;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans SC','PingFang SC',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+
+/* HEADER */
+.hdr{background:var(--navy);height:60px;padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;}
+.logo-a{display:flex;align-items:center;gap:.85rem;text-decoration:none;}
+.lsvg{width:40px;height:40px;flex-shrink:0;}
+.bcol{display:flex;flex-direction:column;}
+.br1{display:flex;align-items:baseline;gap:.4rem;}
+.ben{font-size:1.2rem;font-weight:800;letter-spacing:.05em;background:linear-gradient(160deg,#fff 0%,#cce8f4 60%,#88cce8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.bcn{font-size:.92rem;font-weight:700;color:#fff;}
+.bsl{font-size:.5rem;font-style:italic;color:rgba(160,215,235,.62);margin-top:.1rem;}
+.hbk{color:rgba(255,255,255,.55);font-size:.8rem;text-decoration:none;}
+.hbk:hover{color:#fff;}
+
+/* PAGE */
+.page{max-width:980px;margin:0 auto;padding:2.2rem 1.5rem 4rem;display:grid;grid-template-columns:1fr 370px;gap:2rem;align-items:start;}
+
+/* BENEFITS */
+.bcard{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.bhd{background:linear-gradient(135deg,var(--navy),#1e3858);padding:1.4rem 1.7rem;}
+.bht{font-size:.98rem;font-weight:700;color:#fff;margin-bottom:.15rem;}
+.bhs{font-size:.7rem;color:rgba(200,225,240,.62);}
+.bbd{padding:1.2rem 1.7rem;}
+.brow{display:flex;align-items:flex-start;gap:.85rem;padding:.65rem 0;border-bottom:1px solid var(--borderlt);}
+.brow:last-child{border-bottom:none;}
+.bico{width:34px;height:34px;border-radius:7px;flex-shrink:0;background:linear-gradient(135deg,var(--teal),#006e9e);display:flex;align-items:center;justify-content:center;font-size:.95rem;}
+.bti{font-size:.84rem;font-weight:700;margin-bottom:.12rem;}
+.bde{font-size:.73rem;color:var(--muted);line-height:1.5;}
+.sstrip{display:grid;grid-template-columns:1fr 1fr;gap:.7rem;margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--border);}
+.spill{background:#f5f7fa;border-radius:8px;padding:.75rem;text-align:center;}
+.snum{font-size:1.45rem;font-weight:800;color:var(--teal);line-height:1;}
+.slbl{font-size:.66rem;color:var(--faint);margin-top:.2rem;}
+
+/* PAY CARD */
+.pcard{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:sticky;top:18px;}
+.pband{background:linear-gradient(135deg,var(--navy),#1e3858);padding:1.4rem 1.7rem;text-align:center;position:relative;}
+.pband::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--teal),transparent);}
+.plbl{font-size:.68rem;color:rgba(200,225,240,.58);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.45rem;}
+.pbig{font-size:2.6rem;font-weight:800;color:#fff;line-height:1;}
+.pbig span{font-size:1rem;font-weight:400;color:rgba(200,225,240,.65);}
+.porig{font-size:.8rem;color:rgba(200,225,240,.38);text-decoration:line-through;margin-top:.28rem;}
+.pbadge{display:inline-block;margin-top:.6rem;padding:.26rem .85rem;background:rgba(0,200,200,.16);border:1px solid rgba(0,200,200,.32);color:#7de8e8;border-radius:20px;font-size:.7rem;font-weight:600;}
+
+/* PAY BODY */
+.pbody{padding:1.3rem 1.5rem;}
+.ptimer{display:flex;align-items:center;justify-content:center;gap:.45rem;font-size:.74rem;color:var(--muted);margin-bottom:1.1rem;padding-bottom:1rem;border-bottom:1px solid var(--borderlt);}
+.ptval{font-weight:800;color:#c0392b;font-variant-numeric:tabular-nums;}
+.pglbl{font-size:.69rem;color:var(--faint);margin-bottom:.42rem;}
+.pgrp{background:#fff;border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:.9rem;}
+
+/* brand header */
+.pbhd{display:flex;align-items:center;gap:.6rem;padding:.8rem 1rem .45rem;}
+.blogob{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.pbnm{font-size:.88rem;font-weight:700;color:var(--text);}
+
+/* option rows */
+.popt{display:flex;align-items:center;gap:.65rem;padding:.68rem 1rem .68rem 2.6rem;border-top:1px solid var(--borderlt);cursor:pointer;transition:background .13s;user-select:none;}
+.popt:hover{background:#fafbfc;}
+.popt.sel{background:rgba(0,153,170,.04);}
+.pmth{display:flex;align-items:center;gap:.65rem;padding:.68rem 1rem;border-top:1px solid var(--borderlt);cursor:pointer;transition:background .13s;user-select:none;}
+.pmth:hover{background:#fafbfc;}
+.pmth.sel{background:rgba(0,153,170,.04);}
+.mlogo{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.olbl{font-size:.84rem;color:var(--text);flex:1;}
+.ostag{font-size:.66rem;color:var(--faint);white-space:nowrap;}
+
+/* radio */
+.rdot{width:20px;height:20px;border-radius:50%;border:2px solid #ccd0d8;flex-shrink:0;position:relative;transition:border-color .15s,background .15s;}
+.rdot.on{border-color:var(--teal);background:var(--teal);}
+.rdot.on::after{content:'';position:absolute;top:50%;left:50%;width:7px;height:7px;border-radius:50%;background:#fff;transform:translate(-50%,-50%) scale(0);animation:dpop .18s ease forwards;}
+@keyframes dpop{to{transform:translate(-50%,-50%) scale(1);}}
+
+/* expand */
+.pexp{display:none;border-top:1px solid var(--borderlt);background:#f8fafb;animation:eslide .2s ease;}
+.pexp.open{display:block;}
+@keyframes eslide{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+
+/* QR */
+.qrblk{display:flex;align-items:center;gap:1rem;padding:.9rem 1rem .9rem 2.6rem;}
+.qrfrm{position:relative;flex-shrink:0;border:1px solid #e0e5ea;border-radius:7px;overflow:hidden;background:#fff;}
+.qrscan{position:absolute;left:0;right:0;height:2px;top:0;animation:sbar 2.2s ease-in-out infinite;}
+.qrscan.ali{background:linear-gradient(90deg,transparent,#1677ff,transparent);}
+.qrscan.wx{background:linear-gradient(90deg,transparent,#07c160,transparent);}
+@keyframes sbar{0%{top:0}50%{top:calc(100% - 2px)}100%{top:0}}
+.qrti{font-size:.86rem;font-weight:700;margin-bottom:.22rem;}
+.qrhi{font-size:.7rem;color:var(--muted);margin-bottom:.45rem;}
+.qrcd{display:flex;align-items:center;gap:.32rem;font-size:.68rem;color:var(--faint);}
+.bdot{width:6px;height:6px;border-radius:50%;background:#4caf50;flex-shrink:0;animation:blink 1.2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* forms */
+.iform{display:flex;flex-direction:column;gap:.55rem;padding:.85rem 1rem .85rem 2.6rem;}
+.iform.mf{padding-left:1rem;}
+.irow{display:flex;gap:.5rem;}
+.irow .igrp{flex:1;}
+.igrp{display:flex;flex-direction:column;gap:.2rem;}
+.ilbl{font-size:.65rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.ilbl small{font-weight:400;color:var(--faint);text-transform:none;letter-spacing:0;}
+.ifld{padding:.52rem .72rem;border:1.5px solid var(--border);border-radius:7px;font-size:.82rem;color:var(--text);background:#fff;outline:none;transition:border-color .16s;font-family:inherit;}
+.ifld:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,153,170,.08);}
+.ifld::placeholder{color:rgba(90,112,144,.35);}
+.ibrands{display:flex;gap:.28rem;margin-top:.1rem;flex-wrap:wrap;}
+.ibrand{font-size:.56rem;font-weight:800;padding:.09rem .38rem;border:1px solid var(--border);border-radius:3px;color:var(--faint);letter-spacing:.04em;}
+.snote2{background:rgba(99,91,255,.07);border:1px solid rgba(99,91,255,.17);border-radius:6px;padding:.48rem .65rem;font-size:.7rem;color:#4b43cc;}
+.ppnote{font-size:.74rem;color:var(--muted);line-height:1.65;margin-bottom:.3rem;}
+
+/* sep & more */
+.psep{height:1px;background:var(--borderlt);margin:.2rem 0;}
+.pmlink{padding:.5rem 1rem .55rem 2.6rem;font-size:.73rem;color:var(--faint);cursor:pointer;border-top:1px solid var(--borderlt);display:block;}
+.pmlink:hover{color:var(--teal);}
+.moretog{display:flex;align-items:center;justify-content:center;gap:.38rem;padding:.65rem 1rem;border-top:1px solid var(--borderlt);font-size:.74rem;color:var(--teal);cursor:pointer;transition:background .13s;}
+.moretog:hover{background:#fafbfc;}
+.marrow{transition:transform .22s;display:inline-block;font-size:.62rem;}
+.marrow.up{transform:rotate(180deg);}
+
+/* pay button */
+.pbtn{width:100%;padding:.88rem;margin-top:.75rem;border:none;border-radius:10px;font-size:.94rem;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:.02em;font-family:inherit;}
+.pbtn:hover:not(:disabled){filter:brightness(1.07);transform:translateY(-1px);}
+.pbtn:disabled{cursor:not-allowed;transform:none!important;}
+.pbtn.idle{background:#e8ecf0;color:var(--faint);box-shadow:none;}
+.pbtn.alipay{background:linear-gradient(135deg,#1677ff,#0e5fd8);color:#fff;box-shadow:0 4px 14px rgba(22,119,255,.26);}
+.pbtn.wechat{background:linear-gradient(135deg,#07c160,#059b4e);color:#fff;box-shadow:0 4px 14px rgba(7,193,96,.26);}
+.pbtn.card{background:linear-gradient(135deg,var(--teal),#006e9e);color:#fff;box-shadow:0 4px 14px rgba(0,153,170,.26);}
+.pbtn.stripe{background:linear-gradient(135deg,#635BFF,#4B44CC);color:#fff;box-shadow:0 4px 14px rgba(99,91,255,.26);}
+.pbtn.paypal{background:linear-gradient(135deg,#003087,#0070ba);color:#fff;}
+.secnote{text-align:center;margin-top:.58rem;font-size:.65rem;color:var(--faint);}
+
+/* MODAL */
+#modal{display:none;position:fixed;inset:0;z-index:999;background:rgba(10,22,40,.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;}
+#modal.show{display:flex;}
+.mcard{background:#fff;border-radius:18px;width:100%;max-width:390px;padding:2.6rem 1.9rem 2rem;text-align:center;box-shadow:0 28px 70px rgba(0,0,0,.2);animation:popin .36s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes popin{from{transform:scale(.65);opacity:0}to{transform:scale(1);opacity:1}}
+.micon{width:72px;height:72px;border-radius:50%;margin:0 auto 1.2rem;background:linear-gradient(135deg,#00d084,#00a896);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,200,140,.36);}
+.chksvg{width:34px;height:34px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;}
+.chkp{stroke-dasharray:52;stroke-dashoffset:52;animation:drawck .5s ease .32s forwards;}
+@keyframes drawck{to{stroke-dashoffset:0}}
+.mtit{font-size:1.38rem;font-weight:800;margin-bottom:.38rem;}
+.msub{font-size:.82rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.65;}
+.mrec{background:#f7f9fb;border-radius:8px;padding:.9rem 1.1rem;margin-bottom:1.4rem;text-align:left;}
+.mrow{display:flex;justify-content:space-between;padding:.28rem 0;font-size:.8rem;}
+.mrow .k{color:var(--faint);}
+.mrow .v{color:var(--text);font-weight:600;}
+.mrow.hi .v{color:var(--teal);}
+.mbtn{width:100%;padding:.82rem;background:linear-gradient(135deg,var(--teal),#006e9e);color:#fff;border:none;border-radius:9px;font-size:.92rem;font-weight:700;cursor:pointer;font-family:inherit;}
+.mbtn:hover{filter:brightness(1.08);}
+
+/* FOOTER */
+.footer{text-align:center;padding:1.4rem;font-size:.7rem;color:var(--faint);}
+</style>
+<script>
+// ── Whalium 全站双语切换库 ────────────────────────────────────
+// 每个页面在 <head> 中内联此脚本即可获得切换能力
+// 页面设 <html lang="zh-CN"> 或 <html lang="zh-CN"> 决定默认语言
+// 按钮加 id="lang-btn" onclick="toggleLang()"
+
+(function () {
+  var STORE_KEY = 'whalium_lang';
+
+  // 读取用户上次选择；若无则用页面 html[lang] 属性
+  function getDefault() {
+    try { var s = localStorage.getItem(STORE_KEY); if (s) return s; } catch(e){}
+    return (document.documentElement.lang || 'zh').startsWith('zh') ? 'zh' : 'en';
+  }
+
+  // 对页面所有 <span class="t"> 切换显示内容
+  function applyLang(lang) {
+    var isEn = (lang === 'en');
+    // 切换文字
+    document.querySelectorAll('span.t').forEach(function(el) {
+      el.textContent = isEn ? (el.dataset.en || el.dataset.zh) : (el.dataset.zh || el.dataset.en);
+    });
+    // 切换 placeholder
+    document.querySelectorAll('[data-ph-zh]').forEach(function(el) {
+      el.placeholder = isEn ? (el.dataset.phEn || el.dataset.phZh) : el.dataset.phZh;
+    });
+    // 切换 value (仅 input[data-val-zh])
+    document.querySelectorAll('[data-val-zh]').forEach(function(el) {
+      el.value = isEn ? (el.dataset.valEn || '') : el.dataset.valZh;
+    });
+    // 更新按钮文字
+    var btn = document.getElementById('lang-btn');
+    if (btn) btn.textContent = isEn ? '中文' : 'EN';
+    // 存储
+    try { localStorage.setItem(STORE_KEY, lang); } catch(e){}
+    window._whaliumLang = lang;
+  }
+
+  // 切换
+  window.toggleLang = function() {
+    var cur = window._whaliumLang || getDefault();
+    applyLang(cur === 'zh' ? 'en' : 'zh');
+  };
+
+  window.applyLang = applyLang;
+  window.getCurrentLang = function() { return window._whaliumLang || getDefault(); };
+
+  // 页面加载时执行
+  document.addEventListener('DOMContentLoaded', function() {
+    applyLang(getDefault());
+  });
+})();
+
+</script>
+<style id="safe-fonts">
+/* Safe fonts for China - no external CDN */
+:root { --font: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Helvetica Neue',Arial,sans-serif; }
+body { font-family: var(--font) !important; }
+h1,h2,h3,h4,.brand-name,.hero-title,.demo-title,.pricing-price,.stat-value,
+.section-title,.btn,.btn-primary,.btn-secondary,.btn-plan { 
+    font-family: var(--font) !important; 
+}
+</style>
+<script id="lang-core">(function(){
+  var K = 'whalium_lang';
+
+  function detect() {
+    try {
+      var s = localStorage.getItem(K);
+      if (s === 'zh' || s === 'en') return s;
+    } catch(e) {}
+    return 'zh';
+  }
+
+  function apply(lang) {
+    var en = (lang === 'en');
+    document.querySelectorAll('span.t').forEach(function(el) {
+      el.textContent = en ? (el.dataset.en || el.dataset.zh) : (el.dataset.zh || el.dataset.en);
+    });
+    document.querySelectorAll('[data-ph-zh]').forEach(function(el) {
+      el.placeholder = en ? (el.dataset.phEn || el.dataset.phZh) : el.dataset.phZh;
+    });
+    var btn = document.getElementById('lang-btn');
+    if (btn) btn.textContent = en ? '中文' : 'EN';
+    document.documentElement.setAttribute('lang', en ? 'en' : 'zh-CN');
+    try { localStorage.setItem(K, lang); } catch(e) {}
+    window._wlang = lang;
+  }
+
+  window.toggleLang = function() { apply(window._wlang === 'zh' ? 'en' : 'zh'); };
+  window.applyLang  = apply;
+  window._detectLang = detect;
+  document.addEventListener('DOMContentLoaded', function() { apply(detect()); });
+})();</script>
+<style id="lang-btn-style">
+#lang-btn{
+  background:transparent;border:1.5px solid rgba(255,255,255,0.55);
+  color:inherit;padding:.3rem .85rem;border-radius:6px;cursor:pointer;
+  font-size:.8rem;font-weight:700;letter-spacing:.04em;
+  transition:all .2s;min-width:42px;vertical-align:middle;
+}
+#lang-btn:hover{background:rgba(255,255,255,0.15);}
+</style>
+
+<script id="plan-audience">
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
+    var bar = document.createElement('div');
+    bar.style.cssText = 'padding:.55rem 1.5rem;font-size:.78rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.08);';
+    
+    if(plan === 'consumer'){
+      bar.style.background = 'rgba(212,175,55,.08)';
+      bar.innerHTML = '🇨🇳 <span class="t" data-zh="中国用户订阅 · 解锁全球律所完整资料" data-en="Client subscription · Unlock full firm contacts & all reviews">中国用户订阅 · 解锁全球律所完整资料</span> &nbsp;|&nbsp; <strong style="color:#d4af37">¥365/年</strong>';
+    } else if(plan === 'starter'){
+      bar.style.background = 'rgba(0,200,200,.06)';
+      bar.innerHTML = '🌍 <strong>Firm Starter Plan</strong> &nbsp;|&nbsp; Get listed · Receive up to 30 inquiries/month · Priority search ranking &nbsp;|&nbsp; <strong style="color:#00c8c8">¥2,800/yr</strong>';
+    } else {
+      bar.style.background = 'rgba(0,200,200,.08)';
+      bar.innerHTML = '🏆 <strong>Firm Professional Plan</strong> &nbsp;|&nbsp; Top search placement · Unlimited inquiries · AI Priority Match · Full analytics &nbsp;|&nbsp; <strong style="color:#00c8c8">¥8,000/yr</strong>';
+    }
+    
+    var firstChild = document.body.firstChild;
+    document.body.insertBefore(bar, firstChild);
+  });
+})();
+</script>
+<script id="plan-reader">
+(function(){
+  var params = new URLSearchParams(location.search);
+  var plan   = params.get('plan') || 'starter';
+  var USD    = 7.25;
+  /* Price table:
+     consumer       ¥365/yr    (demand-side: unlock firm details)
+     starter (firm) ¥2,800/yr  (firm listing: Starter)
+     premium (firm) ¥8,000/yr  (firm listing: Professional)     */
+  var PLANS = {
+    consumer: { zh:'年度会员',       en:'Annual Membership',   price:365,  orig:999,  badge:'💎',
+                tz:'解锁全球律所完整联系方式与评价', te:'Unlock full contacts & all reviews for every firm' },
+    starter:  { zh:'律所初级会员',   en:'Firm Starter Plan',   price:2800, orig:4200, badge:'🚀',
+                tz:'快速建立海外法律存在感',         te:'Get listed & start receiving Chinese client inquiries' },
+    premium:  { zh:'律所高级会员',   en:'Firm Professional',   price:8000, orig:12000, badge:'🏆',
+                tz:'专业团队首选，全面曝光',          te:'Priority ranking, full analytics & dedicated support' }
+  };
+  var p = PLANS[plan] || PLANS.starter;
+  window._selectedPlan = plan;
+  window._planData = p;
+
+  function fy(n){ return '¥' + n.toLocaleString(); }
+  function fu(n){ return '≈ USD $' + Math.round(n/USD).toLocaleString(); }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    var lang='zh'; try{ lang=localStorage.getItem('whalium_lang')||'zh'; }catch(e){}
+    var en = lang==='en';
+
+    var pbig = document.querySelector('.pbig');
+    if(pbig) pbig.innerHTML = fy(p.price)+'<span> /年</span>';
+
+    var porig = document.querySelector('.porig');
+    if(porig) porig.innerHTML = '<span class="t" data-zh="原价 '+fy(p.orig)+'" data-en="Was '+fy(p.orig)+'">'+(en?'Was ':'原价 ')+fy(p.orig)+'</span>';
+
+    // USD equiv line
+    var eq = document.getElementById('usd-eq');
+    if(!eq){
+      eq = document.createElement('div'); eq.id='usd-eq';
+      eq.style.cssText='font-size:.76rem;color:rgba(180,210,230,.55);margin-top:.15rem;';
+      if(pbig&&pbig.parentNode) pbig.parentNode.insertBefore(eq, pbig.nextSibling);
+    }
+    eq.innerHTML='<span class="t" data-zh="约合 '+fu(p.price)+' · 按人民币结算" data-en="'+fu(p.price)+' · Billed in CNY">'+(en?fu(p.price)+' · Billed in CNY':'约合 '+fu(p.price)+' · 按人民币结算')+'</span>';
+
+    var bht=document.querySelector('.bht');
+    if(bht) bht.innerHTML=p.badge+' <span class="t" data-zh="'+p.zh+'专享权益" data-en="'+p.en+' Benefits">'+(en?p.en+' Benefits':p.zh+'专享权益')+'</span>';
+
+    var bhs=document.querySelector('.bhs');
+    if(bhs) bhs.innerHTML='<span class="t" data-zh="'+p.tz+'" data-en="'+p.te+'">'+(en?p.te:p.tz)+'</span>';
+
+    // Top bar
+    var bar=document.getElementById('plan-top-bar');
+    if(!bar){ bar=document.createElement('div'); bar.id='plan-top-bar';
+      bar.style.cssText='background:rgba(0,200,200,.08);border-bottom:1px solid rgba(0,200,200,.2);padding:.45rem 1rem;text-align:center;font-size:.8rem;color:rgba(0,200,200,.9);';
+      document.body.insertBefore(bar,document.body.firstChild); }
+    bar.innerHTML=(en?'Paying for: ':'您正在购买：')+p.badge+' <strong>'+(en?p.en:p.zh)+'</strong> &nbsp; '+fy(p.price)+'/年 <span style="opacity:.5;font-size:.7rem">('+fu(p.price)+')</span>';
+
+    document.title=(en?p.en:p.zh)+' — Whalium';
+    if(window.applyLang) window.applyLang(lang);
+  });
+})();
+</script>
+<style id="back-nav-style">
+.back-nav{display:flex;align-items:center;gap:.4rem;padding:.5rem 1rem;
+font-size:.82rem;color:var(--teal,#00c8c8);cursor:pointer;
+text-decoration:none;opacity:.85;transition:opacity .2s;}
+.back-nav:hover{opacity:1;}
+.back-nav::before{content:'←';font-size:1rem;}
+</style>
+<style id="mobile-responsive">
+/* ═══════════════════════════════════════════
+   WHALIUM v5 — GLOBAL MOBILE RESPONSIVE CSS
+   Injected into all 8 pages
+═══════════════════════════════════════════ */
+
+/* ── Reset fixed widths ── */
+html, body {
+  max-width: 100% !important;
+  width: 100% !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box;
+}
+*, *::before, *::after { box-sizing: border-box; }
+
+/* ── Header responsive ── */
+@media (max-width: 768px) {
+  .header, .hdr {
+    padding: 0.8rem 1rem !important;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .header-actions {
+    gap: 0.4rem !important;
+  }
+  .btn, .btn-login, .btn-register, .btn-join {
+    padding: 0.45rem 0.8rem !important;
+    font-size: 0.78rem !important;
+  }
+  .brand-name, .logo-text {
+    font-size: 1.1rem !important;
+  }
+  .whalium-logo, .logo {
+    width: 36px !important;
+    height: 36px !important;
+  }
+}
+
+/* ── Containers ── */
+@media (max-width: 768px) {
+  .search-section, .page-container, .main-content, .page-content,
+  .content, .main-wrap, .benefits-wrap, .pricing-wrap, .form-outer,
+  .register-card, .login-card, .payment-wrap, .pay-body, .dashboard-layout {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0.8rem !important;
+    padding-right: 0.8rem !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  body {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* ── Firm card ── */
+@media (max-width: 768px) {
+  .firm-card {
+    padding: 1rem !important;
+    margin-bottom: 0.8rem !important;
+    border-radius: 8px !important;
+  }
+  .firm-name { font-size: 1.1rem !important; }
+  .firm-name-cn { font-size: 0.85rem !important; }
+  .firm-info { font-size: 0.82rem !important; }
+  .firm-areas { flex-wrap: wrap !important; gap: 0.35rem !important; }
+  .firm-stats { flex-wrap: wrap !important; gap: 0.8rem !important; }
+  .firm-features { flex-wrap: wrap !important; gap: 0.8rem !important; }
+  .firm-actions {
+    display: grid !important;
+    grid-template-columns: 1fr auto auto !important;
+    gap: 0.4rem !important;
+  }
+  .btn-detail { font-size: 0.82rem !important; }
+  .btn-action { padding: 0.6rem 0.8rem !important; font-size: 0.78rem !important; }
+  .firm-badges { flex-wrap: wrap !important; }
+}
+
+/* ── Filter grid: 4-col → 2-col → 1-col ── */
+@media (max-width: 768px) {
+  .filters {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.6rem !important;
+  }
+  .search-container { padding: 1rem !important; }
+}
+@media (max-width: 480px) {
+  .filters { grid-template-columns: 1fr !important; }
+}
+
+/* ── Search section padding ── */
+@media (max-width: 768px) {
+  .search-section { padding: 1rem !important; }
+}
+
+/* ── Font sizes: enforce minimum 12px ── */
+@media (max-width: 768px) {
+  .badge, .area-tag, .feature, .stat-item, .firm-info,
+  .filter-group label, .results-count,
+  small, .small, .text-sm, .note, .footnote {
+    font-size: 0.78rem !important;
+  }
+}
+
+/* ── Touch targets: min 44×44px ── */
+@media (max-width: 768px) {
+  button, .btn, a.btn, input[type="submit"],
+  .btn-detail, .btn-action, .btn-login, .btn-register {
+    min-height: 40px;
+  }
+  input, select, textarea {
+    font-size: 16px !important; /* prevents iOS zoom */
+    min-height: 42px;
+    padding: 0.6rem 0.75rem !important;
+  }
+}
+
+/* ── Multi-select dropdowns ── */
+@media (max-width: 768px) {
+  .msel-wrap, .filter-dropdown {
+    max-height: 200px;
+  }
+}
+
+/* ── Lang toggle button ── */
+@media (max-width: 768px) {
+  #lang-btn {
+    font-size: 0.75rem !important;
+    padding: 0.3rem 0.6rem !important;
+  }
+}
+
+
+@media (max-width:768px){
+  .pay-wrap,.pay-body{max-width:100%!important;padding:0.7rem!important;}
+  .payment-methods{grid-template-columns:1fr 1fr!important;gap:0.4rem!important;}
+  .pay-option{padding:0.5rem!important;font-size:0.78rem!important;}
+  .pbig{font-size:2rem!important;}
+  .bbd{padding:0.8rem!important;}
+  .brow{flex-wrap:wrap!important;}
+  #pbtn{width:100%!important;padding:0.9rem!important;}
+}
+
+</style>
+<style id="font-min-fix">
+*{-webkit-text-size-adjust:100%;text-size-adjust:100%;}
+@media (max-width:768px){
+  :root{font-size:14px!important;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ Universal Header ══ -->
+<div class="wh-header">
+  <a href="whalium_1_index.html" class="wh-logo">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:38px;height:38px;flex-shrink:0;">
+      <defs>
+        <radialGradient id="wbgH" cx="45%" cy="45%" r="60%"><stop offset="0%" stop-color="#1c3d5c"/><stop offset="100%" stop-color="#070f1c"/></radialGradient>
+        <linearGradient id="wtH" x1="15%" y1="5%" x2="85%" y2="95%"><stop offset="0%" stop-color="#80eef8"/><stop offset="40%" stop-color="#22ccde"/><stop offset="100%" stop-color="#0a8eb0"/></linearGradient>
+        <filter id="glH"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <circle cx="100" cy="100" r="88" fill="url(#wbgH)"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#5598ba" stroke-width="5" stroke-dasharray="478 78" stroke-dashoffset="-20" stroke-linecap="round"/>
+      <path d="M100 130 C85 140,62 147,44 137 C29 128,32 110,44 101 C56 92,76 97,100 110" fill="url(#wtH)" filter="url(#glH)"/>
+      <path d="M100 130 C115 140,138 147,156 137 C171 128,168 110,156 101 C144 92,124 97,100 110" fill="url(#wtH)" filter="url(#glH)"/>
+      <path d="M100 110 C94 120,94 127,100 130 C106 127,106 120,100 110" fill="#070f1c"/>
+      <path d="M100 110 C96 95,93 78,100 67 C107 78,104 95,100 110" fill="url(#wtH)" opacity="0.88" filter="url(#glH)"/>
+    </svg>
+    <span class="wh-brand">Whalium</span>
+  </a>
+  <nav class="wh-nav">
+    <a href="whalium_1_index.html" class="wh-nl"><span class="t" data-zh="律所搜索" data-en="Find Firms">律所搜索</span></a>
+    <a href="whalium_6_landing.html" class="wh-nl"><span class="t" data-zh="律所入驻" data-en="Join as Firm">律所入驻</span></a>
+    <a href="whalium_9_about.html" class="wh-nl"><span class="t" data-zh="关于我们" data-en="About">关于我们</span></a>
+  </nav>
+  <div class="wh-actions">
+    <button class="wh-lang" id="lang-btn" onclick="toggleLang()">EN</button>
+    <a href="whalium_2_login.html" class="wh-login"><span class="t" data-zh="登录" data-en="Login">登录</span></a>
+    <a href="whalium_6_landing.html" class="wh-join"><span class="t" data-zh="律所入驻" data-en="Join Us">律所入驻</span></a>
+  </div>
+</div>
+<a class="back-nav" href="whalium_1_index.html"><span class="t" data-zh="返回律所列表" data-en="Back to Listings">返回律所列表</span></a>
+
+<div class="page">
+
+  <!-- LEFT -->
+  <div class="bcard">
+    <div class="bhd">
+      <div class="bht">💎 <span class="t" data-zh="年度会员专享权益" data-en="Annual Member Benefits">年度会员专享权益</span></div>
+      <div class="bhs"><span class="t" data-zh="开通后立即生效 · 覆盖全球 287 家律所" data-en="Effective immediately · 287 global firms covered">开通后立即生效 · 覆盖全球 287 家律所</span></div>
+    </div>
+    <div class="bbd">
+      <div class="brow"><div class="bico">📞</div><div><div class="bti"><span class="t" data-zh="完整联系方式" data-en="Full Contact Info">完整联系方式</span></div><div class="bde"><span class="t" data-zh="直接获取律师邮箱、电话，无需通过平台中转" data-en="Get attorney email & phone directly">直接获取律师邮箱、电话，无需通过平台中转</span></div></div></div>
+      <div class="brow"><div class="bico">💬</div><div><div class="bti"><span class="t" data-zh="全部客户评价" data-en="All Client Reviews">全部客户评价</span></div><div class="bde"><span class="t" data-zh="查看所有真实评价，含差评和避雷指南" data-en="See all real reviews including critical ones">查看所有真实评价，含差评和避雷指南</span></div></div></div>
+      <div class="brow"><div class="bico">💰</div><div><div class="bti"><span class="t" data-zh="真实报价透明" data-en="Transparent Pricing">真实报价透明</span></div><div class="bde"><span class="t" data-zh="详细报价说明、隐藏费用提醒、历史价格趋势" data-en="Detailed quotes, hidden fees & price history">详细报价说明、隐藏费用提醒、历史价格趋势</span></div></div></div>
+      <div class="brow"><div class="bico">🤖</div><div><div class="bti"><span class="t" data-zh="AI 智能匹配" data-en="AI Smart Matching">AI 智能匹配</span></div><div class="bde"><span class="t" data-zh="无限次 AI 检索，获取个性化律所推荐报告" data-en="Unlimited AI search & personalized recommendations">无限次 AI 检索，获取个性化律所推荐报告</span></div></div></div>
+      <div class="brow"><div class="bico">📊</div><div><div class="bti"><span class="t" data-zh="季度行业报告" data-en="Quarterly Reports">季度行业报告</span></div><div class="bde"><span class="t" data-zh="海外 IP 动态、政策解读，掌握最新资讯" data-en="IP updates, policy analysis & latest news">海外 IP 动态、政策解读，掌握最新资讯</span></div></div></div>
+      <div class="brow"><div class="bico">👥</div><div><div class="bti"><span class="t" data-zh="会员专属社群" data-en="Members Community">会员专属社群</span></div><div class="bde"><span class="t" data-zh="加入微信会员群，与出海企业家交流经验" data-en="Join our WeChat group for overseas entrepreneurs">加入微信会员群，与出海企业家交流经验</span></div></div></div>
+      <div class="sstrip">
+        <div class="spill"><div class="snum">287</div><div class="slbl"><span class="t" data-zh="全球律所" data-en="Global Firms">全球律所</span></div></div>
+        <div class="spill"><div class="snum">1,200+</div><div class="slbl"><span class="t" data-zh="真实评价" data-en="Real Reviews">真实评价</span></div></div>
+        <div class="spill"><div class="snum">42</div><div class="slbl"><span class="t" data-zh="覆盖国家" data-en="Countries">覆盖国家</span></div></div>
+        <div class="spill"><div class="snum">98%</div><div class="slbl"><span class="t" data-zh="续费率" data-en="Renewal Rate">续费率</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="pcard">
+    <div class="pband">
+      <div class="plbl"><span class="t" data-zh="年度会员" data-en="Annual Plan">年度会员</span></div>
+      <div class="pbig">¥365<span> /年</span></div>
+      <div class="porig"><span class="t" data-zh="原价 ¥999" data-en="Was ¥999">原价 ¥999</span></div>
+      <div class="pbadge"><span class="t" data-zh="🎉 限时立省 ¥634" data-en="🎉 Save ¥634 Today">🎉 限时立省 ¥634</span></div>
+    </div>
+
+    <div class="pbody">
+      <div class="ptimer" style="background:rgba(0,200,100,0.08);border:1px solid rgba(0,200,100,0.2);border-radius:8px;padding:0.6rem 1rem;margin-bottom:0.8rem;display:flex;align-items:center;gap:0.6rem;">
+        <span style="font-size:1rem;">👥</span>
+        <span style="font-size:0.82rem;color:rgba(220,235,250,0.9);">
+            <span class="t" <span id="social-proof-txt"></span>
+        <script>
+        (function(){
+          function setSP(){
+            var el=document.getElementById('social-proof-txt');
+            if(!el) return;
+            var zh='本周已有 <strong style="color:#00c864;">43</strong> 位出海企业主开通会员';
+            var en='<strong style="color:#00c864;">43</strong> founders joined this week';
+            el.innerHTML = (window._wlang==='en') ? en : zh;
+          }
+          document.addEventListener('DOMContentLoaded', setSP);
+          var orig = window.applyLang;
+          window.applyLang = function(l){ if(orig) orig(l); setSP(); };
+        })();
+        </script>
+        </span>
+        <span style="margin-left:auto;font-size:0.72rem;color:rgba(180,200,220,0.5);">
+            <span class="t" data-zh="● 实时数据" data-en="● Live">● 实时数据</span>
+        </span>
+      </div>
+
+      <!-- 国内支付 -->
+      <!-- Specific unlock preview -->
+    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:1rem 1.1rem;margin-bottom:1.2rem;">
+      <div style="font-size:0.75rem;font-weight:700;color:rgba(0,200,200,0.8);margin-bottom:0.7rem;letter-spacing:0.06em;text-transform:uppercase;">
+        <span class="t" data-zh="🔓 开通后您将立即看到" data-en="🔓 Unlocked immediately after payment">🔓 开通后您将立即看到</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:0.5rem;">
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.8rem;color:rgba(220,235,250,0.85);">
+          <span style="color:#00c864;flex-shrink:0;">✓</span>
+          <span><span class="t" data-zh="Morrison IP Law 真实邮箱 &amp; 律师直线：" data-en="Morrison IP Law direct email &amp; attorney phone:">Morrison IP Law 真实邮箱 &amp; 律师直线：</span> <span style="background:rgba(255,255,255,0.07);border-radius:4px;padding:0.1rem 0.5rem;font-family:monospace;color:rgba(150,200,220,0.6);letter-spacing:0.05em;">d.morri***@morrison-ip.com</span></span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.8rem;color:rgba(220,235,250,0.85);">
+          <span style="color:#00c864;flex-shrink:0;">✓</span>
+          <span><span class="t" data-zh="隐藏的真实差评内容（共2条）：" data-en="Hidden critical reviews (2):">隐藏的真实差评内容（共2条）：</span> <span style="color:rgba(150,180,200,0.5);font-size:0.75rem;font-style:italic;">"<span class="t" data-zh="律师中途失联3周，期间邮件无回复……" data-en="Attorney unreachable for 3 weeks, emails ignored…">律师中途失联3周，期间邮件无回复……</span>"</span></span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.8rem;color:rgba(220,235,250,0.85);">
+          <span style="color:#00c864;flex-shrink:0;">✓</span>
+          <span><span class="t" data-zh="⚠️ 隐藏费用提醒：USPTO驳回后追加费用约$500，多数律所未提前告知" data-en="⚠️ Hidden fee: ~$500 additional after USPTO rejection — rarely disclosed upfront">⚠️ 隐藏费用提醒：USPTO驳回后追加费用约$500，多数律所未提前告知</span></span>
+        </div>
+        <div style="display:flex;align-items:flex-start;gap:0.6rem;font-size:0.8rem;color:rgba(220,235,250,0.85);">
+          <span style="color:#00c864;flex-shrink:0;">✓</span>
+          <span><span class="t" data-zh="全球 286 家其他律所的同等信息 · AI智能匹配报告" data-en="286 more global firms with same data · AI match reports">全球 286 家其他律所的同等信息 · AI智能匹配报告</span></span>
+        </div>
+      </div>
+    </div>
+      <p class="pglbl"><span class="t" data-zh="国内支付方式" data-en="China Payment">国内支付方式</span></p>
+      <div class="pgrp">
+
+        <!-- 支付宝 品牌头 -->
+        <div class="pbhd">
+          <div class="blogob" style="background:#1677FF">
+            <svg viewBox="0 0 28 28" width="20" height="20"><text x="14" y="19" text-anchor="middle" font-size="14" font-weight="900" fill="white" font-family="sans-serif">支</text></svg>
+          </div>
+          <span class="pbnm"><span class="t" data-zh="支付宝" data-en="Alipay">支付宝</span></span>
+        </div>
+
+        <div class="popt" id="ro-aq" onclick="pick('aq')">
+          <span class="olbl"><span class="t" data-zh="扫码支付" data-en="Scan to Pay">扫码支付</span></span>
+          <span class="rdot" id="rd-aq"></span>
+        </div>
+        <div class="pexp" id="ex-aq">
+          <div class="qrblk">
+            <div class="qrfrm">
+              <svg viewBox="0 0 108 108" width="108" height="108" xmlns="http://www.w3.org/2000/svg">
+                <rect width="108" height="108" fill="white"/>
+                <rect x="5" y="5" width="28" height="28" rx="3" fill="none" stroke="#1677ff" stroke-width="2.2"/><rect x="10" y="10" width="18" height="18" rx="1.5" fill="#1677ff"/>
+                <rect x="75" y="5" width="28" height="28" rx="3" fill="none" stroke="#1677ff" stroke-width="2.2"/><rect x="80" y="10" width="18" height="18" rx="1.5" fill="#1677ff"/>
+                <rect x="5" y="75" width="28" height="28" rx="3" fill="none" stroke="#1677ff" stroke-width="2.2"/><rect x="10" y="80" width="18" height="18" rx="1.5" fill="#1677ff"/>
+                <rect x="38" y="5" width="5" height="5" fill="#1677ff"/><rect x="46" y="5" width="5" height="5" fill="#1677ff"/><rect x="54" y="5" width="5" height="5" fill="#1677ff"/><rect x="62" y="5" width="5" height="5" fill="#1677ff"/>
+                <rect x="38" y="13" width="5" height="5" fill="#1677ff"/><rect x="54" y="13" width="5" height="5" fill="#1677ff"/>
+                <rect x="46" y="21" width="5" height="5" fill="#1677ff"/><rect x="62" y="21" width="5" height="5" fill="#1677ff"/>
+                <rect x="38" y="29" width="5" height="5" fill="#1677ff"/><rect x="54" y="29" width="5" height="5" fill="#1677ff"/>
+                <rect x="5" y="38" width="5" height="5" fill="#1677ff"/><rect x="13" y="38" width="5" height="5" fill="#1677ff"/><rect x="21" y="38" width="5" height="5" fill="#1677ff"/>
+                <rect x="38" y="38" width="5" height="5" fill="#1677ff"/><rect x="46" y="38" width="5" height="5" fill="#1677ff"/><rect x="54" y="38" width="5" height="5" fill="#1677ff"/>
+                <rect x="62" y="38" width="5" height="5" fill="#1677ff"/><rect x="71" y="38" width="5" height="5" fill="#1677ff"/><rect x="79" y="38" width="5" height="5" fill="#1677ff"/><rect x="98" y="38" width="5" height="5" fill="#1677ff"/>
+                <rect x="5" y="46" width="5" height="5" fill="#1677ff"/><rect x="21" y="46" width="5" height="5" fill="#1677ff"/>
+                <rect x="46" y="46" width="5" height="5" fill="#1677ff"/><rect x="71" y="46" width="5" height="5" fill="#1677ff"/><rect x="98" y="46" width="5" height="5" fill="#1677ff"/>
+                <rect x="13" y="54" width="5" height="5" fill="#1677ff"/><rect x="29" y="54" width="5" height="5" fill="#1677ff"/>
+                <rect x="54" y="54" width="5" height="5" fill="#1677ff"/><rect x="79" y="54" width="5" height="5" fill="#1677ff"/>
+                <rect x="5" y="62" width="5" height="5" fill="#1677ff"/><rect x="21" y="62" width="5" height="5" fill="#1677ff"/>
+                <rect x="38" y="62" width="5" height="5" fill="#1677ff"/><rect x="62" y="62" width="5" height="5" fill="#1677ff"/><rect x="87" y="62" width="5" height="5" fill="#1677ff"/>
+                <rect x="38" y="71" width="5" height="5" fill="#1677ff"/><rect x="54" y="71" width="5" height="5" fill="#1677ff"/><rect x="71" y="71" width="5" height="5" fill="#1677ff"/>
+                <rect x="46" y="79" width="5" height="5" fill="#1677ff"/><rect x="62" y="79" width="5" height="5" fill="#1677ff"/><rect x="87" y="79" width="5" height="5" fill="#1677ff"/>
+                <rect x="38" y="87" width="5" height="5" fill="#1677ff"/><rect x="54" y="87" width="5" height="5" fill="#1677ff"/><rect x="71" y="87" width="5" height="5" fill="#1677ff"/>
+                <rect x="46" y="98" width="5" height="5" fill="#1677ff"/><rect x="62" y="98" width="5" height="5" fill="#1677ff"/><rect x="98" y="98" width="5" height="5" fill="#1677ff"/>
+                <circle cx="54" cy="54" r="11" fill="white"/>
+                <text x="54" y="57.5" text-anchor="middle" font-size="8.5" fill="#1677ff" font-weight="bold" font-family="sans-serif"><span class="t" data-zh="支付宝" data-en="Alipay">支付宝</span></text>
+              </svg>
+              <div class="qrscan ali"></div>
+            </div>
+            <div>
+              <div class="qrti" style="color:#1677ff"><span class="t" data-zh="支付宝扫码" data-en="Alipay QR">支付宝扫码</span></div>
+              <div class="qrhi"><span class="t" data-zh="打开支付宝 → 扫一扫" data-en="Open Alipay → Scan">打开支付宝 → 扫一扫</span></div>
+              <div class="qrcd"><span class="bdot"></span><span id="cd-aq">05:00</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="popt" id="ro-ap" onclick="pick('ap')">
+          <span class="olbl"><span class="t" data-zh="手机号快捷支付" data-en="Phone Quick Pay">手机号快捷支付</span></span>
+          <span class="rdot" id="rd-ap"></span>
+        </div>
+        <div class="pexp" id="ex-ap">
+          <div class="iform">
+            <div class="igrp"><label class="ilbl"><span class="t" data-zh="支付宝绑定手机号" data-en="Alipay linked phone">支付宝绑定手机号</span></label><input class="ifld" type="tel" placeholder="138 xxxx xxxx"></div>
+            <div style="font-size:.72rem;color:var(--muted)"><span class="t" data-zh="将向手机发送验证码完成快捷支付" data-en="A verification code will be sent to complete payment">将向手机发送验证码完成快捷支付</span></div>
+          </div>
+        </div>
+
+        <a class="pmlink"><span class="t" data-zh="查看更多支付宝绑卡优惠" data-en="View Alipay card offers">查看更多支付宝绑卡优惠</span> &rsaquo;</a>
+        <div class="psep"></div>
+
+        <!-- 微信 品牌头 -->
+        <div class="pbhd" style="padding-top:.55rem">
+          <div class="blogob" style="background:#07C160">
+            <svg viewBox="0 0 28 28" width="20" height="20"><text x="14" y="19" text-anchor="middle" font-size="14" font-weight="900" fill="white" font-family="sans-serif">微</text></svg>
+          </div>
+          <span class="pbnm"><span class="t" data-zh="微信支付" data-en="WeChat Pay">微信支付</span></span>
+        </div>
+
+        <div class="popt" id="ro-wq" onclick="pick('wq')">
+          <span class="olbl"><span class="t" data-zh="扫码支付" data-en="Scan to Pay">扫码支付</span></span>
+          <span class="rdot" id="rd-wq"></span>
+        </div>
+        <div class="pexp" id="ex-wq">
+          <div class="qrblk">
+            <div class="qrfrm">
+              <svg viewBox="0 0 108 108" width="108" height="108" xmlns="http://www.w3.org/2000/svg">
+                <rect width="108" height="108" fill="white"/>
+                <rect x="5" y="5" width="28" height="28" rx="3" fill="none" stroke="#07c160" stroke-width="2.2"/><rect x="10" y="10" width="18" height="18" rx="1.5" fill="#07c160"/>
+                <rect x="75" y="5" width="28" height="28" rx="3" fill="none" stroke="#07c160" stroke-width="2.2"/><rect x="80" y="10" width="18" height="18" rx="1.5" fill="#07c160"/>
+                <rect x="5" y="75" width="28" height="28" rx="3" fill="none" stroke="#07c160" stroke-width="2.2"/><rect x="10" y="80" width="18" height="18" rx="1.5" fill="#07c160"/>
+                <rect x="38" y="5" width="5" height="5" fill="#07c160"/><rect x="54" y="5" width="5" height="5" fill="#07c160"/><rect x="62" y="5" width="5" height="5" fill="#07c160"/>
+                <rect x="46" y="13" width="5" height="5" fill="#07c160"/><rect x="62" y="13" width="5" height="5" fill="#07c160"/>
+                <rect x="38" y="21" width="5" height="5" fill="#07c160"/><rect x="54" y="21" width="5" height="5" fill="#07c160"/>
+                <rect x="46" y="29" width="5" height="5" fill="#07c160"/>
+                <rect x="5" y="38" width="5" height="5" fill="#07c160"/><rect x="21" y="38" width="5" height="5" fill="#07c160"/>
+                <rect x="38" y="38" width="5" height="5" fill="#07c160"/><rect x="54" y="38" width="5" height="5" fill="#07c160"/><rect x="62" y="38" width="5" height="5" fill="#07c160"/>
+                <rect x="79" y="38" width="5" height="5" fill="#07c160"/><rect x="98" y="38" width="5" height="5" fill="#07c160"/>
+                <rect x="13" y="46" width="5" height="5" fill="#07c160"/><rect x="29" y="46" width="5" height="5" fill="#07c160"/>
+                <rect x="46" y="46" width="5" height="5" fill="#07c160"/><rect x="71" y="46" width="5" height="5" fill="#07c160"/>
+                <rect x="5" y="54" width="5" height="5" fill="#07c160"/><rect x="21" y="54" width="5" height="5" fill="#07c160"/>
+                <rect x="38" y="54" width="5" height="5" fill="#07c160"/><rect x="62" y="54" width="5" height="5" fill="#07c160"/><rect x="87" y="54" width="5" height="5" fill="#07c160"/>
+                <rect x="38" y="62" width="5" height="5" fill="#07c160"/><rect x="54" y="62" width="5" height="5" fill="#07c160"/><rect x="71" y="62" width="5" height="5" fill="#07c160"/>
+                <rect x="46" y="71" width="5" height="5" fill="#07c160"/><rect x="62" y="71" width="5" height="5" fill="#07c160"/><rect x="87" y="71" width="5" height="5" fill="#07c160"/>
+                <rect x="38" y="79" width="5" height="5" fill="#07c160"/><rect x="54" y="79" width="5" height="5" fill="#07c160"/><rect x="79" y="79" width="5" height="5" fill="#07c160"/>
+                <rect x="38" y="87" width="5" height="5" fill="#07c160"/><rect x="62" y="87" width="5" height="5" fill="#07c160"/>
+                <rect x="38" y="98" width="5" height="5" fill="#07c160"/><rect x="62" y="98" width="5" height="5" fill="#07c160"/>
+                <circle cx="54" cy="54" r="11" fill="white"/>
+                <text x="54" y="57.5" text-anchor="middle" font-size="8.5" fill="#07c160" font-weight="bold" font-family="sans-serif"><span class="t" data-zh="微信" data-en="WeChat">微信</span></text>
+              </svg>
+              <div class="qrscan wx"></div>
+            </div>
+            <div>
+              <div class="qrti" style="color:#07c160"><span class="t" data-zh="微信扫码" data-en="WeChat QR">微信扫码</span></div>
+              <div class="qrhi"><span class="t" data-zh="打开微信 → 扫一扫" data-en="Open WeChat → Scan">打开微信 → 扫一扫</span></div>
+              <div class="qrcd"><span class="bdot"></span><span id="cd-wq">05:00</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /国内 -->
+
+      <!-- 其他支付方式 -->
+      <p class="pglbl"><span class="t" data-zh="其他支付方式" data-en="Other Methods">其他支付方式</span></p>
+      <div class="pgrp">
+
+        <!-- 储蓄卡 -->
+        <div class="pmth" id="ro-db" onclick="pick('db')">
+          <div class="mlogo" style="background:linear-gradient(135deg,#b71c1c,#e53935)">
+            <svg viewBox="0 0 24 16" width="20" height="14"><rect x="0" y="0" width="24" height="16" rx="2" fill="white" opacity=".9"/><rect x="0" y="4" width="24" height="4" fill="#b71c1c" opacity=".6"/></svg>
+          </div>
+          <span class="olbl"><span class="t" data-zh="银行储蓄卡" data-en="Bank Debit Card">银行储蓄卡</span></span>
+          <span class="ostag"><span class="t" data-zh="银联" data-en="UnionPay">银联</span></span>
+          <span class="rdot" id="rd-db"></span>
+        </div>
+        <div class="pexp" id="ex-db">
+          <div class="iform mf">
+            <div class="igrp"><label class="ilbl"><span class="t" data-zh="卡号" data-en="Card Number">卡号</span></label><input class="ifld" type="text" placeholder="6222 xxxx xxxx xxxx" maxlength="23" oninput="fmtC(this)"></div>
+            <div class="irow">
+              <div class="igrp"><label class="ilbl"><span class="t" data-zh="持卡人姓名" data-en="Cardholder Name">持卡人姓名</span></label><input class="ifld" type="text" placeholder="请输入姓名"></div>
+              <div class="igrp"><label class="ilbl"><span class="t" data-zh="手机号" data-en="Phone">手机号</span></label><input class="ifld" type="tel" placeholder="138 xxxx xxxx"></div>
+            </div>
+            <div class="irow">
+              <div class="igrp"><label class="ilbl"><span class="t" data-zh="有效期" data-en="Expiry">有效期</span></label><input class="ifld" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtE(this)"></div>
+              <div class="igrp"><label class="ilbl">CVV <small><span class="t" data-zh="背面3位" data-en="3 digits on back">背面3位</span></small></label><input class="ifld" type="password" placeholder="···" maxlength="4"></div>
+            </div>
+            <div class="ibrands"><span class="ibrand"><span class="t" data-zh="银联" data-en="UnionPay">银联</span></span></div>
+          </div>
+        </div>
+
+        <!-- 信用卡 -->
+        <div class="pmth" id="ro-cr" onclick="pick('cr')">
+          <div class="mlogo" style="background:linear-gradient(135deg,#1a237e,#1565c0)">
+            <svg viewBox="0 0 24 16" width="20" height="14"><rect x="0" y="0" width="24" height="16" rx="2" fill="white" opacity=".85"/><rect x="0" y="4" width="24" height="3.5" fill="#1a237e" opacity=".45"/><circle cx="17" cy="11" r="3" fill="#eb001b" opacity=".82"/><circle cx="20.5" cy="11" r="3" fill="#f79e1b" opacity=".82"/></svg>
+          </div>
+          <span class="olbl"><span class="t" data-zh="信用卡" data-en="Credit Card">信用卡</span></span>
+          <span class="ostag">Visa · MC · <span class="t" data-zh="银联" data-en="UnionPay">银联</span></span>
+          <span class="rdot" id="rd-cr"></span>
+        </div>
+        <div class="pexp" id="ex-cr">
+          <div class="iform mf">
+            <div class="igrp"><label class="ilbl"><span class="t" data-zh="卡号" data-en="Card Number">卡号</span></label><input class="ifld" type="text" placeholder="1234  5678  9012  3456" maxlength="19" oninput="fmtC(this)"></div>
+            <div class="igrp"><label class="ilbl"><span class="t" data-zh="持卡人姓名" data-en="Cardholder Name">持卡人姓名</span></label><input class="ifld" type="text" placeholder="NAME ON CARD" style="text-transform:uppercase"></div>
+            <div class="irow">
+              <div class="igrp"><label class="ilbl"><span class="t" data-zh="有效期" data-en="Expiry">有效期</span></label><input class="ifld" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtE(this)"></div>
+              <div class="igrp"><label class="ilbl">CVV <small><span class="t" data-zh="背面3-4位" data-en="3-4 digits on back">背面3-4位</span></small></label><input class="ifld" type="password" placeholder="···" maxlength="4"></div>
+            </div>
+            <div class="ibrands"><span class="ibrand">VISA</span><span class="ibrand">MC</span><span class="ibrand">AMEX</span><span class="ibrand"><span class="t" data-zh="银联" data-en="UnionPay">银联</span></span></div>
+          </div>
+        </div>
+
+        <!-- 展开更多 -->
+        <div class="moretog" id="mtog" onclick="toggleMore()">
+          <span id="mtxt"><span class="t" data-zh="展开更多支付方式" data-en="More payment options">展开更多支付方式</span></span>
+          <span class="marrow" id="marr">▾</span>
+        </div>
+
+        <div id="mmore" style="display:none">
+
+          <!-- Stripe -->
+          <div class="pmth" id="ro-st" onclick="pick('st')" style="border-top:1px solid var(--borderlt)">
+            <div class="mlogo" style="background:#635BFF">
+              <svg viewBox="0 0 20 20" width="18" height="18"><text x="3" y="15" font-size="14" font-weight="900" fill="white" font-family="sans-serif">S</text></svg>
+            </div>
+            <span class="olbl">Stripe</span>
+            <span class="ostag"><span class="t" data-zh="国际信用卡 · Stripe 加密" data-en="💳 Credit / Debit Card · Stripe">国际信用卡 · Stripe 加密</span></span>
+            <span class="rdot" id="rd-st"></span>
+          </div>
+          <div class="pexp" id="ex-st">
+            <div class="iform mf">
+              <div class="snote2">🔒 <span class="t" data-zh="通过 Stripe 安全处理 · 支持 Visa / MC / Amex / JCB / UnionPay" data-en="Secured by Stripe · Visa/MC/Amex/JCB/UnionPay">通过 Stripe 安全处理 · 支持 Visa / MC / Amex / JCB / UnionPay</span></div>
+              <div class="igrp"><label class="ilbl"><span class="t" data-zh="卡号" data-en="Card Number">卡号</span></label><input class="ifld" type="text" placeholder="1234  5678  9012  3456" maxlength="19" oninput="fmtC(this)"></div>
+              <div class="irow">
+                <div class="igrp"><label class="ilbl"><span class="t" data-zh="有效期" data-en="Expiry">有效期</span></label><input class="ifld" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtE(this)"></div>
+                <div class="igrp"><label class="ilbl">CVV</label><input class="ifld" type="password" placeholder="···" maxlength="4"></div>
+              </div>
+              <div class="igrp"><label class="ilbl"><span class="t" data-zh="账单邮箱" data-en="Billing Email">账单邮箱</span></label><input class="ifld" type="email" placeholder="your@email.com"></div>
+              <div class="ibrands"><span class="ibrand">VISA</span><span class="ibrand">MC</span><span class="ibrand">AMEX</span><span class="ibrand">JCB</span></div>
+            </div>
+          </div>
+
+          <!-- PayPal -->
+          <div class="pmth" id="ro-pp" onclick="pick('pp')" style="border-top:1px solid var(--borderlt)">
+            <div class="mlogo" style="background:#003087">
+              <svg viewBox="0 0 22 16" width="20" height="14"><text x="1" y="13" font-size="12" font-weight="900" fill="#009cde" font-family="sans-serif">P</text><text x="9" y="13" font-size="12" font-weight="900" fill="white" font-family="sans-serif">P</text></svg>
+            </div>
+            <span class="olbl">PayPal</span>
+            <span class="ostag"><span class="t" data-zh="跳转支付" data-en="Redirect to PayPal">跳转支付</span></span>
+            <span class="rdot" id="rd-pp"></span>
+          </div>
+          <div class="pexp" id="ex-pp">
+            <div class="iform mf">
+              <p class="ppnote"><span class="t" data-zh="点击"立即支付"后将跳转至 PayPal 完成支付，支持余额及绑定卡。" data-en="Click to be redirected to PayPal. Supports balance and linked cards.">点击"立即支付"后将跳转至 PayPal 完成支付，支持余额及绑定卡。</span></p>
+              <div class="igrp"><label class="ilbl"><span class="t" data-zh="PayPal 账号（选填）" data-en="PayPal account (optional)">PayPal 账号（选填）</span></label><input class="ifld" type="email" placeholder="your-paypal@email.com"></div>
+            </div>
+          </div>
+
+        </div><!-- /mmore -->
+      </div><!-- /其他 -->
+
+      <div id="refund-policy" style="margin-top:1rem;padding:0.7rem 0.9rem;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid rgba(255,255,255,0.1);font-size:0.76rem;color:rgba(180,200,220,0.65);line-height:1.5;">
+  <span class="t" data-zh="🔒 开通后如觉得不满意，7天内可申请全额退款，无需理由。如有问题请联系 support@whalium.com"
+    data-en="🔒 Not satisfied? Full refund within 7 days, no questions asked. Email support@whalium.com">
+    <span class="t" data-zh="🔒 开通后如觉得不满意，7天内可申请全额退款，无需理由。如有问题请联系 support@whalium.com" data-en="🔒 Not satisfied? Full refund within 7 days, no questions asked. Questions? support@whalium.com">🔒 开通后如觉得不满意，7天内可申请全额退款，无需理由。如有问题请联系 support@whalium.com</span>
+  </span>
+</div>
+      <button class="pbtn idle" id="pbtn" onclick="doPay()" disabled><span class="t" data-zh="请选择支付方式" data-en="Select a payment method">请选择支付方式</span></button>
+      <div class="secnote">🔒 <span class="t" data-zh="256位 SSL 加密 · 支付信息安全保护" data-en="256-bit SSL · Payment info protected">256位 SSL 加密 · 支付信息安全保护</span></div>
+    </div>
+  </div>
+
+</div><!-- /page -->
+
+<div class="footer">© 2025 Whalium · <span class="t" data-zh="洞察全球律所，安行海外航路" data-en="Global Insights, Secure Navigation">洞察全球律所，安行海外航路</span> &nbsp;·&nbsp; <a href="whalium_9_about.html" style="color:inherit;opacity:0.65;text-decoration:none;"><span class="t" data-zh="关于我们" data-en="About Us">关于我们</span></a></div>
+
+<div id="modal">
+  <div class="mcard">
+    <div class="micon">
+      <svg class="chksvg" viewBox="0 0 34 34">
+        <polyline class="chkp" points="6,17 14,26 28,10"/>
+      </svg>
+    </div>
+    <div class="mtit"><span class="t" data-zh="支付成功！" data-en="Payment Successful!">支付成功！</span></div>
+    <div class="msub"><span class="t" data-zh="欢迎加入 Whalium 年度会员" data-en="Welcome to Whalium Annual Plan">欢迎加入 Whalium 年度会员</span><br><span class="t" data-zh="您的权益已立即生效" data-en="Your benefits are now active">您的权益已立即生效</span></div>
+    <div class="mrec">
+      <div class="mrow"><span class="k"><span class="t" data-zh="订单号" data-en="Order #">订单号</span></span><span class="v" id="r-order">—</span>
+    <div <div id="member-benefits-card"></div>
+      id="success-cta" style="margin-top:0.8rem;">
+      <a href="whalium_4_firm-detail.html" class="mbtn" style="display:block;text-align:center;padding:0.85rem;background:linear-gradient(135deg,#1a2332,#2c3e50);color:white;text-decoration:none;border-radius:8px;font-weight:700;">
+        <span class="t" data-zh="👉 立即查看 Morrison IP Law 完整资料 →" data-en="View Full Profile →">👉 立即查看 Morrison IP Law 完整资料 →</span>
+      </a>
+    </div>
+    <script>
+    (function(){ document.addEventListener('DOMContentLoaded',function(){
+      var p=new URLSearchParams(location.search).get('plan')||'consumer';
+      var el=document.getElementById('success-cta');
+      if(el&&(p==='starter'||p==='premium'))
+        el.innerHTML='<a href="whalium_8_dashboard.html" style="display:block;text-align:center;padding:0.85rem;background:linear-gradient(135deg,#006e9e,#00c8c8);color:#0a1628;text-decoration:none;border-radius:8px;font-weight:700;">⚙️ 进入律所后台管理 →</a>';
+    }); })();
+    </script></div>
+      <div class="mrow"><span class="k"><span class="t" data-zh="支付方式" data-en="Payment Method">支付方式</span></span><span class="v" id="r-method">—</span></div>
+      <div class="mrow"><span class="k"><span class="t" data-zh="实付金额" data-en="Amount Paid">实付金额</span></span><span class="v">¥365.00</span></div>
+      <div class="mrow hi"><span class="k"><span class="t" data-zh="会员到期" data-en="Expires">会员到期</span></span><span class="v" id="r-expire">—</span></div>
+    </div>
+    <button class="mbtn" onclick="localStorage.setItem('wh_paid','1'); location.href='whalium_8_dashboard.html'"><span class="t" data-zh="进入后台管理 →" data-en="Go to Dashboard →">进入后台管理 →</span></button>
+  </div>
+</div>
+
+<script>
+var sel=null, cdT={}, oSec=29*60+59, mOpen=false;
+var LABELS={'aq':['支付宝扫码完成后，点此确认  ¥365','alipay'],'ap':['支付宝快捷支付  ¥365','alipay'],
+  'wq':['微信扫码完成后，点此确认  ¥365','wechat'],'db':['立即支付  ¥365','card'],
+  'cr':['立即支付  ¥365','card'],'st':['通过 Stripe 支付  ¥365','stripe'],'pp':['跳转 PayPal 支付  ¥365','paypal']};
+var MNAME={'aq':'支付宝扫码','ap':'支付宝快捷','wq':'微信支付','db':'银行储蓄卡','cr':'信用卡','st':'Stripe','pp':'PayPal'};
+
+setInterval(function(){
+  if(oSec>0)oSec--;
+  var el=document.getElementById('ptimer');
+  if(el)el.textContent=String(Math.floor(oSec/60)).padStart(2,'0')+':'+String(oSec%60).padStart(2,'0');
+},1000);
+
+function pick(id){
+  if(sel){
+    var pr=document.getElementById('rd-'+sel),ex=document.getElementById('ex-'+sel),ro=document.getElementById('ro-'+sel);
+    if(pr)pr.classList.remove('on');if(ex)ex.classList.remove('open');if(ro)ro.classList.remove('sel');
+    if(cdT[sel]){clearInterval(cdT[sel]);delete cdT[sel];}
+  }
+  if(sel===id){sel=null;upBtn();return;}
+  sel=id;
+  var pr=document.getElementById('rd-'+id),ex=document.getElementById('ex-'+id),ro=document.getElementById('ro-'+id);
+  if(pr)pr.classList.add('on');if(ex)ex.classList.add('open');if(ro)ro.classList.add('sel');
+  if(id==='aq'||id==='wq')startCD(id);
+  upBtn();
+}
+
+function startCD(id){
+  var s=300,el=document.getElementById('cd-'+id);
+  function t(){if(el)el.textContent=String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');s--;if(s<0)s=300;}
+  t();cdT[id]=setInterval(t,1000);
+}
+
+function upBtn(){
+  var b=document.getElementById('pbtn');if(!b)return;
+  b.className='pbtn';
+  if(!sel){b.classList.add('idle');b.textContent='请选择支付方式';b.disabled=true;return;}
+  var c=LABELS[sel]||['立即支付  ¥365','card'];
+  b.textContent=c[0];b.classList.add(c[1]);b.disabled=false;b.style.opacity='1';
+}
+
+function toggleMore(){
+  mOpen=!mOpen;
+  document.getElementById('mmore').style.display=mOpen?'block':'none';
+  document.getElementById('mtxt').textContent=mOpen?'收起':'展开更多支付方式';
+  document.getElementById('marr').classList.toggle('up',mOpen);
+}
+
+function doPay(){
+  if(!sel)return;
+  var b=document.getElementById('pbtn'),isQR=(sel==='aq'||sel==='wq');
+  if(cdT[sel]){clearInterval(cdT[sel]);delete cdT[sel];}
+  b.disabled=true;b.style.opacity='.72';b.textContent=isQR?'验证支付结果…':'处理中…';
+  /* 真实接入点:
+   * 支付宝当面付: 轮询 /api/alipay/query → trade_status==='TRADE_SUCCESS'
+   * 微信Native:   轮询 /api/wx/query    → trade_state==='SUCCESS'
+   * Stripe: stripe.confirmCardPayment(clientSecret,{payment_method:{card:el}})
+   * PayPal: paypal.Buttons({createOrder,onApprove}).render('#container')
+   * 银联:   后端签名 → window.location.href=unionpay_url */
+  setTimeout(showOK,isQR?1200:1600);
+}
+
+function showOK(){
+  var order='WHL-'+new Date().getFullYear()+'-'+Math.floor(Math.random()*900000+100000);
+  var exp=new Date();exp.setFullYear(exp.getFullYear()+1);
+  var es=exp.getFullYear()+'年'+String(exp.getMonth()+1).padStart(2,'0')+'月'+String(exp.getDate()).padStart(2,'0')+'日';
+  var plan=new URLSearchParams(location.search).get('plan')||'consumer';
+
+  // ── 写入会员状态 ──────────────────────────────
+  try {
+    localStorage.setItem('wh_paid','1');
+    localStorage.setItem('wh_plan', plan);
+    localStorage.setItem('wh_order', order);
+    localStorage.setItem('wh_expire', exp.toISOString());
+    localStorage.setItem('wh_member_since', new Date().toISOString());
+  } catch(e){}
+
+  document.getElementById('r-order').textContent=order;
+  document.getElementById('r-method').textContent=MNAME[sel]||sel;
+  document.getElementById('r-expire').textContent=es;
+
+  // ── 动态更新成功页内容 ─────────────────────────
+  var planNames = {consumer:{zh:'年度会员',en:'Annual Member'},
+                   starter:{zh:'律所初级版',en:'Firm Starter'},
+                   premium:{zh:'律所专业版',en:'Firm Pro'}};
+  var pname = planNames[plan] || planNames.consumer;
+  var lang = window._wlang || 'zh';
+  var titleEl = document.querySelector('#modal .mtitle');
+  if(titleEl) titleEl.textContent = (lang==='zh'?'🎉 '+pname.zh+' 已开通！':'🎉 '+pname.en+' Activated!');
+
+  // ── 权益卡片（消费者版）───────────────────────
+  var benEl = document.getElementById('member-benefits-card');
+  if(benEl && plan==='consumer'){
+    benEl.innerHTML = [
+      '<div style="background:linear-gradient(135deg,#e0f7fa,#f0fdf4);border:1.5px solid #22ccde;border-radius:10px;padding:1.2rem 1.3rem;margin:1rem 0;">',
+      '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.08em;color:#0369a1;margin-bottom:0.7rem;">',
+      lang==='zh'?'🎁 您的权益（即刻生效）':'🎁 YOUR BENEFITS (ACTIVE NOW)',
+      '</div>',
+      '<div style="display:grid;gap:0.45rem;font-size:0.83rem;color:#1a2332;">',
+      '<div>✅ <strong>'+(lang==='zh'?'全球287家律所':'287 Global Firms')+'</strong> '+(lang==='zh'?'— 完整联系方式已解锁':'— Full contact info unlocked')+'</div>',
+      '<div>✅ <strong>'+(lang==='zh'?'全部真实差评':'All Critical Reviews')+'</strong> '+(lang==='zh'?'— 含律师失联、费用争议记录':'— Including disputes & red flags')+'</div>',
+      '<div>✅ <strong>'+(lang==='zh'?'隐藏费用提醒':'Hidden Fee Alerts')+'</strong> '+(lang==='zh'?'— 官费、追加费用全透明':'— Govt fees & surcharges revealed')+'</div>',
+      '<div>✅ <strong>'+(lang==='zh'?'AI 精准匹配报告':'AI Match Reports')+'</strong> '+(lang==='zh'?'— 无限次':'— Unlimited')+'</div>',
+      '<div style="margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid rgba(34,204,222,0.2);font-size:0.75rem;color:#475569;">',
+      '📅 '+(lang==='zh'?'有效期至 ':'Valid until ')+es+' &nbsp;·&nbsp; 📦 '+(lang==='zh'?'订单号 ':'Order ')+order,
+      '</div></div></div>'
+    ].join('');
+  }
+
+  document.getElementById('modal').classList.add('show');
+}
+
+function fmtC(i){var v=i.value.replace(/\D/g,'').substring(0,16);i.value=v.replace(/(.{4})/g,'$1  ').trim();}
+function fmtE(i){var v=i.value.replace(/\D/g,'').substring(0,4);if(v.length>=2)v=v.substring(0,2)+' / '+v.substring(2);i.value=v;}
+
+document.addEventListener('DOMContentLoaded',function(){
+  var m=document.getElementById('modal');
+  if(m)m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('show');});
+});
+</script>
+<script id="wh-walker">
+(function(){
+  /* ── Whalium Text-Walker: translates ALL remaining Chinese text nodes
+     and option elements when lang switches to EN.
+     Runs AFTER the .t-span system so it only catches untranslated residue. ── */
+  var MAP = [
+  ["华里安", "Whalium"],
+  ["华 里 安", "Whalium"],
+  ["律所入驻", "List Your Firm"],
+  ["登录", "Sign In"],
+  ["注册", "Sign Up"],
+  ["洞察全球律所，安行海外航路", "Your compass for global legal services"],
+  ["律所列表页", "Law Firm Directory"],
+  ["AI智能检索 + 筛选全球律所", "AI Search + Filter Global Firms"],
+  ["AI 智能检索", "AI Smart Search"],
+  ["用自然语言描述您的法律需求", "Describe your legal need in plain language"],
+  ["无需知道具体术语，直接告诉我们您的情况，AI 将为您匹配最合适的律所", "No legal jargon needed — just describe your situation and AI will match the right firms"],
+  ["AI 检索", "Search with AI"],
+  ["WHALIUM AI 分析结果", "WHALIUM AI Results"],
+  ["根据您的需求，我为您筛选出", "Based on your needs, I found"],
+  ,
+  ,
+  ["美国知识产权", "US Intellectual Property"],
+  ["且提供", "and offering"],
+  ["中文服务", "Mandarin service"],
+  ["的律所。\n                推荐优先考虑", ". Top picks:"],
+  ["（性价比高，商标注册经验丰富）", "(best value, strong trademark track record)"],
+  ["（评分最高，适合复杂商标案件）", "(top-rated, ideal for complex trademark cases)"],
+  ["软件类产品通常需要注册 第9类 商标，官费约 $350/类，律师费用区间已在卡片中标注。", "Software products typically require Class 9 trademark registration. USPTO fee ~$350/class. Attorney fees shown on each card."],
+  ["全部国家", "All Countries"],
+  ["全部领域", "All Practice Areas"],
+  ["全部评分", "All Ratings"],
+  ["全部特色", "All Features"],
+  ["4.5分以上", "4.5+ Stars"],
+  ["4.0-4.5分", "4.0–4.5 Stars"],
+  ["快速响应", "Fast Response"],
+  ["共找到", "Found"],
+  ["家律所", "firms"],
+  ["已应用筛选", "Active filters"],
+  ["核心功能展示：", "Key features:"],
+  ["多维度筛选（国家、领域、评分、特色）· 律所卡片展示 · 评分和价格透明 · 一键查看详情", "Multi-filter search · Firm cards · Transparent ratings & pricing · One-click firm details"],
+  ["全部国家", "All Countries"],
+  ["🇨🇦 加拿大", "🇨🇦 Canada"],
+  ["🇲🇽 墨西哥", "🇲🇽 Mexico"],
+  ["🇬🇧 英国", "🇬🇧 UK"],
+  ["🇩🇪 德国", "🇩🇪 Germany"],
+  ["🇫🇷 法国", "🇫🇷 France"],
+  ["🇳🇱 荷兰", "🇳🇱 Netherlands"],
+  ["🇪🇸 西班牙", "🇪🇸 Spain"],
+  ["🇮🇹 意大利", "🇮🇹 Italy"],
+  ["🇵🇱 波兰", "🇵🇱 Poland"],
+  ["🇰🇷 韩国", "🇰🇷 South Korea"],
+  ["🇮🇩 印度尼西亚", "🇮🇩 Indonesia"],
+  ["🇻🇳 越南", "🇻🇳 Vietnam"],
+  ["🇹🇭 泰国", "🇹🇭 Thailand"],
+  ["🇲🇾 马来西亚", "🇲🇾 Malaysia"],
+  ["🇵🇭 菲律宾", "🇵🇭 Philippines"],
+  ["🇧🇩 孟加拉国", "🇧🇩 Bangladesh"],
+  ["🇸🇦 沙特阿拉伯", "🇸🇦 Saudi Arabia"],
+  ["🇮🇱 以色列", "🇮🇱 Israel"],
+  ["🇹🇷 土耳其", "🇹🇷 Turkey"],
+  ["🇳🇬 尼日利亚", "🇳🇬 Nigeria"],
+  ["🇪🇬 埃及", "🇪🇬 Egypt"],
+  ["🇰🇪 肯尼亚", "🇰🇪 Kenya"],
+  ["🇨🇱 智利", "🇨🇱 Chile"],
+  ["🇳🇿 新西兰", "🇳🇿 New Zealand"],
+  ["🚀 出海设立 & 架构", "🚀 Company Setup & Structure"],
+  ["📦 贸易 & 产品合规", "📦 Trade & Product Compliance"],
+  ["🔒 数据 & 隐私合规", "🔒 Data & Privacy Compliance"],
+  ["⚖️ 商业诚信 & 风险", "⚖️ Business Integrity & Risk"],
+  ["💼 融资 & 并购", "💼 Finance & M&A"],
+  ["✏️ 其他", "✏️ Other"],
+  ["知识产权", "Intellectual Property"],
+  ["公司注册", "Company Registration"],
+  ["税务筹划", "Tax Planning"],
+  ["合同纠纷", "Contract Disputes"],
+  ["移民签证", "Immigration & Visa"],
+  ["商标注册", "Trademark Registration"],
+  ["驳回答辩", "Office Action Response"],
+  ["专利申请", "Patent Application"],
+  ["🔥 热门", "🔥 Popular"],
+  ["⭐ 高性价比", "⭐ Best Value"],
+  ["🏆 Chambers认证", "🏆 Chambers Ranked"],
+  ["🏆 权威认证", "🏆 Top Ranked"],
+  ["查看详情", "View Details"],
+  ["对比", "Compare"],
+  ["❤️ 收藏", "❤️ Save"],
+  ["筛选查找律所", "Search & Filter Law Firms"],
+  ["国家/地区", "Country / Region"],
+  ["服务领域", "Practice Area"],
+  ["综合评分", "Rating"],
+  ["特色服务", "Features"],
+  ["搜索律所", "Search Firms"],
+  ["条评价", "reviews"],
+  ["欢迎回来", "Welcome Back"],
+  ["登录以查看律所联系方式和全部评价", "Sign in to view firm contacts & all reviews"],
+  ["邮箱地址", "Email Address"],
+  ["密码", "Password"],
+  ["记住我", "Remember me"],
+  ["忘记密码", "Forgot password?"],
+  ["登 录", "Sign In"],
+  ["没有账号？", "Don't have an account?"],
+  ["还没有账号？", "Don't have an account?"],
+  ["立即注册", "Sign Up Free"],
+  ["免费注册", "Sign Up Free"],
+  ["微信一键登录", "WeChat Login"],
+  ["或使用邮箱登录", "Or sign in with email"],
+  ["🛠 Demo 模式：任意邮箱/密码均可体验", "🛠 Demo mode: any email/password works"],
+  ["客户注册页面", "Client Registration"],
+  ["用户注册流程", "Registration Flow"],
+  ["客户注册", "Client Registration"],
+  ["创建账号，开始寻找全球律所", "Create an account to find global law firms"],
+  ["姓名", "Full Name"],
+  ["邮箱", "Email"],
+  ["公司名称", "Company Name"],
+  ["手机号", "Phone Number"],
+  ["验证码", "Verification Code"],
+  ["发送验证码", "Send Code"],
+  ["需求领域", "Practice Areas Needed"],
+  ["(可多选)", "(select all that apply)"],
+  ["密码强度：强", "Password strength: Strong"],
+  ["密码强度：中", "Password strength: Medium"],
+  ["密码强度：弱", "Password strength: Weak"],
+  ["确认密码", "Confirm Password"],
+  ["我已阅读并同意", "I agree to the"],
+  ["《服务条款》", "Terms of Service"],
+  ["《隐私政策》", "Privacy Policy"],
+  [, "and"],
+  ["立即登录", "Sign In"],
+  ["已有账号？", "Already have an account?"],
+  ["完整注册表单 · 国际区号选择 · 验证码发送 · 需求领域多选 · 密码强度检测 · 表单验证", "Full form · International dial codes · SMS verification · Multi-select areas · Password strength · Validation"],
+  ["律所列表", "Firm Directory"],
+  ["✓ 已认证", "✓ Verified"],
+  ["美国 · 加利福尼亚州 · 洛杉矶", "US · California · Los Angeles"],
+  ["团队 12 名律师 · 中国客户占比 35%", "12-attorney team · 35% Chinese clients"],
+  ["响应时间 ≤ 24 小时", "Response time ≤ 24 hours"],
+  ["基于 18 条真实评价", "Based on 18 verified reviews"],
+  ["📩 立即询盘", "📩 Send Inquiry"],
+  ["♡ 收藏律所", "♡ Save Firm"],
+  ["处理案件", "Cases/Year"],
+  ["客户推荐率", "Client Recommendation Rate"],
+  ["中国客户占比", "Chinese Clients"],
+  ["执业经验", "Years of Experience"],
+  ["商标服务起价", "Trademark from"],
+  [, "from"],
+  [, "yrs"],
+  ["律所简介", "About the Firm"],
+  ["服务项目与报价", "Services & Pricing"],
+  ["价格区间", "Price Range"],
+  ["说明", "Notes"],
+  ["不含 USPTO 官费 $250/类", "Excl. USPTO govt fee $250/class"],
+  ["商标驳回答辩（简单）", "Office Action Response (Simple)"],
+  ["Likelihood of Confusion 为主", "Likelihood of confusion issues"],
+  ["商标驳回答辩（复杂）", "Office Action Response (Complex)"],
+  ["含证据收集、证人证词", "Incl. evidence & declarations"],
+  ["发明专利申请", "Utility Patent Application"],
+  ["含检索、撰写、提交", "Incl. search, drafting & filing"],
+  ["版权登记（单件）", "Copyright Registration (single work)"],
+  ["标准通道 3-6 个月出证", "Standard track, 3–6 months"],
+  ["⚠️ 隐藏费用提醒", "⚠️ Hidden Fees Alert"],
+  ["会员专属内容…", "Members-only content…"],
+  ["开通会员 · ¥365/年", "Unlock · ¥365/yr (≈ USD $50)"],
+  ["客户评价", "Client Reviews"],
+  ["共 18 条", "18 total"],
+  ["律所回复", "Firm Reply"],
+  ["2024年1月 · 已验证服务", "Jan 2024 · Verified"],
+  ["2023年12月 · 已验证服务", "Dec 2023 · Verified"],
+  ["2023年11月 · 已验证服务", "Nov 2023 · Verified"],
+  ["🇨🇳 中文服务", "🇨🇳 Mandarin Service"],
+  ["非常专业，响应迅速。帮我们成功注册了 3 个类别的商标，整个过程透明清晰，没有任何隐藏费用。全程有中文律师对接，沟通零障碍。强烈推荐！", "Very professional and responsive. Registered trademarks in 3 classes. Fully transparent — no hidden fees. Chinese-speaking attorney throughout. Highly recommend!"],
+  ["律师很专业，最终帮我们拿到了商标注册。但过程中沟通稍有延迟，有时要等 2 天才回复，希望能改进响应速度。结果满意，下次还会来。", "Professional and got our trademark registered. Occasional slow communication — sometimes 2-day wait. Overall satisfied and would return."],
+  ["返回律所列表", "Back to Directory"],
+  ["年度会员专享权益", "Annual Member Benefits"],
+  ["开通后立即生效 · 覆盖全球 287 家律所", "Active immediately · 287 global firms covered"],
+  ["完整联系方式", "Full Contact Info"],
+  ["直接获取律师邮箱、电话，无需通过平台中转", "Get attorney email & phone directly"],
+  ["全部客户评价", "All Client Reviews"],
+  ["查看所有真实评价，含差评和避雷指南", "See all real reviews, including critical ones"],
+  ["真实报价透明", "Transparent Pricing"],
+  ["详细报价说明、隐藏费用提醒、历史价格趋势", "Detailed quotes, hidden fees alerts & price history"],
+  ["AI 智能匹配", "AI Smart Matching"],
+  ["无限次 AI 检索，获取个性化律所推荐报告", "Unlimited AI search & personalized recommendations"],
+  ["季度行业报告", "Quarterly Reports"],
+  ["海外 IP 动态、政策解读，掌握最新资讯", "IP news, policy analysis & latest developments"],
+  ["会员专属社群", "Members Community"],
+  ["加入微信会员群，与出海企业家交流经验", "Connect with peers in our community group"],
+  ["全球律所", "Global Firms"],
+  ["真实评价", "Real Reviews"],
+  ["覆盖国家", "Countries"],
+  ["续费率", "Renewal Rate"],
+  ["年度会员", "Annual Plan"],
+  [, ],
+  ["原价 ¥999", "Was ¥999"],
+  ["🎉 限时立省 ¥634", "🎉 Save ¥634 Today"],
+  ["交易剩余时间", "Offer Expires In"],
+  ["国内支付方式", "China Payment Methods"],
+  ["支付宝", "Alipay"],
+  ["扫码支付", "Scan QR to Pay"],
+  ["支付宝扫码", "Alipay QR"],
+  ["打开支付宝 → 扫一扫", "Open Alipay → Scan QR"],
+  ["手机号快捷支付", "Pay via Phone (Alipay)"],
+  ["支付宝绑定手机号", "Phone linked to Alipay"],
+  ["将向手机发送验证码完成快捷支付", "An OTP will be sent to complete payment"],
+  ["查看更多支付宝绑卡优惠", "View Alipay card promotions"],
+  ["微信支付", "WeChat Pay"],
+  ["微信", "WeChat"],
+  ["微信扫码", "WeChat QR"],
+  ["打开微信 → 扫一扫", "Open WeChat → Scan QR"],
+  ["其他支付方式", "More Payment Options"],
+  ["银行储蓄卡", "Debit Card (UnionPay)"],
+  ["银联", "UnionPay"],
+  ["卡号", "Card Number"],
+  ["持卡人姓名", "Cardholder Name"],
+  ["有效期", "Expiry"],
+  ["背面3位", "CVV (3 digits)"],
+  ["信用卡", "Credit Card"],
+  ["背面3-4位", "CVV (3–4 digits)"],
+  ["展开更多支付方式", "More payment options"],
+  ["通过 Stripe 安全处理 · 支持 Visa / MC / Amex / JCB / UnionPay", "Secured by Stripe · Visa / MC / Amex / JCB / UnionPay"],
+  ["账单邮箱", "Billing Email"],
+  ["跳转支付", "Pay with PayPal"],
+  ["点击\"立即支付\"后将跳转至 PayPal 完成支付，支持余额及绑定卡。", "You'll be redirected to PayPal. Supports balance & linked cards."],
+  ["PayPal 账号（选填）", "PayPal account (optional)"],
+  ["请选择支付方式", "Select a payment method"],
+  ["256位 SSL 加密 · 支付信息安全保护", "256-bit SSL · Payment info protected"],
+  ["支付成功！", "Payment Successful!"],
+  ["欢迎加入 Whalium 年度会员", "Welcome to Whalium!"],
+  ["您的权益已立即生效", "Your benefits are now active"],
+  ["订单号", "Order ID"],
+  ["支付方式", "Payment Method"],
+  ["实付金额", "Amount Paid"],
+  ["会员到期", "Expires"],
+  ["进入后台管理 →", "Go to Dashboard →"],
+  ["+ 中国客户", "+ Chinese Clients"],
+  ["每月", "/month"],
+  ["条询盘通知", "inquiry alerts"],
+  ["搜索结果", "Search Results"],
+  ["& 回复", "& Reply"],
+  ["优先流量", "Priority Traffic"],
+  ["无限", "Unlimited"],
+  ["询盘接收", "Inquiries Received"],
+  ["顶部优先", "Top Placement"],
+  ["AI 优先推荐", "AI Priority Match"],
+  ["高权重流量", "High-weight Traffic"],
+  ["高权重", "High-weight"],
+  [, "Traffic"],
+  ["入驻流程", "How to List Your Firm"],
+  [, "Ranking"],
+  ["优先排名", "Priority Ranking"],
+  ["平台优势展示 · 收费模式对比（免费 vs ¥8,000/年）· 4步入驻流程 · CTA行动召唤", "Platform benefits · Free vs ¥8,000/yr comparison · 4-step listing flow · CTA"],
+  ["律所基本信息", "Firm Basic Information"],
+  ["律所英文名称", "Firm Name (English)"],
+  ["律所中文名称（选填）", "Firm Name in Chinese — optional"],
+  ["律所中文名称", "Firm Name in Chinese"],
+  ["律所官网", "Firm Website"],
+  ["注册国家", "Country of Registration"],
+  ["城市", "City"],
+  ["联系邮箱", "Contact Email"],
+  ["联系电话", "Phone Number"],
+  ["核心服务领域", "Primary Practice Areas"],
+  ["选择主方向，约30秒", "Select your main areas · ~30 sec"],
+  ["执业证书编号", "Bar / License Number"],
+  ["上传执业执照", "Upload License Document"],
+  ["知识产权保护", "Intellectual Property"],
+  ["商标 · 专利 · 版权", "Trademark · Patent · Copyright"],
+  ["出海设立 & 架构", "Company Setup & Structure"],
+  ["公司注册 · 税务 · 外汇", "Incorporation · Tax · FX"],
+  ["贸易 & 产品合规", "Trade & Product Compliance"],
+  ["出口管制 · 认证 · 反倾销", "Export Control · Certification · Anti-dumping"],
+  ["数据 & 隐私合规", "Data & Privacy Compliance"],
+  ["GDPR · 数据跨境 · 网络安全", "GDPR · Cross-border Data · Cybersecurity"],
+  ["商业诚信 & 风险", "Business Integrity & Risk"],
+  ["反腐败 · 反垄断 · 制裁", "Anti-corruption · Antitrust · Sanctions"],
+  ["融资 & 并购", "Finance & M&A"],
+  ["CFIUS · 证券 · 尽调", "CFIUS · Securities · Due Diligence"],
+  ["自定义填写", "Custom Areas"],
+  ["知识产权 · 细分方向", "IP · Sub-areas"],
+  ["商标驳回答辩", "Office Action Response"],
+  ["专利申请", "Patent Application"],
+  ["专利无效诉讼", "Patent Invalidation"],
+  ["版权保护", "Copyright Protection"],
+  ["开源软件合规", "Open Source Compliance"],
+  ["知识产权诉讼", "IP Litigation"],
+  ["商业秘密保护", "Trade Secret Protection"],
+  ["IP尽职调查", "IP Due Diligence"],
+  ["＋ 其他", "+ Other"],
+  ["出海设立 · 细分方向", "Company Setup · Sub-areas"],
+  ["公司注册设立", "Company Incorporation"],
+  ["税务架构筹划", "Tax Structure Planning"],
+  ["ODI备案", "ODI Filing (China outbound)"],
+  ["外汇合规", "FX Compliance"],
+  ["合同起草审查", "Contract Drafting & Review"],
+  ["劳动雇佣法", "Employment Law"],
+  ["移民 & 签证", "Immigration & Visa"],
+  ["贸易 & 产品 · 细分方向", "Trade & Product · Sub-areas"],
+  ["出口管制", "Export Control"],
+  ["产品认证（CE/FCC）", "Product Certification (CE/FCC)"],
+  ["海关合规", "Customs Compliance"],
+  ["反倾销 & 反补贴", "Anti-dumping & Countervailing Duties"],
+  ["数据 & 隐私 · 细分方向", "Data & Privacy · Sub-areas"],
+  ["数据跨境传输", "Cross-border Data Transfer"],
+  ["网络安全合规", "Cybersecurity Compliance"],
+  ["商业诚信 · 细分方向", "Business Integrity · Sub-areas"],
+  ["反腐败合规", "Anti-corruption Compliance"],
+  ["制裁合规", "Sanctions Compliance"],
+  ["反垄断审查", "Antitrust Review"],
+  ["融资 & 并购 · 细分方向", "Finance & M&A · Sub-areas"],
+  ["境外上市", "Overseas Listing"],
+  ["跨境并购", "Cross-border M&A"],
+  ["VIE架构", "VIE Structure"],
+  ["PE/VC投资", "PE/VC Investment"],
+  ["尽职调查", "Due Diligence"],
+  ["全程中文服务", "Mandarin-speaking Staff"],
+  ["中国/华裔律师", "Chinese / Chinese-American Attorney"],
+  ["中英双语合同", "Bilingual Contracts (EN/CN)"],
+  ["24小时响应", "24-hour Response"],
+  ["固定报价透明", "Fixed & Transparent Pricing"],
+  ["免费初次咨询", "Free Initial Consultation"],
+  ["Chambers 认证", "Chambers Ranked"],
+  ["Legal 500 认证", "Legal 500 Ranked"],
+  ["与中国律所合作", "China Law Firm Partner"],
+  ["跨境电商经验", "Cross-border E-commerce"],
+  ["正在为您生成 Profile…", "Generating your profile…"],
+  ["Whalium AI 正在抓取公开信息，自动补全您的律所资料。通常需要 20–30 秒。", "Whalium AI is reading your website and public data to auto-complete your profile. Usually 20–30 seconds."],
+  ["AI 正在工作中…", "AI is working…"],
+  ["正在从多个数据源提取律所信息", "Extracting firm info from multiple sources…"],
+  ["生成结果", "Generated Profile"],
+  ["数据来源", "Data Sources"],
+  ["律所官网", "Firm Website"],
+  ["公开网络信息", "Public Web Data"],
+  ["AI 已自动生成以下 Profile 草稿，来源包括：官网、Chambers Band 2 认证数据、Legal 500 律师数据库。请检查内容是否准确，可直接编辑修改。确认后即可上线。", "AI has generated the following profile draft from your website, Chambers, and Legal 500. Please review and edit as needed."],
+  ["Step 3 · 已上线", "Step 3 · Live"],
+  ["您的律所已可被客户搜索到。持续完善资料可显著提升排名和AI推荐频率。", "Your firm is now searchable. A complete profile significantly boosts your ranking and AI recommendation rate."],
+  ["Profile 完成度", "Profile Completion"],
+  ["完成度越高，在搜索结果中排名越靠前，AI 推荐频率越高", "A more complete profile ranks higher and gets recommended more often"],
+  ["完成度", "Completion"],
+  ["基本信息", "Basic Info"],
+  ["已完成", "Done"],
+  ["待完善", "Incomplete"],
+  ["已上线", "Live"],
+  ["已选 5 项 · 将展示在律所卡片和列表筛选结果中", "5 selected · Shown on your firm card & search filters"],
+  ["⚖️ 最佳案例", "⚖️ Best Cases"],
+  ["至少上传1个，可脱敏处理", "Upload at least 1 · anonymize client info"],
+  ["上传您的代表性案件材料，AI将自动提取案件类型、策略与结果，无需手动填写。文件请提前脱敏处理当事人信息。", "Upload representative case materials. AI auto-extracts case type, strategy & outcome. Please anonymize client info before uploading."],
+  ["点击或拖拽上传案件材料", "Click or drag to upload case files"],
+  ["支持 PDF / DOCX · 每文件 ≤ 20MB · 至少上传1个", "PDF / DOCX · Max 20MB each · At least 1 required"],
+  ["💰 服务价格区间", "💰 Service Price Range"],
+  ["填写您主要服务的参考价格区间（USD），将以区间形式展示给客户，透明定价律所询盘量平均高40%。", "Enter your reference price ranges (USD). Transparent pricing firms receive 40% more inquiries on average."],
+  ["服务项目", "Service"],
+  ["最低价 (USD) *", "Min Price (USD) *"],
+  ["最高价 (USD) *", "Max Price (USD) *"],
+  ["＋ 添加服务项目", "+ Add Service"],
+  ["请输入细分方向，多个用逗号分隔", "e.g. Trademark, Patent, Copyright (comma-separated)"],
+  ["请填写您擅长的其他法律领域，多个用逗号分隔", "Other practice areas, comma-separated"],
+  ["服务项目名称（如：商标注册每类）", "Service name (e.g. Trademark per class)"],
+  ["服务项目名称", "Service name"],
+  ["最低", "Min"],
+  ["最高", "Max"],
+  ["进入后台管理", "Go to Dashboard"],
+  ["完整展示：", "Full demo:"],
+  ["数据概览 ·", "Overview ·"],
+  ["* 演示数据", "* Demo data"],
+  ["📈 近30天浏览量趋势", "📈 30-Day Profile Views"],
+  ["查看全部询盘 →", "View all inquiries →"],
+  ["⭐ 最新评价", "⭐ Latest Reviews"],
+  ["查看全部评价 →", "View all reviews →"],
+  ["共 23 条询盘 · 5 条待回复", "23 total · 5 pending reply"],
+  ["全部 (23)", "All (23)"],
+  ["待回复 (5)", "Pending (5)"],
+  ["已回复 (15)", "Replied (15)"],
+  ["已关闭 (3)", "Closed (3)"],
+  ["已关闭", "Closed"],
+  ["客户", "Client"],
+  ["服务需求", "Service Request"],
+  ["预算", "Budget"],
+  ["时间", "Date"],
+  ["状态", "Status"],
+  ["操作", "Action"],
+  ["描述", "Message"],
+  ["联系方式", "Contact"],
+  ["来源", "Source"],
+  ["附件", "Attachments"],
+  ["查看", "View"],
+  ["已发送回复", "Reply Sent"],
+  ["已读", "Read"],
+  ["✉️ 发送回复", "✉️ Send Reply"],
+  ["保存草稿", "Save Draft"],
+  ["关闭询盘", "Close Inquiry"],
+  ["发布回复", "Post Reply"],
+  ["下载发票", "Download Invoice"],
+  ["导出全部", "Export All"],
+  ["张先生 · 深圳科技", "Zhang — Shenzhen Tech"],
+  ["李女士 · 广州贸易", "Li — Guangzhou Trade"],
+  ["王总 · 北京电商", "Wang — Beijing E-commerce"],
+  ["陈总 · 广州某科技", "Chen — Guangzhou Tech Co."],
+  ["刘女士 · 深圳贸易", "Liu — Shenzhen Trade"],
+  ["张先生", "Client: Zhang"],
+  ["深圳科技公司", "Shenzhen Tech Co."],
+  ["李女士", "Client: Li"],
+  ["广州贸易公司", "Guangzhou Trade Co."],
+  ["王总", "Client: Wang"],
+  ["北京电商平台", "Beijing E-commerce Platform"],
+  ["美国商标注册（第9类，软件产品）", "US Trademark Registration (Class 9 Software)"],
+  ["商标驳回答辩（LOC驳回）", "Office Action Response (Likelihood of Confusion)"],
+  ["软件专利申请（发明专利）", "Software Patent Application (Utility Patent)"],
+  ["亚马逊品牌侵权投诉应对", "Amazon Brand Infringement Response"],
+  ["欧盟商标注册（EUIPO）", "EU Trademark Registration (EUIPO)"],
+  ["今天 10:30", "Today 10:30"],
+  ["今天 15:20", "Today 15:20"],
+  ["昨天 09:45", "Yesterday 09:45"],
+  ["2小时前", "2h ago"],
+  ["5小时前", "5h ago"],
+  ["1天前", "1 day ago"],
+  ["小时前", "h ago"],
+  ["天前", "d ago"],
+  ["我们是深圳一家做企业SaaS软件的公司，品牌名 CloudNexus，想在美国注册商标，主要覆盖第9类（软件）和第42类（SaaS服务），请问流程和费用？", "[Translation] Shenzhen SaaS company \"CloudNexus\" seeking US trademark registration, Class 9 (software) & Class 42 (SaaS). Requesting process info and fee estimate."],
+  ["我们的美国商标申请收到了USPTO的Office Action，说与已注册商标存在混淆可能（likelihood of confusion），需要在3个月内提交答辩，请问贵所有没有处理这类案件的经验？", "[Translation] Received USPTO Office Action citing likelihood of confusion. 3-month deadline to respond. Asking about experience handling this type of case."],
+  ["我们有一套推荐算法想申请美国发明专利，核心是基于用户行为的实时商品推荐系统，请问贵所有没有处理软件专利的经验？预计费用是多少？", "[Translation] Seeking US utility patent for a real-time product recommendation algorithm. Asking about software patent experience and estimated costs."],
+  ["📱 +86 138-0000-1234（微信同号）", "📱 +86 138-0000-1234 (WeChat same)"],
+  ["Whalium AI 智能匹配推荐", "Whalium AI Smart Match"],
+  ["共 18 条评价 · 综合评分 4.2 / 5.0", "18 reviews · Overall 4.2 / 5.0"],
+  ["评分分布", "Rating Breakdown"],
+  ["基于 18 条评价", "Based on 18 reviews"],
+  ["专业度", "Professionalism"],
+  ["响应速度", "Response Speed"],
+  ["性价比", "Value for Money"],
+  ["中文沟通", "Mandarin Communication"],
+  ["评价关键词", "Review Keywords"],
+  ["中文服务好 ×12", "Great Mandarin Service ×12"],
+  ["响应迅速 ×9", "Fast Response ×9"],
+  ["专业 ×8", "Professional ×8"],
+  ["答辩成功 ×6", "Successful Response ×6"],
+  ["流程清晰 ×5", "Clear Process ×5"],
+  ["价格合理 ×4", "Fair Pricing ×4"],
+  ["值得推荐 ×4", "Highly Recommended ×4"],
+  ["AI洞察：", "AI Insight:"],
+  ["您的「中文沟通」和「专业度」评分显著高于同类律所均值。建议在Profile中重点突出这两点，可提升AI推荐频率约20%。", "Your \"Mandarin Communication\" and \"Professionalism\" scores are significantly above peer average. Highlighting these in your profile could boost AI recommendation frequency by ~20%."],
+  ["全部评价", "All Reviews"],
+  ["5星", "5 Stars"],
+  ["4星", "4 Stars"],
+  ["商标注册 · 2026年1月 · 已验证服务", "Trademark Registration · Jan 2026 · Verified"],
+  ["商标驳回答辩 · 2025年12月 · 已验证服务", "Office Action Response · Dec 2025 · Verified"],
+  ["专利申请 · 2025年11月 · 已验证服务", "Patent Application · Nov 2025 · Verified"],
+  ["陈总 · 广州某科技公司", "Chen — Guangzhou Tech Co."],
+  ["刘女士 · 深圳跨境贸易", "Liu — Shenzhen Cross-border Trade"],
+  ["张先生 · 北京AI公司", "Zhang — Beijing AI Co."],
+  ["Sarah律师全程用中文沟通，非常专业耐心，帮我们顺利完成了第9类和第35类两个商标的注册，整个过程比预期快了将近两个月。价格也很透明，没有隐藏费用，非常推荐！", "Attorney Sarah communicated entirely in Mandarin — very professional and patient. Completed Class 9 & 35 trademark registrations nearly 2 months ahead of schedule. Fully transparent, no hidden fees. Highly recommend!"],
+  ["处理商标驳回答辩的经验很丰富，给出的策略很专业。唯一的小建议是沟通频率可以再高一些，有时候等了两三天才有回复，稍微有点着急。总体来说还是很满意的，最终商标顺利通过了。", "Very experienced with office action responses and professional strategy. Minor suggestion: more frequent updates would help — sometimes a 2–3 day wait. Overall satisfied; trademark was approved."],
+  ["Michael Chen律师帮我们完成了一个比较复杂的软件专利申请，他对中美两国专利制度都很熟悉，沟通起来完全没有障碍。整个过程文件准备很充分，USPTO审查时基本没遇到什么问题。", "Attorney Michael Chen handled a complex software patent application. Deep knowledge of both US and Chinese patent systems — seamless communication. Thorough documentation resulted in a smooth USPTO examination."],
+  ["感谢陈总的信任！很高兴能为贵公司顺利完成商标注册。如未来有其他知识产权需求，欢迎随时联系。", "Thank you for your trust! We're delighted to have helped complete your trademark registrations. Please reach out anytime for future IP needs."],
+  ["谢谢张先生！Michael很高兴能协助贵公司完成这次专利布局，期待未来继续合作！", "Thank you! Michael was glad to assist with your patent portfolio. We look forward to working together again!"],
+  ["中文服务", "Mandarin Service"],
+  ["响应迅速", "Fast Response"],
+  ["专业", "Professional"],
+  ["推荐", "Recommended"],
+  ["答辩成功", "Successful Response"],
+  ["管理 Profile", "Manage Profile"],
+  ["完善您的公开展示页面 · 完成度越高 AI 推荐频率越高", "Improve your listing · Higher completion = more AI recommendations"],
+  ["律师团队", "Attorney Team"],
+  ["典型案例", "Featured Cases"],
+  ["收费说明", "Pricing"],
+  ["律所英文名称", "Firm Name (English)"],
+  ["律所中文名称", "Firm Name (Chinese)"],
+  ["官网", "Website"],
+  ["联系邮箱", "Contact Email"],
+  ["律所简介", "About"],
+  ["Morrison IP Law 成立于2008年，专注于跨境知识产权法律服务，在美国商标注册、专利申请及商标驳回答辩领域拥有丰富经验。团队长期服务中国出海企业，提供全中文专业法律支持。", "Morrison IP Law was founded in 2008, specializing in cross-border IP services with extensive experience in US trademark registration, patent applications, and office action responses, serving Chinese companies expanding overseas."],
+  ["＋ 编辑领域", "+ Edit Areas"],
+  ["保存修改", "Save Changes"],
+  ["Sarah Johnson · 合伙人", "Sarah Johnson · Partner"],
+  ["10年+ · UCLA Law · 商标专家", "10+ yrs · UCLA Law · Trademark Specialist"],
+  ["中文流利", "Mandarin Fluent"],
+  ["Michael Chen 陈明 · 高级律师", "Michael Chen · Senior Attorney"],
+  ["8年+ · 软件专利方向", "8+ yrs · Software Patents"],
+  ["中文母语", "Native Mandarin"],
+  ["⚠ 缺专长描述", "⚠ Bio missing"],
+  ["补充信息", "Add Info"],
+  ["Linda Wang · 律师", "Linda Wang · Attorney"],
+  ["5年+", "5+ yrs"],
+  ["✕ 信息不完整", "✕ Incomplete"],
+  ["完善信息", "Complete Profile"],
+  ["＋ 添加律师", "+ Add Attorney"],
+  ["⚠ 尚未上传典型案例。上传后排名预计提升 25 位，并获得「案例认证」标签。", "⚠ No featured cases yet. Adding cases is estimated to improve your ranking by 25 positions and earns a \"Case Verified\" badge."],
+  ["上传案件材料（PDF/Word，可脱敏处理）", "Upload case files (PDF/Word · anonymize client info)"],
+  ["AI自动提取案件类型、策略与结果，无需手动填写", "AI auto-extracts case type, strategy & outcome — no manual entry"],
+  ["选择文件上传", "Choose files"],
+  ["收费区间将以「参考范围」形式展示给会员用户，帮助", "Price ranges are shown to member clients to help them"],
+  ["预判", "estimate budget"],
+  ["最低 (USD)", "Min (USD)"],
+  ["最高 (USD)", "Max (USD)"],
+  ["备注", "Notes"],
+  ["保存", "Save"],
+  ["＋ 添加行", "+ Add Row"],
+  ["管理您的会员权益与账单", "Manage membership & billing"],
+  ["当前套餐", "Current Plan"],
+  ["💎 高级会员 Premium", "🏆 Professional Plan"],
+  ["有效期至", "Valid until"],
+  ["2026年12月31日 · 剩余 313 天", "Dec 31, 2026 · 313 days remaining"],
+  ["询盘接收", "Inquiries"],
+  ["当前搜索排名", "Search Rank"],
+  [, "Priority"],
+  ["AI 推荐权重", "AI Match Weight"],
+  ["🎁 高级会员权益", "🏆 Professional Benefits"],
+  ["搜索结果优先展示", "Priority Search Placement"],
+  ["在同类律所中优先排列，获得更多曝光机会", "Ranked above peers for maximum visibility"],
+  ["无限接收询盘", "Unlimited Inquiries"],
+  ["不限数量接收", "Receive unlimited"],
+  ["询盘，免费会员每月限5条", "inquiries (free plan: 5/month)"],
+  ["AI 优先推荐", "AI Priority Matching"],
+  ["Whalium AI 匹配时给予更高权重，提升精准推荐频率", "Higher AI weighting for more frequent precise recommendations"],
+  ["完整数据分析", "Full Analytics"],
+  ["浏览量趋势、询盘来源分析、竞品对比报告", "View trends, inquiry source analysis & competitor reports"],
+  ["认证律所标识", "Verified Firm Badge"],
+  ["信任度", "client trust"],
+  ["专属客服支持", "Dedicated Support"],
+  ["7×24小时专属客服通道，快速响应运营问题", "24/7 dedicated support for fast issue resolution"],
+  ["账单记录", "Billing History"],
+  ["INV-2026-001 · 高级会员年费", "INV-2026-001 · Professional Annual Fee"],
+  ["INV-2025-001 · 高级会员年费", "INV-2025-001 · Professional Annual Fee"],
+  ["续费", "Renew"],
+  ["当前会员将于", "Your membership expires on"],
+  ["2026年12月31日", "Dec 31, 2026"],
+  ["到期。提前", ". Renew early to"],
+  ["可锁定当前价格，", "lock in current pricing."],
+  ["后有效期顺延一年。", "Membership extended by one year."],
+  [, ],
+  ["立即", "Renew Now"],
+  ["✓ 2024-01-13 已回复 ·", "✓ Replied 2024-01-13 ·"],
+  ["已关闭 (3)", "Closed (3)"],
+  ["陈先生", "Client: Chen"],
+  ["上海跨境电商", "Shanghai Cross-border"],
+  ["刘女士 ·", "Liu —"],
+  ["成都消费品牌", "Chengdu Consumer Brand"],
+  ["成立于2008年，是洛杉矶专注知识产权领域的精品律所。深耕美国商标、专利和版权业务超过16年，服务超过1,200家跨国企业，其中中国出海企业客户超过400家。", "Founded in 2008, Morrison IP Law is a boutique IP firm in Los Angeles, specializing in trademark, patent & copyright matters for 16+ years. Served 1,200+ clients, 400+ of whom are Chinese companies going global."],
+  ["律所创始合伙人 David Morrison 曾任职 USPTO（美国专利商标局），对审查流程有深刻理解，尤其擅长处理", "Founding partner David Morrison previously served at the USPTO, with deep expertise in examination procedures — especially for"],
+  ["和复杂商标纠纷案件。团队配备", "and complex trademark disputes. The team includes"],
+  ["，全程中文沟通，无语言障碍。", ", ensuring seamless Mandarin communication throughout."],
+  ["核心设计：", "Design highlights:"],
+  ["3分钟完成注册", "3-minute setup"],
+  ["平台侧持续积累LLM训练数据", "platform continuously builds LLM training data"],
+  ["数据概览", "Overview"],
+  ["莫里森知识产权律师事务所", "Morrison IP Law (莫里森知识产权律师事务所)"],
+  ["美国 · 加利福尼亚州 · 洛杉矶", "US · California · Los Angeles"],
+  ["斯特林合伙人律师事务所", "Sterling & Partners LLP"],
+  ["亚太法律集团", "Asia Pacific Legal Group"],
+  ["🔍 筛选查找律所", "🔍 Search & Filter Law Firms"],
+  ["已验证服务", "Verified Service"],
+  ["已验证", "Verified"],
+  ["客户评价", "Client Reviews"],
+  ["律所回复：", "Firm Reply:"],
+  ["还有 15 条评价", "15 more reviews"],
+  ["开通会员查看全部", "Subscribe to See All"],
+  ["执业经验", "Years of Practice"],
+  ["商标服务起价", "Trademark from"],
+  ["✏️ 其他", "✏️ Other"],
+  ["待处理", "Pending"],
+  ["已完成", "Done"],
+  ["已关闭", "Closed"],
+  ["+ 中国客户", "+ Chinese clients"],
+  ["每月 5 条询盘通知", "5 inquiries/month"],
+  ["每月 30 条询盘通知", "30 inquiries/month"],
+  ["搜索结果 优先排名", "Priority search ranking"],
+  ["搜索结果 顶部优先 排名", "Top-of-search ranking"],
+  ["无限 询盘接收", "Unlimited inquiries"],
+  ["AI 优先推荐 高权重流量", "AI Priority Match — high-weight traffic"],
+  ["条询盘通知", "inquiries/month"],
+  ["& 回复", "& replies"],
+  ["优先流量", "priority traffic"],
+  ["高权重流量", "high-weight traffic"],
+  ["条询盘/月", "inquiries/month"],
+  ["AI will auto-fetch website info", "AI will auto-fetch website info"],
+  ["数据概览", "Overview"],
+  ["数据概览 ·", "Overview ·"],
+  ["询盘 ·", "Inquiries ·"],
+  ["撰写评价", "Write a Review"],
+  ["仅限已服务客户", "Verified clients only"],
+  ["请先登录，仅向该律所提交过询盘的用户可以评价", "Please sign in. Only clients who submitted an inquiry may review."],
+  ["登录后评价", "Sign In to Review"],
+  ["① 您使用了哪项服务？", "① Which service did you use?"],
+  ["② 各维度评分", "② Rate each dimension"],
+  ["③ 选择适用标签（可多选）", "③ Pick applicable tags (multi-select)"],
+  ["④ 详细描述（选填，但非常有价值）", "④ Written review (optional, but very helpful)"],
+  ["👍 性价比高", "👍 Great value"],
+  ["⚡ 响应迅速", "⚡ Fast response"],
+  ["🎯 专业可靠", "🎯 Reliable & professional"],
+  ["🗣️ 中文流利", "🗣️ Fluent Mandarin"],
+  ["📋 流程清晰", "📋 Clear process"],
+  ["💰 价格透明", "💰 Transparent pricing"],
+  ["🏆 结果超预期", "🏆 Result exceeded expectations"],
+  ["🤝 态度友善", "🤝 Friendly & approachable"],
+  ["📝 文件规范", "📝 Well-prepared documents"],
+  ["🔄 会再次委托", "🔄 Would hire again"],
+  ["⏱️ 回复较慢", "⏱️ Slow replies"],
+  ["💸 超出预算", "💸 Over budget"],
+  ["提交评价", "Submit Review"],
+  ["评价已提交！", "Review submitted!"],
+  ["版权登记", "Copyright Registration"],
+  ["实际支付金额（USD，选填）", "Actual amount paid (USD, optional)"],
+  ["完成时间", "Completion time"],
+  ["1个月内", "Within 1 month"],
+  ["1-3个月", "1–3 months"],
+  ["3-6个月", "3–6 months"],
+  ["6-12个月", "6–12 months"],
+  ["12个月以上", "Over 12 months"],
+  ["Whalium已帮助2,000+出海企业对接律所", "2,000+ Chinese companies matched to date"],
+  ["全部律所经过资质核验", "All firms credential-verified"],
+  ["评价均来自真实服务客户", "Reviews from verified clients only"],
+  ["中文客服 · 工作日9-18时", "Chinese support · Weekdays 9am–6pm CST"],
+  ["🇨🇳 出海企业最关注", "🇨🇳 Why Chinese companies choose this firm"],
+  ["中文律师全程对接，零语言障碍", "Mandarin-speaking attorneys throughout"],
+  ["服务过 400+ 家中国出海企业", "Served 400+ Chinese overseas companies"],
+  ["收费透明，支持微信/支付宝付款", "Transparent fees, WeChat/Alipay accepted"],
+  ["商标成功率 94%（高于行业均值）", "94% trademark success rate (above industry avg)"],
+  ["律所回复：", "Firm reply:"],
+  ["成立于 2008", "Est. 2008"],
+  ["年，是洛杉矶", ", a Los Angeles"],
+  ["超过 1,200", "over 1,200"],
+  [, "over"],
+  ["年，服务超过", ", serving over"],
+  ["已验证服务", "Verified"],
+  ["AI 将自动抓取官网信息", "AI will auto-fetch website info"],
+  ["Step 1 · 基本信息", "Step 1 · Basic Info"],
+  ["Step 2 · AI Auto-fill", "Step 2 · AI Auto-fill"],
+  ["下一步：AI 自动生成", "Next: AI Auto-fill"],
+  ["提交并上线", "Submit & Go Live"],
+  ["选择方案", "Select Plan"],
+  ["立即支付", "Pay Now"],
+  ["核心功能展示：多维度筛选（国家、领域、评分、特色）· 律所卡片展示 · 评分和价格透明 · 一键查看详情", "Features: Multi-filter search · Firm cards · Transparent ratings & pricing · One-click details"]
+  ];
+
+  /* Sort by length descending — replace longer strings first to avoid partial matches */
+  MAP.sort(function(a,b){ return b[0].length - a[0].length; });
+
+  function walkAndReplace(root, toEn) {
+    /* Text nodes */
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
+    var node;
+    while((node = walker.nextNode())) {
+      var parent = node.parentNode;
+      if(!parent) continue;
+      var tag = parent.tagName;
+      if(tag==='SCRIPT'||tag==='STYLE') continue;
+      var txt = node.nodeValue;
+      if(!/[一-鿿]/.test(txt)) continue;
+      var replaced = txt;
+      for(var i=0;i<MAP.length;i++) {
+        if(replaced.indexOf(MAP[i][0]) !== -1) {
+          replaced = replaced.split(MAP[i][toEn?0:1]).join(MAP[i][toEn?1:0]);
+        }
+      }
+      if(replaced !== txt) node.nodeValue = replaced;
+    }
+    /* Option elements (select dropdowns) */
+    root.querySelectorAll('option').forEach(function(opt) {
+      var txt = opt.textContent;
+      if(!/[一-鿿]/.test(txt)) return;
+      var replaced = txt;
+      for(var i=0;i<MAP.length;i++) {
+        if(replaced.indexOf(MAP[i][0]) !== -1) {
+          replaced = replaced.split(MAP[i][toEn?0:1]).join(MAP[i][toEn?1:0]);
+        }
+      }
+      if(replaced !== txt) opt.textContent = replaced;
+    });
+    /* Placeholder attributes */
+    root.querySelectorAll('[placeholder]').forEach(function(el) {
+      var txt = el.placeholder;
+      if(!/[一-鿿]/.test(txt)) return;
+      var replaced = txt;
+      for(var i=0;i<MAP.length;i++) {
+        replaced = replaced.split(MAP[i][toEn?0:1]).join(MAP[i][toEn?1:0]);
+      }
+      if(replaced !== txt) el.placeholder = replaced;
+    });
+    /* Title / aria-label attributes */
+    root.querySelectorAll('[title],[aria-label]').forEach(function(el) {
+      ['title','aria-label'].forEach(function(attr) {
+        var txt = el.getAttribute(attr)||'';
+        if(!/[一-鿿]/.test(txt)) return;
+        var replaced = txt;
+        for(var i=0;i<MAP.length;i++) {
+          replaced = replaced.split(MAP[i][toEn?0:1]).join(MAP[i][toEn?1:0]);
+        }
+        if(replaced !== txt) el.setAttribute(attr, replaced);
+      });
+    });
+  }
+
+  /* Hook into the applyLang system */
+  var _orig = window.applyLang;
+  window.applyLang = function(lang) {
+    if(_orig) _orig(lang);
+    walkAndReplace(document.body||document.documentElement, lang==='en');
+  };
+
+  /* Also run on DOMContentLoaded after .t spans have been applied */
+  document.addEventListener('DOMContentLoaded', function() {
+    var lang = 'zh';
+    try { lang = localStorage.getItem('whalium_lang') || window._wlang || 'zh'; } catch(e) {}
+    if(lang === 'en') walkAndReplace(document.body, true);
+  });
+})();
+</script>
+
+  <script>
+  (function(){
+    document.addEventListener('DOMContentLoaded', function(){
+      var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
+      var priceMap = {consumer: '365', starter: '2,800', premium: '8,000'};
+      var el = document.getElementById('price-num');
+      if(el && priceMap[plan]) el.textContent = priceMap[plan];
+      // Also update orig price
+      var ORIG = {consumer:'999', starter:'4,200', premium:'12,000'};
+      var origEl = document.querySelector('.porig');
+      if(origEl && ORIG[plan]){
+        origEl.innerHTML = origEl.innerHTML.replace(/[\d,]+/, ORIG[plan]);
+      }
+    });
+  })();
+  </script>
+
+  <script>
+  (function(){
+    document.addEventListener('DOMContentLoaded', function(){
+      var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
+      var usdMap = {consumer: '$50', starter: '$385', premium: '$1,103'};
+      var usdEl = document.querySelector('.pusd');
+      if(usdEl && usdMap[plan]) {
+        usdEl.innerHTML = usdEl.innerHTML.replace(/\$[\d,]+/, usdMap[plan]);
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>关于 Whalium · 华里安 — 出海企业的全球法律导航</title>
+  <script id="lang-core">(function(){
+    var K='whalium_lang';
+    function detect(){try{var s=localStorage.getItem(K);if(s==='zh'||s==='en')return s;}catch(e){}return 'zh';}
+    function apply(lang){var en=(lang==='en');
+      document.querySelectorAll('span.t').forEach(function(el){el.textContent=en?(el.dataset.en||el.dataset.zh):(el.dataset.zh||el.dataset.en);});
+      var btn=document.getElementById('lang-btn');if(btn)btn.textContent=en?'中文':'EN';
+      document.documentElement.setAttribute('lang',en?'en':'zh-CN');
+      try{localStorage.setItem(K,lang);}catch(e){}window._wlang=lang;}
+    window.toggleLang=function(){apply(window._wlang==='zh'?'en':'zh');};
+    window.applyLang=apply;window._detectLang=detect;
+    document.addEventListener('DOMContentLoaded',function(){apply(detect());});
+  })();</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--navy:#0a1628;--navy2:#1a2e4a;--teal:#22ccde;--gold:#d4af37;--text:#1a2332;--muted:#64748b;--faint:#94a3b8;--bg:#f8fafc;--card:#ffffff;--border:#e2e8f0;}
+    body{font-family:-apple-system,BlinkMacSystemFont,'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+    a{color:inherit;text-decoration:none;}
+    .header{background:linear-gradient(135deg,var(--navy) 0%,var(--navy2) 100%);color:#fff;padding:0.9rem 2.5rem;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,0.3);}
+    .logo-sec{display:flex;align-items:center;gap:0.7rem;text-decoration:none;}
+    .brand{font-size:1.2rem;font-weight:800;background:linear-gradient(135deg,#fff 0%,var(--teal) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hnav{display:flex;align-items:center;gap:0.2rem;margin:0 auto;}
+    .nl{padding:0.4rem 0.85rem;color:rgba(255,255,255,0.72);font-size:0.85rem;border-radius:6px;transition:all 0.2s;}
+    .nl:hover{color:#fff;background:rgba(255,255,255,0.08);}
+    .nl.active{color:var(--teal);font-weight:600;}
+    .hact{display:flex;align-items:center;gap:0.6rem;}
+    .btn-lang{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.85);padding:0.32rem 0.7rem;border-radius:5px;font-size:0.8rem;cursor:pointer;}
+    .btn-join{background:linear-gradient(135deg,var(--gold) 0%,#f39c12 100%);color:var(--navy);padding:0.42rem 1rem;border-radius:6px;font-size:0.83rem;font-weight:700;}
+    .btn-login{border:1px solid rgba(255,255,255,0.3);color:rgba(255,255,255,0.85);padding:0.42rem 0.95rem;border-radius:6px;font-size:0.83rem;}
+    /* Hero */
+    .hero{background:linear-gradient(150deg,var(--navy) 0%,#0f2540 50%,#1a3a5c 100%);color:#fff;padding:4.5rem 2rem 3.5rem;text-align:center;position:relative;overflow:hidden;}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(34,204,222,0.12) 0%,transparent 65%);pointer-events:none;}
+    .hero-tag{display:inline-block;background:rgba(34,204,222,0.12);border:1px solid rgba(34,204,222,0.3);color:var(--teal);padding:0.28rem 0.95rem;border-radius:20px;font-size:0.76rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.4rem;}
+    .hero h1{font-size:clamp(1.7rem,4vw,2.7rem);font-weight:800;line-height:1.25;margin-bottom:1.1rem;}
+    .hero h1 em{font-style:normal;color:var(--teal);}
+    .hero-sub{font-size:1rem;color:rgba(255,255,255,0.7);max-width:580px;margin:0 auto 2.2rem;line-height:1.75;}
+    .hero-stats{display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;}
+    .hstat{text-align:center;}
+    .hstat-num{font-size:1.9rem;font-weight:800;color:var(--teal);line-height:1;}
+    .hstat-lbl{font-size:0.77rem;color:rgba(255,255,255,0.52);margin-top:0.28rem;}
+    /* Sections */
+    .sec{max-width:840px;margin:0 auto;padding:3.5rem 2rem;}
+    .sec-tag{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem;}
+    .sec-title{font-size:1.55rem;font-weight:800;color:var(--text);margin-bottom:0.75rem;line-height:1.3;}
+    .sec-body{font-size:0.93rem;color:var(--muted);line-height:1.85;}
+    hr.div{border:none;border-top:1px solid var(--border);margin:0;}
+    /* Problem cards */
+    .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.3rem;margin-top:1.8rem;}
+    @media(max-width:600px){.story-grid{grid-template-columns:1fr;}}
+    .story-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.3rem 1.4rem;}
+    .story-icon{font-size:1.5rem;margin-bottom:0.6rem;}
+    .story-title{font-size:0.93rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;}
+    .story-text{font-size:0.82rem;color:var(--muted);line-height:1.7;}
+    /* Steps */
+    .steps{display:flex;flex-direction:column;gap:0;margin-top:1.8rem;position:relative;}
+    .steps::before{content:'';position:absolute;left:18px;top:20px;bottom:20px;width:2px;background:linear-gradient(to bottom,var(--teal),rgba(34,204,222,0.1));}
+    .step{display:flex;gap:1.1rem;padding:0.9rem 0;}
+    .step-num{width:36px;height:36px;border-radius:50%;background:var(--navy);border:2px solid var(--teal);color:var(--teal);font-size:0.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1;}
+    .step-body{padding-top:0.45rem;}
+    .step-title{font-size:0.93rem;font-weight:700;color:var(--text);margin-bottom:0.22rem;}
+    .step-desc{font-size:0.83rem;color:var(--muted);line-height:1.65;}
+    .step-note{display:inline-block;margin-top:0.3rem;background:#f0fdf4;border:1px solid #bbf7d0;color:#166534;font-size:0.7rem;padding:0.13rem 0.5rem;border-radius:10px;font-weight:600;}
+    /* Trust */
+    .trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem;margin-top:1.8rem;}
+    @media(max-width:600px){.trust-grid{grid-template-columns:1fr;}}
+    .trust-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.3rem;text-align:center;}
+    .trust-icon{font-size:1.7rem;margin-bottom:0.55rem;}
+    .trust-title{font-size:0.88rem;font-weight:700;color:var(--text);margin-bottom:0.35rem;}
+    .trust-desc{font-size:0.78rem;color:var(--muted);line-height:1.6;}
+    /* Data sources */
+    .source-list{margin-top:1.4rem;display:flex;flex-direction:column;gap:0.7rem;}
+    .source-row{display:flex;align-items:flex-start;gap:0.7rem;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0.85rem 1rem;}
+    .source-icon{font-size:1.05rem;flex-shrink:0;padding-top:0.1rem;}
+    .source-title{font-size:0.86rem;font-weight:700;color:var(--text);}
+    .source-desc{font-size:0.78rem;color:var(--muted);margin-top:0.12rem;line-height:1.55;}
+    /* Team note */
+    .team-note{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1px solid #bae6fd;border-radius:12px;padding:1.4rem;margin-top:1.8rem;font-size:0.87rem;color:#0369a1;line-height:1.8;}
+    .team-note strong{font-weight:700;}
+    /* FAQ */
+    .faq-list{margin-top:1.4rem;display:flex;flex-direction:column;gap:0.7rem;}
+    .faq-item{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+    .faq-q{padding:0.95rem 1.05rem;font-size:0.88rem;font-weight:700;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none;}
+    .faq-q:hover{background:#f8fafc;}
+    .faq-arrow{color:var(--faint);font-size:0.78rem;transition:transform 0.2s;}
+    .faq-a{padding:0 1.05rem 0.95rem;font-size:0.83rem;color:var(--muted);line-height:1.75;display:none;}
+    .faq-item.open .faq-a{display:block;}
+    .faq-item.open .faq-arrow{transform:rotate(180deg);}
+    /* CTA */
+    .cta-strip{background:linear-gradient(135deg,var(--navy) 0%,#0f2540 100%);color:#fff;text-align:center;padding:3.5rem 2rem;}
+    .cta-strip h2{font-size:1.55rem;font-weight:800;margin-bottom:0.7rem;}
+    .cta-strip p{color:rgba(255,255,255,0.62);margin-bottom:1.8rem;font-size:0.93rem;}
+    .cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+    .btn-cta-p{background:linear-gradient(135deg,var(--teal) 0%,#0a8eb0 100%);color:var(--navy);padding:0.82rem 1.9rem;border-radius:8px;font-weight:800;font-size:0.93rem;}
+    .btn-cta-s{border:1.5px solid rgba(255,255,255,0.32);color:rgba(255,255,255,0.83);padding:0.82rem 1.9rem;border-radius:8px;font-weight:600;font-size:0.93rem;}
+    .btn-cta-p:hover,.btn-cta-s:hover{opacity:0.88;}
+    /* Footer */
+    .footer{background:var(--navy);color:rgba(255,255,255,0.42);padding:1.4rem 2rem;text-align:center;font-size:0.78rem;}
+    .footer a{color:rgba(255,255,255,0.52);margin:0 0.45rem;}
+    .footer a:hover{color:var(--teal);}
+  
+    /* ── Universal Header ── */
+    .wh-header{background:linear-gradient(135deg,#0a1628 0%,#1a2e4a 100%);color:#fff;padding:0.85rem 2rem;display:flex;align-items:center;gap:0;position:sticky;top:0;z-index:200;box-shadow:0 2px 16px rgba(0,0,0,0.35);}
+    .wh-logo{display:flex;align-items:center;gap:0.65rem;text-decoration:none;flex-shrink:0;}
+    .wh-brand{font-size:1.15rem;font-weight:800;background:linear-gradient(135deg,#fff 0%,#22ccde 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-0.01em;}
+    .wh-nav{display:flex;align-items:center;gap:0.15rem;margin:0 auto;}
+    .wh-nl{padding:0.4rem 0.8rem;color:rgba(255,255,255,0.68);font-size:0.84rem;border-radius:6px;text-decoration:none;transition:all 0.18s;white-space:nowrap;}
+    .wh-nl:hover{color:#fff;background:rgba(255,255,255,0.09);}
+    .wh-nl.active{color:#22ccde;font-weight:600;}
+    .wh-actions{display:flex;align-items:center;gap:0.55rem;flex-shrink:0;}
+    .wh-lang{background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.82);padding:0.3rem 0.65rem;border-radius:5px;font-size:0.79rem;cursor:pointer;font-family:inherit;}
+    .wh-login{border:1px solid rgba(255,255,255,0.28);color:rgba(255,255,255,0.82);padding:0.38rem 0.85rem;border-radius:6px;font-size:0.82rem;text-decoration:none;white-space:nowrap;}
+    .wh-login:hover{background:rgba(255,255,255,0.07);}
+    .wh-join{background:linear-gradient(135deg,#d4af37 0%,#f39c12 100%);color:#0a1628;padding:0.38rem 1rem;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;white-space:nowrap;}
+    .wh-join:hover{opacity:0.9;}
+    @media(max-width:700px){.wh-nav{display:none;}.wh-brand{font-size:1rem;}}
+
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<!-- ══ Universal Header ══ -->
+<div class="wh-header">
+  <a href="whalium_1_index.html" class="wh-logo">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:38px;height:38px;flex-shrink:0;">
+      <defs>
+        <radialGradient id="wbgH" cx="45%" cy="45%" r="60%"><stop offset="0%" stop-color="#1c3d5c"/><stop offset="100%" stop-color="#070f1c"/></radialGradient>
+        <linearGradient id="wtH" x1="15%" y1="5%" x2="85%" y2="95%"><stop offset="0%" stop-color="#80eef8"/><stop offset="40%" stop-color="#22ccde"/><stop offset="100%" stop-color="#0a8eb0"/></linearGradient>
+        <filter id="glH"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <circle cx="100" cy="100" r="88" fill="url(#wbgH)"/>
+      <circle cx="100" cy="100" r="88" fill="none" stroke="#5598ba" stroke-width="5" stroke-dasharray="478 78" stroke-dashoffset="-20" stroke-linecap="round"/>
+      <path d="M100 130 C85 140,62 147,44 137 C29 128,32 110,44 101 C56 92,76 97,100 110" fill="url(#wtH)" filter="url(#glH)"/>
+      <path d="M100 130 C115 140,138 147,156 137 C171 128,168 110,156 101 C144 92,124 97,100 110" fill="url(#wtH)" filter="url(#glH)"/>
+      <path d="M100 110 C94 120,94 127,100 130 C106 127,106 120,100 110" fill="#070f1c"/>
+      <path d="M100 110 C96 95,93 78,100 67 C107 78,104 95,100 110" fill="url(#wtH)" opacity="0.88" filter="url(#glH)"/>
+    </svg>
+    <span class="wh-brand">Whalium</span>
+  </a>
+  <nav class="wh-nav">
+    <a href="whalium_1_index.html" class="wh-nl"><span class="t" data-zh="律所搜索" data-en="Find Firms">律所搜索</span></a>
+    <a href="whalium_6_landing.html" class="wh-nl"><span class="t" data-zh="律所入驻" data-en="Join as Firm">律所入驻</span></a>
+    <a href="whalium_9_about.html" class="wh-nl active"><span class="t" data-zh="关于我们" data-en="About">关于我们</span></a>
+  </nav>
+  <div class="wh-actions">
+    <button class="wh-lang" id="lang-btn" onclick="toggleLang()">EN</button>
+    <a href="whalium_2_login.html" class="wh-login"><span class="t" data-zh="登录" data-en="Login">登录</span></a>
+    <a href="whalium_6_landing.html" class="wh-join"><span class="t" data-zh="律所入驻" data-en="Join Us">律所入驻</span></a>
+  </div>
+</div>
+
+
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-tag"><span class="t" data-zh="我们的使命" data-en="Our Mission">我们的使命</span></div>
+  <h1><span class="t" data-zh="让中国出海企业找到真正" data-en="Helping Chinese Companies Find ">让中国出海企业找到真正</span><em><span class="t" data-zh="靠谱" data-en="Trusted">靠谱</span></em><span class="t" data-zh="的境外律所" data-en=" Law Firms">的境外律所</span></h1>
+  <p class="hero-sub"><span class="t" data-zh="Whalium（华里安）是专为中国出海企业打造的全球律所导航平台。通过真实评价、透明报价和中文服务，帮助企业在陌生法律环境中做出有把握的决策。" data-en="Whalium is a global law firm navigation platform built for Chinese companies expanding abroad — helping businesses navigate unfamiliar legal environments through verified reviews, transparent pricing, and bilingual support.">Whalium（华里安）是专为中国出海企业打造的全球律所导航平台。通过真实评价、透明报价和中文服务，帮助企业在陌生法律环境中做出有把握的决策。</span></p>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-num">287</div><div class="hstat-lbl"><span class="t" data-zh="已收录律所" data-en="Law Firms Listed">已收录律所</span></div></div>
+    <div class="hstat"><div class="hstat-num">26</div><div class="hstat-lbl"><span class="t" data-zh="覆盖国家地区" data-en="Countries Covered">覆盖国家地区</span></div></div>
+    <div class="hstat"><div class="hstat-num">1,400+</div><div class="hstat-lbl"><span class="t" data-zh="真实客户评价" data-en="Verified Client Reviews">真实客户评价</span></div></div>
+    <div class="hstat"><div class="hstat-num">94%</div><div class="hstat-lbl"><span class="t" data-zh="提供中文服务" data-en="Offer Chinese Support">提供中文服务</span></div></div>
+  </div>
+</div>
+
+<!-- Problem -->
+<hr class="div">
+<div class="sec">
+  <div class="sec-tag"><span class="t" data-zh="背景与问题" data-en="The Problem">背景与问题</span></div>
+  <div class="sec-title"><span class="t" data-zh="出海企业找律所，为什么这么难？" data-en="Why is finding the right overseas law firm so hard?">出海企业找律所，为什么这么难？</span></div>
+  <p class="sec-body"><span class="t" data-zh="近年来中国企业出海加速——商标注册、公司设立、合规审查、跨境诉讼……每一步都离不开当地律师。但现有的国际律所目录要么英文为主、对中国客户不友好，要么评价注水、营销驱动，企业最终只能靠同行口耳相传。" data-en="Chinese companies are expanding overseas at an accelerating pace — trademark registration, entity setup, compliance, cross-border disputes… every step requires local legal counsel. Yet existing directories are either English-first and unfriendly to Chinese clients, or marketing-driven with inflated reviews, leaving companies relying on word-of-mouth.">近年来中国企业出海加速——商标注册、公司设立、合规审查、跨境诉讼……每一步都离不开当地律师。但现有的国际律所目录要么英文为主、对中国客户不友好，要么评价注水、营销驱动，企业最终只能靠同行口耳相传。</span></p>
+  <div class="story-grid">
+    <div class="story-card"><div class="story-icon">😤</div><div class="story-title"><span class="t" data-zh="信息不透明" data-en="Opaque Pricing">信息不透明</span></div><div class="story-text"><span class="t" data-zh="律所网站看不出真实报价，官费、加急费、驳回答辩追加费隐藏在合同细则里，签约前根本不知道。" data-en="Law firm websites rarely show real pricing. Government fees, rush charges, and office action surcharges are buried in contract terms — you won't know until after signing.">律所网站看不出真实报价，官费、加急费、驳回答辩追加费隐藏在合同细则里，签约前根本不知道。</span></div></div>
+    <div class="story-card"><div class="story-icon">🔤</div><div class="story-title"><span class="t" data-zh="语言沟通障碍" data-en="Language Barriers">语言沟通障碍</span></div><div class="story-text"><span class="t" data-zh="很多律所标注&quot;中文服务&quot;，实际只有助理懂中文。关键谈判依赖机器翻译，错误百出，风险极大。" data-en="Many firms claim 'Chinese service,' but only one assistant speaks Mandarin. Critical negotiations rely on machine translation — full of errors, high risk.">很多律所标注"中文服务"，实际只有助理懂中文。关键谈判依赖机器翻译，错误百出，风险极大。</span></div></div>
+    <div class="story-card"><div class="story-icon">⭐</div><div class="story-title"><span class="t" data-zh="评价不可信" data-en="Untrustworthy Reviews">评价不可信</span></div><div class="story-text"><span class="t" data-zh="谷歌评价清一色五星，Chambers认证看不懂，付了钱才发现预期落差巨大。真实差评都找不到。" data-en="Google reviews are all 5 stars, Chambers is hard to interpret, and you only discover the gap after paying. Real critical reviews are nowhere to be found.">谷歌评价清一色五星，Chambers认证看不懂，付了钱才发现预期落差巨大。真实差评都找不到。</span></div></div>
+    <div class="story-card"><div class="story-icon">🧭</div><div class="story-title"><span class="t" data-zh="匹配效率极低" data-en="Low Matching Efficiency">匹配效率极低</span></div><div class="story-text"><span class="t" data-zh="从&quot;需要美国商标律所&quot;到签合同，平均耗时超过3周，联系6家律所，最终选择的是第一个认真回邮件的。" data-en="From 'I need a US trademark firm' to signing takes 3+ weeks on average, contacting 6 firms — and the final choice is usually just whoever replied to the email first.">从"需要美国商标律所"到签合同，平均耗时超过3周，联系6家律所，最终选择的是第一个认真回邮件的。</span></div></div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- How it works -->
+<div class="sec">
+  <div class="sec-tag"><span class="t" data-zh="产品机制" data-en="How It Works">产品机制</span></div>
+  <div class="sec-title"><span class="t" data-zh="Whalium 是怎么工作的" data-en="How Whalium Works">Whalium 是怎么工作的</span></div>
+  <div class="steps">
+    <div class="step"><div class="step-num">1</div><div class="step-body"><div class="step-title"><span class="t" data-zh="律所申请入驻并通过人工审核" data-en="Law firms apply and pass manual verification">律所申请入驻并通过人工审核</span></div><div class="step-desc"><span class="t" data-zh="律所提交营业执照、律师执照、Chambers/Legal 500等第三方认证资料。Whalium团队人工核实，不接受纯营销材料。平均审核周期3个工作日。" data-en="Firms submit licenses, attorney credentials, and third-party certifications (Chambers, Legal 500). The Whalium team manually verifies each submission — marketing materials alone are not accepted. Average review: 3 business days.">律所提交营业执照、律师执照、Chambers/Legal 500等第三方认证资料。Whalium团队人工核实，不接受纯营销材料。平均审核周期3个工作日。</span></div><span class="step-note"><span class="t" data-zh="✓ 所有在列律所均已完成资质核验" data-en="✓ All listed firms have passed credential verification">✓ 所有在列律所均已完成资质核验</span></span></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-body"><div class="step-title"><span class="t" data-zh="真实客户留下经过验证的评价" data-en="Real clients leave verified reviews">真实客户留下经过验证的评价</span></div><div class="step-desc"><span class="t" data-zh="只有实际委托过该律所的企业才能提交评价，需上传合同首页或付款凭证作为验证依据（自动脱敏）。平台不删除差评——差评是会员核心权益之一。" data-en="Only clients who have actually engaged a firm can submit reviews, verified by uploading a contract cover or payment receipt (auto-redacted). We do not remove negative reviews — they are a core part of what members pay for.">只有实际委托过该律所的企业才能提交评价，需上传合同首页或付款凭证作为验证依据（自动脱敏）。平台不删除差评——差评是会员核心权益之一。</span></div><span class="step-note"><span class="t" data-zh="✓ 每条评价均附带验证标识" data-en="✓ Every review carries a verification badge">✓ 每条评价均附带验证标识</span></span></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-body"><div class="step-title"><span class="t" data-zh="企业用AI搜索或筛选找到匹配律所" data-en="Companies find matched firms via AI search or filters">企业用AI搜索或筛选找到匹配律所</span></div><div class="step-desc"><span class="t" data-zh="用自然语言描述需求（如"收到USPTO驳回通知，预算$1,000内"），AI自动匹配最相关律所，附上同类案例成功率、真实报价区间和中文沟通能力评分。" data-en="Describe your needs in natural language (e.g., 'Got a USPTO office action, budget under $1,000'). AI matches the most relevant firms with success rates for similar cases, real price ranges, and Mandarin proficiency scores.">用自然语言描述需求（如"收到USPTO驳回通知，预算$1,000内"），AI自动匹配最相关律所，附上同类案例成功率、真实报价区间和中文沟通能力评分。</span></div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-body"><div class="step-title"><span class="t" data-zh="企业开通会员，解锁完整信息并发送询盘" data-en="Companies subscribe to unlock full info and send inquiries">企业开通会员，解锁完整信息并发送询盘</span></div><div class="step-desc"><span class="t" data-zh="会员可查看律师直线、邮箱、完整评价（含差评）、隐藏费用提醒和历史成交价趋势。发送询盘后由平台转发，律所通常在24小时内用中文回复。" data-en="Members access attorney direct lines, emails, full reviews (including critical ones), hidden fee alerts, and historical pricing trends. Inquiries are forwarded by the platform; firms typically reply in Chinese within 24 hours.">会员可查看律师直线、邮箱、完整评价（含差评）、隐藏费用提醒和历史成交价趋势。发送询盘后由平台转发，律所通常在24小时内用中文回复。</span></div><span class="step-note"><span class="t" data-zh="✓ 询盘不构成委托关系 · 第一次咨询免费" data-en="✓ Inquiry ≠ attorney-client relationship · First consult free">✓ 询盘不构成委托关系 · 第一次咨询免费</span></span></div></div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- Trust -->
+<div class="sec">
+  <div class="sec-tag"><span class="t" data-zh="为什么可信" data-en="Why Trust Us">为什么可信</span></div>
+  <div class="sec-title"><span class="t" data-zh="我们如何保证信息质量" data-en="How We Ensure Information Quality">我们如何保证信息质量</span></div>
+  <div class="trust-grid">
+    <div class="trust-card"><div class="trust-icon">🔍</div><div class="trust-title"><span class="t" data-zh="人工资质审核" data-en="Manual Credential Review">人工资质审核</span></div><div class="trust-desc"><span class="t" data-zh="每家律所入驻前由专职审核员核查执照、认证、历史案例，最终由人工确认。" data-en="Every firm is vetted by a dedicated reviewer checking licenses, certifications, and case history before listing.">每家律所入驻前由专职审核员核查执照、认证、历史案例，最终由人工确认。</span></div></div>
+    <div class="trust-card"><div class="trust-icon">📋</div><div class="trust-title"><span class="t" data-zh="服务合同验证评价" data-en="Contract-Verified Reviews">服务合同验证评价</span></div><div class="trust-desc"><span class="t" data-zh="评价者必须提交服务凭证，平台AI核对合同中的律所名称与评价对象是否一致，防止刷分。" data-en="Reviewers must submit service proof. Our AI cross-checks the firm name in the contract with the review target to prevent fake reviews.">评价者必须提交服务凭证，平台AI核对合同中的律所名称与评价对象是否一致，防止刷分。</span></div></div>
+    <div class="trust-card"><div class="trust-icon">⚖️</div><div class="trust-title"><span class="t" data-zh="差评不可删除政策" data-en="No-Delete Policy">差评不可删除政策</span></div><div class="trust-desc"><span class="t" data-zh="律所无权要求删除负面评价。若评价存在事实错误，律所可申诉，由平台独立裁定并公开结果。" data-en="Firms cannot request removal of negative reviews. If a review contains factual errors, firms may dispute; the platform adjudicates independently with results publicly visible.">律所无权要求删除负面评价。若评价存在事实错误，律所可申诉，由平台独立裁定并公开结果。</span></div></div>
+    <div class="trust-card"><div class="trust-icon">💰</div><div class="trust-title"><span class="t" data-zh="付费不影响排名" data-en="Payment ≠ Rankings">付费不影响排名</span></div><div class="trust-desc"><span class="t" data-zh="律所付费入驻，但金额不影响搜索排名。排名完全基于评价质量、响应率和历史服务数据。" data-en="Firms pay to list, but payment amount does not affect rankings. Rankings are based entirely on review quality, response rate, and service history.">律所付费入驻，但金额不影响搜索排名。排名完全基于评价质量、响应率和历史服务数据。</span></div></div>
+    <div class="trust-card"><div class="trust-icon">🔐</div><div class="trust-title"><span class="t" data-zh="隐私保护" data-en="Privacy Protection">隐私保护</span></div><div class="trust-desc"><span class="t" data-zh="评价中的公司名称、金额由用户自主选择是否公开。联系方式仅对会员显示，不对外共享。" data-en="Company names and amounts in reviews can be kept private at the reviewer's choice. Contact details are shown only to members, never shared externally.">评价中的公司名称、金额由用户自主选择是否公开。联系方式仅对会员显示，不对外共享。</span></div></div>
+    <div class="trust-card"><div class="trust-icon">📊</div><div class="trust-title"><span class="t" data-zh="数据来源透明" data-en="Transparent Data Sources">数据来源透明</span></div><div class="trust-desc"><span class="t" data-zh="律所基本信息来源均标注（官网、Chambers、Legal 500、政府注册库等），引用时注明来源和更新日期。" data-en="Every piece of firm data is sourced (official website, Chambers, Legal 500, government registries, etc.) with citations and update dates.">律所基本信息来源均标注（官网、Chambers、Legal 500、政府注册库等），引用时注明来源和更新日期。</span></div></div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- Data Sources -->
+<div class="sec">
+  <div class="sec-tag"><span class="t" data-zh="数据来源" data-en="Data Sources">数据来源</span></div>
+  <div class="sec-title"><span class="t" data-zh="我们的数据从哪里来" data-en="Where Our Data Comes From">我们的数据从哪里来</span></div>
+  <p class="sec-body"><span class="t" data-zh="Whalium的律所数据来自多个权威来源的交叉验证，由人工团队持续维护。我们不接受律所付费修改评分和评价内容。" data-en="Whalium's firm data is cross-verified from multiple authoritative sources, continuously maintained by a human editorial team. We do not accept payment to alter ratings or review content.">Whalium的律所数据来自多个权威来源的交叉验证，由人工团队持续维护。我们不接受律所付费修改评分和评价内容。</span></p>
+  <div class="source-list">
+    <div class="source-row"><div class="source-icon">🏛️</div><div><div class="source-title"><span class="t" data-zh="政府注册数据库" data-en="Government Registration Databases">政府注册数据库</span></div><div class="source-desc"><span class="t" data-zh="美国各州律师协会（State Bar）、USPTO注册代理人名录、英国SRA、新加坡法律协会等官方数据库，核实执照有效性。" data-en="US State Bar associations, USPTO registered agent directories, UK SRA, Singapore Law Society — used to verify active licenses for firms and attorneys.">美国各州律师协会（State Bar）、USPTO注册代理人名录、英国SRA、新加坡法律协会等官方数据库，核实执照有效性。</span></div></div></div>
+    <div class="source-row"><div class="source-icon">📈</div><div><div class="source-title">Chambers &amp; Partners / Legal 500</div><div class="source-desc"><span class="t" data-zh="引用全球两大权威法律评级机构的Band评级和推荐律师信息，作为律所实力的第三方背书，同步标注数据年份。" data-en="We reference Band ratings and recommended attorney data from the two leading global legal ranking bodies as third-party endorsements, with data year clearly noted.">引用全球两大权威法律评级机构的Band评级和推荐律师信息，作为律所实力的第三方背书，同步标注数据年份。</span></div></div></div>
+    <div class="source-row"><div class="source-icon">✍️</div><div><div class="source-title"><span class="t" data-zh="经验证的客户评价" data-en="Verified Client Reviews">经验证的客户评价</span></div><div class="source-desc"><span class="t" data-zh="平台自有评价系统，评价者须提供服务凭证（合同或付款截图）。已收录1,400+条经验证评价，覆盖287家律所。" data-en="Our proprietary review system requires service proof (contract or payment screenshot). Currently 1,400+ verified reviews across 287 firms.">平台自有评价系统，评价者须提供服务凭证（合同或付款截图）。已收录1,400+条经验证评价，覆盖287家律所。</span></div></div></div>
+    <div class="source-row"><div class="source-icon">💬</div><div><div class="source-title"><span class="t" data-zh="律所自主更新信息" data-en="Firm Self-Reported Updates">律所自主更新信息</span></div><div class="source-desc"><span class="t" data-zh="入驻律所可通过后台更新服务范围、收费等信息，所有修改带时间戳并标注"律所自述"标签，与第三方核实数据区分显示。" data-en="Listed firms can update practice areas and fees via their dashboard. All self-reported updates are timestamped and labeled 'Firm-reported,' clearly differentiated from third-party verified data.">入驻律所可通过后台更新服务范围、收费等信息，所有修改带时间戳并标注"律所自述"标签，与第三方核实数据区分显示。</span></div></div></div>
+  </div>
+</div>
+<hr class="div">
+
+<!-- Team -->
+<div class="sec">
+  <div class="sec-tag"><span class="t" data-zh="团队" data-en="Team">团队</span></div>
+  <div class="sec-title"><span class="t" data-zh="谁在做 Whalium" data-en="Who Builds Whalium">谁在做 Whalium</span></div>
+  <div class="team-note">
+    <span class="t" data-zh="Whalium 由一支有出海企业法律服务实战经验的团队创立。创始团队成员曾在跨国企业法务部、中国律所涉外业务部门和出海服务机构任职，亲身经历过"在海外找律所"的痛苦过程，这才决定做这个产品。" data-en="Whalium was founded by a team with hands-on experience in cross-border legal services. Founding members have worked in multinational corporate legal departments, Chinese law firms' international practice groups, and overseas expansion service providers — experiencing firsthand the pain of finding reliable legal counsel abroad.">Whalium 由一支有出海企业法律服务实战经验的团队创立。创始团队成员曾在跨国企业法务部、中国律所涉外业务部门和出海服务机构任职，亲身经历过"在海外找律所"的痛苦过程，这才决定做这个产品。</span><br><br><span class="t" data-zh="我们相信：" data-en="We believe: ">我们相信：</span><strong><span class="t" data-zh="一个诚实的、中立的、对中国客户友好的律所导航平台，本身就有很大的市场价值。" data-en="an honest, neutral, China-friendly law firm navigation platform has enormous market value.">一个诚实的、中立的、对中国客户友好的律所导航平台，本身就有很大的市场价值。</span></strong><span class="t" data-zh=" 这是我们做 Whalium 的原始动力，也是对用户的承诺。" data-en=" This is our founding conviction and our commitment to every user."> 这是我们做 Whalium 的原始动力，也是对用户的承诺。</span><br><br><span class="t" data-zh="目前团队规模较小，正处于早期阶段。如果你是出海企业主、律所从业者，或者对这个方向感兴趣，欢迎联系：" data-en="We're a small, early-stage team. If you're a Chinese business founder, a law firm practitioner, or simply interested in what we're building, we'd love to hear from you: ">目前团队规模较小，正处于早期阶段。如果你是出海企业主、律所从业者，或者对这个方向感兴趣，欢迎联系：</span><strong>hello@whalium.com</strong>
+  </div>
+</div>
+<hr class="div">
+
+<!-- FAQ -->
+<div class="sec">
+  <div class="sec-tag">FAQ</div>
+  <div class="sec-title"><span class="t" data-zh="常见问题" data-en="Frequently Asked Questions">常见问题</span></div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="tfaq(this)"><span class="t" data-zh="Whalium 是怎么赚钱的？会偏向收费多的律所吗？" data-en="How does Whalium make money? Will you favor firms that pay more?">Whalium 是怎么赚钱的？会偏向收费多的律所吗？</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a"><span class="t" data-zh="两个收入来源：① 律所支付年度入驻费换取平台曝光和询盘；② 中国企业用户支付年费（¥365）解锁完整律所资料。律所付费金额不影响搜索排名——排名完全基于客观数据。如果花钱能提高排名，平台信任基础就会崩塌，这对我们没有任何好处。" data-en="Two revenue streams: ① Law firms pay an annual listing fee for exposure and inquiry leads; ② Chinese users pay an annual fee (¥365) to unlock complete profiles. Payment amount does not influence search rankings — rankings are based entirely on objective data. If money could buy rankings, our trust foundation would collapse, which benefits no one including us.">两个收入来源：① 律所支付年度入驻费换取平台曝光和询盘；② 中国企业用户支付年费（¥365）解锁完整律所资料。律所付费金额不影响搜索排名——排名完全基于客观数据。如果花钱能提高排名，平台信任基础就会崩塌，这对我们没有任何好处。</span></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="tfaq(this)"><span class="t" data-zh="发送询盘之后会发生什么？律所会直接联系我吗？" data-en="What happens after I send an inquiry? Will the firm contact me directly?">发送询盘之后会发生什么？律所会直接联系我吗？</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a"><span class="t" data-zh="发送询盘后，Whalium会将你的需求（脱敏处理后）在24小时内转发给对应律所，律所通常在24小时内用中文邮件回复。发送询盘不构成任何法律委托关系，无需付费。你的联系方式只有在你明确同意后才会共享给律所。如果72小时内未收到回复，平台会主动跟进。" data-en="After sending an inquiry, Whalium forwards your (anonymized) needs to the firm within 24 hours. Firms typically reply in Chinese by email within 24 hours. Sending an inquiry does not create any attorney-client relationship and involves no fees. Your contact info is only shared with the firm after your explicit consent. If no reply arrives within 72 hours, we'll follow up proactively.">发送询盘后，Whalium会将你的需求（脱敏处理后）在24小时内转发给对应律所，律所通常在24小时内用中文邮件回复。发送询盘不构成任何法律委托关系，无需付费。你的联系方式只有在你明确同意后才会共享给律所。如果72小时内未收到回复，平台会主动跟进。</span></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="tfaq(this)"><span class="t" data-zh="会员费 ¥365/年，不满意可以退款吗？" data-en="Is there a refund if I'm unsatisfied with the ¥365/year membership?">会员费 ¥365/年，不满意可以退款吗？</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a"><span class="t" data-zh="可以。开通后7天内如果觉得不满意，可以申请全额退款，无需任何理由，发邮件到 support@whalium.com 即可，通常1个工作日内处理。" data-en="Yes. If you're unsatisfied within 7 days of subscribing, you can request a full refund with no questions asked. Email support@whalium.com and we'll process it within 1 business day.">可以。开通后7天内如果觉得不满意，可以申请全额退款，无需任何理由，发邮件到 support@whalium.com 即可，通常1个工作日内处理。</span></div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="tfaq(this)"><span class="t" data-zh="我是一家律所，如何入驻 Whalium？" data-en="I'm a law firm — how do I get listed?">我是一家律所，如何入驻 Whalium？</span><span class="faq-arrow">▾</span></div>
+      <div class="faq-a"><span class="t" data-zh="点击右上角"律所入驻"，填写基本信息并上传资质证明材料。审核通过后可选择免费基础入驻（有限曝光）或付费专业版（优先展示+询盘通知+数据分析）。审核通常需要3个工作日，结果通过邮件通知。" data-en="Click 'Join as Firm' in the top right, fill in your information, and upload credential documents. After passing review, choose a free basic listing (limited exposure) or a paid professional plan (priority placement + inquiry notifications + analytics). Review takes approximately 3 business days, notified by email.">点击右上角"律所入驻"，填写基本信息并上传资质证明材料。审核通过后可选择免费基础入驻（有限曝光）或付费专业版（优先展示+询盘通知+数据分析）。审核通常需要3个工作日，结果通过邮件通知。</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <h2><span class="t" data-zh="准备好了吗？" data-en="Ready to get started?">准备好了吗？</span></h2>
+  <p><span class="t" data-zh="找到适合您企业的境外律所，或让中国客户发现您的律所。" data-en="Find the right overseas law firm for your business, or let Chinese clients discover your firm.">找到适合您企业的境外律所，或让中国客户发现您的律所。</span></p>
+  <div class="cta-btns">
+    <a href="whalium_1_index.html" class="btn-cta-p"><span class="t" data-zh="🔍 搜索律所" data-en="🔍 Find a Law Firm">🔍 搜索律所</span></a>
+    <a href="whalium_6_landing.html" class="btn-cta-s"><span class="t" data-zh="律所入驻 →" data-en="Join as a Firm →">律所入驻 →</span></a>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="background:#1a2332;padding:0.9rem 2rem;text-align:center;font-size:0.78rem;">
+  <a href="whalium_1_index.html" style="color:rgba(255,255,255,0.5);margin:0 0.45rem;text-decoration:none;"><span class="t" data-zh="律所搜索" data-en="Find Firms">律所搜索</span></a> ·
+  <a href="whalium_6_landing.html" style="color:rgba(255,255,255,0.5);margin:0 0.45rem;text-decoration:none;"><span class="t" data-zh="律所入驻" data-en="Join as Firm">律所入驻</span></a> ·
+  <a href="whalium_9_about.html" style="color:rgba(255,255,255,0.5);margin:0 0.45rem;text-decoration:none;"><span class="t" data-zh="关于我们" data-en="About">关于我们</span></a> ·
+  <a href="mailto:hello@whalium.com" style="color:rgba(255,255,255,0.5);margin:0 0.45rem;text-decoration:none;">hello@whalium.com</a>
+</div>
+<div class="footer"><strong style="color:rgba(255,255,255,0.6);">Whalium<span class="t" data-zh=" · 华里安" data-en=""> · 华里安</span></strong> &nbsp;·&nbsp; <span class="t" data-zh="洞察全球律所，安行海外航路" data-en="Global Insights, Secure Navigation">洞察全球律所，安行海外航路</span></div>
+
+<script>
+function tfaq(el){
+  var item=el.parentElement;
+  var wasOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(function(i){i.classList.remove('open');});
+  if(!wasOpen)item.classList.add('open');
+}
+</script>
+
+<script>
+(function(){
+  document.addEventListener('DOMContentLoaded', function(){
+    try {
+      if(localStorage.getItem('wh_paid')!=='1') return;
+      // Replace Login button with member badge
+      var loginBtn = document.querySelector('.wh-login');
+      if(loginBtn){
+        loginBtn.style.cssText = 'border:1.5px solid #22ccde;color:#22ccde;padding:0.35rem 0.85rem;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;display:flex;align-items:center;gap:0.3rem;';
+        loginBtn.innerHTML = '<span style="background:#22ccde;color:#0a1628;padding:0.1rem 0.4rem;border-radius:8px;font-size:0.68rem;font-weight:800;">✦</span> <span class="t" data-zh="会员" data-en="Member">会员</span>';
+        loginBtn.href = '#';
+        loginBtn.title = '会员权益已生效';
+      }
+    } catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
