@@ -2193,7 +2193,7 @@ function loadMore() {
       + '<div class="firm-features">' + featHtml + '</div>'
       + '</div>'
       + '<div class="firm-actions">'
-      + '<button class="btn-detail" onclick="location.href=\'whalium_4_firm-detail.html\'">'
+      + '<button class="btn-detail" onclick="location.href=\'whalium_4_firm-detail.html?slug=' + (f.slug||'') + '\'">'
         + (en ? 'View Details' : '查看详情') + '</button>'
       + emailHtml
       + '<button class="btn-action" onclick="compareCard(this)">' + (en?'Compare':'对比') + '</button>'

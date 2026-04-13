@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <!-- Whalium: China-accessible fonts via loli.net mirror -->
   <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
   <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -635,44 +637,72 @@ html, body {
         <strong><span class="t" data-zh="核心功能展示：" data-en="Key Features:">核心功能展示：</span></strong><span class="t" data-zh="完整注册表单 · 国际区号选择 · 验证码发送 · 需求领域多选 · 密码强度检测 · 表单验证" data-en="Full form · Intl codes · Verification code · Multi-select areas · Password strength · Validation">完整注册表单 · 国际区号选择 · 验证码发送 · 需求领域多选 · 密码强度检测 · 表单验证</span>
     </div>
 <script>
+// ── Supabase 客户端 ──────────────────────────────────────────
+var _wh_sb_reg = window.supabase.createClient(
+  'https://cenmhxewrmjpibkokuls.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8'
+);
+
 function handleRegister(e) {
   e.preventDefault();
   var lang = (window._wlang||'zh');
-  var email = document.querySelector('[name="email"],[type="email"]');
-  var pwd = document.querySelector('[name="password"],[type="password"]');
-  var confirmPwd = document.querySelectorAll('[type="password"]')[1];
+  var nameEl    = document.querySelector('[type="text"]');
+  var emailEl   = document.querySelector('[type="email"]');
+  var pwdEls    = document.querySelectorAll('[type="password"]');
+  var pwd       = pwdEls[0];
+  var confirmPwd= pwdEls[1];
+  var compEl    = document.querySelectorAll('[type="text"]')[1];
 
-  if(email && !email.value.trim()){
+  // ── 前端校验 ─────────────────────────────────────────────
+  if(!emailEl || !emailEl.value.trim()){
     alert(lang==='zh' ? '请填写邮箱地址' : 'Please enter your email');
-    email.focus(); return;
+    if(emailEl) emailEl.focus(); return;
   }
-  if(email && !/\S+@\S+\.\S+/.test(email.value.trim())){
+  if(!/\S+@\S+\.\S+/.test(emailEl.value.trim())){
     alert(lang==='zh' ? '邮箱格式不正确' : 'Invalid email format');
-    email.focus(); return;
+    emailEl.focus(); return;
   }
-  if(pwd && !pwd.value.trim()){
+  if(!pwd || !pwd.value.trim()){
     alert(lang==='zh' ? '请填写密码' : 'Please enter a password');
-    pwd.focus(); return;
+    if(pwd) pwd.focus(); return;
   }
-  if(pwd && pwd.value.length < 6){
+  if(pwd.value.length < 6){
     alert(lang==='zh' ? '密码至少 6 位' : 'Password must be at least 6 characters');
     pwd.focus(); return;
   }
-  if(confirmPwd && pwd && confirmPwd.value !== pwd.value){
-    alert(lang==='zh' ? '两次输入的密码不一致，请重新确认' : 'Passwords do not match');
+  if(confirmPwd && confirmPwd.value !== pwd.value){
+    alert(lang==='zh' ? '两次密码不一致' : 'Passwords do not match');
     confirmPwd.focus(); return;
   }
+
   var btn = document.querySelector('.btn-register');
-  if(btn){ btn.disabled=true; btn.style.opacity='0.7'; btn.textContent=lang==='zh'?'注册中…':'Registering…'; }
-  setTimeout(function(){
-    alert(lang==='zh' ? '注册成功！欢迎加入 Whalium 华里安' : 'Registered! Welcome to Whalium');
-    location.href = 'whalium_1_index.html';
-  }, 1000);
-}
-  if(pwd && !pwd.value.trim()){alert('请填写密码'); pwd.focus(); return;}
-  // 模拟注册成功
-  alert('注册成功！欢迎加入 Whalium 华里安');
-  location.href = 'whalium_1_index.html';
+  if(btn){ btn.disabled=true; btn.style.opacity='0.7'; btn.textContent=lang==='zh'?'注册中…':'Creating account…'; }
+
+  // ── Supabase Auth 注册 ────────────────────────────────────
+  _wh_sb_reg.auth.signUp({
+    email:    emailEl.value.trim(),
+    password: pwd.value,
+    options: {
+      data: {
+        name:    nameEl  ? nameEl.value.trim()  : '',
+        company: compEl  ? compEl.value.trim()  : ''
+      }
+    }
+  }).then(function(res){
+    if(res.error){
+      alert(lang==='zh'
+        ? '注册失败：' + res.error.message
+        : 'Registration failed: ' + res.error.message);
+      if(btn){ btn.disabled=false; btn.style.opacity='1';
+        btn.textContent=lang==='zh'?'立即注册':'Create Account'; }
+      return;
+    }
+    // 成功
+    alert(lang==='zh'
+      ? '注册成功！请检查邮箱完成验证，然后登录。'
+      : 'Registered! Please check your email to verify, then sign in.');
+    location.href = 'whalium_2_login.html';
+  });
 }
 </script>
 <script id="verify-code-fn">

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <!-- Whalium: China-accessible fonts via loli.net mirror -->
   <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
   <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1446,9 +1448,32 @@ function submitInquiry() {
     tags.push(t.textContent.trim());
   });
 
-  // Build inquiry summary
+  // Disable button + show loading
+  var sBtn = document.querySelector('#inquiry-modal button[onclick*="submitInquiry"]');
+  if(sBtn){ sBtn.disabled=true; sBtn.textContent = lang==='zh'?'发送中…':'Sending…'; }
+
+  // ── 写入 Supabase inquiries 表 ──────────────────────────────
+  var firm = window._wh_firm || {};
+  var record = {
+    firm_id:      firm.id || null,
+    name:         nameEl.value.trim(),
+    email:        emailEl.value.trim(),
+    company:      compEl && compEl.value.trim() ? compEl.value.trim() : null,
+    budget:       budgetEl && budgetEl.value ? budgetEl.value : null,
+    service_type: tags.length ? tags.join(', ') : null,
+    description:  bodyEl.value.trim(),
+    status:       'pending'
+  };
+  if (window._wh_sb) {
+    window._wh_sb.from('inquiries').insert(record).then(function(res){
+      if(res.error) console.warn('Supabase inquiry error:', res.error.message);
+    });
+  }
+
+  // Build summary (for fallback mailto / session storage)
+  var firmName = firm.name || 'Morrison IP Law';
   var summary = [
-    '【Whalium询盘】Morrison IP Law',
+    '【Whalium询盘】' + firmName,
     '姓名: ' + nameEl.value.trim(),
     compEl&&compEl.value ? '公司: ' + compEl.value.trim() : '',
     '邮箱: ' + emailEl.value.trim(),
@@ -1458,10 +1483,7 @@ function submitInquiry() {
     '---',
     '来源: Whalium.com · ' + new Date().toISOString().slice(0,10)
   ].filter(Boolean).join('\n');
-
-  // Disable button + show loading
-  var sBtn = document.querySelector('#inquiry-modal button[onclick*="submitInquiry"]');
-  if(sBtn){ sBtn.disabled=true; sBtn.textContent = lang==='zh'?'发送中…':'Sending…'; }
+  void summary; // used below
 
   // Primary: try to POST to a future backend endpoint (gracefully fails)
   // Fallback: open mailto (works immediately, no server needed)
@@ -2404,6 +2426,116 @@ function toggleReviewForm(cb){
     el.style.pointerEvents = on ? '' : 'none';
   });
 }
+</script>
+
+<script id="supabase-firm-loader">
+// ══════════════════════════════════════════════════════════════
+//  Whalium × Supabase — 律所详情动态加载
+//  用法：whalium_4_firm-detail.html?slug=finnegan
+// ══════════════════════════════════════════════════════════════
+(function(){
+  var SB_URL = 'https://cenmhxewrmjpibkokuls.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8';
+
+  var sb = window.supabase.createClient(SB_URL, SB_KEY);
+  window._wh_sb = sb;  // 供 submitInquiry() 使用
+
+  // 读取 URL slug
+  var slug = new URLSearchParams(window.location.search).get('slug');
+  if (!slug) return; // 无 slug → 保持硬编码的 Morrison IP Law 演示数据
+
+  var COUNTRY_ZH = { USA:'美国', Singapore:'新加坡', UK:'英国', Germany:'德国' };
+  var BADGE_INFO = {
+    chambers_certified: '🏆 Chambers认证',
+    chinese_service:    '🇨🇳 中文服务',
+    china_practice:     '🌏 中国业务',
+    legal500:           '🏅 Legal 500',
+  };
+
+  function starStr(rating) {
+    var r = Math.round(rating * 2) / 2;
+    var full = Math.floor(r), half = (r % 1) >= 0.5 ? 1 : 0, empty = 5 - full - half;
+    return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+  }
+
+  document.addEventListener('DOMContentLoaded', function(){
+    sb.from('firms').select('*').eq('slug', slug).eq('active', true).single()
+      .then(function(res){
+        if (res.error || !res.data) {
+          console.warn('Firm not found:', slug);
+          return;
+        }
+        var f = res.data;
+        window._wh_firm = f;  // 供 submitInquiry() 使用
+        var en = (window._wlang || 'zh') === 'en';
+        var loc = en
+          ? f.country + (f.state ? ' · ' + f.state : '') + (f.city ? ' · ' + f.city : '')
+          : (COUNTRY_ZH[f.country]||f.country) + (f.city ? ' · ' + f.city : '');
+
+        // ── 页面标题 ──────────────────────────────────────────
+        document.title = f.name + ' · Whalium';
+
+        // ── 律所名称 ──────────────────────────────────────────
+        var nameEn = document.querySelector('.firm-name-en');
+        if (nameEn) nameEn.textContent = f.name;
+
+        var nameCn = document.querySelector('.firm-name-cn');
+        if (nameCn) nameCn.textContent = f.name_cn || f.name;
+
+        // ── 地址 ─────────────────────────────────────────────
+        var locEl = document.querySelector('.hero-meta .meta-item:first-child span.t');
+        if (locEl) { locEl.dataset.zh = loc; locEl.dataset.en = en ? loc : (f.country + (f.city ? ' · ' + f.city : '')); locEl.textContent = loc; }
+
+        // ── 评分 ─────────────────────────────────────────────
+        var ratingBig = document.querySelector('.rating-big');
+        if (ratingBig && f.rating > 0) ratingBig.textContent = f.rating.toFixed(1);
+
+        var ratingStars = document.querySelector('.rating-stars');
+        if (ratingStars && f.rating > 0) ratingStars.textContent = starStr(f.rating);
+
+        var ratingCount = document.querySelector('.rating-count span.t');
+        if (ratingCount && f.review_count > 0) {
+          ratingCount.dataset.zh = '基于 ' + f.review_count + ' 条真实评价';
+          ratingCount.dataset.en = 'Based on ' + f.review_count + ' reviews';
+          ratingCount.textContent = en ? ratingCount.dataset.en : ratingCount.dataset.zh;
+        }
+
+        // ── Badges ───────────────────────────────────────────
+        var heroBadges = document.querySelector('.hero-badges');
+        if (heroBadges && f.badges && f.badges.length) {
+          var badgeHtml = (f.chambers_rank ? '<span class="badge badge-cert">🏆 Chambers ' + f.chambers_rank + '</span>' : '')
+            + (f.verified ? '<span class="badge badge-cert"><span class="t" data-zh="✓ 已认证" data-en="✓ Verified">✓ 已认证</span></span>' : '');
+          f.badges.forEach(function(b){
+            if (BADGE_INFO[b]) badgeHtml = '<span class="badge badge-value">' + BADGE_INFO[b] + '</span>' + badgeHtml;
+          });
+          heroBadges.innerHTML = badgeHtml;
+        }
+
+        // ── 业务领域 ─────────────────────────────────────────
+        var areasWrap = document.querySelector('.tab-pane[data-tab="overview"] .practice-tags');
+        if (areasWrap && f.practice_areas && f.practice_areas.length) {
+          areasWrap.innerHTML = f.practice_areas.map(function(a){
+            return '<span class="practice-tag">' + a + '</span>';
+          }).join('');
+        }
+
+        // ── 询盘 Modal 标题律所名 ────────────────────────────
+        var modalTitle = document.querySelector('#inquiry-modal [style*="font-weight:700"]');
+        if (modalTitle) {
+          var titleSpan = modalTitle.querySelector('span.t');
+          if (titleSpan) modalTitle.innerHTML = titleSpan.outerHTML + ' · ' + f.name;
+          else modalTitle.innerHTML = (en ? 'Send Inquiry' : '发送询盘') + ' · ' + f.name;
+        }
+
+        // ── 官网链接 ─────────────────────────────────────────
+        if (f.website) {
+          var websiteEl = document.querySelector('a[href*="morrison"][href*=".com"]') ||
+                          document.querySelector('.sidebar-val a');
+          if (websiteEl) websiteEl.href = f.website;
+        }
+      });
+  });
+})();
 </script>
 </body>
 </html>
