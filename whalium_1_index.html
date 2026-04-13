@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+  <!-- Supabase JS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <!-- Whalium: China-accessible fonts via loli.net mirror -->
   <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
   <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1149,133 +1151,22 @@ html, body {
         </div>
     </div>
 
-    <!-- Results -->
+    <!-- Results — 动态加载自 Supabase -->
     <div class="results-area">
         <div class="results-header">
-            <div class="results-count">共找到 <strong>3</strong> 家律所</div>
-            <div class="results-filters-applied"><span class="t" data-zh="显示全部律所" data-en="Show All Firms">显示全部律所</span></div>
+            <div class="results-count" id="results-count"><span class="t" data-zh="加载中…" data-en="Loading…">加载中…</span></div>
+            <div class="results-filters-applied" id="results-filter-label"><span class="t" data-zh="显示全部律所" data-en="Show All Firms">显示全部律所</span></div>
         </div>
-
-        <div class="firm-card">
-            <div class="firm-badges">
-                <span class="badge badge-hot"><span class="t" data-zh="🔥 热门" data-en="🔥 Popular">🔥 热门</span></span>
-                <span class="badge badge-value"><span class="t" data-zh="⭐ 高性价比" data-en="⭐ Best Value">⭐ 高性价比</span></span>
-                <span class="badge badge-certified"><span class="t" data-zh="🏆 Chambers认证" data-en="🏆 Chambers Ranked">🏆 Chambers认证</span></span>
-            </div>
-            <div class="firm-card-top">
-                <div>
-                    <div class="firm-name">Morrison IP Law</div>
-                    <div class="firm-name-cn"><span class="t" data-zh="莫里森知识产权律师事务所" data-en="Morrison IP Law (US)">莫里森知识产权律师事务所</span></div>
-                    <div class="firm-info"><span class="t" data-zh="📍 美国 · 加利福尼亚州 · 洛杉矶" data-en="📍 USA · California · Los Angeles">📍 美国 · 加利福尼亚州 · 洛杉矶</span></div>
-                    <div class="firm-info">📧 <span>contact@morrison-ip.com</span></div>
-                </div>
-            </div>
-            <div class="firm-areas">
-                <span class="areas-label"><span class="t" data-zh="专业领域" data-en="Practice Areas">专业领域</span></span>
-                <span class="area-tag"><span class="t" data-zh="商标注册" data-en="Trademark Reg.">商标注册</span></span>
-                <span class="area-tag"><span class="t" data-zh="驳回答辩" data-en="Office Action">驳回答辩</span></span>
-                <span class="area-tag"><span class="t" data-zh="专利申请" data-en="Patent Filing">专利申请</span></span>
-            </div>
-            <div class="firm-bottom">
-                <div class="firm-stats">
-                    <div class="stat-item"><span class="rating">⭐ 4.2</span> (<span class="t" data-zh="18条评价" data-en="18 reviews">18条评价</span>)</div>
-                </div>
-                <div class="firm-features">
-                    <div class="feature"><span class="t" data-zh="中文服务" data-en="CN Service">中文服务</span></div>
-                    <div class="feature"><span class="t" data-zh="24h响应" data-en="24h Response">24h响应</span></div>
-                    <div class="feature">Chambers Band 2</div>
-                </div>
-            </div>
-            <div class="firm-actions">
-                <button class="btn-detail" onclick="location.href='whalium_4_firm-detail.html'"><span class="t" data-zh="查看详情" data-en="View Details">查看详情</span></button>
-                <a href="mailto:contact@morrison-ip.com?subject=%E6%B3%95%E5%BE%8B%E5%92%A8%E8%AF%A2%20%E2%80%94%20Whalium%E7%94%A8%E6%88%B7&body=%E6%82%A8%E5%A5%BD%EF%BC%8C%E6%88%91%E9%80%9A%E8%BF%87%20Whalium%20%E5%8D%8E%E9%87%8C%E5%AE%89%E4%BA%86%E8%A7%A3%E5%88%B0%E8%B4%B5%E6%89%80%EF%BC%8C%E5%B8%8C%E6%9C%9B%E5%AE%89%E6%8E%92%E4%B8%80%E6%AC%A1%E5%85%8D%E8%B4%B9%E5%92%A8%E8%AF%A2%E3%80%82" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.55rem 0.9rem;background:transparent;border:1.5px solid rgba(0,200,200,0.35);border-radius:6px;color:rgba(0,200,200,0.8);font-size:0.75rem;font-weight:600;text-decoration:none;"><span class="t" data-zh="📧 免费询盘" data-en="📧 Free Inquiry">📧 免费询盘</span></a>
-                <button class="btn-action" onclick="compareCard(this)"><span class="t" data-zh="对比" data-en="Compare">对比</span></button>
-                <button class="btn-action" onclick="toggleSave(this)"><span class="t" data-zh="♡ 收藏" data-en="♡ Save">♡ 收藏</span></button>
-            </div>
-        </div>
-
-        <div class="firm-card">
-            <div class="firm-badges">
-                <span class="badge badge-hot"><span class="t" data-zh="🔥 热门" data-en="🔥 Popular">🔥 热门</span></span>
-                <span class="badge badge-certified"><span class="t" data-zh="🏆 权威认证" data-en="🏆 Top Ranked">🏆 权威认证</span></span>
-            </div>
-            <div class="firm-card-top">
-                <div>
-                    <div class="firm-name">Sterling &amp; Partners LLP</div>
-                    <div class="firm-name-cn"><span class="t" data-zh="斯特林合伙人律师事务所" data-en="Sterling &amp; Partners LLP">斯特林合伙人律师事务所</span></div>
-                    <div class="firm-info"><span class="t" data-zh="📍 美国 · 纽约州 · 纽约" data-en="📍 USA · New York · NYC">📍 美国 · 纽约州 · 纽约</span></div>
-                    <div class="firm-info">📧 <span>info@sterlinglaw.com</span></div>
-                </div>
-            </div>
-            <div class="firm-areas">
-                <span class="areas-label"><span class="t" data-zh="专业领域" data-en="Practice Areas">专业领域</span></span>
-                <span class="area-tag"><span class="t" data-zh="公司设立" data-en="Company Setup">公司设立</span></span>
-                <span class="area-tag"><span class="t" data-zh="税务筹划" data-en="Tax Planning">税务筹划</span></span>
-                <span class="area-tag"><span class="t" data-zh="合同审查" data-en="Contract Review">合同审查</span></span>
-            </div>
-            <div class="firm-bottom">
-                <div class="firm-stats">
-                    <div class="stat-item"><span class="rating">⭐ 4.6</span> (<span class="t" data-zh="32条评价" data-en="32 reviews">32条评价</span>)</div>
-                </div>
-                <div class="firm-features">
-                    <div class="feature"><span class="t" data-zh="中文服务" data-en="CN Service">中文服务</span></div>
-                    <div class="feature"><span class="t" data-zh="12h响应" data-en="12h Response">12h响应</span></div>
-                    <div class="feature">Chambers Band 1</div>
-                </div>
-            </div>
-            <div class="firm-actions">
-                <button class="btn-detail" onclick="location.href='whalium_4_firm-detail.html'"><span class="t" data-zh="查看详情" data-en="View Details">查看详情</span></button>
-                <a href="mailto:info@sterlinglaw.com?subject=%E6%B3%95%E5%BE%8B%E5%92%A8%E8%AF%A2%20%E2%80%94%20Whalium%E7%94%A8%E6%88%B7&body=%E6%82%A8%E5%A5%BD%EF%BC%8C%E6%88%91%E9%80%9A%E8%BF%87%20Whalium%20%E5%8D%8E%E9%87%8C%E5%AE%89%E4%BA%86%E8%A7%A3%E5%88%B0%E8%B4%B5%E6%89%80%EF%BC%8C%E5%B8%8C%E6%9C%9B%E5%AE%89%E6%8E%92%E4%B8%80%E6%AC%A1%E5%85%8D%E8%B4%B9%E5%92%A8%E8%AF%A2%E3%80%82" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.55rem 0.9rem;background:transparent;border:1.5px solid rgba(0,200,200,0.35);border-radius:6px;color:rgba(0,200,200,0.8);font-size:0.75rem;font-weight:600;text-decoration:none;"><span class="t" data-zh="📧 免费询盘" data-en="📧 Free Inquiry">📧 免费询盘</span></a>
-                <button class="btn-action" onclick="compareCard(this)"><span class="t" data-zh="对比" data-en="Compare">对比</span></button>
-                <button class="btn-action" onclick="toggleSave(this)"><span class="t" data-zh="♡ 收藏" data-en="♡ Save">♡ 收藏</span></button>
-            </div>
-        </div>
-
-        <div class="firm-card">
-            <div class="firm-badges">
-                <span class="badge badge-value"><span class="t" data-zh="⭐ 高性价比" data-en="⭐ Best Value">⭐ 高性价比</span></span>
-            </div>
-            <div class="firm-card-top">
-                <div>
-                    <div class="firm-name">Asia Pacific Legal Group</div>
-                    <div class="firm-name-cn"><span class="t" data-zh="亚太法律集团" data-en="Asia Pacific Legal Group">亚太法律集团</span></div>
-                    <div class="firm-info"><span class="t" data-zh="📍 新加坡 · 新加坡" data-en="📍 Singapore">📍 新加坡 · 新加坡</span></div>
-                    <div class="firm-info">📧 <span>hello@aplegal.sg</span></div>
-                </div>
-            </div>
-            <div class="firm-areas">
-                <span class="areas-label"><span class="t" data-zh="专业领域" data-en="Practice Areas">专业领域</span></span>
-                <span class="area-tag"><span class="t" data-zh="新加坡商标" data-en="SG Trademark">新加坡商标</span></span>
-                <span class="area-tag"><span class="t" data-zh="公司注册" data-en="Company Reg.">公司注册</span></span>
-                <span class="area-tag"><span class="t" data-zh="东盟合同" data-en="ASEAN Contracts">东盟合同</span></span>
-            </div>
-            <div class="firm-bottom">
-                <div class="firm-stats">
-                    <div class="stat-item"><span class="rating">⭐ 4.5</span> (<span class="t" data-zh="28条评价" data-en="28 reviews">28条评价</span>)</div>
-                </div>
-                <div class="firm-features">
-                    <div class="feature"><span class="t" data-zh="中文服务" data-en="CN Service">中文服务</span></div>
-                    <div class="feature"><span class="t" data-zh="6h响应" data-en="6h Response">6h响应</span></div>
-                    <div class="feature"><span class="t" data-zh="Legal 500认证" data-en="Legal 500">Legal 500认证</span></div>
-                </div>
-            </div>
-            <div class="firm-actions">
-                <button class="btn-detail" onclick="location.href='whalium_4_firm-detail.html'"><span class="t" data-zh="查看详情" data-en="View Details">查看详情</span></button>
-                <a href="mailto:hello@aplegal.sg?subject=%E6%B3%95%E5%BE%8B%E5%92%A8%E8%AF%A2%20%E2%80%94%20Whalium%E7%94%A8%E6%88%B7&body=%E6%82%A8%E5%A5%BD%EF%BC%8C%E6%88%91%E9%80%9A%E8%BF%87%20Whalium%20%E5%8D%8E%E9%87%8C%E5%AE%89%E4%BA%86%E8%A7%A3%E5%88%B0%E8%B4%B5%E6%89%80%EF%BC%8C%E5%B8%8C%E6%9C%9B%E5%AE%89%E6%8E%92%E4%B8%80%E6%AC%A1%E5%85%8D%E8%B4%B9%E5%92%A8%E8%AF%A2%E3%80%82" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.55rem 0.9rem;background:transparent;border:1.5px solid rgba(0,200,200,0.35);border-radius:6px;color:rgba(0,200,200,0.8);font-size:0.75rem;font-weight:600;text-decoration:none;"><span class="t" data-zh="📧 免费询盘" data-en="📧 Free Inquiry">📧 免费询盘</span></a>
-                <button class="btn-action" onclick="compareCard(this)"><span class="t" data-zh="对比" data-en="Compare">对比</span></button>
-                <button class="btn-action" onclick="toggleSave(this)"><span class="t" data-zh="♡ 收藏" data-en="♡ Save">♡ 收藏</span></button>
-            </div>
-        </div>
+        <!-- 律所卡片动态插入此处 -->
+        <div id="firms-list"></div>
     </div>
 
-    <div style="text-align:center;padding:1.5rem 0 0.5rem;">
-  <button class="load-more-btn" onclick="loadMore(this)">
-    <span class="t" data-zh="加载更多律所 ↓" data-en="Load More Firms ↓">加载更多律所 ↓</span>
-  </button>
-  <div style="margin-top:0.5rem;font-size:0.78rem;color:#888;">
-    <span class="t" data-zh="共 287 家律所，当前显示 3 家" data-en="287 firms total, showing 3">共 287 家律所，当前显示 3 家</span>
-  </div>
-</div>
+    <div style="text-align:center;padding:1.5rem 0 0.5rem;" id="load-more-wrap">
+        <button class="load-more-btn" id="load-more-btn" onclick="loadMore()">
+            <span class="t" data-zh="加载更多律所 ↓" data-en="Load More Firms ↓">加载更多律所 ↓</span>
+        </button>
+        <div style="margin-top:0.5rem;font-size:0.78rem;color:#888;" id="load-more-note"></div>
+    </div>
 <div class="footer-note">
         <strong>Whalium <span class="t" data-zh="· 华里安" data-en=""></span></strong> &nbsp;·&nbsp; <span class="t" data-zh="洞察全球律所，安行海外航路" data-en="Global Insights, Secure Navigation">洞察全球律所，安行海外航路</span> &nbsp;·&nbsp; <a href="whalium_9_about.html" style="color:inherit;opacity:0.65;text-decoration:none;"><span class="t" data-zh="关于我们" data-en="About Us">关于我们</span></a>
     </div>
@@ -1339,17 +1230,8 @@ html, body {
 
     // ── 筛选按钮 ─────────────────────────────────────────
     function applyFilters() {
-        var countries = Array.from(document.querySelectorAll('#msel-country input:checked')).map(function(c){return c.value;});
-        var areas     = Array.from(document.querySelectorAll('#msel-area input:checked')).map(function(c){return c.value;});
-        var features  = Array.from(document.querySelectorAll('#msel-feat input:checked')).map(function(c){return c.value;});
-        var rating    = document.querySelector('.filter-select') ? document.querySelector('.filter-select').value : '';
-        var parts = [];
-        if (countries.length) parts.push(countries.slice(0,2).join('、') + (countries.length > 2 ? ' 等' + countries.length + '个地区' : ''));
-        if (areas.length)     parts.push(areas.length + '个服务领域');
-        if (rating)           parts.push(rating.replace('+',' 分以上'));
-        if (features.length)  parts.push(features.length + '项特色');
-        var summary = document.querySelector('.results-filters-applied');
-        if (summary) summary.textContent = parts.length ? '已筛选：' + parts.join(' · ') : '显示全部律所';
+        window._firmPage = 0;
+        fetchFirms(true);
     }
     </script>
 
@@ -1475,18 +1357,10 @@ window.applyFilters = function() {
   if(countEl) countEl.textContent = visible;
 };
 
-// #21: 加载更多 (demo)
-function loadMore(btn) {
-  var lang = (window._wlang||'zh');
-  btn.textContent = lang==='zh' ? '加载中…' : 'Loading…';
-  btn.disabled = true;
-  setTimeout(function(){
-    btn.textContent = lang==='zh' ? '已显示全部律所' : 'All firms shown';
-    btn.style.opacity = '0.5';
-    btn.disabled = true;
-    var note = btn.nextElementSibling;
-    if(note) note.innerHTML = '<span class="t">' + (lang==='zh'?'共 3 家律所（更多律所即将入驻）':'3 firms available (more joining soon)') + '</span>';
-  }, 1200);
+// #21: 加载更多 — Supabase 分页
+function loadMore() {
+  window._firmPage = (window._firmPage || 0) + 1;
+  fetchFirms(false);
 }
 </script>
 <script id="wh-walker">
@@ -2208,6 +2082,204 @@ function loadMore(btn) {
       }
     } catch(e){}
   });
+})();
+</script>
+<script id="supabase-engine">
+// ══════════════════════════════════════════════════════════════
+//  Whalium × Supabase — 律所动态加载引擎
+// ══════════════════════════════════════════════════════════════
+(function(){
+  var SB_URL  = 'https://cenmhxewrmjpibkokuls.supabase.co';
+  var SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8';
+  var PAGE_SIZE = 6;
+
+  // 国家名称中英映射
+  var COUNTRY_MAP = { 'USA':'美国','Singapore':'新加坡','UK':'英国','Germany':'德国' };
+  // badge → 显示标签
+  var BADGE_LABEL = {
+    chambers_certified: { zh:'🏆 Chambers认证', en:'🏆 Chambers Ranked', cls:'badge-certified' },
+    chinese_service:    { zh:'🇨🇳 中文服务',     en:'🇨🇳 CN Service',      cls:'badge-value' },
+    china_practice:     { zh:'🌏 中国业务',       en:'🌏 China Practice',   cls:'badge-certified' },
+    legal500:           { zh:'🏅 Legal 500',     en:'🏅 Legal 500',        cls:'badge-value' },
+  };
+
+  // 功能特色 → 显示文字（卡片底部）
+  var FEATURE_LABEL = {
+    chinese_service: { zh:'中文服务',   en:'CN Service' },
+    china_practice:  { zh:'中国业务',   en:'China Practice' },
+    legal500:        { zh:'Legal 500认证', en:'Legal 500' },
+  };
+
+  var supabase = window.supabase.createClient(SB_URL, SB_KEY);
+  window._firmPage   = 0;
+  window._firmTotal  = 0;
+
+  // ── 建查询 ───────────────────────────────────────────────────
+  function buildQuery() {
+    var countries = Array.from(document.querySelectorAll('#msel-country input:checked')).map(function(c){return c.value;});
+    var areas     = Array.from(document.querySelectorAll('#msel-area input:checked')).map(function(c){return c.value;});
+    var features  = Array.from(document.querySelectorAll('#msel-feat input:checked')).map(function(c){return c.value;});
+    var ratingVal = (document.querySelector('.filter-select')||{}).value || '';
+
+    var q = supabase.from('firms').select('*', {count:'exact'}).eq('active', true).order('rating', {ascending:false});
+
+    if (countries.length) q = q.in('country', countries);
+    if (areas.length)     areas.forEach(function(a){ q = q.contains('practice_areas',[a]); });
+    if (features.length)  features.forEach(function(f){ q = q.contains('badges',[f]); });
+    if (ratingVal) {
+      var parts = ratingVal.split('-');
+      if (ratingVal.indexOf('+') > -1) {
+        q = q.gte('rating', parseFloat(ratingVal));
+      } else if (parts.length === 2) {
+        q = q.gte('rating', parseFloat(parts[0])).lte('rating', parseFloat(parts[1]));
+      }
+    }
+    return q;
+  }
+
+  // ── 渲染单张卡片 ──────────────────────────────────────────────
+  function renderCard(f) {
+    var lang = window._wlang || 'zh';
+    var en   = lang === 'en';
+
+    // 地址
+    var loc = en
+      ? '📍 ' + f.country + (f.state ? ' · ' + f.state : '') + (f.city ? ' · ' + f.city : '')
+      : '📍 ' + (COUNTRY_MAP[f.country]||f.country) + (f.city ? ' · ' + f.city : '');
+
+    // badges
+    var badgeHtml = (f.badges||[]).slice(0,3).map(function(b){
+      var info = BADGE_LABEL[b];
+      if (!info) return '';
+      return '<span class="badge ' + info.cls + '">' + (en ? info.en : info.zh) + '</span>';
+    }).join('');
+
+    // practice areas (最多3个)
+    var areaHtml = (f.practice_areas||[]).slice(0,3).map(function(a){
+      return '<span class="area-tag">' + a + '</span>';
+    }).join('');
+
+    // features
+    var featHtml = (f.badges||[]).filter(function(b){ return FEATURE_LABEL[b]; }).slice(0,2).map(function(b){
+      return '<div class="feature">' + (en ? FEATURE_LABEL[b].en : FEATURE_LABEL[b].zh) + '</div>';
+    }).join('');
+    if (f.chambers_rank) {
+      featHtml += '<div class="feature">Chambers ' + f.chambers_rank + '</div>';
+    }
+
+    // 评分
+    var ratingHtml = f.rating > 0
+      ? '<div class="stat-item"><span class="rating">⭐ ' + f.rating.toFixed(1) + '</span>'
+        + (f.review_count > 0 ? ' (' + f.review_count + (en ? ' reviews' : '条评价') + ')' : '') + '</div>'
+      : '';
+
+    // 邮件链接
+    var emailHtml = f.email
+      ? '<a href="mailto:' + f.email + '?subject=' + encodeURIComponent('法律咨询 — Whalium用户') + '" style="display:inline-flex;align-items:center;gap:0.3rem;padding:0.55rem 0.9rem;background:transparent;border:1.5px solid rgba(0,200,200,0.35);border-radius:6px;color:rgba(0,200,200,0.8);font-size:0.75rem;font-weight:600;text-decoration:none;">'
+        + (en ? '📧 Free Inquiry' : '📧 免费询盘') + '</a>'
+      : '';
+
+    return '<div class="firm-card" data-slug="' + (f.slug||'') + '">'
+      + '<div class="firm-badges">' + badgeHtml + '</div>'
+      + '<div class="firm-card-top"><div>'
+      + '<div class="firm-name">' + escHtml(f.name) + '</div>'
+      + (f.name_cn ? '<div class="firm-name-cn">' + escHtml(f.name_cn) + '</div>' : '')
+      + '<div class="firm-info">' + escHtml(loc) + '</div>'
+      + (f.email ? '<div class="firm-info">📧 <span>' + escHtml(f.email) + '</span></div>' : '')
+      + '</div></div>'
+      + '<div class="firm-areas"><span class="areas-label">' + (en?'Practice Areas':'专业领域') + '</span>' + areaHtml + '</div>'
+      + '<div class="firm-bottom">'
+      + '<div class="firm-stats">' + ratingHtml + '</div>'
+      + '<div class="firm-features">' + featHtml + '</div>'
+      + '</div>'
+      + '<div class="firm-actions">'
+      + '<button class="btn-detail" onclick="location.href=\'whalium_4_firm-detail.html\'">'
+        + (en ? 'View Details' : '查看详情') + '</button>'
+      + emailHtml
+      + '<button class="btn-action" onclick="compareCard(this)">' + (en?'Compare':'对比') + '</button>'
+      + '<button class="btn-action" onclick="toggleSave(this)">' + (en?'♡ Save':'♡ 收藏') + '</button>'
+      + '</div>'
+      + '</div>';
+  }
+
+  function escHtml(s) {
+    return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ── 拉取并渲染 ────────────────────────────────────────────────
+  window.fetchFirms = function(reset) {
+    var lang = window._wlang || 'zh';
+    var en   = lang === 'en';
+    var list = document.getElementById('firms-list');
+    var btn  = document.getElementById('load-more-btn');
+    var note = document.getElementById('load-more-note');
+    var countEl = document.getElementById('results-count');
+
+    if (reset) {
+      window._firmPage = 0;
+      list.innerHTML = '<div style="padding:2rem;text-align:center;color:#888;">'
+        + (en ? 'Loading…' : '加载中…') + '</div>';
+    }
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
+
+    var page = window._firmPage || 0;
+    buildQuery()
+      .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1)
+      .then(function(res) {
+        if (res.error) {
+          list.innerHTML = '<div style="padding:2rem;text-align:center;color:#e74c3c;">'
+            + (en ? 'Failed to load. Please refresh.' : '加载失败，请刷新重试。') + '</div>';
+          return;
+        }
+        var firms = res.data || [];
+        var total = res.count || 0;
+        window._firmTotal = total;
+
+        // 更新计数
+        if (countEl) countEl.innerHTML = en
+          ? 'Found <strong>' + total + '</strong> firms'
+          : '共找到 <strong>' + total + '</strong> 家律所';
+
+        // 渲染卡片
+        if (reset) list.innerHTML = '';
+        if (firms.length === 0 && reset) {
+          list.innerHTML = '<div style="padding:2rem;text-align:center;color:#888;">'
+            + (en ? 'No firms match your filters.' : '没有符合条件的律所。') + '</div>';
+        } else {
+          list.insertAdjacentHTML('beforeend', firms.map(renderCard).join(''));
+        }
+
+        // 更新筛选标签文字
+        var labelEl = document.getElementById('results-filter-label');
+        var countries = document.querySelectorAll('#msel-country input:checked').length;
+        var areas     = document.querySelectorAll('#msel-area input:checked').length;
+        var features  = document.querySelectorAll('#msel-feat input:checked').length;
+        var hasFilter = countries || areas || features;
+        if (labelEl) labelEl.textContent = hasFilter
+          ? (en ? 'Filtered results' : '已应用筛选')
+          : (en ? 'Show All Firms' : '显示全部律所');
+
+        // 更多按钮
+        var shown = (page + 1) * PAGE_SIZE;
+        if (shown >= total) {
+          if (btn) { btn.style.display = 'none'; }
+          if (note) note.textContent = en
+            ? total + ' firms total — all shown'
+            : '共 ' + total + ' 家律所，已全部显示';
+        } else {
+          if (btn) { btn.style.display = ''; btn.disabled = false; btn.style.opacity = '1'; }
+          if (note) note.textContent = en
+            ? 'Showing ' + Math.min(shown, total) + ' of ' + total + ' firms'
+            : '已显示 ' + Math.min(shown, total) + ' / 共 ' + total + ' 家';
+        }
+      });
+  };
+
+  // 页面加载时执行一次
+  document.addEventListener('DOMContentLoaded', function(){
+    window.fetchFirms(true);
+  });
+
 })();
 </script>
 </body>
