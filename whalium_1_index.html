@@ -417,6 +417,8 @@
         }
         .firm-name-cn { font-size: 0.85rem; color: var(--silver-dim); margin-bottom: 0.5rem; }
         .firm-info { font-size: 0.83rem; color: var(--silver-dim); margin-bottom: 0.3rem; }
+        .firm-meta-tag { display:inline-block; font-size:0.72rem; background:rgba(0,200,200,0.08); color:rgba(0,200,200,0.75); border:1px solid rgba(0,200,200,0.2); border-radius:4px; padding:0.15rem 0.45rem; margin-right:0.3rem; }
+        .firm-desc-snippet { font-size:0.78rem; color:var(--silver-dim); margin-top:0.45rem; line-height:1.5; opacity:0.85; }
 
         .firm-areas {
             display: flex;
@@ -2179,13 +2181,26 @@ function loadMore() {
         + (en ? '📧 Free Inquiry' : '📧 免费询盘') + '</a>'
       : '';
 
+    // 简介摘要（最多100字）
+    var descSnippet = '';
+    if (f.description) {
+      var raw = f.description.replace(/<[^>]+>/g, '');
+      descSnippet = raw.length > 100 ? raw.slice(0, 100) + '…' : raw;
+    }
+
+    // 团队规模 & chambers
+    var metaHtml = '';
+    if (f.team_size) metaHtml += '<span class="firm-meta-tag">👥 ' + f.team_size + '+ ' + (en?'atty':'人') + '</span>';
+    if (f.chambers_rank) metaHtml += '<span class="firm-meta-tag">🏆 Chambers ' + f.chambers_rank + '</span>';
+
     return '<div class="firm-card" data-slug="' + (f.slug||'') + '">'
       + '<div class="firm-badges">' + badgeHtml + '</div>'
       + '<div class="firm-card-top"><div>'
       + '<div class="firm-name">' + escHtml(f.name) + '</div>'
       + (f.name_cn ? '<div class="firm-name-cn">' + escHtml(f.name_cn) + '</div>' : '')
       + '<div class="firm-info">' + escHtml(loc) + '</div>'
-      + (f.email ? '<div class="firm-info">📧 <span>' + escHtml(f.email) + '</span></div>' : '')
+      + (metaHtml ? '<div class="firm-info" style="margin-top:0.3rem">' + metaHtml + '</div>' : '')
+      + (descSnippet ? '<div class="firm-desc-snippet">' + escHtml(descSnippet) + '</div>' : '')
       + '</div></div>'
       + '<div class="firm-areas"><span class="areas-label">' + (en?'Practice Areas':'专业领域') + '</span>' + areaHtml + '</div>'
       + '<div class="firm-bottom">'

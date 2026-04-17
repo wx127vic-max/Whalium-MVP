@@ -781,11 +781,11 @@ html, body {
         <div style="font-size:0.82rem;color:#2c4a6e;">✅ <span class="t" data-zh="商标成功率 94%（高于行业均值）" data-en="94% trademark success rate (above industry avg)">商标成功率 94%（高于行业均值）</span></div>
     </div>
 </div>
-                <div class="card-body">
-                <p class="intro-text">
+                <div class="card-body" id="firm-intro-body">
+                <p class="intro-text" id="firm-description">
                     <strong>Morrison IP Law</strong> <span class="t" data-zh="成立于2008年，是洛杉矶专注知识产权领域的精品律所。深耕美国商标、专利和版权业务超过16年，服务超过1,200家跨国企业，其中中国出海企业客户超过400家。" data-en="Founded in 2008, Morrison IP Law is a boutique IP firm in Los Angeles with 16+ years specializing in trademark, patent &amp; copyright. Served 1,200+ multinational clients including 400+ Chinese companies going global.">成立于2008年，是洛杉矶专注知识产权领域的精品律所。深耕美国商标、专利和版权业务超过16年，服务超过1,200家跨国企业，其中中国出海企业客户超过400家。</span>
                 </p>
-                <p class="intro-text" style="margin-top:0.85rem">
+                <p class="intro-text" id="firm-description-2" style="margin-top:0.85rem">
                     <span class="t" data-zh="律所创始合伙人 David Morrison 曾任职 USPTO（美国专利商标局），对审查流程有深刻理解，尤其擅长处理驳回答辩和复杂商标纠纷案件。团队配备2名中文流利的华裔律师，全程中文沟通，无语言障碍。" data-en="Founding partner David Morrison previously served at the USPTO, giving him deep insight into examination procedures — especially for office action responses and complex trademark disputes. The team includes 2 Mandarin-fluent attorneys for seamless Chinese communication.">律所创始合伙人 David Morrison 曾任职 USPTO（美国专利商标局），对审查流程有深刻理解，尤其擅长处理驳回答辩和复杂商标纠纷。团队配备 2 名中文流利的华裔律师，全程中文沟通，无语言障碍。</span>
                     </div>
             </div>
@@ -1264,7 +1264,7 @@ html, body {
             <div class="side-card-title"><span class="t" data-zh="基本信息" data-en="Basic Info">基本信息</span></div>
             <div class="contact-info-row">
                 <div class="contact-info-icon">📍</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="地址" data-en="Location">地址</span></div><div class="contact-info-val"><span class="t" data-zh="洛杉矶，加利福尼亚州" data-en="Los Angeles, California">洛杉矶，加利福尼亚州</span></div></div>
+                <div><div class="contact-info-label"><span class="t" data-zh="地址" data-en="Location">地址</span></div><div class="contact-info-val" id="detail-location"><span class="t" data-zh="洛杉矶，加利福尼亚州" data-en="Los Angeles, California">洛杉矶，加利福尼亚州</span></div></div>
             </div>
             <div class="contact-info-row">
                 <div class="contact-info-icon">🕐</div>
@@ -1272,11 +1272,19 @@ html, body {
             </div>
             <div class="contact-info-row">
                 <div class="contact-info-icon">👥</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="团队规模" data-en="Team Size">团队规模</span></div><div class="contact-info-val"><span class="t" data-zh="12 名律师" data-en="12 Attorneys">12 名律师</span></div></div>
+                <div><div class="contact-info-label"><span class="t" data-zh="团队规模" data-en="Team Size">团队规模</span></div><div class="contact-info-val" id="detail-team-size"><span class="t" data-zh="12 名律师" data-en="12 Attorneys">12 名律师</span></div></div>
+            </div>
+            <div class="contact-info-row" id="detail-phone-row" style="display:none">
+                <div class="contact-info-icon">📞</div>
+                <div><div class="contact-info-label"><span class="t" data-zh="电话" data-en="Phone">电话</span></div><div class="contact-info-val" id="detail-phone">—</div></div>
+            </div>
+            <div class="contact-info-row" id="detail-email-row" style="display:none">
+                <div class="contact-info-icon">📧</div>
+                <div><div class="contact-info-label"><span class="t" data-zh="邮件" data-en="Email">邮件</span></div><div class="contact-info-val" id="detail-email" style="word-break:break-all">—</div></div>
             </div>
             <div class="contact-info-row">
                 <div class="contact-info-icon">🌐</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="官方网站" data-en="Website">官方网站</span></div><div class="contact-info-val" style="color:var(--teal)">morrison-ip.com</div></div>
+                <div><div class="contact-info-label"><span class="t" data-zh="官方网站" data-en="Website">官方网站</span></div><div class="contact-info-val"><a id="detail-website" href="https://morrison-ip.com" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:none">morrison-ip.com</a></div></div>
             </div>
         </div>
 
@@ -2528,10 +2536,49 @@ function toggleReviewForm(cb){
         }
 
         // ── 官网链接 ─────────────────────────────────────────
-        if (f.website) {
-          var websiteEl = document.querySelector('a[href*="morrison"][href*=".com"]') ||
-                          document.querySelector('.sidebar-val a');
-          if (websiteEl) websiteEl.href = f.website;
+        var websiteEl = document.getElementById('detail-website');
+        if (websiteEl && f.website) {
+          websiteEl.href = f.website;
+          websiteEl.textContent = f.website.replace(/^https?:\/\/(www\.)?/, '');
+        }
+
+        // ── 团队规模 ─────────────────────────────────────────
+        var teamEl = document.getElementById('detail-team-size');
+        if (teamEl && f.team_size) {
+          var ts = String(f.team_size);
+          teamEl.innerHTML = en
+            ? ts + '+ Attorneys'
+            : ts + '+ 名律师';
+        }
+
+        // ── 地址（sidebar）───────────────────────────────────
+        var locSideEl = document.getElementById('detail-location');
+        if (locSideEl) locSideEl.textContent = loc;
+
+        // ── 电话 ─────────────────────────────────────────────
+        if (f.phone) {
+          var phoneRow = document.getElementById('detail-phone-row');
+          var phoneEl  = document.getElementById('detail-phone');
+          if (phoneRow) phoneRow.style.display = '';
+          if (phoneEl)  phoneEl.innerHTML = '<a href="tel:' + f.phone + '" style="color:var(--teal);text-decoration:none">' + f.phone + '</a>';
+        }
+
+        // ── 邮件 ─────────────────────────────────────────────
+        if (f.email) {
+          var emailRow = document.getElementById('detail-email-row');
+          var emailEl  = document.getElementById('detail-email');
+          if (emailRow) emailRow.style.display = '';
+          if (emailEl)  emailEl.innerHTML = '<a href="mailto:' + f.email + '" style="color:var(--teal);text-decoration:none">' + f.email + '</a>';
+        }
+
+        // ── 律所简介（动态覆盖） ──────────────────────────────
+        if (f.description) {
+          var descEl  = document.getElementById('firm-description');
+          var desc2El = document.getElementById('firm-description-2');
+          if (descEl) {
+            descEl.innerHTML = '<strong>' + f.name + '</strong> ' + f.description;
+          }
+          if (desc2El) desc2El.style.display = 'none'; // 隐藏第二段（Morrison专属）
         }
       });
   });
