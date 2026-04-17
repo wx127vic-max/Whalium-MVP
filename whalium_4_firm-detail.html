@@ -948,9 +948,9 @@ html, body {
             <div class="card-header">
                 <span style="font-size:1rem">💬</span>
                 <span class="card-title"><span class="t" data-zh="客户评价" data-en="Reviews">客户评价</span></span>
-                <span style="margin-left:auto;font-size:0.78rem;color:var(--faint)"><span class="t" data-zh="共 18 条" data-en="18 total">共 18 条</span></span>
+                <span id="review-count-label" style="margin-left:auto;font-size:0.78rem;color:var(--faint)"><span class="t" data-zh="共 18 条" data-en="18 total">共 18 条</span></span>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="reviews-list">
                 <div class="review-card">
                     <div class="rev-top">
                         <div>
@@ -1162,9 +1162,82 @@ html, body {
             stars.forEach(function(s,i){ s.classList.toggle('on',i<val); });
         }
         function toggleTag(btn){ btn.classList.toggle('on'); }
+
         function submitRev(){
-            document.getElementById('rev-ok').style.display='block';
-            document.getElementById('rev-ok').scrollIntoView({behavior:'smooth',block:'nearest'});
+          var lang = window._wlang || 'zh';
+          var zh = lang !== 'en';
+
+          // ── 1. 登录检查 ───────────────────────────────────────────
+          if (!window._wh_sb) { alert(zh ? '系统错误，请刷新重试' : 'System error, please refresh'); return; }
+          window._wh_sb.auth.getSession().then(function(sr){
+            var session = sr.data && sr.data.session;
+            if (!session) {
+              alert(zh ? '请先登录后再提交评价' : 'Please sign in to submit a review');
+              location.href = 'whalium_2_login.html?next=' + encodeURIComponent(location.href);
+              return;
+            }
+
+            // ── 2. 收集表单数据 ──────────────────────────────────────
+            var svcBtn = document.querySelector('.rev-svc.active');
+            var serviceType = svcBtn ? svcBtn.textContent.trim() : null;
+
+            var dims = ['pro','spd','val','cn','out'];
+            var breakdown = {};
+            var total = 0, count = 0;
+            dims.forEach(function(d){
+              var on = document.querySelectorAll('#stars-'+d+' .s.on').length;
+              breakdown[d] = on;
+              if (on > 0){ total += on; count++; }
+            });
+
+            if (count === 0) { alert(zh ? '请至少给一项打分' : 'Please rate at least one dimension'); return; }
+            var avgRating = Math.max(1, Math.min(5, Math.round(total / count)));
+
+            var body = (document.getElementById('rev-txt') || {}).value;
+            if (!body || body.trim().length < 5) {
+              alert(zh ? '请填写评价内容（至少5个字）' : 'Please write a review (min 5 chars)');
+              return;
+            }
+
+            var tags = [];
+            document.querySelectorAll('.rev-tag.on').forEach(function(t){ tags.push(t.textContent.trim()); });
+
+            var priceEl = document.getElementById('rev-price');
+            var durEl   = document.getElementById('rev-dur');
+            var verifiedCb = document.getElementById('commissioned-confirm');
+
+            var firm = window._wh_firm || {};
+            var record = {
+              firm_id:          firm.id  || null,
+              user_id:          session.user.id,
+              rating:           avgRating,
+              body:             body.trim(),
+              service_type:     serviceType,
+              amount_paid:      priceEl && priceEl.value ? parseFloat(priceEl.value) : null,
+              tags:             tags,
+              verified_service: !!(verifiedCb && verifiedCb.checked),
+              status:           'pending'
+            };
+
+            // ── 3. 写入 Supabase ─────────────────────────────────────
+            var btn = document.querySelector('[onclick*="submitRev"]');
+            if (btn){ btn.disabled = true; btn.textContent = zh ? '提交中…' : 'Submitting…'; }
+
+            window._wh_sb.from('reviews').insert(record).then(function(res){
+              if (res.error){
+                alert((zh ? '提交失败：' : 'Failed: ') + res.error.message);
+                if (btn){ btn.disabled = false; btn.textContent = zh ? '提交评价' : 'Submit Review'; }
+                return;
+              }
+              // ── 4. 成功 ──────────────────────────────────────────────
+              var okEl = document.getElementById('rev-ok');
+              if (okEl){
+                okEl.style.display = 'block';
+                okEl.scrollIntoView({behavior:'smooth', block:'nearest'});
+              }
+              if (btn) btn.style.display = 'none';
+            });
+          });
         }
         </script>
 
@@ -2372,54 +2445,55 @@ window.addEventListener('load', function() {
 <script>
 (function(){
   document.addEventListener('DOMContentLoaded', function(){
-    var paid = false;
-    try { paid = localStorage.getItem('wh_paid')==='1'; } catch(e){}
+    var zh = (window._wlang || 'zh') !== 'en';
     var reviewCard = document.getElementById('review-form');
-    var reviewToggle = document.querySelector('[onclick*="review"], .review-card-header, #review-toggle');
-    
-    if(!paid){
-      // Non-member: replace review form with gate message
-      if(reviewCard){
+    if (!reviewCard) return;
+
+    // 检查登录状态
+    if (!window._wh_sb) { showReviewGate(false); return; }
+    window._wh_sb.auth.getSession().then(function(sr){
+      var loggedIn = !!(sr.data && sr.data.session);
+      var paid = false;
+      try { paid = localStorage.getItem('wh_paid') === '1'; } catch(e){}
+
+      if (!loggedIn) {
+        // 未登录：提示登录
         reviewCard.innerHTML = [
           '<div style="text-align:center;padding:1.5rem;background:#f8fafc;border-radius:8px;border:1px dashed #e2e8f0;">',
-          '<div style="font-size:1.4rem;margin-bottom:0.5rem;">🔒</div>',
+          '<div style="font-size:1.4rem;margin-bottom:0.5rem;">✍️</div>',
           '<div style="font-size:0.85rem;font-weight:700;color:#334155;margin-bottom:0.3rem;">',
-          (window._wlang==='en'?'Members can submit verified reviews':'开通会员后可提交经验证的服务评价'),
+          zh ? '登录后即可提交评价' : 'Sign in to submit a review',
           '</div>',
           '<div style="font-size:0.75rem;color:#64748b;margin-bottom:0.8rem;">',
-          (window._wlang==='en'?'Only clients with a service contract can review':'需上传合同凭证，防止刷评价'),
+          zh ? '仅限实际委托过该律所的客户' : 'Only for clients who have engaged this firm',
           '</div>',
-          '<a href="whalium_5_payment.html" style="display:inline-block;background:linear-gradient(135deg,#22ccde,#0a8eb0);color:#0a1628;padding:0.45rem 1.2rem;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;">',
-          (window._wlang==='en'?'Subscribe · ¥365/yr':'开通会员 · ¥365/年'),
+          '<a href="whalium_2_login.html?next=' + encodeURIComponent(location.href) + '" style="display:inline-block;background:linear-gradient(135deg,#22ccde,#0a8eb0);color:#0a1628;padding:0.45rem 1.2rem;border-radius:6px;font-size:0.82rem;font-weight:700;text-decoration:none;">',
+          zh ? '登录 / 注册' : 'Sign In / Sign Up',
           '</a></div>'
         ].join('');
-      }
-    } else {
-      // Member: add commission confirmation step before form
-      if(reviewCard){
+      } else {
+        // 已登录：显示委托确认 checkbox，然后展开表单
         var gate = document.createElement('div');
         gate.id = 'review-commission-gate';
         gate.style.cssText = 'background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;padding:0.9rem 1rem;margin-bottom:1rem;font-size:0.83rem;';
         gate.innerHTML = [
-          '<div style="font-weight:700;color:#92400e;margin-bottom:0.5rem;">⚠️ ',
-          (window._wlang==='en'?'Verified review requires service proof':'验证评价需要委托凭证'),
+          '<div style="font-weight:700;color:#92400e;margin-bottom:0.4rem;">✅ ',
+          zh ? '已登录，可提交评价' : 'Signed in — ready to review',
           '</div>',
-          '<div style="color:#78350f;margin-bottom:0.7rem;line-height:1.6;">',
-          (window._wlang==='en'
-            ?'Please confirm you have actually engaged this firm. You'll need to upload a contract page or payment receipt.'
-            :'请确认您已实际委托过该律所。提交时需上传合同首页或付款截图，经平台核验后评价才会公开显示。'),
+          '<div style="color:#78350f;margin-bottom:0.7rem;line-height:1.6;font-size:0.8rem;">',
+          zh ? '请确认您已实际委托过该律所后填写评价，经平台人工审核后公开显示。' : 'Please confirm you have actually engaged this firm. Reviews are moderated before publishing.',
           '</div>',
           '<label style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;color:#1a2332;font-weight:600;">',
           '<input type="checkbox" id="commissioned-confirm" style="width:16px;height:16px;" onchange="toggleReviewForm(this)">',
-          (window._wlang==='en'?'I confirm I have retained this firm':'我确认已委托过该律所'),
+          zh ? '我确认已委托过该律所' : 'I confirm I have retained this firm',
           '</label>'
         ].join('');
         reviewCard.insertBefore(gate, reviewCard.firstChild);
-        // Hide form fields until confirmed
+        // 隐藏表单字段，直到用户确认
         var formFields = reviewCard.querySelectorAll('.rev-svc, .star-row, textarea, .submit-review-btn, [id^="rev-"]');
         formFields.forEach(function(el){ el.style.opacity='0.3'; el.style.pointerEvents='none'; });
       }
-    }
+    });
   });
 })();
 </script>
@@ -2580,8 +2654,83 @@ function toggleReviewForm(cb){
           }
           if (desc2El) desc2El.style.display = 'none'; // 隐藏第二段（Morrison专属）
         }
+
+        // ── 动态加载评价 ──────────────────────────────────────
+        if (f.id) loadReviews(f.id, en);
       });
   });
+
+  // ── 评价渲染函数 ──────────────────────────────────────────────
+  function starStr(n) {
+    var s = '';
+    for (var i=1;i<=5;i++) s += (i<=Math.round(n)?'★':'☆');
+    return s;
+  }
+
+  function loadReviews(firmId, en) {
+    sb.from('reviews')
+      .select('*')
+      .eq('firm_id', firmId)
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false })
+      .then(function(res){
+        if (res.error || !res.data || res.data.length === 0) return; // 无评价则保留 demo
+
+        var reviews = res.data;
+        var lang = window._wlang || 'zh';
+        var isEn = lang === 'en';
+        var total = reviews.length;
+
+        // 更新总评价数标签
+        var countLabel = document.getElementById('review-count-label');
+        if (countLabel) countLabel.innerHTML = isEn ? total + ' total' : '共 ' + total + ' 条';
+
+        // 构建评价卡片 HTML
+        function renderReviewCard(r) {
+          var stars = starStr(r.rating);
+          var verBadge = r.verified_service
+            ? (isEn ? ' · ✅ Verified Service' : ' · ✅ 已验证服务') : '';
+          var dateStr = r.created_at ? r.created_at.slice(0,7).replace('-','年') + '月' : '';
+          var tagsHtml = (r.tags||[]).map(function(t){ return '<span class="rev-tag" style="background:rgba(0,200,200,0.07);border:1px solid rgba(0,200,200,0.2);color:var(--teal);padding:0.15rem 0.5rem;border-radius:12px;font-size:0.72rem;margin-right:0.3rem;">'+t+'</span>'; }).join('');
+          var amtHtml = r.amount_paid ? ' · ' + (isEn?'Paid $':'实付 $') + r.amount_paid : '';
+          var svcHtml = r.service_type ? '📌 ' + r.service_type + amtHtml : '';
+          var replyHtml = r.firm_reply
+            ? '<div class="rev-firm-reply"><div class="rev-reply-label">'+(isEn?'Firm Reply':'律所回复')+'</div><div class="rev-reply-text">'+r.firm_reply+'</div></div>'
+            : '';
+          return '<div class="review-card">'
+            + '<div class="rev-top"><div>'
+            + '<div class="rev-name">' + (isEn ? 'Verified Client' : '已认证用户') + '</div>'
+            + '<div class="rev-date">' + (isEn ? dateStr.replace('年','').replace('月','') : dateStr) + verBadge + '</div>'
+            + '</div><div class="rev-stars">' + stars + ' ' + r.rating + '.0</div></div>'
+            + (svcHtml ? '<div class="rev-tag-row" style="margin:0.4rem 0;font-size:0.78rem;color:var(--muted)">' + svcHtml + '</div>' : '')
+            + (tagsHtml ? '<div style="margin-bottom:0.5rem">' + tagsHtml + '</div>' : '')
+            + '<div class="rev-text">' + r.body + '</div>'
+            + replyHtml
+            + '</div>';
+        }
+
+        // 第1条：免费显示
+        var html = renderReviewCard(reviews[0]);
+
+        // 第2条起：付费墙
+        if (total > 1) {
+          var blurHtml = renderReviewCard(reviews[1]);
+          var moreCount = total - 1;
+          html += '<div class="locked-wrap" style="margin-top:0.5rem">'
+            + '<div class="locked-content" style="min-height:100px;filter:blur(4px);opacity:0.3;pointer-events:none">' + blurHtml + '</div>'
+            + '<div class="lock-gate">'
+            + '<div class="lock-icon">🔒</div>'
+            + '<div class="lock-title">' + (isEn ? moreCount + ' more reviews hidden' : '还有 ' + moreCount + ' 条评价未显示') + '</div>'
+            + '<div class="lock-desc">' + (isEn ? 'Subscribe to see all verified client reviews' : '开通会员，查看全部已验证客户评价') + '</div>'
+            + '<button class="btn-unlock" onclick="location.href=\'whalium_5_payment.html\'">'
+            + (isEn ? 'Subscribe to See All' : '开通会员查看全部') + '</button>'
+            + '</div></div>';
+        }
+
+        var listEl = document.getElementById('reviews-list');
+        if (listEl) listEl.innerHTML = html;
+      });
+  }
 })();
 </script>
 
