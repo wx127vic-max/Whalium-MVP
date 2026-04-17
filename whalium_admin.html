@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+  <link href="https://fonts.loli.net/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Whalium 管理后台</title>
+  <style>
+    :root {
+      --bg:#0d1b2e; --card:#132035; --border:rgba(255,255,255,0.08);
+      --teal:#22ccde; --text:#e2eaf4; --muted:#7a9bbf; --faint:#3a5068;
+      --green:#22c55e; --red:#ef4444; --yellow:#f59e0b;
+      --font:'Inter','Noto Sans SC','PingFang SC',sans-serif;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;}
+
+    /* ── Header ── */
+    .adm-header{background:linear-gradient(135deg,#0a1628,#1a2e4a);padding:0.85rem 2rem;display:flex;align-items:center;gap:1rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,0.4);}
+    .adm-logo{font-size:1.1rem;font-weight:800;background:linear-gradient(135deg,#fff,#22ccde);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .adm-badge{background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.35);color:#ef4444;font-size:0.7rem;font-weight:700;padding:0.18rem 0.55rem;border-radius:4px;letter-spacing:0.05em;}
+    .adm-user{margin-left:auto;font-size:0.8rem;color:var(--muted);}
+    .adm-logout{border:1px solid var(--border);color:var(--muted);background:transparent;padding:0.32rem 0.8rem;border-radius:5px;font-size:0.78rem;cursor:pointer;font-family:inherit;}
+    .adm-logout:hover{border-color:var(--red);color:var(--red);}
+
+    /* ── Layout ── */
+    .adm-body{max-width:1100px;margin:0 auto;padding:2rem 1.5rem;}
+
+    /* ── Stats ── */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem;}
+    .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;}
+    .stat-num{font-size:2rem;font-weight:800;line-height:1;}
+    .stat-label{font-size:0.75rem;color:var(--muted);margin-top:0.3rem;}
+    .stat-pending .stat-num{color:var(--yellow);}
+    .stat-approved .stat-num{color:var(--green);}
+    .stat-rejected .stat-num{color:var(--red);}
+    .stat-inq .stat-num{color:var(--teal);}
+
+    /* ── Tabs ── */
+    .tab-bar{display:flex;gap:0.3rem;margin-bottom:1.5rem;border-bottom:1px solid var(--border);padding-bottom:0;}
+    .tab-btn{background:transparent;border:none;color:var(--muted);padding:0.55rem 1.1rem;font-size:0.85rem;cursor:pointer;border-bottom:2px solid transparent;font-family:inherit;transition:all .18s;}
+    .tab-btn:hover{color:var(--text);}
+    .tab-btn.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:600;}
+    .tab-count{display:inline-block;background:rgba(255,255,255,0.1);border-radius:10px;padding:0.05rem 0.45rem;font-size:0.7rem;margin-left:0.3rem;}
+    .tab-btn.active .tab-count{background:rgba(34,204,222,0.15);color:var(--teal);}
+
+    /* ── Review Cards ── */
+    #content-area{display:flex;flex-direction:column;gap:1rem;}
+    .rev-adm-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.3rem 1.5rem;}
+    .rev-adm-card.pending{border-left:3px solid var(--yellow);}
+    .rev-adm-card.approved{border-left:3px solid var(--green);}
+    .rev-adm-card.rejected{border-left:3px solid var(--red);opacity:0.7;}
+
+    .rev-adm-top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:0.7rem;}
+    .rev-adm-firm{font-size:0.95rem;font-weight:700;color:var(--teal);}
+    .rev-adm-firm a{color:inherit;text-decoration:none;}
+    .rev-adm-firm a:hover{text-decoration:underline;}
+    .rev-adm-meta{font-size:0.75rem;color:var(--muted);margin-top:0.2rem;}
+    .rev-stars{font-size:1rem;color:#f59e0b;letter-spacing:1px;}
+    .rev-adm-status{font-size:0.7rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:4px;}
+    .status-pending{background:rgba(245,158,11,0.15);color:var(--yellow);border:1px solid rgba(245,158,11,0.3);}
+    .status-approved{background:rgba(34,197,94,0.12);color:var(--green);border:1px solid rgba(34,197,94,0.25);}
+    .status-rejected{background:rgba(239,68,68,0.1);color:var(--red);border:1px solid rgba(239,68,68,0.2);}
+
+    .rev-adm-body{font-size:0.85rem;color:var(--text);line-height:1.65;margin-bottom:0.8rem;padding:0.75rem;background:rgba(255,255,255,0.03);border-radius:6px;}
+    .rev-adm-tags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.8rem;}
+    .rev-tag-pill{font-size:0.7rem;background:rgba(34,204,222,0.08);border:1px solid rgba(34,204,222,0.2);color:var(--teal);padding:0.15rem 0.5rem;border-radius:10px;}
+
+    .rev-adm-actions{display:flex;gap:0.6rem;align-items:center;}
+    .btn-approve{background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:var(--green);padding:0.4rem 1.1rem;border-radius:6px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .18s;}
+    .btn-approve:hover{background:rgba(34,197,94,0.2);}
+    .btn-reject{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);color:var(--red);padding:0.4rem 1.1rem;border-radius:6px;font-size:0.82rem;font-weight:600;cursor:pointer;font-family:inherit;transition:all .18s;}
+    .btn-reject:hover{background:rgba(239,68,68,0.15);}
+    .rev-adm-done{font-size:0.78rem;color:var(--muted);font-style:italic;}
+
+    /* ── Inquiry Cards ── */
+    .inq-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--teal);border-radius:10px;padding:1.1rem 1.4rem;}
+    .inq-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.5rem;}
+    .inq-firm{font-size:0.9rem;font-weight:700;color:var(--teal);}
+    .inq-date{font-size:0.72rem;color:var(--muted);}
+    .inq-contact{font-size:0.8rem;color:var(--muted);margin-bottom:0.5rem;}
+    .inq-contact b{color:var(--text);}
+    .inq-desc{font-size:0.82rem;line-height:1.6;color:var(--text);padding:0.65rem 0.8rem;background:rgba(255,255,255,0.03);border-radius:6px;}
+    .inq-budget{display:inline-block;margin-top:0.5rem;font-size:0.72rem;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);color:#d4af37;padding:0.15rem 0.5rem;border-radius:4px;}
+
+    /* ── Empty / Loading ── */
+    .adm-empty{text-align:center;padding:3rem;color:var(--muted);font-size:0.9rem;}
+    .adm-loading{text-align:center;padding:2rem;color:var(--muted);}
+
+    /* ── Auth gate ── */
+    #auth-gate{display:flex;align-items:center;justify-content:center;min-height:70vh;}
+    .auth-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2.5rem;text-align:center;max-width:380px;}
+    .auth-box h2{margin-bottom:0.5rem;}
+    .auth-box p{color:var(--muted);font-size:0.85rem;margin-bottom:1.5rem;}
+    .auth-input{width:100%;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--text);padding:0.7rem 1rem;border-radius:7px;font-size:0.9rem;font-family:inherit;margin-bottom:0.8rem;}
+    .auth-input:focus{outline:none;border-color:var(--teal);}
+    .auth-btn{width:100%;background:linear-gradient(135deg,#22ccde,#0a8eb0);color:#0a1628;border:none;padding:0.75rem;border-radius:7px;font-size:0.93rem;font-weight:700;cursor:pointer;font-family:inherit;}
+    #auth-msg{font-size:0.78rem;color:var(--red);margin-top:0.5rem;min-height:1em;}
+
+    @media(max-width:600px){
+      .stats-row{grid-template-columns:1fr 1fr;}
+      .adm-body{padding:1rem;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Header ── -->
+<div class="adm-header">
+  <span class="adm-logo">Whalium 华里安</span>
+  <span class="adm-badge">管理后台</span>
+  <span class="adm-user" id="adm-user-email"></span>
+  <button class="adm-logout" onclick="doLogout()">退出登录</button>
+</div>
+
+<!-- ── Auth Gate (shown when not logged in) ── -->
+<div id="auth-gate" style="display:none">
+  <div class="auth-box">
+    <div style="font-size:2rem;margin-bottom:0.7rem">🔐</div>
+    <h2 style="margin-bottom:0.5rem">管理员登录</h2>
+    <p>此页面仅限 Whalium 管理员访问</p>
+    <input id="adm-email" class="auth-input" type="email" placeholder="管理员邮箱">
+    <input id="adm-pw" class="auth-input" type="password" placeholder="密码" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="auth-btn" onclick="doLogin()">登录</button>
+    <div id="auth-msg"></div>
+  </div>
+</div>
+
+<!-- ── Main Content (shown when authenticated) ── -->
+<div id="adm-main" style="display:none">
+  <div class="adm-body">
+
+    <!-- Stats -->
+    <div class="stats-row" id="stats-row">
+      <div class="stat-card stat-pending">
+        <div class="stat-num" id="stat-pending">–</div>
+        <div class="stat-label">⏳ 待审核评价</div>
+      </div>
+      <div class="stat-card stat-approved">
+        <div class="stat-num" id="stat-approved">–</div>
+        <div class="stat-label">✅ 已通过评价</div>
+      </div>
+      <div class="stat-card stat-rejected">
+        <div class="stat-num" id="stat-rejected">–</div>
+        <div class="stat-label">❌ 已拒绝评价</div>
+      </div>
+      <div class="stat-card stat-inq">
+        <div class="stat-num" id="stat-inq">–</div>
+        <div class="stat-label">💬 询盘总数</div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('pending',this)">
+        待审核 <span class="tab-count" id="tc-pending">0</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('approved',this)">
+        已通过 <span class="tab-count" id="tc-approved">0</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('rejected',this)">
+        已拒绝 <span class="tab-count" id="tc-rejected">0</span>
+      </button>
+      <button class="tab-btn" onclick="switchTab('inquiries',this)">
+        询盘记录 <span class="tab-count" id="tc-inq">0</span>
+      </button>
+    </div>
+
+    <!-- Content -->
+    <div id="content-area">
+      <div class="adm-loading">加载中…</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── Supabase ─────────────────────────────────────────────────────
+var SB_URL = 'https://cenmhxewrmjpibkokuls.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8';
+
+// ⚠️ 改成你的管理员邮箱（与 migration_admin.sql 中保持一致）
+var ADMIN_EMAILS = ['admin@whalium.com'];
+
+var sb = window.supabase.createClient(SB_URL, SB_KEY);
+var _allReviews = [];
+var _allInquiries = [];
+var _curTab = 'pending';
+var _firmMap = {}; // id → {name, slug}
+
+// ── 启动 ─────────────────────────────────────────────────────────
+sb.auth.getSession().then(function(res){
+  var session = res.data && res.data.session;
+  if (!session) {
+    showAuthGate();
+    return;
+  }
+  var email = session.user.email;
+  if (!ADMIN_EMAILS.includes(email)) {
+    document.getElementById('auth-gate').style.display = 'flex';
+    document.getElementById('auth-msg').textContent = '❌ 该账号无管理员权限：' + email;
+    sb.auth.signOut();
+    return;
+  }
+  showDashboard(email);
+});
+
+function showAuthGate() {
+  document.getElementById('auth-gate').style.display = 'flex';
+}
+
+function showDashboard(email) {
+  document.getElementById('auth-gate').style.display = 'none';
+  document.getElementById('adm-main').style.display = 'block';
+  document.getElementById('adm-user-email').textContent = '👤 ' + email;
+  loadAll();
+}
+
+// ── 登录 ──────────────────────────────────────────────────────────
+function doLogin() {
+  var email = document.getElementById('adm-email').value.trim();
+  var pw    = document.getElementById('adm-pw').value;
+  var msg   = document.getElementById('auth-msg');
+  if (!email || !pw) { msg.textContent = '请填写邮箱和密码'; return; }
+  msg.textContent = '登录中…'; msg.style.color = '#7a9bbf';
+  sb.auth.signInWithPassword({ email: email, password: pw }).then(function(res){
+    if (res.error) {
+      msg.textContent = '❌ ' + (res.error.message.includes('Invalid') ? '邮箱或密码错误' : res.error.message);
+      msg.style.color = '#ef4444'; return;
+    }
+    var userEmail = res.data.user.email;
+    if (!ADMIN_EMAILS.includes(userEmail)) {
+      msg.textContent = '❌ 该账号无管理员权限';
+      msg.style.color = '#ef4444';
+      sb.auth.signOut(); return;
+    }
+    showDashboard(userEmail);
+  });
+}
+
+function doLogout() {
+  sb.auth.signOut().then(function(){ location.reload(); });
+}
+
+// ── 加载所有数据 ───────────────────────────────────────────────────
+function loadAll() {
+  // 加载律所 id→name 映射
+  sb.from('firms').select('id,name,slug').then(function(res){
+    if (res.data) res.data.forEach(function(f){ _firmMap[f.id] = f; });
+  });
+
+  // 加载评价
+  sb.from('reviews').select('*').order('created_at', { ascending: false }).then(function(res){
+    if (res.error) { console.error(res.error); return; }
+    _allReviews = res.data || [];
+    updateStats();
+    renderTab('pending');
+  });
+
+  // 加载询盘
+  sb.from('inquiries').select('*').order('created_at', { ascending: false }).then(function(res){
+    if (res.error) { console.error(res.error); return; }
+    _allInquiries = res.data || [];
+    document.getElementById('stat-inq').textContent   = _allInquiries.length;
+    document.getElementById('tc-inq').textContent      = _allInquiries.length;
+  });
+}
+
+function updateStats() {
+  var pending  = _allReviews.filter(function(r){ return r.status==='pending'; }).length;
+  var approved = _allReviews.filter(function(r){ return r.status==='approved'; }).length;
+  var rejected = _allReviews.filter(function(r){ return r.status==='rejected'; }).length;
+  document.getElementById('stat-pending').textContent  = pending;
+  document.getElementById('stat-approved').textContent = approved;
+  document.getElementById('stat-rejected').textContent = rejected;
+  document.getElementById('tc-pending').textContent    = pending;
+  document.getElementById('tc-approved').textContent   = approved;
+  document.getElementById('tc-rejected').textContent   = rejected;
+}
+
+// ── Tab 切换 ───────────────────────────────────────────────────────
+function switchTab(tab, btn) {
+  _curTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderTab(tab);
+}
+
+function renderTab(tab) {
+  var area = document.getElementById('content-area');
+  if (tab === 'inquiries') {
+    renderInquiries(area); return;
+  }
+  var list = _allReviews.filter(function(r){ return r.status === tab; });
+  if (list.length === 0) {
+    area.innerHTML = '<div class="adm-empty">暂无' + {pending:'待审核',approved:'已通过',rejected:'已拒绝'}[tab] + '评价</div>';
+    return;
+  }
+  area.innerHTML = list.map(function(r){ return buildRevCard(r); }).join('');
+}
+
+// ── 评价卡片 ───────────────────────────────────────────────────────
+function buildRevCard(r) {
+  var firm   = _firmMap[r.firm_id] || {};
+  var firmName = firm.name || '未知律所';
+  var firmLink = firm.slug ? 'whalium_4_firm-detail.html?slug='+firm.slug : '#';
+  var stars  = '';
+  for (var i=1;i<=5;i++) stars += (i<=r.rating ? '★' : '☆');
+  var date   = r.created_at ? r.created_at.slice(0,10) : '';
+  var tags   = (r.tags||[]).map(function(t){
+    return '<span class="rev-tag-pill">'+t+'</span>';
+  }).join('');
+  var svcLine = r.service_type ? '📌 '+r.service_type : '';
+  if (r.amount_paid) svcLine += ' · 实付 $' + r.amount_paid;
+  var verBadge = r.verified_service ? ' · ✅ 已验证' : '';
+  var statusClass = 'status-' + r.status;
+  var statusText  = {pending:'⏳ 待审核', approved:'✅ 已通过', rejected:'❌ 已拒绝'}[r.status] || r.status;
+
+  var actions = '';
+  if (r.status === 'pending') {
+    actions = '<button class="btn-approve" onclick="updateStatus(\''+r.id+'\',\'approved\',this)">✅ 通过</button>'
+            + '<button class="btn-reject"  onclick="updateStatus(\''+r.id+'\',\'rejected\',this)">❌ 拒绝</button>';
+  } else if (r.status === 'approved') {
+    actions = '<button class="btn-reject" onclick="updateStatus(\''+r.id+'\',\'rejected\',this)">撤回 → 拒绝</button>';
+  } else {
+    actions = '<button class="btn-approve" onclick="updateStatus(\''+r.id+'\',\'approved\',this)">重新通过</button>';
+  }
+
+  return '<div class="rev-adm-card '+r.status+'" id="rcard-'+r.id+'">'
+    + '<div class="rev-adm-top">'
+    + '<div><div class="rev-adm-firm"><a href="'+firmLink+'" target="_blank">'+firmName+'</a></div>'
+    + '<div class="rev-adm-meta">'+date+verBadge+(svcLine?' · '+svcLine:'')+'</div></div>'
+    + '<div style="display:flex;align-items:center;gap:0.6rem">'
+    + '<span class="rev-stars">'+stars+'</span><span style="font-size:0.9rem;font-weight:700">'+r.rating+'.0</span>'
+    + '<span class="rev-adm-status '+statusClass+'">'+statusText+'</span>'
+    + '</div></div>'
+    + (tags ? '<div class="rev-adm-tags">'+tags+'</div>' : '')
+    + '<div class="rev-adm-body">'+escHtml(r.body)+'</div>'
+    + '<div class="rev-adm-actions">'+actions+'</div>'
+    + '</div>';
+}
+
+// ── 审核操作 ───────────────────────────────────────────────────────
+function updateStatus(id, status, btn) {
+  btn.disabled = true;
+  btn.textContent = '处理中…';
+  sb.from('reviews').update({ status: status }).eq('id', id).then(function(res){
+    if (res.error) {
+      alert('操作失败：' + res.error.message);
+      btn.disabled = false; return;
+    }
+    // 更新本地数据
+    var rev = _allReviews.find(function(r){ return r.id === id; });
+    if (rev) rev.status = status;
+    updateStats();
+    // 从当前视图移除卡片（带动画）
+    var card = document.getElementById('rcard-'+id);
+    if (card) {
+      card.style.transition = 'opacity .3s, transform .3s';
+      card.style.opacity = '0'; card.style.transform = 'translateX(20px)';
+      setTimeout(function(){ renderTab(_curTab); }, 350);
+    }
+  });
+}
+
+// ── 询盘卡片 ───────────────────────────────────────────────────────
+function renderInquiries(area) {
+  if (_allInquiries.length === 0) {
+    area.innerHTML = '<div class="adm-empty">暂无询盘记录</div>'; return;
+  }
+  area.innerHTML = _allInquiries.map(function(q){
+    var firm = _firmMap[q.firm_id] || {};
+    var date = q.created_at ? q.created_at.slice(0,10) : '';
+    var budgetHtml = q.budget ? '<span class="inq-budget">💰 预算 '+q.budget+'</span>' : '';
+    var svcHtml = q.service_type ? '<span class="inq-budget" style="background:rgba(34,204,222,0.08);border-color:rgba(34,204,222,0.2);color:var(--teal)">'+q.service_type+'</span>' : '';
+    return '<div class="inq-card">'
+      + '<div class="inq-top">'
+      + '<div class="inq-firm">'+(firm.name||'未知律所')+'</div>'
+      + '<div class="inq-date">'+date+'</div>'
+      + '</div>'
+      + '<div class="inq-contact"><b>'+escHtml(q.name||'匿名')+'</b>'
+      + (q.company ? ' · '+escHtml(q.company) : '')
+      + ' · <a href="mailto:'+escHtml(q.email||'')+'" style="color:var(--teal)">'+escHtml(q.email||'')+'</a>'
+      + '</div>'
+      + '<div class="inq-desc">'+escHtml(q.description||'')+'</div>'
+      + '<div style="margin-top:0.5rem;display:flex;gap:0.4rem;flex-wrap:wrap">'
+      + budgetHtml + svcHtml + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
