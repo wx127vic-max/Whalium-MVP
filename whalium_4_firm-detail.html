@@ -189,17 +189,24 @@
         }
 
         /* ══ SERVICES ═════════════════════════════════════════ */
-        .service-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.9rem; }
+        .service-grid { display:flex; flex-direction:column; gap:0.7rem; }
         .service-item {
+            display:flex; align-items:flex-start; gap:1rem;
             background:#f7f9fb; border:1px solid var(--border);
-            border-radius:8px; padding:1rem 1.1rem;
+            border-radius:8px; padding:0.85rem 1.1rem;
             border-left:3px solid var(--teal);
             transition:border-color .18s, box-shadow .18s;
         }
         .service-item:hover { box-shadow:0 3px 12px rgba(0,153,170,0.1); border-left-color:var(--teal-b); }
-        .service-name { font-size:0.88rem; font-weight:700; color:var(--text); margin-bottom:0.3rem; }
+        .service-item-body { flex:1; min-width:0; }
+        .service-name { font-size:0.88rem; font-weight:700; color:var(--text); margin-bottom:0.25rem; }
         .service-desc { font-size:0.77rem; color:var(--muted); line-height:1.6; }
-        .service-price { font-size:0.75rem; color:var(--teal); font-weight:600; margin-top:0.45rem; }
+        .service-price {
+            flex-shrink:0; white-space:nowrap;
+            font-size:0.78rem; color:var(--teal); font-weight:700;
+            background:rgba(0,200,200,0.07); border:1px solid rgba(0,200,200,0.2);
+            border-radius:5px; padding:0.2rem 0.6rem; align-self:flex-start;
+        }
 
         /* ══ RATINGS ══════════════════════════════════════════ */
         .rating-row { display:flex; align-items:center; gap:0.9rem; margin-bottom:0.8rem; }
@@ -558,7 +565,7 @@ html, body {
   .tab-bar,.tab-nav{overflow-x:auto!important;white-space:nowrap!important;-webkit-overflow-scrolling:touch;}
   .tab-bar button,.tab-nav button{min-width:76px!important;font-size:0.75rem!important;padding:0.45rem 0.6rem!important;}
   .content-section,.section-block{padding:0.8rem!important;}
-  .price-grid,.service-grid{grid-template-columns:1fr!important;}
+  .price-grid{grid-template-columns:1fr!important;}
   #inquiry-modal{padding:0.4rem!important;}
   .inquiry-modal-inner,[style*="max-width:580"]{width:96%!important;max-height:90vh!important;overflow-y:auto!important;padding:1rem!important;}
   .review-card,.team-card{padding:0.7rem!important;}
@@ -798,36 +805,48 @@ html, body {
                 <span class="card-title"><span class="t" data-zh="服务项目" data-en="Services">服务项目</span></span>
             </div>
             <div class="card-body">
-                <div class="service-grid">
+                <div class="service-grid" id="services-list">
                     <div class="service-item">
-                        <div class="service-name"><span class="t" data-zh="🏷️ 美国商标注册" data-en="🏷️ US Trademark Reg.">🏷️ 美国商标注册</span></div>
-                        <div class="service-desc"><span class="t" data-zh="全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。" data-en="Full USPTO trademark registration: filing, examination replies, and opposition responses.">全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。</span></div>
-                        <div class="service-price"><span class="t" data-zh="💰 $800 – $1,200 / 类" data-en="💰 $800–$1,200/class">💰 $800 – $1,200 / 类</span></div>
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="🏷️ 美国商标注册" data-en="🏷️ US Trademark Reg.">🏷️ 美国商标注册</span></div>
+                            <div class="service-desc"><span class="t" data-zh="全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。" data-en="Full USPTO trademark registration: filing, examination replies, and opposition responses.">全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。</span></div>
+                        </div>
+                        <div class="service-price"><span class="t" data-zh="$800–$1,200/类" data-en="$800–$1,200/class">$800–$1,200/类</span></div>
                     </div>
                     <div class="service-item">
-                        <div class="service-name"><span class="t" data-zh="📋 驳回答辩" data-en="📋 Office Action">📋 驳回答辩</span></div>
-                        <div class="service-desc"><span class="t" data-zh="针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。" data-en="Professional office action responses with 78% success rate, including TTAB appeals.">针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。</span></div>
-                        <div class="service-price">💰 $1,500 – $2,500</div>
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="📋 驳回答辩" data-en="📋 Office Action Response">📋 驳回答辩</span></div>
+                            <div class="service-desc"><span class="t" data-zh="针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。" data-en="Professional office action responses with 78% success rate, including TTAB appeals.">针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。</span></div>
+                        </div>
+                        <div class="service-price">$1,500–$2,500</div>
                     </div>
                     <div class="service-item">
-                        <div class="service-name">💡 <span class="t" data-zh="发明专利申请" data-en="Invention Patent Filing">发明专利申请</span></div>
-                        <div class="service-desc"><span class="t" data-zh="发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。" data-en="Utility and design patent filing: technical assessment + claim drafting.">发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。</span></div>
-                        <div class="service-price">💰 $3,000 – $6,000</div>
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="💡 发明专利申请" data-en="💡 Invention Patent Filing">💡 发明专利申请</span></div>
+                            <div class="service-desc"><span class="t" data-zh="发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。" data-en="Utility and design patent filing: technical assessment + claim drafting.">发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。</span></div>
+                        </div>
+                        <div class="service-price">$3,000–$6,000</div>
                     </div>
                     <div class="service-item">
-                        <div class="service-name"><span class="t" data-zh="⚔️ 商标侵权维权" data-en="⚔️ TM Enforcement">⚔️ 商标侵权维权</span></div>
-                        <div class="service-desc"><span class="t" data-zh="电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。" data-en="E-commerce infringement (Amazon/eBay/Walmart), C&D letters, court litigation.">电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。</span></div>
-                        <div class="service-price"><span class="t" data-zh="💰 按案件报价" data-en="💰 Case-by-Case">💰 按案件报价</span></div>
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="⚔️ 商标侵权维权" data-en="⚔️ TM Enforcement">⚔️ 商标侵权维权</span></div>
+                            <div class="service-desc"><span class="t" data-zh="电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。" data-en="E-commerce infringement (Amazon/eBay/Walmart), C&D letters, court litigation.">电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。</span></div>
+                        </div>
+                        <div class="service-price"><span class="t" data-zh="按案件报价" data-en="Case-by-Case">按案件报价</span></div>
                     </div>
                     <div class="service-item">
-                        <div class="service-name"><span class="t" data-zh="©️ 版权登记" data-en="©️ Copyright"><span class="t" data-zh="©️ 版权登记" data-en="©️ Copyright Reg.">©️ 版权登记</span></span></div>
-                        <div class="service-desc"><span class="t" data-zh="软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。" data-en="US Copyright registration for software, art & literary works. 5-day expedited processing.">软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。</span></div>
-                        <div class="service-price">💰 $300 – $500</div>
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="©️ 版权登记" data-en="©️ Copyright Reg.">©️ 版权登记</span></div>
+                            <div class="service-desc"><span class="t" data-zh="软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。" data-en="US Copyright registration for software, art & literary works. 5-day expedited processing.">软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。</span></div>
+                        </div>
+                        <div class="service-price">$300–$500</div>
                     </div>
                     <div class="service-item">
-                        <div class="service-name"><span class="t" data-zh="🌐 国际商标延伸" data-en="🌐 International TM">🌐 国际商标延伸</span></div>
-                        <div class="service-desc"><span class="t" data-zh="马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。" data-en="Madrid Protocol TM registration — EU, UK, Australia & more in one application.">马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。</span></div>
-                        <div class="service-price"><span class="t" data-zh="💰 $500 – $900 / 国" data-en="💰 $500–$900/country">💰 $500 – $900 / 国</span></div>
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="🌐 国际商标延伸" data-en="🌐 International TM">🌐 国际商标延伸</span></div>
+                            <div class="service-desc"><span class="t" data-zh="马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。" data-en="Madrid Protocol TM registration — EU, UK, Australia & more in one application.">马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。</span></div>
+                        </div>
+                        <div class="service-price"><span class="t" data-zh="$500–$900/国" data-en="$500–$900/country">$500–$900/国</span></div>
                     </div>
                 </div>
             </div>
@@ -2655,10 +2674,31 @@ function toggleReviewForm(cb){
           if (desc2El) desc2El.style.display = 'none'; // 隐藏第二段（Morrison专属）
         }
 
+        // ── 动态加载服务项目 ──────────────────────────────────
+        if (f.services && f.services.length) loadServices(f.services, en);
+
         // ── 动态加载评价 ──────────────────────────────────────
         if (f.id) loadReviews(f.id, en);
       });
   });
+
+  // ── 服务项目渲染 ──────────────────────────────────────────────
+  function loadServices(services, en) {
+    var el = document.getElementById('services-list');
+    if (!el || !services || !services.length) return;
+    el.innerHTML = services.map(function(s){
+      var name  = en ? (s.name_en  || s.name)  : s.name;
+      var desc  = en ? (s.desc_en  || s.desc)  : s.desc;
+      var price = en ? (s.price_en || s.price) : s.price;
+      return '<div class="service-item">'
+        + '<div class="service-item-body">'
+        + '<div class="service-name">' + name + '</div>'
+        + '<div class="service-desc">' + desc + '</div>'
+        + '</div>'
+        + (price ? '<div class="service-price">' + price + '</div>' : '')
+        + '</div>';
+    }).join('');
+  }
 
   // ── 评价渲染函数 ──────────────────────────────────────────────
   function starStr(n) {
