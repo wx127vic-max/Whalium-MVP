@@ -575,9 +575,9 @@ html, body {
                 <h1 class="register-title"><span class="t" data-zh="客户注册" data-en="Create Account">客户注册</span></h1>
                 <p class="register-subtitle"><span class="t" data-zh="创建账号，开始寻找全球律所" data-en="Create an account to find global law firms">创建账号，开始寻找全球律所</span></p>
 
-                <div class="form-group"><label class="form-label"><span class="t" data-zh="姓名" data-en="Full Name">姓名</span><span class="required">*</span></label><input type="text" class="form-input" data-ph-zh="请输入您的真实姓名" data-ph-en="Your full name" placeholder="请输入您的真实姓名"></div>
-                <div class="form-group"><label class="form-label"><span class="t" data-zh="邮箱" data-en="Email">邮箱</span><span class="required">*</span></label><input type="email" class="form-input" placeholder="your@email.com"></div>
-                <div class="form-group"><label class="form-label"><span class="t" data-zh="公司名称" data-en="Company">公司名称</span></label><input type="text" class="form-input" data-ph-zh="请输入公司名称" data-ph-en="Your company name" placeholder="请输入公司名称"></div>
+                <div class="form-group"><label class="form-label"><span class="t" data-zh="姓名" data-en="Full Name">姓名</span><span class="required">*</span></label><input id="reg-name" type="text" class="form-input" data-ph-zh="请输入您的真实姓名" data-ph-en="Your full name" placeholder="请输入您的真实姓名"></div>
+                <div class="form-group"><label class="form-label"><span class="t" data-zh="邮箱" data-en="Email">邮箱</span><span class="required">*</span></label><input id="reg-email" type="email" class="form-input" placeholder="your@email.com"></div>
+                <div class="form-group"><label class="form-label"><span class="t" data-zh="公司名称" data-en="Company">公司名称</span></label><input id="reg-company" type="text" class="form-input" data-ph-zh="请输入公司名称" data-ph-en="Your company name" placeholder="请输入公司名称"></div>
 
                 <div class="form-group">
                     <label class="form-label"><span class="t" data-zh="手机号" data-en="Phone">手机号</span><span class="required">*</span></label>
@@ -610,11 +610,11 @@ html, body {
 
                 <div class="form-group">
                     <label class="form-label"><span class="t" data-zh="密码" data-en="Password">密码</span><span class="required">*</span></label>
-                    <input type="password" class="form-input" data-ph-zh="至少8位，包含字母和数字" data-ph-en="At least 8 chars, letters and numbers" placeholder="至少8位，包含字母和数字">
+                    <input id="reg-password" type="password" class="form-input" data-ph-zh="至少8位，包含字母和数字" data-ph-en="At least 8 chars, letters and numbers" placeholder="至少8位，包含字母和数字">
                     <div class="password-strength"><div class="strength-bar"></div></div>
                     <div class="password-hint"><span class="t" data-zh="密码强度：强" data-en="Password strength: Strong">密码强度：强</span></div>
                 </div>
-                <div class="form-group"><label class="form-label"><span class="t" data-zh="确认密码" data-en="Confirm Password">确认密码</span><span class="required">*</span></label><input type="password" class="form-input" data-ph-zh="请再次输入密码" data-ph-en="Re-enter your password" placeholder="请再次输入密码"></div>
+                <div class="form-group"><label class="form-label"><span class="t" data-zh="确认密码" data-en="Confirm Password">确认密码</span><span class="required">*</span></label><input id="reg-confirm" type="password" class="form-input" data-ph-zh="请再次输入密码" data-ph-en="Re-enter your password" placeholder="请再次输入密码"></div>
 
                 <div class="agreement">
                     <input type="checkbox" id="agreement" checked>
@@ -645,38 +645,54 @@ var _wh_sb_reg = window.supabase.createClient(
 
 function handleRegister(e) {
   e.preventDefault();
-  var lang = (window._wlang||'zh');
-  var nameEl    = document.querySelector('[type="text"]');
-  var emailEl   = document.querySelector('[type="email"]');
-  var pwdEls    = document.querySelectorAll('[type="password"]');
-  var pwd       = pwdEls[0];
-  var confirmPwd= pwdEls[1];
-  var compEl    = document.querySelectorAll('[type="text"]')[1];
+  var lang      = (window._wlang||'zh');
+  var zh        = lang === 'zh';
+  var nameEl    = document.getElementById('reg-name');
+  var emailEl   = document.getElementById('reg-email');
+  var compEl    = document.getElementById('reg-company');
+  var pwd       = document.getElementById('reg-password');
+  var confirmPwd= document.getElementById('reg-confirm');
+  var agreeEl   = document.getElementById('agreement');
+  var btn       = document.querySelector('.btn-register');
 
   // ── 前端校验 ─────────────────────────────────────────────
-  if(!emailEl || !emailEl.value.trim()){
-    alert(lang==='zh' ? '请填写邮箱地址' : 'Please enter your email');
-    if(emailEl) emailEl.focus(); return;
+  if (!nameEl || !nameEl.value.trim()) {
+    alert(zh ? '请填写您的姓名' : 'Please enter your name');
+    if (nameEl) nameEl.focus(); return;
   }
-  if(!/\S+@\S+\.\S+/.test(emailEl.value.trim())){
-    alert(lang==='zh' ? '邮箱格式不正确' : 'Invalid email format');
+  if (!emailEl || !emailEl.value.trim()) {
+    alert(zh ? '请填写邮箱地址' : 'Please enter your email');
+    if (emailEl) emailEl.focus(); return;
+  }
+  if (!/\S+@\S+\.\S+/.test(emailEl.value.trim())) {
+    alert(zh ? '邮箱格式不正确' : 'Invalid email format');
     emailEl.focus(); return;
   }
-  if(!pwd || !pwd.value.trim()){
-    alert(lang==='zh' ? '请填写密码' : 'Please enter a password');
-    if(pwd) pwd.focus(); return;
+  if (!pwd || !pwd.value) {
+    alert(zh ? '请填写密码' : 'Please enter a password');
+    if (pwd) pwd.focus(); return;
   }
-  if(pwd.value.length < 6){
-    alert(lang==='zh' ? '密码至少 6 位' : 'Password must be at least 6 characters');
+  if (pwd.value.length < 6) {
+    alert(zh ? '密码至少 6 位' : 'Password must be at least 6 characters');
     pwd.focus(); return;
   }
-  if(confirmPwd && confirmPwd.value !== pwd.value){
-    alert(lang==='zh' ? '两次密码不一致' : 'Passwords do not match');
+  if (confirmPwd && confirmPwd.value !== pwd.value) {
+    alert(zh ? '两次密码不一致' : 'Passwords do not match');
     confirmPwd.focus(); return;
   }
+  if (agreeEl && !agreeEl.checked) {
+    alert(zh ? '请先同意用户服务协议' : 'Please agree to the Terms of Service');
+    return;
+  }
 
-  var btn = document.querySelector('.btn-register');
-  if(btn){ btn.disabled=true; btn.style.opacity='0.7'; btn.textContent=lang==='zh'?'注册中…':'Creating account…'; }
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; btn.textContent = zh ? '注册中…' : 'Creating account…'; }
+
+  // 收集需求领域
+  var areas = [];
+  document.querySelectorAll('.checkbox-grid input[type="checkbox"]:checked').forEach(function(cb){
+    var label = cb.nextElementSibling;
+    if (label) areas.push(label.textContent.replace(/[🛡️🚀📦🔒⚖️💼✏️]/gu,'').trim());
+  });
 
   // ── Supabase Auth 注册 ────────────────────────────────────
   _wh_sb_reg.auth.signUp({
@@ -684,23 +700,23 @@ function handleRegister(e) {
     password: pwd.value,
     options: {
       data: {
-        name:    nameEl  ? nameEl.value.trim()  : '',
-        company: compEl  ? compEl.value.trim()  : ''
+        full_name:    nameEl.value.trim(),
+        company:      compEl ? compEl.value.trim() : '',
+        practice_interests: areas.join(', ')
       }
     }
-  }).then(function(res){
-    if(res.error){
-      alert(lang==='zh'
-        ? '注册失败：' + res.error.message
-        : 'Registration failed: ' + res.error.message);
-      if(btn){ btn.disabled=false; btn.style.opacity='1';
-        btn.textContent=lang==='zh'?'立即注册':'Create Account'; }
+  }).then(function(res) {
+    if (res.error) {
+      var msg = res.error.message;
+      if (msg.includes('already registered')) msg = zh ? '该邮箱已注册，请直接登录' : 'This email is already registered, please sign in';
+      alert(zh ? '注册失败：' + msg : 'Registration failed: ' + msg);
+      if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.textContent = zh ? '立即注册' : 'Create Account'; }
       return;
     }
     // 成功
-    alert(lang==='zh'
+    alert(zh
       ? '注册成功！请检查邮箱完成验证，然后登录。'
-      : 'Registered! Please check your email to verify, then sign in.');
+      : 'Account created! Please check your email to verify, then sign in.');
     location.href = 'whalium_2_login.html';
   });
 }

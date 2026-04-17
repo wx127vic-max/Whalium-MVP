@@ -2113,6 +2113,7 @@ function loadMore() {
   };
 
   var supabase = window.supabase.createClient(SB_URL, SB_KEY);
+  window._whSB = supabase;   // 供 wh-auth-state 使用
   window._firmPage   = 0;
   window._firmTotal  = 0;
 
@@ -2295,6 +2296,30 @@ function loadMore() {
     window.fetchFirms(true);
   });
 
+})();
+</script>
+
+<script id="wh-auth-state">
+// ── 登录状态：导航显示用户名 ─────────────────────────────────────
+(function(){
+  var _sb = window._whSB;
+  if (!_sb) return;
+  _sb.auth.getSession().then(function(res){
+    var session = res.data && res.data.session;
+    if (!session) return;
+    var user = session.user;
+    var meta = user.user_metadata || {};
+    var displayName = meta.full_name || meta.name || user.email.split('@')[0];
+    var loginLinks = document.querySelectorAll('a[href*="whalium_2_login"]');
+    loginLinks.forEach(function(a){
+      if (a.textContent.trim().length < 20) {
+        a.textContent = displayName;
+        a.href = '#';
+        a.title = '点击退出登录';
+        a.onclick = function(){ _sb.auth.signOut().then(function(){ location.reload(); }); return false; };
+      }
+    });
+  });
 })();
 </script>
 </body>

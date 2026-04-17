@@ -2584,5 +2584,37 @@ function toggleReviewForm(cb){
   });
 })();
 </script>
+
+<script id="wh-auth-state">
+// ── 登录状态：自动填充询盘表单 + 导航显示用户名 ─────────────────
+(function(){
+  if (!window._wh_sb) return;
+  window._wh_sb.auth.getSession().then(function(res){
+    var session = res.data && res.data.session;
+    if (!session) return;
+
+    var user = session.user;
+    var meta = (user.user_metadata) || {};
+    var displayName = meta.full_name || meta.name || user.email.split('@')[0];
+
+    // 1. 更新导航栏登录按钮 → 用户名 + 退出
+    var loginLinks = document.querySelectorAll('a[href*="whalium_2_login"]');
+    loginLinks.forEach(function(a){
+      if (a.textContent.trim().length < 20) {  // 只替换短链接（登录按钮）
+        a.textContent = displayName;
+        a.href = '#';
+        a.onclick = function(){ window._wh_sb.auth.signOut().then(function(){ location.reload(); }); return false; };
+        a.title = '点击退出登录';
+      }
+    });
+
+    // 2. 询盘表单自动填充
+    var nameEl  = document.getElementById('inq-name');
+    var emailEl = document.getElementById('inq-email');
+    if (nameEl  && !nameEl.value)  nameEl.value  = displayName;
+    if (emailEl && !emailEl.value) emailEl.value = user.email;
+  });
+})();
+</script>
 </body>
 </html>
