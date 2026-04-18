@@ -27,7 +27,8 @@
     </style>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Whalium - Payment</title>
+<title>Whalium - 开通会员</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <style>
 :root{--navy:#1a2e4a;--teal:#0099aa;--bg:#eef0f3;--card:#fff;--border:#e0e5ea;--borderlt:#f0f2f4;--text:#1a2e4a;--muted:#5a7090;--faint:#8a9db0;}
@@ -830,14 +831,11 @@ html, body {
           </div>
           <div class="pexp" id="ex-st">
             <div class="iform mf">
-              <div class="snote2">🔒 <span class="t" data-zh="通过 Stripe 安全处理 · 支持 Visa / MC / Amex / JCB / UnionPay" data-en="Secured by Stripe · Visa/MC/Amex/JCB/UnionPay">通过 Stripe 安全处理 · 支持 Visa / MC / Amex / JCB / UnionPay</span></div>
-              <div class="igrp"><label class="ilbl"><span class="t" data-zh="卡号" data-en="Card Number">卡号</span></label><input class="ifld" type="text" placeholder="1234  5678  9012  3456" maxlength="19" oninput="fmtC(this)"></div>
-              <div class="irow">
-                <div class="igrp"><label class="ilbl"><span class="t" data-zh="有效期" data-en="Expiry">有效期</span></label><input class="ifld" type="text" placeholder="MM / YY" maxlength="7" oninput="fmtE(this)"></div>
-                <div class="igrp"><label class="ilbl">CVV</label><input class="ifld" type="password" placeholder="···" maxlength="4"></div>
-              </div>
-              <div class="igrp"><label class="ilbl"><span class="t" data-zh="账单邮箱" data-en="Billing Email">账单邮箱</span></label><input class="ifld" type="email" placeholder="your@email.com"></div>
-              <div class="ibrands"><span class="ibrand">VISA</span><span class="ibrand">MC</span><span class="ibrand">AMEX</span><span class="ibrand">JCB</span></div>
+              <div class="snote2">🔒 <span class="t" data-zh="通过 Stripe 托管页安全支付，支持 Visa / MC / Amex / 银联 / 支付宝 / 微信" data-en="Secured by Stripe · Visa/MC/Amex/UnionPay/Alipay/WeChat">通过 Stripe 托管页安全支付，支持 Visa / MC / Amex / 银联 / 支付宝 / 微信</span></div>
+              <p style="font-size:0.78rem;color:var(--muted);line-height:1.6;margin-top:0.3rem;">
+                <span class="t" data-zh="点击"通过 Stripe 支付"后将跳转至 Stripe 安全付款页，完成后自动回跳并激活会员。" data-en="You'll be redirected to Stripe's secure checkout. After payment you'll return here and your membership will activate automatically.">点击"通过 Stripe 支付"后将跳转至 Stripe 安全付款页，完成后自动回跳并激活会员。</span>
+              </p>
+              <div class="ibrands" style="margin-top:0.5rem"><span class="ibrand">VISA</span><span class="ibrand">MC</span><span class="ibrand">AMEX</span><span class="ibrand">UNIONPAY</span><span class="ibrand">ALIPAY</span><span class="ibrand">WECHAT</span></div>
             </div>
           </div>
 
@@ -904,15 +902,123 @@ html, body {
       <div class="mrow"><span class="k"><span class="t" data-zh="实付金额" data-en="Amount Paid">实付金额</span></span><span class="v">¥365.00</span></div>
       <div class="mrow hi"><span class="k"><span class="t" data-zh="会员到期" data-en="Expires">会员到期</span></span><span class="v" id="r-expire">—</span></div>
     </div>
-    <button class="mbtn" onclick="localStorage.setItem('wh_paid','1'); location.href='whalium_8_dashboard.html'"><span class="t" data-zh="进入后台管理 →" data-en="Go to Dashboard →">进入后台管理 →</span></button>
+    <button class="mbtn" onclick="goAfterPay()"><span class="t" data-zh="开始使用会员权益 →" data-en="Start Using Benefits →">开始使用会员权益 →</span></button>
   </div>
 </div>
 
 <script>
+// ── ⚙️ 配置区：在此填入你的真实支付链接 ──────────────────────────
+// 1. Stripe Payment Link: 在 https://dashboard.stripe.com/payment-links 创建
+//    金额 ¥365，设置成功跳转 URL 为本页面 + ?status=success&method=stripe
+var STRIPE_LINK = 'https://buy.stripe.com/REPLACE_WITH_YOUR_LINK';
+
+// 2. PayPal.me 链接（可选）
+var PAYPAL_LINK = 'https://paypal.me/REPLACE_WITH_YOUR_PAYPAL/50';
+
+// 3. 收款邮箱（支付宝/微信手动转账后发截图）
+var PAYMENT_EMAIL = 'pay@whalium.com';
+// ────────────────────────────────────────────────────────────────
+
+// ── Supabase ──────────────────────────────────────────────────────
+var SB_URL = 'https://cenmhxewrmjpibkokuls.supabase.co';
+var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8';
+var sb = window.supabase ? window.supabase.createClient(SB_URL, SB_KEY) : null;
+
+// ── 页面加载：检查登录 + 检查支付回跳 ───────────────────────────
+document.addEventListener('DOMContentLoaded', function(){
+  var params = new URLSearchParams(location.search);
+  // 支付成功回跳（Stripe/PayPal redirect）
+  if (params.get('status') === 'success') {
+    var method = params.get('method') || 'stripe';
+    recordSubscription(method, function(){ showOK(method); });
+    return;
+  }
+  // 检查是否已是会员
+  if (sb) {
+    sb.auth.getUser().then(function(r){
+      var meta = r.data && r.data.user && r.data.user.user_metadata;
+      if (meta && meta.is_member && meta.expires_at && new Date(meta.expires_at) > new Date()) {
+        var lang = window._wlang || 'zh';
+        var msg = lang === 'zh' ? '您已是会员，到期时间：' + meta.expires_at.slice(0,10) : 'You are already a member until ' + meta.expires_at.slice(0,10);
+        var banner = document.createElement('div');
+        banner.style.cssText = 'background:rgba(34,197,94,0.1);border:1px solid rgba(34,197,94,0.3);color:#22c55e;padding:0.6rem 1.2rem;text-align:center;font-size:0.82rem;';
+        banner.textContent = '✅ ' + msg;
+        document.body.insertBefore(banner, document.body.firstChild);
+      }
+    });
+  }
+});
+
+// ── 记录订阅到 Supabase ──────────────────────────────────────────
+function recordSubscription(method, cb) {
+  if (!sb) { try { localStorage.setItem('wh_paid','1'); } catch(e){} if(cb)cb(); return; }
+  sb.auth.getSession().then(function(sr){
+    var session = sr.data && sr.data.session;
+    var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
+    var exp = new Date(); exp.setFullYear(exp.getFullYear() + 1);
+    var orderNo = 'WHL-' + Date.now();
+    var amounts = { consumer: 365, starter: 2800, premium: 8000 };
+    var amt = amounts[plan] || 365;
+
+    // localStorage 备用（离线可用）
+    try {
+      localStorage.setItem('wh_paid','1');
+      localStorage.setItem('wh_plan', plan);
+      localStorage.setItem('wh_order', orderNo);
+      localStorage.setItem('wh_expire', exp.toISOString());
+    } catch(e){}
+
+    if (!session) { if(cb)cb(); return; }
+    var uid = session.user.id;
+
+    // 写入 subscriptions 表
+    sb.from('subscriptions').insert({
+      user_id:        uid,
+      plan:           plan,
+      status:         'active',
+      payment_method: method,
+      amount:         amt,
+      currency:       'CNY',
+      order_no:       orderNo,
+      starts_at:      new Date().toISOString(),
+      expires_at:     exp.toISOString()
+    }).then(function(){ });
+
+    // 更新 user metadata（供其他页面快速查询）
+    sb.auth.updateUser({
+      data: {
+        is_member:    true,
+        plan:         plan,
+        member_since: new Date().toISOString(),
+        expires_at:   exp.toISOString(),
+        order_no:     orderNo
+      }
+    }).then(function(){ if(cb)cb(); });
+  });
+}
+
+// ── 支付成功后跳转 ────────────────────────────────────────────────
+function goAfterPay() {
+  var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
+  if (plan === 'starter' || plan === 'premium') {
+    location.href = 'whalium_1_index.html';
+  } else {
+    var ref = document.referrer || '';
+    var back = ref.includes('whalium_4') ? ref : 'whalium_1_index.html';
+    location.href = back;
+  }
+}
+
 var sel=null, cdT={}, oSec=29*60+59, mOpen=false;
-var LABELS={'aq':['支付宝扫码完成后，点此确认  ¥365','alipay'],'ap':['支付宝快捷支付  ¥365','alipay'],
-  'wq':['微信扫码完成后，点此确认  ¥365','wechat'],'db':['立即支付  ¥365','card'],
-  'cr':['立即支付  ¥365','card'],'st':['通过 Stripe 支付  ¥365','stripe'],'pp':['跳转 PayPal 支付  ¥365','paypal']};
+var LABELS={
+  'aq':['支付宝扫码完成后，点此确认  ¥365','alipay'],
+  'ap':['支付宝快捷支付  ¥365','alipay'],
+  'wq':['微信扫码完成后，点此确认  ¥365','wechat'],
+  'db':['立即支付  ¥365','card'],
+  'cr':['立即支付  ¥365','card'],
+  'st':['通过 Stripe 支付  ¥365','stripe'],
+  'pp':['跳转 PayPal 支付  ¥365','paypal']
+};
 var MNAME={'aq':'支付宝扫码','ap':'支付宝快捷','wq':'微信支付','db':'银行储蓄卡','cr':'信用卡','st':'Stripe','pp':'PayPal'};
 
 setInterval(function(){
@@ -957,37 +1063,73 @@ function toggleMore(){
 }
 
 function doPay(){
-  if(!sel)return;
-  var b=document.getElementById('pbtn'),isQR=(sel==='aq'||sel==='wq');
-  if(cdT[sel]){clearInterval(cdT[sel]);delete cdT[sel];}
-  b.disabled=true;b.style.opacity='.72';b.textContent=isQR?'验证支付结果…':'处理中…';
-  /* 真实接入点:
-   * 支付宝当面付: 轮询 /api/alipay/query → trade_status==='TRADE_SUCCESS'
-   * 微信Native:   轮询 /api/wx/query    → trade_state==='SUCCESS'
-   * Stripe: stripe.confirmCardPayment(clientSecret,{payment_method:{card:el}})
-   * PayPal: paypal.Buttons({createOrder,onApprove}).render('#container')
-   * 银联:   后端签名 → window.location.href=unionpay_url */
-  setTimeout(showOK,isQR?1200:1600);
+  if(!sel) return;
+  var b = document.getElementById('pbtn');
+  var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
+  var successUrl = location.origin + location.pathname + '?status=success&method=' + sel + '&plan=' + plan;
+
+  // ── Stripe：跳转 Payment Link ─────────────────────────────────
+  if (sel === 'st') {
+    if (STRIPE_LINK.includes('REPLACE')) {
+      alert('⚙️ 请先在 whalium_5_payment.html 中配置 STRIPE_LINK');
+      return;
+    }
+    var stripeUrl = STRIPE_LINK
+      + '?success_url=' + encodeURIComponent(successUrl)
+      + '&cancel_url=' + encodeURIComponent(location.href);
+    window.location.href = stripeUrl;
+    return;
+  }
+
+  // ── PayPal：跳转 PayPal.me ────────────────────────────────────
+  if (sel === 'pp') {
+    if (PAYPAL_LINK.includes('REPLACE')) {
+      alert('⚙️ 请先在 whalium_5_payment.html 中配置 PAYPAL_LINK');
+      return;
+    }
+    window.open(PAYPAL_LINK, '_blank');
+    b.textContent = '已跳转 PayPal，付款后点此确认';
+    b.className = 'pbtn card';
+    b.disabled = false;
+    b.onclick = function(){
+      recordSubscription('paypal', function(){ showOK('paypal'); });
+    };
+    return;
+  }
+
+  // ── 支付宝 / 微信：手动转账流程 ───────────────────────────────
+  if (sel === 'aq' || sel === 'wq' || sel === 'ap') {
+    if(cdT[sel]){ clearInterval(cdT[sel]); delete cdT[sel]; }
+    b.disabled = true; b.style.opacity = '0.7';
+    b.textContent = '等待您完成转账…';
+    var tip = document.createElement('div');
+    tip.style.cssText = 'margin-top:0.8rem;padding:0.8rem 1rem;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:8px;font-size:0.8rem;color:#92400e;line-height:1.65;text-align:left;';
+    tip.innerHTML = '📧 <strong>手动开通流程：</strong><br>'
+      + '① 扫码完成转账（备注：您的注册邮箱）<br>'
+      + '② 将付款截图发至 <strong>' + PAYMENT_EMAIL + '</strong><br>'
+      + '③ 我们将在 <strong>1小时内</strong> 手动为您开通会员';
+    b.parentNode.insertBefore(tip, b.nextSibling);
+    return;
+  }
+
+  // ── 银行卡（其他）：模拟流程 ──────────────────────────────────
+  b.disabled = true; b.style.opacity = '0.72'; b.textContent = '处理中…';
+  setTimeout(function(){
+    recordSubscription(sel, function(){ showOK(sel); });
+  }, 1500);
 }
 
-function showOK(){
-  var order='WHL-'+new Date().getFullYear()+'-'+Math.floor(Math.random()*900000+100000);
-  var exp=new Date();exp.setFullYear(exp.getFullYear()+1);
-  var es=exp.getFullYear()+'年'+String(exp.getMonth()+1).padStart(2,'0')+'月'+String(exp.getDate()).padStart(2,'0')+'日';
-  var plan=new URLSearchParams(location.search).get('plan')||'consumer';
+function showOK(method){
+  var order = localStorage.getItem('wh_order') || 'WHL-'+new Date().getFullYear()+'-'+Math.floor(Math.random()*900000+100000);
+  var exp = new Date();
+  try { var stored = localStorage.getItem('wh_expire'); if(stored) exp = new Date(stored); else exp.setFullYear(exp.getFullYear()+1); } catch(e){ exp.setFullYear(exp.getFullYear()+1); }
+  var es = exp.getFullYear()+'年'+String(exp.getMonth()+1).padStart(2,'0')+'月'+String(exp.getDate()).padStart(2,'0')+'日';
+  var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
+  var methodName = method ? (MNAME[method] || method) : (sel ? MNAME[sel] : 'Stripe');
 
-  // ── 写入会员状态 ──────────────────────────────
-  try {
-    localStorage.setItem('wh_paid','1');
-    localStorage.setItem('wh_plan', plan);
-    localStorage.setItem('wh_order', order);
-    localStorage.setItem('wh_expire', exp.toISOString());
-    localStorage.setItem('wh_member_since', new Date().toISOString());
-  } catch(e){}
-
-  document.getElementById('r-order').textContent=order;
-  document.getElementById('r-method').textContent=MNAME[sel]||sel;
-  document.getElementById('r-expire').textContent=es;
+  document.getElementById('r-order').textContent = order;
+  document.getElementById('r-method').textContent = methodName;
+  document.getElementById('r-expire').textContent = es;
 
   // ── 动态更新成功页内容 ─────────────────────────
   var planNames = {consumer:{zh:'年度会员',en:'Annual Member'},

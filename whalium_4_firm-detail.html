@@ -619,23 +619,35 @@ html, body {
   <span style="margin-left:auto;color:#64748b;" id="member-expire-txt"></span>
 </div>
 <script>
+// ── 会员状态：优先查 Supabase user metadata，降级用 localStorage ──
 (function(){
-  try {
-    var paid = localStorage.getItem('wh_paid')==='1';
+  function showMemberBar(expIso){
     var bar = document.getElementById('member-status-bar');
-    if(paid && bar){
-      bar.style.display='flex';
-      var exp = localStorage.getItem('wh_expire');
-      var expEl = document.getElementById('member-expire-txt');
-      if(exp && expEl){
-        var d = new Date(exp);
-        var isEnNow = (localStorage.getItem('whalium_lang') === 'en');
-        expEl.textContent = isEnNow
-          ? 'Valid until ' + d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
-          : '有效期至 '+d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日';
-      }
+    if(bar) bar.style.display = 'flex';
+    var expEl = document.getElementById('member-expire-txt');
+    if(expEl && expIso){
+      var d = new Date(expIso);
+      var isEnNow = (localStorage.getItem('whalium_lang') === 'en');
+      expEl.textContent = isEnNow
+        ? 'Valid until ' + d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+        : '有效期至 '+d.getFullYear()+'年'+(d.getMonth()+1)+'月'+d.getDate()+'日';
     }
+  }
+  // 先用 localStorage 快速显示（避免闪烁）
+  try {
+    if(localStorage.getItem('wh_paid')==='1') showMemberBar(localStorage.getItem('wh_expire'));
   } catch(e){}
+  // 再用 Supabase 校验（更可靠）
+  document.addEventListener('DOMContentLoaded', function(){
+    if(!window._wh_sb) return;
+    window._wh_sb.auth.getUser().then(function(r){
+      var meta = r.data && r.data.user && r.data.user.user_metadata;
+      if(meta && meta.is_member && meta.expires_at && new Date(meta.expires_at) > new Date()){
+        showMemberBar(meta.expires_at);
+        try{ localStorage.setItem('wh_paid','1'); localStorage.setItem('wh_expire', meta.expires_at); }catch(e){}
+      }
+    });
+  });
 })();
 </script>
 <header class="header">
