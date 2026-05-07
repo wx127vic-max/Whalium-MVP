@@ -182,6 +182,26 @@
         .intro-text { font-size:0.9rem; line-height:1.9; color:var(--muted); }
         .intro-text strong { color:var(--text); font-weight:600; }
 
+        /* ── 资质认证标签（律所简介内）─────────────────────────────── */
+        .firm-cred-tags { display:flex; flex-wrap:wrap; gap:0.4rem; padding:0.55rem 1.25rem 0.65rem; }
+        .cred-tag { display:inline-flex; align-items:center; padding:0.22rem 0.65rem; border-radius:20px; font-size:0.74rem; font-weight:600; white-space:nowrap; }
+        .cred-chambers { background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.35); color:#b8860b; }
+        .cred-legal500  { background:rgba(26,107,154,0.08); border:1px solid rgba(26,107,154,0.25); color:#1a6b9a; }
+        .cred-verified  { background:rgba(0,180,80,0.08); border:1px solid rgba(0,180,80,0.25); color:#16a34a; }
+
+        /* ── 基本信息横排（主栏内）────────────────────────────────── */
+        .firm-info-strip { display:flex; flex-wrap:wrap; gap:0; padding:0.5rem 0; }
+        .firm-info-cell { display:flex; align-items:flex-start; gap:0.5rem; padding:0.6rem 1.1rem; flex:1 1 180px; border-right:1px solid var(--border); }
+        .firm-info-cell:last-child { border-right:none; }
+        .firm-info-icon { font-size:1.1rem; line-height:1; flex-shrink:0; margin-top:0.05rem; }
+        .firm-info-label { font-size:0.7rem; color:#94a3b8; margin-bottom:0.1rem; }
+        .firm-info-val { font-size:0.83rem; font-weight:600; color:#1a2332; }
+
+        /* ── 询盘 CTA 主栏卡片 ──────────────────────────────────── */
+        .inq-cta-card { background:linear-gradient(135deg,#f0f9ff,#e8f4fd) !important; border:1.5px solid #bae6fd !important; }
+        .btn-inquiry-cta { padding:0.65rem 1.3rem; background:linear-gradient(135deg,#1d4ed8,#0ea5e9); color:#fff; border:none; border-radius:8px; font-size:0.88rem; font-weight:700; cursor:pointer; font-family:inherit; white-space:nowrap; flex-shrink:0; transition:filter .15s; }
+        .btn-inquiry-cta:hover { filter:brightness(1.1); }
+
         /* ── 律所简介折叠 ──────────────────────────────────────────── */
         .intro-fold { max-height:4.8em; overflow:hidden; position:relative; transition:max-height 0.35s ease; }
         .intro-fold::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2.4em; background:linear-gradient(to bottom,transparent,#fff); pointer-events:none; transition:opacity 0.25s; }
@@ -847,17 +867,12 @@ html, body {
                 <span style="font-size:1rem">🏛️</span>
                 <span class="card-title"><span class="t" data-zh="律所简介" data-en="About">律所简介</span></span>
             </div>
-            <div style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.03));border:1px solid rgba(212,175,55,0.25);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.2rem;">
-    <div style="font-size:0.78rem;font-weight:700;color:#d4af37;margin-bottom:0.6rem;letter-spacing:0.05em;">
-        <span class="t" data-zh="🇨🇳 出海企业最关注" data-en="🇨🇳 Why Chinese companies choose this firm">🇨🇳 出海企业最关注</span>
-    </div>
-    <div style="display:flex;flex-wrap:wrap;gap:0.8rem;">
-        <div style="font-size:0.82rem;color:#2c4a6e;">✅ <span class="t" data-zh="中文律师全程对接，零语言障碍" data-en="Mandarin-speaking attorneys throughout">中文律师全程对接，零语言障碍</span></div>
-        <div style="font-size:0.82rem;color:#2c4a6e;">✅ <span class="t" data-zh="服务过 400+ 家中国出海企业" data-en="Served 400+ Chinese overseas companies">服务过 400+ 家中国出海企业</span></div>
-        <div style="font-size:0.82rem;color:#2c4a6e;">✅ <span class="t" data-zh="收费透明，支持微信/支付宝付款" data-en="Transparent fees, WeChat/Alipay accepted">收费透明，支持微信/支付宝付款</span></div>
-        <div style="font-size:0.82rem;color:#2c4a6e;">✅ <span class="t" data-zh="商标成功率 94%（高于行业均值）" data-en="94% trademark success rate (above industry avg)">商标成功率 94%（高于行业均值）</span></div>
-    </div>
-</div>
+            <!-- 资质认证标签 -->
+            <div class="firm-cred-tags" id="firm-cred-tags">
+                <span class="cred-tag cred-chambers">🏆 Chambers USA · Band 2</span>
+                <span class="cred-tag cred-legal500">🏅 Legal 500 · Recommended</span>
+                <span class="cred-tag cred-verified">✅ <span class="t" data-zh="Whalium 已认证" data-en="Whalium Verified">Whalium 已认证</span></span>
+            </div>
                 <div class="card-body" id="firm-intro-body">
                     <div class="intro-fold" id="intro-fold-wrap">
                         <p class="intro-text" id="firm-description">
@@ -870,6 +885,54 @@ html, body {
                     <button class="intro-expand-btn" id="intro-expand-btn" onclick="toggleIntroFold()">
                         <span id="intro-expand-label"><span class="t" data-zh="展开全文 ↓" data-en="Read more ↓">展开全文 ↓</span></span>
                     </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 基本信息（主栏紧凑版） -->
+        <div class="card">
+            <div class="firm-info-strip">
+                <div class="firm-info-cell">
+                    <div class="firm-info-icon">📍</div>
+                    <div>
+                        <div class="firm-info-label"><span class="t" data-zh="地址" data-en="Location">地址</span></div>
+                        <div class="firm-info-val" id="detail-location"><span class="t" data-zh="洛杉矶，加利福尼亚州" data-en="Los Angeles, CA">洛杉矶，加利福尼亚州</span></div>
+                    </div>
+                </div>
+                <div class="firm-info-cell">
+                    <div class="firm-info-icon">👥</div>
+                    <div>
+                        <div class="firm-info-label"><span class="t" data-zh="团队规模" data-en="Team Size">团队规模</span></div>
+                        <div class="firm-info-val" id="detail-team-size"><span class="t" data-zh="12 名律师" data-en="12 Attorneys">12 名律师</span></div>
+                    </div>
+                </div>
+                <div class="firm-info-cell">
+                    <div class="firm-info-icon">🕐</div>
+                    <div>
+                        <div class="firm-info-label"><span class="t" data-zh="响应时间" data-en="Response Time">响应时间</span></div>
+                        <div class="firm-info-val"><span class="t" data-zh="≤ 24 小时" data-en="≤ 24 hrs">≤ 24 小时</span></div>
+                    </div>
+                </div>
+                <div class="firm-info-cell">
+                    <div class="firm-info-icon">🌐</div>
+                    <div>
+                        <div class="firm-info-label"><span class="t" data-zh="官方网站" data-en="Website">官方网站</span></div>
+                        <div class="firm-info-val"><a id="detail-website" href="https://morrison-ip.com" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:none">morrison-ip.com</a></div>
+                    </div>
+                </div>
+                <div class="firm-info-cell" id="detail-phone-row" style="display:none">
+                    <div class="firm-info-icon">📞</div>
+                    <div>
+                        <div class="firm-info-label"><span class="t" data-zh="电话" data-en="Phone">电话</span></div>
+                        <div class="firm-info-val" id="detail-phone">—</div>
+                    </div>
+                </div>
+                <div class="firm-info-cell" id="detail-email-row" style="display:none">
+                    <div class="firm-info-icon">📧</div>
+                    <div>
+                        <div class="firm-info-label"><span class="t" data-zh="邮件" data-en="Email">邮件</span></div>
+                        <div class="firm-info-val" id="detail-email" style="word-break:break-all">—</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -968,6 +1031,51 @@ html, body {
         };
         </script>
 
+        <!-- 综合评分（主栏，客户评价上方） -->
+        <div class="card">
+            <div class="card-header">
+                <span style="font-size:1rem">📊</span>
+                <span class="card-title"><span class="t" data-zh="综合评分" data-en="Overall Rating">综合评分</span></span>
+                <span style="margin-left:auto;font-size:0.78rem;color:var(--faint)"><span class="t" data-zh="基于 18 条真实评价" data-en="Based on 18 reviews">基于 18 条真实评价</span></span>
+            </div>
+            <div class="card-body" style="padding-top:0.75rem;">
+                <div style="display:flex;align-items:center;gap:1.5rem;">
+                    <div style="text-align:center;flex-shrink:0;">
+                        <div style="font-size:2.6rem;font-weight:800;color:#1a2332;line-height:1;" id="main-rating-num">4.3</div>
+                        <div style="font-size:1rem;color:#f59e0b;margin:0.2rem 0;">★★★★★</div>
+                        <div style="font-size:0.7rem;color:#94a3b8;"><span class="t" data-zh="综合评分" data-en="Overall">综合评分</span></div>
+                    </div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:0.35rem;">
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="专业度" data-en="Expertise">专业度</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:90%"></div></div>
+                            <span class="rating-bar-score">4.5</span>
+                        </div>
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="响应速度" data-en="Response">响应速度</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:80%"></div></div>
+                            <span class="rating-bar-score">4.0</span>
+                        </div>
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="性价比" data-en="Value">性价比</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:86%"></div></div>
+                            <span class="rating-bar-score">4.3</span>
+                        </div>
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="中文沟通" data-en="CN Comm.">中文沟通</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:88%"></div></div>
+                            <span class="rating-bar-score">4.4</span>
+                        </div>
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="流程透明" data-en="Transpar.">流程透明</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:82%"></div></div>
+                            <span class="rating-bar-score">4.1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- 客户评价 -->
         <div class="card">
             <div class="card-header">
@@ -1016,6 +1124,19 @@ html, body {
                 </div><!-- /locked-wrap -->
             </div><!-- /card-body -->
         </div><!-- /reviews card -->
+
+        <!-- 询盘 CTA（主栏，撰写评价上方） -->
+        <div class="card inq-cta-card">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
+                <div>
+                    <div style="font-size:1rem;font-weight:700;color:#1a2332;margin-bottom:0.2rem;">📩 <span class="t" data-zh="联系这家律所" data-en="Contact This Firm">联系这家律所</span></div>
+                    <div style="font-size:0.8rem;color:#64748b;"><span class="t" data-zh="律所通常在 24 小时内用中文回复，不构成委托关系" data-en="Firms typically reply within 24h · No obligation">律所通常在 24 小时内用中文回复，不构成委托关系</span></div>
+                </div>
+                <button class="btn-inquiry-cta" onclick="document.getElementById('inquiry-modal').style.display='flex'">
+                    <span class="t" data-zh="立即询盘 →" data-en="Send Inquiry →">立即询盘 →</span>
+                </button>
+            </div>
+        </div>
 
         <!-- ══ Write a Review ══ -->
         <div class="card" id="write-review-card">
@@ -1181,11 +1302,11 @@ html, body {
                     </div>
 
                     <!-- Submit -->
-                    <div style="display:flex;align-items:center;gap:1rem;margin-top:1rem;">
-                        <button onclick="submitRev()" style="flex:1;padding:0.8rem;background:linear-gradient(135deg,#1a2332,#2c3e50);color:white;border:none;border-radius:6px;font-size:0.93rem;font-weight:600;cursor:pointer;font-family:inherit;">
+                    <div style="margin-top:1rem;">
+                        <button onclick="submitRev()" style="width:100%;padding:0.85rem;background:linear-gradient(135deg,#1a2332,#2c3e50);color:white;border:none;border-radius:6px;font-size:0.93rem;font-weight:600;cursor:pointer;font-family:inherit;">
                             <span class="t" data-zh="提交评价" data-en="Submit Review">提交评价</span>
                         </button>
-                        <p style="font-size:0.73rem;color:var(--muted);line-height:1.5;max-width:180px;margin:0;">
+                        <p style="font-size:0.73rem;color:var(--muted);line-height:1.5;text-align:center;margin:0.5rem 0 0;">
                             <span class="t" data-zh="经人工审核后发布 · 公司名脱敏显示" data-en="Moderated before publishing · Company name anonymized">经人工审核后发布 · 公司名脱敏显示</span>
                         </p>
                     </div>
@@ -1490,78 +1611,6 @@ html, body {
             </div>
         </div>
 
-        <!-- 综合评分简版 -->
-        <div class="side-card" id="rating-compact-card">
-            <div class="side-card-title">
-                <span class="t" data-zh="综合评分" data-en="Overall Rating">综合评分</span>
-            </div>
-            <div class="rating-compact">
-                <div class="rating-compact-top">
-                    <div>
-                        <div class="rating-big-num" id="sb-rating-num">4.3</div>
-                        <div class="rating-big-stars">★★★★★</div>
-                        <div class="rating-big-count"><span class="t" data-zh="基于 18 条评价" data-en="Based on 18 reviews">基于 18 条评价</span></div>
-                    </div>
-                    <div style="flex:1">
-                        <div class="rating-bar-row">
-                            <span class="rating-bar-label"><span class="t" data-zh="专业度" data-en="Expertise">专业度</span></span>
-                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:90%"></div></div>
-                            <span class="rating-bar-score">4.5</span>
-                        </div>
-                        <div class="rating-bar-row">
-                            <span class="rating-bar-label"><span class="t" data-zh="响应速度" data-en="Response">响应速度</span></span>
-                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:80%"></div></div>
-                            <span class="rating-bar-score">4.0</span>
-                        </div>
-                        <div class="rating-bar-row">
-                            <span class="rating-bar-label"><span class="t" data-zh="性价比" data-en="Value">性价比</span></span>
-                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:86%"></div></div>
-                            <span class="rating-bar-score">4.3</span>
-                        </div>
-                        <div class="rating-bar-row">
-                            <span class="rating-bar-label"><span class="t" data-zh="中文沟通" data-en="CN Comm.">中文沟通</span></span>
-                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:88%"></div></div>
-                            <span class="rating-bar-score">4.4</span>
-                        </div>
-                        <div class="rating-bar-row">
-                            <span class="rating-bar-label"><span class="t" data-zh="流程透明" data-en="Transpar.">流程透明</span></span>
-                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:82%"></div></div>
-                            <span class="rating-bar-score">4.1</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 基本信息 -->
-        <div class="side-card">
-            <div class="side-card-title"><span class="t" data-zh="基本信息" data-en="Basic Info">基本信息</span></div>
-            <div class="contact-info-row">
-                <div class="contact-info-icon">📍</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="地址" data-en="Location">地址</span></div><div class="contact-info-val" id="detail-location"><span class="t" data-zh="洛杉矶，加利福尼亚州" data-en="Los Angeles, California">洛杉矶，加利福尼亚州</span></div></div>
-            </div>
-            <div class="contact-info-row">
-                <div class="contact-info-icon">🕐</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="响应时间" data-en="Response Time">响应时间</span></div><div class="contact-info-val"><span class="t" data-zh="≤ 24 小时" data-en="≤ 24 hrs">≤ 24 小时</span></div></div>
-            </div>
-            <div class="contact-info-row">
-                <div class="contact-info-icon">👥</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="团队规模" data-en="Team Size">团队规模</span></div><div class="contact-info-val" id="detail-team-size"><span class="t" data-zh="12 名律师" data-en="12 Attorneys">12 名律师</span></div></div>
-            </div>
-            <div class="contact-info-row" id="detail-phone-row" style="display:none">
-                <div class="contact-info-icon">📞</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="电话" data-en="Phone">电话</span></div><div class="contact-info-val" id="detail-phone">—</div></div>
-            </div>
-            <div class="contact-info-row" id="detail-email-row" style="display:none">
-                <div class="contact-info-icon">📧</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="邮件" data-en="Email">邮件</span></div><div class="contact-info-val" id="detail-email" style="word-break:break-all">—</div></div>
-            </div>
-            <div class="contact-info-row">
-                <div class="contact-info-icon">🌐</div>
-                <div><div class="contact-info-label"><span class="t" data-zh="官方网站" data-en="Website">官方网站</span></div><div class="contact-info-val"><a id="detail-website" href="https://morrison-ip.com" target="_blank" rel="noopener" style="color:var(--teal);text-decoration:none">morrison-ip.com</a></div></div>
-            </div>
-        </div>
-
         <!-- 特色服务（内容由 JS 动态渲染，无 slug 时保留演示数据） -->
         <div class="side-card" id="features-side-card">
             <div class="side-card-title"><span class="t" data-zh="特色服务" data-en="Key Features">特色服务</span></div>
@@ -1572,23 +1621,6 @@ html, body {
                 <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="固定报价透明" data-en="Fixed & Transparent Pricing">固定报价透明</span></div>
                 <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="免费初次咨询（30分钟）" data-en="Free Initial Consultation (30 min)">免费初次咨询（30分钟）</span></div>
                 <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="24小时响应保证" data-en="24-hour Response Guarantee">24小时响应保证</span></div>
-            </div>
-        </div>
-
-        <!-- 认证资质 -->
-        <div class="side-card">
-            <div class="side-card-title"><span class="t" data-zh="认证资质" data-en="Credentials">认证资质</span></div>
-            <div class="cert-badge">
-                <div class="cert-icon">🏆</div>
-                <div class="cert-text"><div class="cert-name">Chambers USA</div><div class="cert-desc">Band 2 · IP: Trademark</div></div>
-            </div>
-            <div class="cert-badge">
-                <div class="cert-icon">🏅</div>
-                <div class="cert-text"><div class="cert-name">Legal 500 US</div><div class="cert-desc">Recommended Firm 2024</div></div>
-            </div>
-            <div class="cert-badge">
-                <div class="cert-icon">✅</div>
-                <div class="cert-text"><div class="cert-name"><span class="t" data-zh="Whalium 已认证" data-en="Whalium Verified">Whalium 已认证</span></div><div class="cert-desc"><span class="t" data-zh="信息经人工核实" data-en="Manually verified info">信息经人工核实</span></div></div>
             </div>
         </div>
 
