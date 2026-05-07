@@ -181,6 +181,26 @@
         /* ══ INTRO ════════════════════════════════════════════ */
         .intro-text { font-size:0.9rem; line-height:1.9; color:var(--muted); }
         .intro-text strong { color:var(--text); font-weight:600; }
+
+        /* ── 律所简介折叠 ──────────────────────────────────────────── */
+        .intro-fold { max-height:4.8em; overflow:hidden; position:relative; transition:max-height 0.35s ease; }
+        .intro-fold::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2.4em; background:linear-gradient(to bottom,transparent,#fff); pointer-events:none; transition:opacity 0.25s; }
+        .intro-fold.expanded { max-height:none; }
+        .intro-fold.expanded::after { opacity:0; }
+        .intro-expand-btn { display:block; width:100%; margin-top:0.6rem; background:none; border:1px solid #e2e8f0; border-radius:6px; padding:0.38rem 0; font-size:0.78rem; color:#64748b; cursor:pointer; font-family:inherit; transition:all 0.15s; }
+        .intro-expand-btn:hover { border-color:#0ea5e9; color:#0ea5e9; background:#f0f9ff; }
+
+        /* ── 侧边栏综合评分简版 ──────────────────────────────────────── */
+        .rating-compact { padding:0.9rem 1rem; }
+        .rating-compact-top { display:flex; align-items:center; gap:0.9rem; margin-bottom:0.75rem; }
+        .rating-big-num { font-size:2.2rem; font-weight:800; color:#1a2332; line-height:1; }
+        .rating-big-stars { font-size:0.95rem; color:#f59e0b; letter-spacing:0.05em; }
+        .rating-big-count { font-size:0.72rem; color:#94a3b8; margin-top:0.15rem; }
+        .rating-bar-row { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.28rem; }
+        .rating-bar-label { font-size:0.72rem; color:#64748b; min-width:44px; }
+        .rating-bar-track { flex:1; height:5px; background:#e2e8f0; border-radius:3px; overflow:hidden; }
+        .rating-bar-fill { height:100%; background:linear-gradient(90deg,#0099aa,#00b4cc); border-radius:3px; }
+        .rating-bar-score { font-size:0.72rem; color:#475569; min-width:24px; text-align:right; font-weight:600; }
         .tag-list { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1.1rem; }
         .tag {
             padding:0.3rem 0.75rem; border-radius:5px;
@@ -839,12 +859,30 @@ html, body {
     </div>
 </div>
                 <div class="card-body" id="firm-intro-body">
-                <p class="intro-text" id="firm-description">
-                    <strong>Morrison IP Law</strong> <span class="t" data-zh="成立于2008年，是洛杉矶专注知识产权领域的精品律所。深耕美国商标、专利和版权业务超过16年，服务超过1,200家跨国企业，其中中国出海企业客户超过400家。" data-en="Founded in 2008, Morrison IP Law is a boutique IP firm in Los Angeles with 16+ years specializing in trademark, patent &amp; copyright. Served 1,200+ multinational clients including 400+ Chinese companies going global.">成立于2008年，是洛杉矶专注知识产权领域的精品律所。深耕美国商标、专利和版权业务超过16年，服务超过1,200家跨国企业，其中中国出海企业客户超过400家。</span>
-                </p>
-                <p class="intro-text" id="firm-description-2" style="margin-top:0.85rem">
-                    <span class="t" data-zh="律所创始合伙人 David Morrison 曾任职 USPTO（美国专利商标局），对审查流程有深刻理解，尤其擅长处理驳回答辩和复杂商标纠纷案件。团队配备2名中文流利的华裔律师，全程中文沟通，无语言障碍。" data-en="Founding partner David Morrison previously served at the USPTO, giving him deep insight into examination procedures — especially for office action responses and complex trademark disputes. The team includes 2 Mandarin-fluent attorneys for seamless Chinese communication.">律所创始合伙人 David Morrison 曾任职 USPTO（美国专利商标局），对审查流程有深刻理解，尤其擅长处理驳回答辩和复杂商标纠纷。团队配备 2 名中文流利的华裔律师，全程中文沟通，无语言障碍。</span>
+                    <div class="intro-fold" id="intro-fold-wrap">
+                        <p class="intro-text" id="firm-description">
+                            <strong>Morrison IP Law</strong> <span class="t" data-zh="成立于2008年，是洛杉矶专注知识产权领域的精品律所。深耕美国商标、专利和版权业务超过16年，服务超过1,200家跨国企业，其中中国出海企业客户超过400家。" data-en="Founded in 2008, Morrison IP Law is a boutique IP firm in Los Angeles with 16+ years specializing in trademark, patent &amp; copyright. Served 1,200+ multinational clients including 400+ Chinese companies going global.">成立于2008年，是洛杉矶专注知识产权领域的精品律所。深耕美国商标、专利和版权业务超过16年，服务超过1,200家跨国企业，其中中国出海企业客户超过400家。</span>
+                        </p>
+                        <p class="intro-text" id="firm-description-2" style="margin-top:0.85rem">
+                            <span class="t" data-zh="律所创始合伙人 David Morrison 曾任职 USPTO（美国专利商标局），对审查流程有深刻理解，尤其擅长处理驳回答辩和复杂商标纠纷案件。团队配备2名中文流利的华裔律师，全程中文沟通，无语言障碍。" data-en="Founding partner David Morrison previously served at the USPTO, giving him deep insight into examination procedures — especially for office action responses and complex trademark disputes. The team includes 2 Mandarin-fluent attorneys for seamless Chinese communication.">律所创始合伙人 David Morrison 曾任职 USPTO（美国专利商标局），对审查流程有深刻理解，尤其擅长处理驳回答辩和复杂商标纠纷。团队配备 2 名中文流利的华裔律师，全程中文沟通，无语言障碍。</span>
+                        </p>
                     </div>
+                    <button class="intro-expand-btn" id="intro-expand-btn" onclick="toggleIntroFold()">
+                        <span id="intro-expand-label"><span class="t" data-zh="展开全文 ↓" data-en="Read more ↓">展开全文 ↓</span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心律师团队（内容由 JS 动态渲染） -->
+        <div class="card" id="lawyers-card" style="display:none">
+            <div class="card-header">
+                <span style="font-size:1rem">👤</span>
+                <span class="card-title"><span class="t" data-zh="核心律师团队" data-en="Key Attorneys">核心律师团队</span></span>
+            </div>
+            <div class="card-body">
+                <div class="lawyer-grid" id="lawyers-list"></div>
+                <p class="lawyer-disclaimer">* <span class="t" data-zh="律师信息由平台整理，仅供参考，以律所官网为准" data-en="Attorney info compiled by Whalium for reference only; verify via firm's official website">律师信息由平台整理，仅供参考，以律所官网为准</span></p>
             </div>
         </div>
 
@@ -896,19 +934,20 @@ html, body {
             </div>
         </div>
 
-        <!-- 核心律师团队（内容由 JS 动态渲染） -->
-        <div class="card" id="lawyers-card" style="display:none">
-            <div class="card-header">
-                <span style="font-size:1rem">👤</span>
-                <span class="card-title"><span class="t" data-zh="核心律师团队" data-en="Key Attorneys">核心律师团队</span></span>
-            </div>
-            <div class="card-body">
-                <div class="lawyer-grid" id="lawyers-list"></div>
-                <p class="lawyer-disclaimer">* <span class="t" data-zh="律师信息由平台整理，仅供参考，以律所官网为准" data-en="Attorney info compiled by Whalium for reference only; verify via firm's official website">律师信息由平台整理，仅供参考，以律所官网为准</span></p>
-            </div>
-        </div>
-
         <script>
+        // ── 律所简介折叠/展开 ─────────────────────────────────────────
+        window.toggleIntroFold = function() {
+          var wrap = document.getElementById('intro-fold-wrap');
+          var btn  = document.getElementById('intro-expand-btn');
+          var lbl  = document.getElementById('intro-expand-label');
+          if (!wrap) return;
+          var en = (window._wlang || 'zh') === 'en';
+          var expanded = wrap.classList.toggle('expanded');
+          lbl.innerHTML = expanded
+            ? '<span class="t" data-zh="收起 ↑" data-en="Collapse ↑">' + (en ? 'Collapse ↑' : '收起 ↑') + '</span>'
+            : '<span class="t" data-zh="展开全文 ↓" data-en="Read more ↓">' + (en ? 'Read more ↓' : '展开全文 ↓') + '</span>';
+        };
+
         // ── 服务价格门控：未登录→登录页；已登录未付费→开通页 ──────────────
         window.priceGateClick = function() {
           var paid = false;
@@ -928,116 +967,6 @@ html, body {
           });
         };
         </script>
-
-        <!-- 评分详情 -->
-        <div class="card">
-            <div class="card-header">
-                <span style="font-size:1rem">📊</span>
-                <span class="card-title"><span class="t" data-zh="客户评分详情" data-en="Rating Details">客户评分详情</span></span>
-                <span style="margin-left:auto;font-size:0.78rem;color:var(--faint)"><span class="t" data-zh="基于 18 条真实评价" data-en="Based on 18 reviews">基于 18 条真实评价</span></span>
-            </div>
-            <div class="card-body">
-                <div class="rating-row" style="align-items:center;gap:0.5rem;">
-                    <span class="rating-label" style="min-width:58px;"><span class="t" data-zh="专业度" data-en="Expertise">专业度</span></span>
-                    <div class="bar-track" style="flex:1;position:relative;">
-                        <div class="bar-fill" style="width:90%"></div>
-                        <div style="position:absolute;top:0;left:0;height:100%;width:2px;background:rgba(0,0,0,0.15);left:82%;opacity:0.5;border-radius:1px;"></div>
-                    </div>
-                    <span class="rating-score" style="min-width:26px;">4.5</span>
-                    <span style="font-size:0.68rem;color:#16a34a;min-width:80px;white-space:nowrap;">
-                        <span class="t" data-zh="同类均值 4.1 ↑" data-en="Peer avg 4.1 ↑">同类均值 4.1 ↑</span>
-                    </span>
-                </div>
-                <div class="rating-row" style="align-items:center;gap:0.5rem;">
-                    <span class="rating-label" style="min-width:58px;"><span class="t" data-zh="响应速度" data-en="Responsiveness">响应速度</span></span>
-                    <div class="bar-track" style="flex:1;position:relative;">
-                        <div class="bar-fill" style="width:80%"></div>
-                        <div style="position:absolute;top:0;left:0;height:100%;width:2px;background:rgba(0,0,0,0.15);left:76%;opacity:0.5;border-radius:1px;"></div>
-                    </div>
-                    <span class="rating-score" style="min-width:26px;">4.0</span>
-                    <span style="font-size:0.68rem;color:#16a34a;min-width:80px;white-space:nowrap;">
-                        <span class="t" data-zh="同类均值 3.8 ↑" data-en="Peer avg 3.8 ↑">同类均值 3.8 ↑</span>
-                    </span>
-                </div>
-                <div class="rating-row" style="align-items:center;gap:0.5rem;">
-                    <span class="rating-label" style="min-width:58px;"><span class="t" data-zh="性价比" data-en="Value">性价比</span></span>
-                    <div class="bar-track" style="flex:1;position:relative;">
-                        <div class="bar-fill" style="width:86%"></div>
-                        <div style="position:absolute;top:0;left:0;height:100%;width:2px;background:rgba(0,0,0,0.15);left:80%;opacity:0.5;border-radius:1px;"></div>
-                    </div>
-                    <span class="rating-score" style="min-width:26px;">4.3</span>
-                    <span style="font-size:0.68rem;color:#16a34a;min-width:80px;white-space:nowrap;">
-                        <span class="t" data-zh="同类均值 4.0 ↑" data-en="Peer avg 4.0 ↑">同类均值 4.0 ↑</span>
-                    </span>
-                </div>
-                <div class="rating-row" style="align-items:center;gap:0.5rem;">
-                    <span class="rating-label" style="min-width:58px;"><span class="t" data-zh="中文沟通" data-en="CN Communication">中文沟通</span></span>
-                    <div class="bar-track" style="flex:1;position:relative;">
-                        <div class="bar-fill" style="width:88%"></div>
-                        <div style="position:absolute;top:0;left:0;height:100%;width:2px;background:rgba(0,0,0,0.15);left:78%;opacity:0.5;border-radius:1px;"></div>
-                    </div>
-                    <span class="rating-score" style="min-width:26px;">4.4</span>
-                    <span style="font-size:0.68rem;color:#16a34a;min-width:80px;white-space:nowrap;">
-                        <span class="t" data-zh="同类均值 3.9 ↑" data-en="Peer avg 3.9 ↑">同类均值 3.9 ↑</span>
-                    </span>
-                </div>
-                <div class="rating-row" style="align-items:center;gap:0.5rem;">
-                    <span class="rating-label" style="min-width:58px;"><span class="t" data-zh="流程透明" data-en="Transparency">流程透明</span></span>
-                    <div class="bar-track" style="flex:1;position:relative;">
-                        <div class="bar-fill" style="width:82%"></div>
-                        <div style="position:absolute;top:0;left:0;height:100%;width:2px;background:rgba(0,0,0,0.15);left:74%;opacity:0.5;border-radius:1px;"></div>
-                    </div>
-                    <span class="rating-score" style="min-width:26px;">4.1</span>
-                    <span style="font-size:0.68rem;color:#16a34a;min-width:80px;white-space:nowrap;">
-                        <span class="t" data-zh="同类均值 3.7 ↑" data-en="Peer avg 3.7 ↑">同类均值 3.7 ↑</span>
-                    </span>
-                </div>
-                    <span class="rating-score">4.1</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- 收费参考（付费墙） -->
-        <div class="card">
-            <div class="card-header">
-                <span style="font-size:1rem">💰</span>
-                <span class="card-title"><span class="t" data-zh="收费参考" data-en="Price Reference">收费参考</span></span>
-                <span style="margin-left:auto;padding:0.18rem 0.55rem;background:rgba(0,153,170,0.08);border:1px solid rgba(0,153,170,0.2);border-radius:3px;font-size:0.68rem;color:var(--teal);font-weight:600"><span class="t" data-zh="基于真实成交价" data-en="Based on real transactions">基于真实成交价</span></span>
-            </div>
-            <div class="card-body" style="padding-bottom:0">
-                <div class="locked-wrap">
-                    <div class="locked-content">
-                        <table class="price-table">
-                            <thead>
-                                <tr><th><span class="t" data-zh="服务项目" data-en="Services">服务项目</span></th><th><span class="t" data-zh="价格区间" data-en="Price Range">价格区间</span></th><th><span class="t" data-zh="说明" data-en="Notes">说明</span></th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td><span class="t" data-zh="美国商标注册（1类）" data-en="US TM Reg. (Class 1)">美国商标注册（1类）</span></td><td class="price-hl">$800–$1,200</td><td class="price-note"><span class="t" data-zh="不含 USPTO 官费 $250/类" data-en="Excl. USPTO fee $250/class">不含 USPTO 官费 $250/类</span></td></tr>
-                                <tr><td><span class="t" data-zh="商标驳回答辩（简单）" data-en="Office Action Response (Simple)">商标驳回答辩（简单）</span></td><td class="price-hl">$1,500–$2,000</td><td class="price-note"><span class="t" data-zh="Likelihood of Confusion 为主" data-en="Primarily Likelihood of Confusion">Likelihood of Confusion 为主</span></td></tr>
-                                <tr><td><span class="t" data-zh="商标驳回答辩（复杂）" data-en="Office Action Response (Complex)">商标驳回答辩（复杂）</span></td><td class="price-hl">$2,000–$2,500</td><td class="price-note"><span class="t" data-zh="含证据收集、证人证词" data-en="Incl. evidence & declarations">含证据收集、证人证词</span></td></tr>
-                                <tr><td><span class="t" data-zh="发明专利申请" data-en="Invention Patent Filing">发明专利申请</span></td><td class="price-hl">$3,500–$5,000</td><td class="price-note"><span class="t" data-zh="含检索、撰写、提交" data-en="Incl. search, drafting, filing">含检索、撰写、提交</span></td></tr>
-                                <tr><td><span class="t" data-zh="版权登记（单件）" data-en="Copyright Registration (single)">版权登记（单件）</span></td><td class="price-hl">$300–$500</td><td class="price-note"><span class="t" data-zh="标准通道 3-6 个月出证" data-en="Standard track: 3–6 months">标准通道 3-6 个月出证</span></td></tr>
-                                <tr style="background:rgba(255,193,7,0.05);">
-                                <td style="font-size:0.82rem;padding:0.6rem 0.4rem;">
-                                    <div style="color:#b45309;font-weight:600;">⚠️ <span class="t" data-zh="隐藏费用提醒" data-en="Hidden Fees Alert">隐藏费用提醒</span></div>
-                                    <div style="font-size:0.73rem;color:#78350f;margin-top:0.25rem;line-height:1.5;">
-                                        <span class="t" data-zh="🔍 预览：USPTO驳回后追加费用约$500，多数律所未提前告知" data-en="🔍 Preview: ~$500 extra after USPTO rejection — rarely disclosed upfront">🔍 预览：USPTO驳回后追加费用约$500，多数律所未提前告知</span>
-                                        — <a href="whalium_5_payment.html" style="color:#1a6b9a;font-weight:700;text-decoration:none;white-space:nowrap;"><span class="t" data-zh="开通会员查看全部" data-en="Unlock all details">开通会员查看全部</span> →</a>
-                                    </div>
-                                </td><td>—</td><td></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="lock-gate">
-                        <div class="lock-icon">🔒</div>
-                        <div class="lock-title"><span class="t" data-zh="查看详细报价" data-en="View Full Pricing">查看详细报价</span></div>
-                        <div class="lock-desc"><span class="t" data-zh="开通会员解锁真实成交价区间、隐藏费用提醒和历史价格趋势" data-en="Subscribe to unlock real pricing ranges, hidden fee warnings & price history">开通会员解锁真实成交价区间、隐藏费用提醒和历史价格趋势</span></div>
-                        <button class="btn-unlock" onclick="location.href='whalium_5_payment.html'"><span class="t" data-zh="开通会员 · ¥365/年" data-en="Subscribe · ¥365/yr">开通会员 · ¥365/年</span></button>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- 客户评价 -->
         <div class="card">
@@ -1509,44 +1438,6 @@ html, body {
         </script>
 
 
-        <!-- 相似律所推荐 -->
-        <div class="card">
-            <div class="card-header">
-                <span style="font-size:1rem">🔍</span>
-                <span class="card-title"><span class="t" data-zh="相似律所推荐" data-en="Similar Firms">相似律所推荐</span></span>
-            </div>
-            <div class="card-body">
-                <div class="similar-grid">
-                    <div class="similar-card" onclick="location.href='whalium_1_index.html'">
-                        <div class="sim-name">Sterling &amp; Partners LLP</div>
-                        <div class="sim-loc">📍 <span class="t" data-zh="美国 · 纽约" data-en="USA · New York">美国 · 纽约</span></div>
-                        <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="公司设立" data-en="Entity Setup">公司设立</span></span><span class="sim-tag"><span class="t" data-zh="税务" data-en="Tax">税务</span></span></div>
-                        <div class="sim-bottom">
-                            <span class="sim-rating">★ 4.6</span>
-                            <span class="sim-price">$1,200<span class="t" data-zh="起" data-en="+">起</span></span>
-                        </div>
-                    </div>
-                    <div class="similar-card" onclick="location.href='whalium_1_index.html'">
-                        <div class="sim-name">Pacific IP Group</div>
-                        <div class="sim-loc">📍 <span class="t" data-zh="美国 · 旧金山" data-en="USA · San Francisco">美国 · 旧金山</span></div>
-                        <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="商标" data-en="Trademark">商标</span></span><span class="sim-tag"><span class="t" data-zh="专利" data-en="Patent">专利</span></span></div>
-                        <div class="sim-bottom">
-                            <span class="sim-rating">★ 4.4</span>
-                            <span class="sim-price">$700<span class="t" data-zh="起" data-en="+">起</span></span>
-                        </div>
-                    </div>
-                    <div class="similar-card" onclick="location.href='whalium_1_index.html'">
-                        <div class="sim-name">Asia Pacific Legal</div>
-                        <div class="sim-loc">📍 <span class="t" data-zh="新加坡" data-en="Singapore">新加坡</span></div>
-                        <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="东南亚商标" data-en="SEA Trademark">东南亚商标</span></span></div>
-                        <div class="sim-bottom">
-                            <span class="sim-rating">★ 4.5</span>
-                            <span class="sim-price">$600<span class="t" data-zh="起" data-en="+">起</span></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
     </div><!-- /main-col -->
 
@@ -1596,6 +1487,49 @@ html, body {
         <a href="mailto:support@whalium.com" style="color:#0ea5e9;">support@whalium.com</a>
       </div>
     </div>
+            </div>
+        </div>
+
+        <!-- 综合评分简版 -->
+        <div class="side-card" id="rating-compact-card">
+            <div class="side-card-title">
+                <span class="t" data-zh="综合评分" data-en="Overall Rating">综合评分</span>
+            </div>
+            <div class="rating-compact">
+                <div class="rating-compact-top">
+                    <div>
+                        <div class="rating-big-num" id="sb-rating-num">4.3</div>
+                        <div class="rating-big-stars">★★★★★</div>
+                        <div class="rating-big-count"><span class="t" data-zh="基于 18 条评价" data-en="Based on 18 reviews">基于 18 条评价</span></div>
+                    </div>
+                    <div style="flex:1">
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="专业度" data-en="Expertise">专业度</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:90%"></div></div>
+                            <span class="rating-bar-score">4.5</span>
+                        </div>
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="响应速度" data-en="Response">响应速度</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:80%"></div></div>
+                            <span class="rating-bar-score">4.0</span>
+                        </div>
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="性价比" data-en="Value">性价比</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:86%"></div></div>
+                            <span class="rating-bar-score">4.3</span>
+                        </div>
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="中文沟通" data-en="CN Comm.">中文沟通</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:88%"></div></div>
+                            <span class="rating-bar-score">4.4</span>
+                        </div>
+                        <div class="rating-bar-row">
+                            <span class="rating-bar-label"><span class="t" data-zh="流程透明" data-en="Transpar.">流程透明</span></span>
+                            <div class="rating-bar-track"><div class="rating-bar-fill" style="width:82%"></div></div>
+                            <span class="rating-bar-score">4.1</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1655,6 +1589,31 @@ html, body {
             <div class="cert-badge">
                 <div class="cert-icon">✅</div>
                 <div class="cert-text"><div class="cert-name"><span class="t" data-zh="Whalium 已认证" data-en="Whalium Verified">Whalium 已认证</span></div><div class="cert-desc"><span class="t" data-zh="信息经人工核实" data-en="Manually verified info">信息经人工核实</span></div></div>
+            </div>
+        </div>
+
+        <!-- 相似律所推荐 -->
+        <div class="side-card">
+            <div class="side-card-title"><span class="t" data-zh="相似律所推荐" data-en="Similar Firms">相似律所推荐</span></div>
+            <div style="display:flex;flex-direction:column;gap:0.6rem;padding:0 0 0.25rem;">
+                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
+                    <div class="sim-name">Sterling &amp; Partners LLP</div>
+                    <div class="sim-loc">📍 <span class="t" data-zh="美国 · 纽约" data-en="USA · New York">美国 · 纽约</span></div>
+                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="公司设立" data-en="Entity Setup">公司设立</span></span><span class="sim-tag"><span class="t" data-zh="税务" data-en="Tax">税务</span></span></div>
+                    <div class="sim-bottom"><span class="sim-rating">★ 4.6</span><span class="sim-price">$1,200<span class="t" data-zh="起" data-en="+">起</span></span></div>
+                </div>
+                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
+                    <div class="sim-name">Pacific IP Group</div>
+                    <div class="sim-loc">📍 <span class="t" data-zh="美国 · 旧金山" data-en="USA · San Francisco">美国 · 旧金山</span></div>
+                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="商标" data-en="Trademark">商标</span></span><span class="sim-tag"><span class="t" data-zh="专利" data-en="Patent">专利</span></span></div>
+                    <div class="sim-bottom"><span class="sim-rating">★ 4.4</span><span class="sim-price">$700<span class="t" data-zh="起" data-en="+">起</span></span></div>
+                </div>
+                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
+                    <div class="sim-name">Asia Pacific Legal</div>
+                    <div class="sim-loc">📍 <span class="t" data-zh="新加坡" data-en="Singapore">新加坡</span></div>
+                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="东南亚商标" data-en="SEA Trademark">东南亚商标</span></span></div>
+                    <div class="sim-bottom"><span class="sim-rating">★ 4.5</span><span class="sim-price">$600<span class="t" data-zh="起" data-en="+">起</span></span></div>
+                </div>
             </div>
         </div>
 
