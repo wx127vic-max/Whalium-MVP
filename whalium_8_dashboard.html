@@ -731,7 +731,7 @@ html, body {
         <div class="nav-item" onclick="showPanel('profile')"><span>⚙️</span><span><span class="t" data-zh="管理律所主页" data-en="Manage Profile">Manage Profile</span></span></div>
         <div class="nav-item" onclick="showPanel('membership')"><span>💎</span><span><span class="t" data-zh="会员中心" data-en="Membership">Membership</span></span></div>
     
-        <div class="nav-item" style="cursor:pointer" onclick="location.href='whalium_7_submit-firm.html'"><span>➕</span><span><span class="t" data-zh="入驻 / 修改资料" data-en="Submit / Edit Firm">Submit / Edit Firm</span></span></div>
+        <div id="sidebar-add-firm" class="nav-item" style="display:none;cursor:pointer" onclick="location.href='whalium_7_submit-firm.html'"><span>➕</span><span><span class="t" data-zh="提交律所入驻" data-en="List Your Firm">提交律所入驻</span></span></div>
     </aside>
 
     <main class="main-content">
@@ -762,48 +762,24 @@ html, body {
 
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-label"><span class="t" data-zh="Profile 浏览量" data-en="Profile Views">Profile Views</span></div>
-                    <div class="stat-value">1,248</div>
-                    <div class="stat-change"><span class="t" data-zh="↑ 15.3% 较上月" data-en="↑ 15.3% vs last month">↑ 15.3% vs last month</span></div>
-                    <div class="mini-chart">
-                        <div class="bar" style="height:40%"></div><div style="font-size:0.68rem;color:rgba(255,255,255,0.28);text-align:right;margin-top:0.2rem;font-style:italic;"><span class="t" data-zh="* 演示数据" data-en="* Demo data">* Demo data</span></div><div class="bar" style="height:55%"></div>
-                        <div class="bar" style="height:45%"></div><div class="bar" style="height:70%"></div>
-                        <div class="bar hi" style="height:85%"></div><div class="bar" style="height:75%"></div>
-                        <div class="bar hi" style="height:100%"></div>
-                    </div>
+                    <div class="stat-label"><span class="t" data-zh="累计询盘数" data-en="Total Inquiries">累计询盘数</span></div>
+                    <div class="stat-value" id="stat-inq-total">—</div>
+                    <div class="stat-change" id="stat-inq-pending" style="color:var(--warn)"></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label"><span class="t" data-zh="本月新询盘" data-en="New Inquiries">New Inquiries</span></div>
-                    <div class="stat-value">23</div>
-                    <div class="stat-change"><span class="t" data-zh="↑ 8.7% 较上月" data-en="↑ 8.7% vs last month">↑ 8.7% vs last month</span></div>
-                    <div class="mini-chart">
-                        <div class="bar" style="height:50%"></div><div class="bar" style="height:40%"></div>
-                        <div class="bar" style="height:65%"></div><div class="bar hi" style="height:90%"></div>
-                        <div class="bar" style="height:75%"></div><div class="bar" style="height:80%"></div>
-                        <div class="bar hi" style="height:100%"></div>
-                    </div>
+                    <div class="stat-label"><span class="t" data-zh="待回复询盘" data-en="Pending Replies">待回复询盘</span></div>
+                    <div class="stat-value" id="stat-inq-new">—</div>
+                    <div class="stat-change" id="stat-inq-new-sub"></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label"><span class="t" data-zh="综合评分" data-en="Overall Rating">Overall Rating</span></div>
-                    <div class="stat-value">4.2</div>
-                    <div class="stat-change"><span class="t" data-zh="↑ 0.1 较上月" data-en="↑ 0.1 vs last month">↑ 0.1 vs last month</span></div>
-                    <div class="mini-chart">
-                        <div class="bar hi" style="height:80%"></div><div class="bar hi" style="height:82%"></div>
-                        <div class="bar hi" style="height:78%"></div><div class="bar hi" style="height:84%"></div>
-                        <div class="bar hi" style="height:84%"></div><div class="bar hi" style="height:84%"></div>
-                        <div class="bar hi" style="height:84%"></div>
-                    </div>
+                    <div class="stat-label"><span class="t" data-zh="综合评分" data-en="Overall Rating">综合评分</span></div>
+                    <div class="stat-value" id="stat-rating">—</div>
+                    <div class="stat-change" id="stat-rating-sub"></div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-label"><span class="t" data-zh="搜索排名" data-en="Search Rank">Search Rank</span></div>
-                    <div class="stat-value">#12</div>
-                    <div class="stat-change"><span class="t" data-zh="↑ 5位 较上月" data-en="↑ 5 places vs last month">↑ 5 places vs last month</span></div>
-                    <div class="mini-chart">
-                        <div class="bar" style="height:40%"></div><div class="bar" style="height:50%"></div>
-                        <div class="bar" style="height:60%"></div><div class="bar" style="height:65%"></div>
-                        <div class="bar hi" style="height:75%"></div><div class="bar hi" style="height:88%"></div>
-                        <div class="bar hi" style="height:100%"></div>
-                    </div>
+                    <div class="stat-label"><span class="t" data-zh="审核状态" data-en="Review Status">审核状态</span></div>
+                    <div class="stat-value" id="stat-status" style="font-size:1.2rem;">—</div>
+                    <div class="stat-change" id="stat-status-sub"></div>
                 </div>
             </div>
 
@@ -832,160 +808,103 @@ html, body {
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
                 <div class="card" style="margin-bottom:0">
-                    <div class="card-title"><span class="t" data-zh="🔔 最新询盘（待处理）" data-en="🔔 Latest Inquiries (Pending)">🔔 Latest Inquiries (Pending)</span></div>
-                    <div style="display:flex;flex-direction:column;gap:0.6rem">
-                        <div style="display:flex;align-items:center;gap:0.8rem;padding:0.6rem;background:rgba(240,180,41,0.05);border-radius:6px;border:1px solid rgba(240,180,41,0.1)">
-                            <div style="flex:1"><div style="font-size:0.83rem;color:var(--white);font-weight:600">张先生 · 深圳科技</div><div style="font-size:0.72rem;color:var(--silver-faint)">美国商标注册 · 2<span class="t" data-zh="小时前" data-en="h ago">h ago</span></div></div>
-                            <span class="badge badge-new"><span class="t" data-zh="新" data-en="New">New</span></span>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:0.8rem;padding:0.6rem;background:rgba(240,180,41,0.05);border-radius:6px;border:1px solid rgba(240,180,41,0.1)">
-                            <div style="flex:1"><div style="font-size:0.83rem;color:var(--white);font-weight:600">李女士 · 广州贸易</div><div style="font-size:0.72rem;color:var(--silver-faint)">商标驳回答辩 · 5<span class="t" data-zh="小时前" data-en="h ago">h ago</span></div></div>
-                            <span class="badge badge-new"><span class="t" data-zh="新" data-en="New">New</span></span>
-                        </div>
-                        <div style="display:flex;align-items:center;gap:0.8rem;padding:0.6rem;background:rgba(255,255,255,0.02);border-radius:6px">
-                            <div style="flex:1"><div style="font-size:0.83rem;color:var(--silver-dim)">王总 · 北京电商</div><div style="font-size:0.72rem;color:var(--silver-faint)">专利申请 · 1<span class="t" data-zh="天前" data-en="1d ago">1d ago</span></div></div>
-                            <span class="badge badge-replied"><span class="t" data-zh="已回复" data-en="Replied">Replied</span></span>
-                        </div>
+                    <div class="card-title"><span class="t" data-zh="🔔 最新询盘" data-en="🔔 Latest Inquiries">🔔 最新询盘</span></div>
+                    <div id="inq-preview-list" style="display:flex;flex-direction:column;gap:0">
+                        <div style="text-align:center;padding:1.5rem;color:var(--silver-faint);font-size:0.8rem;">加载中…</div>
                     </div>
-                    <div style="margin-top:0.8rem"><button class="btn-sm btn-teal" onclick="showPanel('inquiries')"><span class="t" data-zh="查看全部询盘 →" data-en="View all inquiries →">View all inquiries →</span></button></div>
+                    <div style="margin-top:0.8rem"><button class="btn-sm btn-teal" onclick="showPanel('inquiries')"><span class="t" data-zh="查看全部询盘 →" data-en="View all →">查看全部询盘 →</span></button></div>
                 </div>
                 <div class="card" style="margin-bottom:0">
-                    <div class="card-title"><span class="t" data-zh="⭐ 最新评价" data-en="⭐ Latest Reviews">⭐ Latest Reviews</span></div>
-                    <div style="display:flex;flex-direction:column;gap:0.7rem">
-                        <div style="padding:0.7rem;background:rgba(255,255,255,0.02);border-radius:6px">
-                            <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem"><span style="font-size:0.82rem;color:var(--white);font-weight:600"><span class="t" data-zh="陈总 · 广州某科技" data-en="Mr. Chen · Guangzhou Tech">陈总 · 广州某科技</span></span><span style="color:var(--warn);font-size:0.82rem">★★★★★</span></div>
-                            <div style="font-size:0.78rem;color:var(--silver-dim);line-height:1.5"><span class="t" data-zh=""全程中文服务，响应很快，商标顺利通过。"" data-en=""Full Mandarin service, fast response, trademark approved smoothly."">"全程中文服务，响应很快，商标顺利通过。"</span></div>
-                        </div>
-                        <div style="padding:0.7rem;background:rgba(255,255,255,0.02);border-radius:6px">
-                            <div style="display:flex;justify-content:space-between;margin-bottom:0.3rem"><span style="font-size:0.82rem;color:var(--white);font-weight:600"><span class="t" data-zh="刘女士 · 深圳贸易" data-en="Ms. Liu · Shenzhen Trade">刘女士 · 深圳贸易</span></span><span style="color:var(--warn);font-size:0.82rem">★★★★☆</span></div>
-                            <div style="font-size:0.78rem;color:var(--silver-dim);line-height:1.5"><span class="t" data-zh=""专业度很高，价格也在预期内。"" data-en=""Very professional, pricing was within expectations."">"专业度很高，价格也在预期内。"</span></div>
-                        </div>
+                    <div class="card-title"><span class="t" data-zh="⭐ 最新评价" data-en="⭐ Latest Reviews">⭐ 最新评价</span></div>
+                    <div id="rev-preview-list" style="display:flex;flex-direction:column;gap:0.7rem">
+                        <div style="text-align:center;padding:1.5rem;color:var(--silver-faint);font-size:0.8rem;">加载中…</div>
                     </div>
-                    <div style="margin-top:0.8rem"><button class="btn-sm btn-teal" onclick="showPanel('reviews')"><span class="t" data-zh="查看全部评价 →" data-en="View all reviews →">View all reviews →</span></button></div>
+                    <div style="margin-top:0.8rem"><button class="btn-sm btn-teal" onclick="showPanel('reviews')"><span class="t" data-zh="查看全部评价 →" data-en="View all →">查看全部评价 →</span></button></div>
                 </div>
             </div>
+
+            <!-- ══ 提升任务中心 ══ -->
+            <div class="card" style="margin-top:1rem">
+                <div class="card-title">
+                    🎯 <span class="t" data-zh="提升任务中心 · 完成越多排名越高" data-en="Boost Tasks · Complete more to rank higher">提升任务中心 · 完成越多排名越高</span>
+                </div>
+
+                <!-- 任务1：基本信息 已完成 -->
+                <div style="display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;border:1px solid rgba(26,138,74,0.2);border-radius:10px;background:rgba(26,138,74,0.04);margin-bottom:0.65rem;">
+                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(26,138,74,0.15);border:2px solid rgba(26,138,74,0.4);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">✓</div>
+                    <div style="flex:1;">
+                        <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:0.15rem;"><span class="t" data-zh="填写基本信息 &amp; 上传执照" data-en="Basic Info &amp; License Uploaded">填写基本信息 &amp; 上传执照</span></div>
+                        <div style="font-size:0.74rem;color:var(--silver-faint);"><span class="t" data-zh="律所名称、联系方式、核心领域、执业资质" data-en="Firm name, contact, practice areas, license">律所名称、联系方式、核心领域、执业资质</span></div>
+                    </div>
+                    <span style="font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:20px;background:rgba(26,138,74,0.1);color:#1a8a4a;border:1px solid rgba(26,138,74,0.25);">
+                        <span class="t" data-zh="已完成" data-en="Done">已完成</span>
+                    </span>
+                </div>
+
+                <!-- 任务2：律师专长 待补充 -->
+                <div onclick="goToProfileTab('pt-lawyers')" style="display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;border:1px solid rgba(0,153,170,0.18);border-radius:10px;background:rgba(0,153,170,0.03);margin-bottom:0.65rem;cursor:pointer;transition:all 0.18s;" onmouseover="this.style.borderColor='rgba(0,153,170,0.4)';this.style.background='rgba(0,153,170,0.07)'" onmouseout="this.style.borderColor='rgba(0,153,170,0.18)';this.style.background='rgba(0,153,170,0.03)'">
+                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,153,170,0.1);border:2px solid rgba(0,153,170,0.3);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">→</div>
+                    <div style="flex:1;">
+                        <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:0.15rem;"><span class="t" data-zh="补充律师专长描述" data-en="Add Attorney Bios">补充律师专长描述</span></div>
+                        <div style="font-size:0.74rem;color:var(--silver-faint);"><span class="t" data-zh="让客户了解每位律师的专长与经验，提升匹配精准度 · 约5分钟" data-en="Help clients find the right attorney · ~5 min">让客户了解每位律师的专长与经验，提升匹配精准度 · 约5分钟</span></div>
+                    </div>
+                    <span style="font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:20px;background:rgba(0,153,170,0.1);color:#0099aa;border:1px solid rgba(0,153,170,0.25);">↑ <span class="t" data-zh="排名+12" data-en="Rank +12">排名+12</span></span>
+                </div>
+
+                <!-- 任务3：典型案例 未上传 -->
+                <div onclick="goToProfileTab('pt-cases')" style="display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;border:1px solid rgba(240,100,50,0.2);border-radius:10px;background:rgba(240,100,50,0.03);margin-bottom:0.65rem;cursor:pointer;transition:all 0.18s;" onmouseover="this.style.borderColor='rgba(240,100,50,0.4)';this.style.background='rgba(240,100,50,0.07)'" onmouseout="this.style.borderColor='rgba(240,100,50,0.2)';this.style.background='rgba(240,100,50,0.03)'">
+                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(240,100,50,0.08);border:2px solid rgba(240,100,50,0.3);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">→</div>
+                    <div style="flex:1;">
+                        <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:0.15rem;"><span class="t" data-zh="上传1–3个典型案例" data-en="Upload 1–3 Case Studies">上传1–3个典型案例</span></div>
+                        <div style="font-size:0.74rem;color:var(--silver-faint);"><span class="t" data-zh="描述代表性案件，帮助客户了解您的实战经验 · 约10分钟" data-en="Showcase your experience with real cases · ~10 min">描述代表性案件，帮助客户了解您的实战经验 · 约10分钟</span></div>
+                    </div>
+                    <span style="font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:20px;background:rgba(240,100,50,0.08);color:#c84a1a;border:1px solid rgba(240,100,50,0.25);">🔥 <span class="t" data-zh="热门 + 排名+25" data-en="Hot + Rank +25">热门 + 排名+25</span></span>
+                </div>
+
+                <!-- 任务4：收费参考区间 -->
+                <div onclick="goToProfileTab('pt-pricing')" style="display:flex;align-items:center;gap:1rem;padding:0.85rem 1rem;border:1px solid rgba(0,153,170,0.18);border-radius:10px;background:rgba(0,153,170,0.03);cursor:pointer;transition:all 0.18s;" onmouseover="this.style.borderColor='rgba(0,153,170,0.4)';this.style.background='rgba(0,153,170,0.07)'" onmouseout="this.style.borderColor='rgba(0,153,170,0.18)';this.style.background='rgba(0,153,170,0.03)'">
+                    <div style="width:36px;height:36px;border-radius:50%;background:rgba(0,153,170,0.1);border:2px solid rgba(0,153,170,0.3);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">→</div>
+                    <div style="flex:1;">
+                        <div style="font-size:0.88rem;font-weight:700;color:var(--white);margin-bottom:0.15rem;"><span class="t" data-zh="填写收费参考区间" data-en="Add Pricing Range">填写收费参考区间</span></div>
+                        <div style="font-size:0.74rem;color:var(--silver-faint);"><span class="t" data-zh="帮助客户预判预算，透明定价律所询盘量平均高40% · 约3分钟" data-en="Transparent pricing increases inquiries by 40% · ~3 min">帮助客户预判预算，透明定价律所询盘量平均高40% · 约3分钟</span></div>
+                    </div>
+                    <span style="font-size:0.75rem;font-weight:700;padding:0.25rem 0.75rem;border-radius:20px;background:rgba(0,153,170,0.1);color:#0099aa;border:1px solid rgba(0,153,170,0.25);">↑ <span class="t" data-zh="排名+8" data-en="Rank +8">排名+8</span></span>
+                </div>
+            </div>
+
         </div>
 
         <!-- ══ INQUIRIES ══ -->
         <div class="panel" id="panel-inquiries">
             <div class="page-header">
                 <h1 class="page-title"><span class="t" data-zh="客户询盘" data-en="Client Inquiries">Client Inquiries</span></h1>
-                <p class="page-subtitle"><span class="t" data-zh="共 23 条询盘 · 5 条待回复" data-en="23 total inquiries · 5 pending">23 total inquiries · 5 pending</span></p>
+                <p class="page-subtitle" id="inq-subtitle"><span class="t" data-zh="加载中…" data-en="Loading…">加载中…</span></p>
             </div>
 
             <div class="card">
                 <div class="filter-row">
-                    <button class="filter-tab on" onclick="filterTab(this)"><span class="t" data-zh="全部 (23)" data-en="All (23)">All (23)</span></button>
-                    <button class="filter-tab" onclick="filterTab(this)"><span class="t" data-zh="待回复 (5)" data-en="Pending (5)">Pending (5)</span></button>
-                    <button class="filter-tab" onclick="filterTab(this)"><span class="t" data-zh="已回复 (15)" data-en="Replied (15)">Replied (15)</span></button>
-                    <button class="filter-tab" onclick="filterTab(this)"><span class="t" data-zh="已关闭 (3)" data-en="Closed (3)">Closed (3)</span> (3)</span></button>
-                    <input type="text" class="search-input" data-ph-zh="🔍 搜索客户或需求…" data-ph-en="🔍 Search clients or needs…" placeholder="🔍 搜索客户或需求…">
+                    <button class="filter-tab on" data-filter="all" onclick="filterInq(this)"><span class="t" data-zh="全部" data-en="All">全部</span> (<span id="inq-count-all">0</span>)</button>
+                    <button class="filter-tab" data-filter="pending" onclick="filterInq(this)"><span class="t" data-zh="待回复" data-en="Pending">待回复</span> (<span id="inq-count-pending">0</span>)</button>
+                    <button class="filter-tab" data-filter="replied" onclick="filterInq(this)"><span class="t" data-zh="已回复" data-en="Replied">已回复</span> (<span id="inq-count-replied">0</span>)</button>
+                    <button class="filter-tab" data-filter="closed" onclick="filterInq(this)"><span class="t" data-zh="已关闭" data-en="Closed">已关闭</span> (<span id="inq-count-closed">0</span>)</button>
+                    <input type="text" class="search-input" id="inq-search" data-ph-zh="🔍 搜索客户或需求…" data-ph-en="🔍 Search…" placeholder="🔍 搜索客户或需求…" oninput="renderInqTable()">
                 </div>
 
                 <table>
                     <thead>
                         <tr>
                             <th><span class="t" data-zh="客户" data-en="Client">Client</span></th>
-                            <th><span class="t" data-zh="服务需求" data-en="Service Request">Service Request</span></th>
+                            <th><span class="t" data-zh="服务需求" data-en="Service">Service</span></th>
                             <th><span class="t" data-zh="预算" data-en="Budget">Budget</span></th>
                             <th><span class="t" data-zh="时间" data-en="Date">Date</span></th>
                             <th><span class="t" data-zh="状态" data-en="Status">Status</span></th>
-                            <th><span class="t" data-zh="操作" data-en="Actions">操作</span></th>
+                            <th><span class="t" data-zh="操作" data-en="Action">操作</span></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="td-main"><span class="t" data-zh="张先生" data-en="Mr. Zhang">张先生</span></div><div class="td-sub"><span class="t" data-zh="深圳科技公司" data-en="Shenzhen Tech Co.">深圳科技公司</span></div></td>
-                            <td><span class="t" data-zh="美国商标注册（第9类，软件产品）" data-en="US Trademark Registration (Class 9 Software)">US Trademark Registration (Class 9 Software)</span></td>
-                            <td style="color:var(--white);font-weight:600">$800–$1,200</td>
-                            <td><span class="t" data-zh="今天 10:30" data-en="Today 10:30">Today 10:30</span></td>
-                            <td><span class="badge badge-new"><span class="t" data-zh="待回复" data-en="Pending">Pending</span></span></td>
-                            <td><button class="btn-sm btn-teal" onclick="toggleDetail('d1')"><span class="t" data-zh="回复" data-en="Reply">Reply</span></button></td>
-                        </tr>
-                        <tr id="d1-row">
-                            <td colspan="6" style="padding:0">
-                                <div class="inquiry-detail" id="d1">
-                                    <div class="detail-grid">
-                                        <div class="detail-item"><div class="detail-label"><span class="t" data-zh="客户描述" data-en="Client Description">客户描述</span></div><div class="detail-value">我们是深圳一家做企业SaaS软件的公司，品牌名 CloudNexus，想在美国注册商标，主要覆盖第9类（软件）和第42类（SaaS服务），请问流程和费用？</div></div>
-                                        <div class="detail-item">
-                                            <div class="detail-label"><span class="t" data-zh="联系方式" data-en="Contact">Contact</span></div>
-                                            <div class="detail-value">📧 <span class="t" data-zh="client@example.com" data-en="client@example.com">client@example.com</span><br>📱 +86 138-0000-1234 <span class="t" data-zh="（微信同号）" data-en="(WeChat same)">(WeChat same)</span></div>
-                                            <div class="detail-label" style="margin-top:0.6rem"><span class="t" data-zh="来源" data-en="Source">来源</span></div>
-                                            <div class="detail-value"><span class="t" data-zh="Whalium AI 智能匹配推荐" data-en="Whalium AI Matched">Whalium AI 智能匹配推荐</span></div>
-                                        </div>
-                                    </div>
-                                    <textarea class="reply-box" data-ph-zh="输入回复内容…&#10;建议包含：初步报价、流程说明、下一步行动…" data-ph-en="Type your reply…&#10;Suggested: initial quote, process overview, next steps…" placeholder="输入回复内容…&#10;建议包含：初步报价、流程说明、下一步行动…"></textarea>
-                                    <div class="reply-actions">
-                                        <button class="btn-sm btn-primary" onclick="sendReply(this)">✉️ <span class="t" data-zh="发送回复" data-en="Send Reply">发送回复</span></button>
-                                        <button class="btn-sm btn-ghost" onclick="saveDraft(this)"><span class="t" data-zh="保存草稿" data-en="Save Draft">保存草稿</span></button>
-                                        <button class="btn-sm btn-ghost" style="margin-left:auto" onclick="closeInquiry(this)"><span class="t" data-zh="关闭询盘" data-en="Close Inquiry">关闭询盘</span></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><div class="td-main"><span class="t" data-zh="李女士" data-en="Ms. Li">李女士</span></div><div class="td-sub"><span class="t" data-zh="广州贸易公司" data-en="Guangzhou Trade Co.">广州贸易公司</span></div></td>
-                            <td><span class="t" data-zh="商标驳回答辩（LOC驳回）" data-en="Office Action Response (Likelihood of Confusion)">商标驳回答辩（LOC驳回）</span></td>
-                            <td style="color:var(--white);font-weight:600">$1,500–$2,000</td>
-                            <td><span class="t" data-zh="今天 15:20" data-en="Today 15:20">今天 15:20</span></td>
-                            <td><span class="badge badge-new"><span class="t" data-zh="待回复" data-en="Pending">Pending</span></span></td>
-                            <td><button class="btn-sm btn-teal" onclick="toggleDetail('d2')"><span class="t" data-zh="回复" data-en="Reply">Reply</span></button></td>
-                        </tr>
-                        <tr id="d2-row">
-                            <td colspan="6" style="padding:0">
-                                <div class="inquiry-detail" id="d2">
-                                    <div class="detail-grid">
-                                        <div class="detail-item"><div class="detail-label"><span class="t" data-zh="客户描述" data-en="Client Description">客户描述</span></div><div class="detail-value">我们的美国商标申请收到了USPTO的Office Action，说与已注册商标存在混淆可能（likelihood of confusion），需要在3个月内提交答辩，请问贵所有没有处理这类案件的经验？</div></div>
-                                        <div class="detail-item">
-                                            <div class="detail-label"><span class="t" data-zh="附件" data-en="Attachment">附件</span></div><div class="detail-value">📄 USPTO-Office-Action.pdf (1.2MB)</div>
-                                            <div class="detail-label" style="margin-top:0.6rem"><span class="t" data-zh="联系方式" data-en="Contact">Contact</span></div>
-                                            <div class="detail-value">📧 <span class="t" data-zh="client@example.com" data-en="client@example.com">client@example.com</span></div>
-                                        </div>
-                                    </div>
-                                    <textarea class="reply-box" data-ph-zh="输入回复内容…" data-ph-en="Type your reply…" placeholder="输入回复内容…"></textarea>
-                                    <div class="reply-actions">
-                                        <button class="btn-sm btn-primary" onclick="sendReply(this)">✉️ <span class="t" data-zh="发送回复" data-en="Send Reply">发送回复</span></button>
-                                        <button class="btn-sm btn-ghost" onclick="saveDraft(this)"><span class="t" data-zh="保存草稿" data-en="Save Draft">保存草稿</span></button>
-                                        <button class="btn-sm btn-ghost" style="margin-left:auto" onclick="closeInquiry(this)"><span class="t" data-zh="关闭询盘" data-en="Close Inquiry">关闭询盘</span></button>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><div class="td-main"><span class="t" data-zh="王总" data-en="Mr. Wang">王总</span></div><div class="td-sub"><span class="t" data-zh="北京电商平台" data-en="Beijing E-commerce">北京电商平台</span></div></td>
-                            <td><span class="t" data-zh="软件专利申请（发明专利）" data-en="Software Patent Filing (Invention)">软件专利申请（发明专利）</span></td>
-                            <td style="color:var(--white);font-weight:600">$3,000–$5,000</td>
-                            <td><span class="t" data-zh="昨天 09:45" data-en="Yesterday 09:45">昨天 09:45</span></td>
-                            <td><span class="badge badge-replied"><span class="t" data-zh="已回复" data-en="Replied">Replied</span></span></td>
-                            <td><button class="btn-sm btn-ghost" onclick="toggleDetail('d3')"><span class="t" data-zh="查看" data-en="View">查看</span></button></td>
-                        </tr>
-                        <tr id="d3-row">
-                            <td colspan="6" style="padding:0">
-                                <div class="inquiry-detail" id="d3">
-                                    <div class="detail-grid">
-                                        <div class="detail-item"><div class="detail-label"><span class="t" data-zh="客户描述" data-en="Client Description">客户描述</span></div><div class="detail-value">我们有一套推荐算法想申请美国发明专利，核心是基于用户行为的实时商品推荐系统，请问贵所有没有处理软件专利的经验？预计费用是多少？</div></div>
-                                        <div class="detail-item"><div class="detail-label"><span class="t" data-zh="已发送回复" data-en="Reply Sent">已发送回复</span></div><div class="detail-value" style="color:var(--success)">✓ 2024-01-13 <span class="t" data-zh="已回复 · 客户已读" data-en="Replied · Read by client">已回复 · 客户已读</span></div></div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><div class="td-main"><span class="t" data-zh="陈先生" data-en="Mr. Chen">陈先生</span></div><div class="td-sub"><span class="t" data-zh="上海跨境电商" data-en="Shanghai Cross-border E-com">上海跨境电商</span></div></td>
-                            <td><span class="t" data-zh="亚马逊品牌侵权投诉应对" data-en="Amazon Brand Infringement Defense">亚马逊品牌侵权投诉应对</span></td>
-                            <td style="color:var(--white);font-weight:600">$500–$1,000</td>
-                            <td><span class="t" data-zh="2天前" data-en="2d ago">2天前</span></td>
-                            <td><span class="badge badge-new"><span class="t" data-zh="待回复" data-en="Pending">Pending</span></span></td>
-                            <td><button class="btn-sm btn-teal" onclick="toggleDetail('d4')"><span class="t" data-zh="回复" data-en="Reply">Reply</span></button></td>
-                        </tr>
-                        <tr id="d4-row"><td colspan="6" style="padding:0"><div class="inquiry-detail" id="d4"><textarea class="reply-box" data-ph-zh="输入回复内容…" data-ph-en="Type your reply…" placeholder="输入回复内容…"></textarea><div class="reply-actions"><button class="btn-sm btn-primary" onclick="sendReply(this)">✉️ <span class="t" data-zh="发送回复" data-en="Send Reply">发送回复</span></button><button class="btn-sm btn-ghost" style="margin-left:auto" onclick="closeInquiry(this)"><span class="t" data-zh="关闭询盘" data-en="Close Inquiry">关闭询盘</span></button></div></div></td></tr>
-                        <tr>
-                            <td><div class="td-main"><span class="t" data-zh="刘女士" data-en="Ms. Liu">刘女士</span></div><div class="td-sub"><span class="t" data-zh="成都消费品牌" data-en="Chengdu Consumer Brand">成都消费品牌</span></div></td>
-                            <td><span class="t" data-zh="欧盟商标注册（EUIPO）" data-en="EU Trademark Registration (EUIPO)">欧盟商标注册（EUIPO）</span></td>
-                            <td style="color:var(--white);font-weight:600">$600–$900</td>
-                            <td><span class="t" data-zh="3天前" data-en="3d ago">3天前</span></td>
-                            <td><span class="badge badge-closed"><span class="t" data-zh="已关闭" data-en="Closed">Closed</span></span></td>
-                            <td><button class="btn-sm btn-ghost" style="opacity:0.5" disabled><span class="t" data-zh="查看" data-en="View">查看</span></button></td>
-                        </tr>
+                    <tbody id="inq-tbody">
+                        <tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--silver-faint);">
+                            <span class="t" data-zh="加载询盘中…" data-en="Loading…">加载询盘中…</span>
+                        </td></tr>
                     </tbody>
                 </table>
             </div>
@@ -995,107 +914,20 @@ html, body {
         <div class="panel" id="panel-reviews">
             <div class="page-header">
                 <h1 class="page-title"><span class="t" data-zh="客户评价" data-en="Client Reviews">客户评价</span></h1>
-                <p class="page-subtitle"><span class="t" data-zh="共 18 条评价 · 综合评分 4.2 / 5.0" data-en="18 total reviews · Overall rating 4.2 / 5.0">共 18 条评价 · 综合评分 4.2 / 5.0</span></p>
+                <p class="page-subtitle" id="rev-subtitle"><span class="t" data-zh="加载中…" data-en="Loading…">加载中…</span></p>
             </div>
-
-            <div style="display:grid;grid-template-columns:1fr 2fr;gap:1rem;margin-bottom:1.1rem">
-                <div class="card" style="margin-bottom:0">
-                    <div class="card-title"><span class="t" data-zh="评分分布" data-en="Rating Distribution">评分分布</span></div>
-                    <div style="text-align:center;margin-bottom:1rem">
-                        <div style="font-family:'Helvetica Neue',sans-serif;font-size:3rem;font-weight:800;color:var(--white);line-height:1">4.2</div>
-                        <div style="color:var(--warn);font-size:1.1rem;margin:0.3rem 0">★★★★☆</div>
-                        <div style="font-size:0.75rem;color:var(--silver-faint)"><span class="t" data-zh="基于 18 条评价" data-en="Based on 18 reviews">基于 18 条评价</span></div>
-                    </div>
-                    <div class="rating-summary">
-                        <div class="rating-label"><span class="t" data-zh="专业度" data-en="Professionalism">专业度</span></div><div class="rating-bar-wrap"><div class="rating-bar-fill" style="width:88%"></div></div><div class="rating-num">4.4</div>
-                        <div class="rating-label"><span class="t" data-zh="响应速度" data-en="Responsiveness">响应速度</span></div><div class="rating-bar-wrap"><div class="rating-bar-fill" style="width:82%"></div></div><div class="rating-num">4.1</div>
-                        <div class="rating-label"><span class="t" data-zh="性价比" data-en="Value">性价比</span></div><div class="rating-bar-wrap"><div class="rating-bar-fill" style="width:78%"></div></div><div class="rating-num">3.9</div>
-                        <div class="rating-label"><span class="t" data-zh="中文沟通" data-en="Mandarin Service">中文沟通</span></div><div class="rating-bar-wrap"><div class="rating-bar-fill" style="width:92%"></div></div><div class="rating-num">4.6</div>
-                    </div>
-                </div>
-                <div class="card" style="margin-bottom:0">
-                    <div class="card-title"><span class="t" data-zh="评价关键词" data-en="Review Keywords">评价关键词</span></div>
-                    <div class="tag-list" style="margin-bottom:0.8rem">
-                        <span class="domain-tag" style="font-size:0.9rem;padding:0.3rem 0.8rem"><span class="t" data-zh="中文服务好 ×12" data-en="Great Mandarin service ×12">中文服务好 ×12</span></span>
-                        <span class="domain-tag" style="font-size:0.9rem;padding:0.3rem 0.8rem"><span class="t" data-zh="响应迅速 ×9" data-en="Fast response ×9">响应迅速 ×9</span></span>
-                        <span class="domain-tag" style="font-size:0.9rem;padding:0.3rem 0.8rem"><span class="t" data-zh="专业 ×8" data-en="Professional ×8">专业 ×8</span></span>
-                        <span class="domain-tag" style="font-size:0.85rem;padding:0.25rem 0.7rem"><span class="t" data-zh="答辩成功 ×6" data-en="Successful defense ×6">答辩成功 ×6</span></span>
-                        <span class="domain-tag" style="font-size:0.85rem;padding:0.25rem 0.7rem"><span class="t" data-zh="流程清晰 ×5" data-en="Clear process ×5">流程清晰 ×5</span></span>
-                        <span class="domain-tag" style="font-size:0.8rem"><span class="t" data-zh="价格合理 ×4" data-en="Fair pricing ×4">价格合理 ×4</span></span>
-                        <span class="domain-tag" style="font-size:0.8rem"><span class="t" data-zh="值得推荐 ×4" data-en="Recommended ×4">值得推荐 ×4</span></span>
-                    </div>
-                    <div class="divider"></div>
-                    <div style="font-size:0.78rem;color:var(--silver-dim);line-height:1.6">
-                        💡 <strong style="color:var(--white)"><span class="t" data-zh="AI洞察：" data-en="AI Insight:">AI洞察：</span></strong><span class="t" data-zh="您的「中文沟通」和「专业度」评分显著高于同类律所均值。建议在Profile中重点突出这两点，可提升AI推荐频率约20%。" data-en="Your "Mandarin Service" and "Professionalism" scores are significantly above peer average. Highlighting these in your Profile could boost AI recommendation frequency by ~20%.">您的「中文沟通」和「专业度」评分显著高于同类律所均值。建议在Profile中重点突出这两点，可提升AI推荐频率约20%。</span>
-                    </div>
-                </div>
-            </div>
-
             <div class="card">
-                <div class="card-title">
-                    <span class="t" data-zh="全部评价" data-en="All Reviews">全部评价</span>
-                    <div class="card-title-right">
-                        <button class="filter-tab on" style="font-size:0.72rem;padding:0.28rem 0.7rem" onclick="filterTab(this)"><span class="t" data-zh="全部" data-en="All">All</span></button>
-                        <button class="filter-tab" style="font-size:0.72rem;padding:0.28rem 0.7rem" onclick="filterTab(this)"><span class="t" data-zh="待回复" data-en="Pending">Pending</span></button>
-                        <button class="filter-tab" style="font-size:0.72rem;padding:0.28rem 0.7rem" onclick="filterTab(this)"><span class="t" data-zh="5星" data-en="5★">5星</span></button>
-                        <button class="filter-tab" style="font-size:0.72rem;padding:0.28rem 0.7rem" onclick="filterTab(this)"><span class="t" data-zh="4星" data-en="4★">4星</span></button>
-                    </div>
+                <div style="text-align:center;padding:1rem 0 0.5rem">
+                    <div style="font-size:3rem;font-weight:800;color:var(--white);line-height:1" id="rev-avg-score">—</div>
+                    <div style="color:var(--warn);font-size:1.1rem;margin:0.3rem 0" id="rev-stars">☆☆☆☆☆</div>
+                    <div style="font-size:0.75rem;color:var(--silver-faint)" id="rev-count-label"><span class="t" data-zh="暂无评价" data-en="No reviews yet">暂无评价</span></div>
                 </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">陈</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">陈总 · 广州某科技公司</div>
-                            <div class="reviewer-meta">商标注册 · 2026年1月 · 已验证服务</div>
-                        </div>
-                        <div class="stars">★★★★★</div>
-                    </div>
-                    <div class="review-body">Sarah律师全程用中文沟通，非常专业耐心，帮我们顺利完成了第9类和第35类两个商标的注册，整个过程比预期快了将近两个月。价格也很透明，没有隐藏费用，非常推荐！</div>
-                    <div class="review-tags">
-                        <span class="review-tag"><span class="t" data-zh="中文服务" data-en="Mandarin Service">中文服务</span></span><span class="review-tag"><span class="t" data-zh="响应迅速" data-en="Fast Response">响应迅速</span></span><span class="review-tag"><span class="t" data-zh="专业" data-en="Professional">专业</span></span><span class="review-tag"><span class="t" data-zh="推荐" data-en="Recommended">推荐</span></span>
-                    </div>
-                    <div class="review-reply">
-                        <div class="review-reply-label"><span class="t" data-zh="律所回复" data-en="Firm Reply">律所回复</span></div>
-                        感谢陈总的信任！很高兴能为贵公司顺利完成商标注册。如未来有其他知识产权需求，欢迎随时联系。
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">刘</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">刘女士 · 深圳跨境贸易</div>
-                            <div class="reviewer-meta">商标驳回答辩 · 2025年12月 · 已验证服务</div>
-                        </div>
-                        <div class="stars">★★★★☆</div>
-                    </div>
-                    <div class="review-body">处理商标驳回答辩的经验很丰富，给出的策略很专业。唯一的小建议是沟通频率可以再高一些，有时候等了两三天才有回复，稍微有点着急。总体来说还是很满意的，最终商标顺利通过了。</div>
-                    <div class="review-tags">
-                        <span class="review-tag"><span class="t" data-zh="专业" data-en="Professional">专业</span></span><span class="review-tag"><span class="t" data-zh="答辩成功" data-en="Successful Response">答辩成功</span></span>
-                    </div>
-                    <div style="margin-top:0.8rem">
-                        <textarea class="reply-box" style="min-height:60px" data-ph-zh="回复这条评价…感谢客户反馈，可以说明改进措施…" data-ph-en="Reply to this review… thank the client and describe any improvements…" placeholder="回复这条评价…感谢客户反馈，可以说明改进措施…"></textarea>
-                        <button class="btn-sm btn-primary" onclick="publishReply(this)"><span class="t" data-zh="发布回复" data-en="Post Reply">发布回复</span></button>
-                    </div>
-                </div>
-
-                <div class="review-card">
-                    <div class="review-header">
-                        <div class="reviewer-avatar">张</div>
-                        <div class="reviewer-info">
-                            <div class="reviewer-name">张先生 · 北京AI公司</div>
-                            <div class="reviewer-meta">专利申请 · 2025年11月 · 已验证服务</div>
-                        </div>
-                        <div class="stars">★★★★★</div>
-                    </div>
-                    <div class="review-body">Michael Chen律师帮我们完成了一个比较复杂的软件专利申请，他对中美两国专利制度都很熟悉，沟通起来完全没有障碍。整个过程文件准备很充分，USPTO审查时基本没遇到什么问题。</div>
-                    <div class="review-tags">
-                        <span class="review-tag"><span class="t" data-zh="专利专业" data-en="Patent Expertise">专利专业</span></span><span class="review-tag"><span class="t" data-zh="中文沟通" data-en="Mandarin Service">中文沟通</span></span><span class="review-tag"><span class="t" data-zh="流程清晰" data-en="Clear Process">流程清晰</span></span>
-                    </div>
-                    <div class="review-reply">
-                        <div class="review-reply-label">律所回复</div>
-                        谢谢张先生！Michael很高兴能协助贵公司完成这次专利布局，期待未来继续合作！
+            </div>
+            <div class="card">
+                <div class="card-title"><span class="t" data-zh="全部评价" data-en="All Reviews">全部评价</span></div>
+                <div id="reviews-list">
+                    <div style="text-align:center;padding:2rem;color:var(--silver-faint);">
+                        <span class="t" data-zh="加载评价中…" data-en="Loading reviews…">加载评价中…</span>
                     </div>
                 </div>
             </div>
@@ -1117,6 +949,7 @@ html, body {
             <div class="card">
                 <div class="profile-section-tab">
                     <div class="prof-tab on" onclick="switchProfTab(this,'pt-basic')"><span class="t" data-zh="基本信息" data-en="Basic Info">Basic Info</span></div>
+                    <div class="prof-tab" onclick="switchProfTab(this,'pt-features')">⭐ <span class="t" data-zh="特色服务" data-en="Features">特色服务</span></div>
                     <div class="prof-tab" onclick="switchProfTab(this,'pt-lawyers')"><span class="t" data-zh="律师团队" data-en="Our Attorneys">律师团队</span></div>
                     <div class="prof-tab" onclick="switchProfTab(this,'pt-cases')"><span class="t" data-zh="典型案例" data-en="Case Studies">典型案例</span></div>
                     <div class="prof-tab" onclick="switchProfTab(this,'pt-pricing')"><span class="t" data-zh="收费说明" data-en="Pricing">收费说明</span></div>
@@ -1125,68 +958,82 @@ html, body {
                 <!-- Basic -->
                 <div id="pt-basic">
                     <div class="form-row2">
-                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="律所英文名称" data-en="Firm English Name">律所英文名称</span></label><input type="text" class="form-input2" value="Morrison IP Law"></div>
-                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="律所中文名称" data-en="Firm Chinese Name">律所中文名称</span></label><input type="text" class="form-input2" value="莫里森知识产权律师事务所"></div>
+                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="律所英文名称" data-en="Firm English Name">律所英文名称</span></label><input type="text" id="db-name" class="form-input2" value=""></div>
+                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="律所中文名称" data-en="Firm Chinese Name">律所中文名称</span></label><input type="text" id="db-name-cn" class="form-input2" value=""></div>
                     </div>
                     <div class="form-row2">
-                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="官网" data-en="Website">官网</span></label><input type="text" class="form-input2" value="https://www.morrison-ip.com"></div>
-                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="联系邮箱" data-en="Contact Email">联系邮箱</span></label><input type="text" class="form-input2" value="john.smith@morrison-ip.com"></div>
+                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="官网" data-en="Website">官网</span></label><input type="text" id="db-website" class="form-input2" value=""></div>
+                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="联系邮箱" data-en="Contact Email">联系邮箱</span></label><input type="text" id="db-email" class="form-input2" value=""></div>
                     </div>
-                    <div class="form-group2" style="margin-bottom:1rem"><label class="form-label2"><span class="t" data-zh="律所简介" data-en="Firm Bio">律所简介</span></label><textarea class="form-input2 form-textarea2">Morrison IP Law 成立于2008年，专注于跨境知识产权法律服务，在美国商标注册、专利申请及商标驳回答辩领域拥有丰富经验。团队长期服务中国出海企业，提供全中文专业法律支持。</textarea></div>
-                    <div class="tag-list" style="margin-bottom:1rem">
-                        <span class="domain-tag"><span class="t" data-zh="商标注册" data-en="Trademark Reg.">商标注册</span></span><span class="domain-tag"><span class="t" data-zh="驳回答辩" data-en="Office Action">驳回答辩</span></span><span class="domain-tag"><span class="t" data-zh="专利申请" data-en="Patent Application">专利申请</span></span><span class="domain-tag"><span class="t" data-zh="中文服务" data-en="Mandarin Service">中文服务</span></span>
-                        <button class="btn-sm btn-teal" style="font-size:0.72rem;padding:0.18rem 0.6rem">＋ <span class="t" data-zh="编辑领域" data-en="Edit Areas">编辑领域</span></button>
+                    <div class="form-row2">
+                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="联系电话" data-en="Phone">联系电话</span></label><input type="text" id="db-phone" class="form-input2" value=""></div>
+                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="城市" data-en="City">城市</span></label><input type="text" id="db-city" class="form-input2" value=""></div>
                     </div>
-                    <button class="btn-sm btn-primary"><span class="t" data-zh="保存修改" data-en="Save Changes">保存修改</span></button>
+                    <div class="form-row2">
+                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="注册国家" data-en="Country">注册国家</span></label><input type="text" id="db-country" class="form-input2" placeholder="e.g. USA, Germany, Singapore" value=""></div>
+                        <div class="form-group2"><label class="form-label2"><span class="t" data-zh="服务语言" data-en="Languages">服务语言</span> <span style="font-size:0.68rem;color:rgba(100,130,160,0.6);text-transform:none;letter-spacing:0;font-weight:400">逗号分隔</span></label><input type="text" id="db-languages" class="form-input2" placeholder="e.g. 中文, English, Deutsch" value=""></div>
+                    </div>
+                    <div class="form-group2" style="margin-bottom:1rem"><label class="form-label2"><span class="t" data-zh="律所简介（英文）" data-en="Firm Bio (EN)">律所简介（英文）</span></label><textarea id="db-description" class="form-input2 form-textarea2"></textarea></div>
+                    <div class="form-group2" style="margin-bottom:1rem"><label class="form-label2"><span class="t" data-zh="律所简介（中文）" data-en="Firm Bio (CN)">律所简介（中文）</span></label><textarea id="db-description-cn" class="form-input2 form-textarea2"></textarea></div>
+                    <button class="btn-sm btn-primary" onclick="saveBasicInfo()"><span class="t" data-zh="保存修改" data-en="Save Changes">保存修改</span></button>
+                    <span id="db-save-msg" style="margin-left:0.8rem;font-size:0.78rem;color:var(--success);display:none">✓ 已保存</span>
+                </div>
+
+                <!-- 特色服务 Tab -->
+                <div id="pt-features" style="display:none">
+                    <p style="font-size:0.78rem;color:var(--silver-dim);margin-bottom:1.2rem;line-height:1.65">
+                        勾选适用您律所的特色服务。这些标签将显示在律所卡片和首页筛选器中，客户可以按此筛选律所。请如实勾选，虚报将影响平台评级。
+                    </p>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1.2rem" id="db-feat-grid">
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="中文服务" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>🇨🇳 全程中文服务</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="中国律师" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>👤 中国/华裔律师</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="双语合同" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>📄 中英双语合同</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="24h响应" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>⚡ 24小时响应</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="固定报价" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>💰 固定报价透明</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="免费咨询" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>🆓 免费初次咨询</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="Chambers认证" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>🏆 Chambers 认证</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="Legal500" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>🏅 Legal 500 认证</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="中国律所合作" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>🤝 与中国律所合作</span></label>
+                        <label class="db-feat-item" onclick="dbToggleFeat(this)" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1rem;border:1px solid rgba(0,200,200,0.15);border-radius:8px;cursor:pointer;transition:all 0.18s;user-select:none">
+                            <input type="checkbox" value="跨境电商" style="display:none"><span class="db-feat-check" style="width:18px;height:18px;border:2px solid rgba(0,200,200,0.35);border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:0.75rem;flex-shrink:0"></span><span>🛒 跨境电商经验</span></label>
+                    </div>
+                    <button class="btn-sm btn-primary" onclick="saveFeatures()"><span class="t" data-zh="保存特色服务" data-en="Save Features">保存特色服务</span></button>
+                    <span id="db-feat-msg" style="margin-left:0.8rem;font-size:0.78rem;color:var(--success);display:none">✓ 已保存</span>
                 </div>
 
                 <!-- Lawyers -->
                 <div id="pt-lawyers" style="display:none">
-                    <div class="lawyer-row">
-                        <div class="lawyer-av">SJ</div>
-                        <div class="lawyer-info">
-                            <div class="lawyer-name">Sarah Johnson · <span class="t" data-zh="合伙人" data-en="Partner">合伙人</span></div>
-                            <div class="lawyer-role">10<span class="t" data-zh="年+" data-en=" yrs+">年+</span> · UCLA Law · <span class="t" data-zh="商标专家" data-en="Trademark Expert">商标专家</span></div>
-                            <div class="tag-list" style="margin-top:0.35rem"><span class="domain-tag"><span class="t" data-zh="商标注册" data-en="Trademark Reg.">商标注册</span></span><span class="domain-tag"><span class="t" data-zh="驳回答辩" data-en="Office Action">驳回答辩</span></span><span class="domain-tag"><span class="t" data-zh="中文流利" data-en="Mandarin Fluent">中文流利</span></span></div>
-                        </div>
-                        <div style="display:flex;gap:0.4rem">
-                            <button class="btn-sm btn-teal" onclick="showPanel(\'profile\')"><span class="t" data-zh="编辑" data-en="Edit">Edit</span></button>
-                        </div>
-                    </div>
-                    <div class="lawyer-row">
-                        <div class="lawyer-av">MC</div>
-                        <div class="lawyer-info">
-                            <div class="lawyer-name">Michael Chen 陈明 · <span class="t" data-zh="高级律师" data-en="Senior Attorney">高级律师</span></div>
-                            <div class="lawyer-role">8<span class="t" data-zh="年+" data-en=" yrs+">年+</span> · <span class="t" data-zh="软件专利方向" data-en="Software Patents">软件专利方向</span></div>
-                            <div class="tag-list" style="margin-top:0.35rem"><span class="domain-tag"><span class="t" data-zh="专利申请" data-en="Patent Application">专利申请</span></span><span class="domain-tag"><span class="t" data-zh="中文母语" data-en="Native Mandarin">中文母语</span></span><span style="font-size:0.7rem;color:var(--warn);background:rgba(240,180,41,0.08);border:1px solid rgba(240,180,41,0.2);padding:0.18rem 0.55rem;border-radius:3px">⚠ <span class="t" data-zh="缺专长描述" data-en="Missing bio">缺专长描述</span></span></div>
-                        </div>
-                        <div style="display:flex;gap:0.4rem">
-                            <button class="btn-sm btn-teal"><span class="t" data-zh="补充信息" data-en="Add Bio">补充信息</span></button>
-                        </div>
-                    </div>
-                    <div class="lawyer-row">
-                        <div class="lawyer-av">LW</div>
-                        <div class="lawyer-info">
-                            <div class="lawyer-name">Linda Wang · <span class="t" data-zh="律师" data-en="Attorney">律师</span></div>
-                            <div class="lawyer-role">5<span class="t" data-zh="年+" data-en=" yrs+">年+</span></div>
-                            <div class="tag-list" style="margin-top:0.35rem"><span style="font-size:0.7rem;color:var(--danger);background:rgba(255,94,108,0.08);border:1px solid rgba(255,94,108,0.2);padding:0.18rem 0.55rem;border-radius:3px">✕ <span class="t" data-zh="信息不完整" data-en="Incomplete profile">信息不完整</span></span></div>
-                        </div>
-                        <div><button class="btn-sm btn-teal"><span class="t" data-zh="完善信息" data-en="Complete Profile">完善信息</span></button></div>
-                    </div>
-                    <div style="margin-top:1rem"><button class="btn-sm btn-ghost">＋ <span class="t" data-zh="添加律师" data-en="Add Attorney">添加律师</span></button></div>
+                    <p style="font-size:0.78rem;color:var(--silver-dim);margin-bottom:1rem;line-height:1.6">
+                        <span class="t" data-zh="添加律师团队成员，让客户了解您的专业阵容，提升匹配精准度。" data-en="Add your attorneys so clients can find the right fit.">添加律师团队成员，让客户了解您的专业阵容，提升匹配精准度。</span>
+                    </p>
+                    <div id="db-lawyers-list" style="display:flex;flex-direction:column;gap:0.65rem;margin-bottom:0.85rem;"></div>
+                    <button class="btn-sm btn-ghost" onclick="dbAddLawyer()" style="width:100%;padding:0.6rem;border:1.5px dashed rgba(0,153,170,0.3);border-radius:8px;color:#0099aa;font-weight:600;font-size:0.82rem;cursor:pointer;background:rgba(0,153,170,0.02);margin-bottom:1rem;">
+                        ＋ <span class="t" data-zh="添加律师成员" data-en="Add Attorney">添加律师成员</span>
+                    </button>
+                    <button class="btn-sm btn-primary" onclick="dbSaveLawyers()"><span class="t" data-zh="保存律师团队" data-en="Save Attorneys">保存律师团队</span></button>
+                    <span id="db-lawyers-msg" style="margin-left:0.8rem;font-size:0.78rem;color:var(--success);display:none">✓ <span class="t" data-zh="已保存" data-en="Saved">已保存</span></span>
                 </div>
 
                 <!-- Cases -->
                 <div id="pt-cases" style="display:none">
-                    <div style="background:rgba(240,180,41,0.06);border:1px solid rgba(240,180,41,0.15);border-radius:6px;padding:0.8rem 1rem;margin-bottom:1rem;font-size:0.82rem;color:var(--warn)">
-                        ⚠ <span class="t" data-zh="尚未上传典型案例。上传后排名预计提升 25 位，并获得「案例认证」标签。" data-en="No case studies uploaded yet. Uploading cases is estimated to improve your ranking by 25 positions and earn a 'Case Verified' badge.">尚未上传典型案例。上传后排名预计提升 25 位，并获得「案例认证」标签。</span>
-                    </div>
-                    <div style="border:1px dashed rgba(0,200,200,0.2);border-radius:8px;padding:2rem;text-align:center">
-                        <div style="font-size:2rem;opacity:0.3;margin-bottom:0.6rem">📂</div>
-                        <div style="font-size:0.88rem;color:var(--silver-dim);margin-bottom:0.3rem"><span class="t" data-zh="上传案件材料（PDF/Word，可脱敏处理）" data-en="Upload case files (PDF/Word, can be anonymized)">上传案件材料（PDF/Word，可脱敏处理）</span></div>
-                        <div style="font-size:0.75rem;color:var(--silver-faint);margin-bottom:1rem"><span class="t" data-zh="AI自动提取案件类型、策略与结果，无需手动填写" data-en="AI auto-extracts case type, strategy & outcome — no manual entry needed">AI自动提取案件类型、策略与结果，无需手动填写</span></div>
-                        <button class="btn-sm btn-primary"><span class="t" data-zh="选择文件上传" data-en="Upload Files">选择文件上传</span></button>
-                    </div>
+                    <p style="font-size:0.78rem;color:var(--silver-dim);margin-bottom:1rem;line-height:1.65">
+                        <span class="t" data-zh="填写代表性案例，让客户了解您的实战经验。添加案例后排名预计提升 25 位。" data-en="Add representative case studies so clients understand your expertise. Estimated +25 ranking boost.">填写代表性案例，让客户了解您的实战经验。添加案例后排名预计提升 25 位。</span>
+                    </p>
+                    <div id="db-cases-list" style="display:flex;flex-direction:column;gap:0.75rem;margin-bottom:0.85rem;"></div>
+                    <button class="btn-sm btn-ghost" onclick="dbAddCase()" style="width:100%;padding:0.6rem;border:1.5px dashed rgba(0,153,170,0.3);border-radius:8px;color:#0099aa;font-weight:600;font-size:0.82rem;cursor:pointer;background:rgba(0,153,170,0.02);margin-bottom:1rem;">
+                        ＋ <span class="t" data-zh="添加案例" data-en="Add Case Study">添加案例</span>
+                    </button>
+                    <button class="btn-sm btn-primary" onclick="dbSaveCases()"><span class="t" data-zh="保存典型案例" data-en="Save Case Studies">保存典型案例</span></button>
+                    <span id="db-cases-msg" style="margin-left:0.8rem;font-size:0.78rem;color:var(--success);display:none">✓ <span class="t" data-zh="已保存" data-en="Saved">已保存</span></span>
                 </div>
 
                 <!-- Pricing -->
@@ -1289,8 +1136,20 @@ html, body {
 function showPanel(id) {
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
     document.getElementById('panel-' + id).classList.add('active');
-    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-    event.currentTarget.classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(function(n) {
+        n.classList.remove('active');
+        if (n.getAttribute('onclick') && n.getAttribute('onclick').indexOf("'" + id + "'") !== -1) {
+            n.classList.add('active');
+        }
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* 直接跳到 Profile 的某个 Tab */
+function goToProfileTab(tabId) {
+    showPanel('profile');
+    var tabEl = document.querySelector('.prof-tab[onclick*="' + tabId + '"]');
+    if (tabEl && window.switchProfTab) window.switchProfTab(tabEl, tabId);
 }
 
 function toggleDetail(id) {
@@ -1299,7 +1158,12 @@ function toggleDetail(id) {
 }
 
 function filterTab(el) {
-    el.closest(
+    var row = el.closest('.filter-row');
+    if (!row) return;
+    row.querySelectorAll('.filter-tab').forEach(function(t){ t.classList.remove('on'); });
+    el.classList.add('on');
+}
+</script>
 <script>
 (function() {
   var PAGE_DICT = [
@@ -2237,6 +2101,599 @@ function translateInquiry(btn) {
     try { lang = localStorage.getItem('whalium_lang') || window._wlang || 'zh'; } catch(e) {}
     if(lang === 'en') walkAndReplace(document.body, true);
   });
+})();
+</script>
+
+<!-- ── Supabase 律所 Dashboard：加载 & 编辑 ─────────────────── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function(){
+  var SB_URL = 'https://cenmhxewrmjpibkokuls.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8';
+  var _sb = window.supabase.createClient(SB_URL, SB_KEY);
+  window._db_sb = _sb;
+  var _myFirmId = null;
+
+  /* ── Tab 切换 ── */
+  window.switchProfTab = function(el, id) {
+    document.querySelectorAll('.prof-tab').forEach(function(t){ t.classList.remove('on'); });
+    el.classList.add('on');
+    ['pt-basic','pt-features','pt-lawyers','pt-cases','pt-pricing'].forEach(function(pid){
+      var p = document.getElementById(pid);
+      if (p) p.style.display = (pid === id) ? '' : 'none';
+    });
+  };
+
+  /* ── 填充基本信息输入框 ── */
+  function setVal(id, val) {
+    var el = document.getElementById(id);
+    if (el) { el.tagName === 'TEXTAREA' ? el.value = val||'' : el.value = val||''; }
+  }
+
+  function populateBasic(f) {
+    setVal('db-name',           f.name);
+    setVal('db-name-cn',        f.name_cn);
+    setVal('db-website',        f.website);
+    setVal('db-email',          f.email);
+    setVal('db-phone',          f.phone);
+    setVal('db-city',           f.city);
+    setVal('db-country',        f.country);
+    setVal('db-languages',      Array.isArray(f.languages) ? f.languages.join(', ') : (f.languages || ''));
+    setVal('db-description',    f.description);
+    setVal('db-description-cn', f.description_cn);
+  }
+
+  /* ── 填充特色服务复选框 ── */
+  function populateFeatures(badges) {
+    var all = document.querySelectorAll('#db-feat-grid .db-feat-item');
+    all.forEach(function(label){
+      var cb = label.querySelector('input[type=checkbox]');
+      var check = label.querySelector('.db-feat-check');
+      if (!cb) return;
+      var selected = (badges || []).indexOf(cb.value) > -1;
+      cb.checked = selected;
+      if (selected) {
+        label.style.borderColor = 'rgba(0,200,200,0.5)';
+        label.style.background  = 'rgba(0,200,200,0.06)';
+        if (check) check.innerHTML = '✓';
+      } else {
+        label.style.borderColor = 'rgba(0,200,200,0.15)';
+        label.style.background  = '';
+        if (check) check.innerHTML = '';
+      }
+    });
+  }
+
+  /* ── 特色服务勾选 ── */
+  window.dbToggleFeat = function(label) {
+    var cb = label.querySelector('input[type=checkbox]');
+    var check = label.querySelector('.db-feat-check');
+    cb.checked = !cb.checked;
+    if (cb.checked) {
+      label.style.borderColor = 'rgba(0,200,200,0.5)';
+      label.style.background  = 'rgba(0,200,200,0.06)';
+      if (check) check.innerHTML = '✓';
+    } else {
+      label.style.borderColor = 'rgba(0,200,200,0.15)';
+      label.style.background  = '';
+      if (check) check.innerHTML = '';
+    }
+  };
+
+  /* ── 保存基本信息 ── */
+  window.saveBasicInfo = async function() {
+    if (!_myFirmId) { alert('未找到您的律所记录'); return; }
+    var langRaw = document.getElementById('db-languages') ? document.getElementById('db-languages').value : '';
+    var langsArr = langRaw ? langRaw.split(',').map(function(s){ return s.trim(); }).filter(Boolean) : undefined;
+    var payload = {
+      name:           document.getElementById('db-name')           ? document.getElementById('db-name').value           : undefined,
+      name_cn:        document.getElementById('db-name-cn')        ? document.getElementById('db-name-cn').value        : undefined,
+      website:        document.getElementById('db-website')        ? document.getElementById('db-website').value        : undefined,
+      email:          document.getElementById('db-email')          ? document.getElementById('db-email').value          : undefined,
+      phone:          document.getElementById('db-phone')          ? document.getElementById('db-phone').value          : undefined,
+      city:           document.getElementById('db-city')           ? document.getElementById('db-city').value           : undefined,
+      country:        document.getElementById('db-country')        ? document.getElementById('db-country').value        : undefined,
+      languages:      langsArr,
+      description:    document.getElementById('db-description')    ? document.getElementById('db-description').value    : undefined,
+      description_cn: document.getElementById('db-description-cn') ? document.getElementById('db-description-cn').value : undefined,
+    };
+    // 去掉 undefined / 空数组字段
+    Object.keys(payload).forEach(function(k){ if (payload[k] === undefined || (Array.isArray(payload[k]) && payload[k].length === 0)) delete payload[k]; });
+
+    var res = await _sb.from('firms').update(payload).eq('id', _myFirmId);
+    var msgEl = document.getElementById('db-save-msg');
+    if (res.error) {
+      alert('保存失败：' + res.error.message);
+    } else {
+      if (msgEl) { msgEl.style.display = 'inline'; setTimeout(function(){ msgEl.style.display='none'; }, 2500); }
+    }
+  };
+
+  /* ── 保存特色服务 ── */
+  window.saveFeatures = async function() {
+    if (!_myFirmId) { alert('未找到您的律所记录'); return; }
+    var badges = Array.from(document.querySelectorAll('#db-feat-grid input:checked')).map(function(i){ return i.value; });
+    var res = await _sb.from('firms').update({ badges: badges }).eq('id', _myFirmId);
+    var msgEl = document.getElementById('db-feat-msg');
+    if (res.error) {
+      alert('保存失败：' + res.error.message);
+    } else {
+      if (msgEl) { msgEl.style.display = 'inline'; setTimeout(function(){ msgEl.style.display='none'; }, 2500); }
+    }
+  };
+
+  /* ── 律师团队：添加行 ── */
+  var _dbLawyerIdx = 0;
+  window.dbAddLawyer = function(name, title, specialty) {
+    var list = document.getElementById('db-lawyers-list');
+    if (!list) return;
+    var idx = _dbLawyerIdx++;
+    var row = document.createElement('div');
+    row.id = 'dblr-' + idx;
+    row.style.cssText = 'background:rgba(0,153,170,0.03);border:1px solid rgba(0,153,170,0.15);border-radius:8px;padding:0.7rem 0.85rem;';
+    var inp = 'width:100%;padding:0.38rem 0.55rem;border:1px solid rgba(0,153,170,0.2);border-radius:6px;font-size:0.82rem;font-family:inherit;outline:none;background:rgba(255,255,255,0.5);box-sizing:border-box;color:var(--white);';
+    row.innerHTML =
+      '<div style="display:flex;gap:0.45rem;align-items:center;margin-bottom:0.35rem;">' +
+        '<input type="text" placeholder="姓名 / Name" value="' + (name||'') + '" style="' + inp + 'flex:1;">' +
+        '<input type="text" placeholder="职位 / Title" value="' + (title||'') + '" style="' + inp + 'flex:1;">' +
+        '<button type="button" onclick="document.getElementById(\'dblr-' + idx + '\').remove()" style="background:rgba(255,94,108,0.12);border:1px solid rgba(255,94,108,0.25);color:#cc2233;border-radius:6px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:1rem;padding:0;">×</button>' +
+      '</div>' +
+      '<textarea placeholder="专长描述 / Specialty & Bio" rows="2" style="' + inp + 'resize:vertical;">' + (specialty||'') + '</textarea>';
+    list.appendChild(row);
+  };
+
+  /* ── 律师团队：保存到 Supabase ── */
+  window.dbSaveLawyers = async function() {
+    if (!_myFirmId) { alert('未找到您的律所记录'); return; }
+    var rows = document.querySelectorAll('[id^="dblr-"]');
+    var lawyers = [];
+    rows.forEach(function(row) {
+      var inputs = row.querySelectorAll('input[type="text"]');
+      var ta = row.querySelector('textarea');
+      var name = inputs[0] ? inputs[0].value.trim() : '';
+      var title = inputs[1] ? inputs[1].value.trim() : '';
+      var specialty = ta ? ta.value.trim() : '';
+      if (name) lawyers.push({ name: name, title: title, specialty: specialty });
+    });
+    var res = await _sb.from('firms').update({ lawyers: lawyers }).eq('id', _myFirmId);
+    var msgEl = document.getElementById('db-lawyers-msg');
+    if (res.error) {
+      alert('保存失败：' + res.error.message);
+    } else {
+      if (msgEl) { msgEl.style.display = 'inline'; setTimeout(function(){ msgEl.style.display='none'; }, 2500); }
+    }
+  };
+
+  /* ── 典型案例：添加行 ── */
+  var _dbCaseIdx = 0;
+  window.dbAddCase = function(title, desc) {
+    var list = document.getElementById('db-cases-list');
+    if (!list) return;
+    var idx = _dbCaseIdx++;
+    var div = document.createElement('div');
+    div.id = 'dbcase-' + idx;
+    div.style.cssText = 'background:rgba(255,255,255,0.03);border:1px solid rgba(0,200,200,0.12);border-radius:8px;padding:0.8rem;display:flex;flex-direction:column;gap:0.5rem;';
+    div.innerHTML =
+      '<div style="display:flex;gap:0.5rem;align-items:center;">' +
+        '<input type="text" placeholder="案例标题（如：代理某品牌欧盟商标注册维权胜诉）" value="' + (title||'') + '"' +
+        '  style="flex:1;padding:0.5rem 0.7rem;border:1px solid rgba(0,200,200,0.2);border-radius:6px;background:rgba(255,255,255,0.04);color:var(--white);font-size:0.83rem;outline:none;">' +
+        '<button type="button" onclick="document.getElementById(\'dbcase-' + idx + '\').remove()"' +
+        '  style="flex-shrink:0;width:26px;height:26px;border:none;background:rgba(220,50,50,0.09);color:#cc3333;border-radius:5px;cursor:pointer;font-size:1rem;font-weight:700;padding:0;">×</button>' +
+      '</div>' +
+      '<textarea placeholder="简要描述案件背景、挑战与结果（100字内，请提前脱敏客户信息）" rows="2"' +
+      '  style="width:100%;padding:0.5rem 0.7rem;border:1px solid rgba(0,200,200,0.2);border-radius:6px;background:rgba(255,255,255,0.04);color:var(--white);font-size:0.82rem;resize:vertical;outline:none;">' + (desc||'') + '</textarea>';
+    list.appendChild(div);
+  };
+
+  /* ── 典型案例：保存到 Supabase ── */
+  window.dbSaveCases = async function() {
+    if (!_myFirmId) { alert('未找到您的律所记录'); return; }
+    var items = document.querySelectorAll('[id^="dbcase-"]');
+    var cases = [];
+    items.forEach(function(item) {
+      var inp = item.querySelector('input[type="text"]');
+      var ta  = item.querySelector('textarea');
+      var t = inp ? inp.value.trim() : '';
+      var d = ta  ? ta.value.trim()  : '';
+      if (t) cases.push({ title: t, desc: d });
+    });
+    var res = await _sb.from('firms').update({ cases: cases }).eq('id', _myFirmId);
+    var msgEl = document.getElementById('db-cases-msg');
+    if (res.error) {
+      alert('保存失败：' + res.error.message);
+    } else {
+      if (msgEl) { msgEl.style.display = 'inline'; setTimeout(function(){ msgEl.style.display='none'; }, 2500); }
+    }
+  };
+
+  /* ── 无律所时的入驻引导 CTA ── */
+  function _showNoFirmCTA() {
+    // 侧边栏显示"提交律所入驻"按钮
+    var sideBtn = document.getElementById('sidebar-add-firm');
+    if (sideBtn) sideBtn.style.display = 'flex';
+
+    // Overview 面板顶部插入引导卡
+    var overviewPanel = document.getElementById('panel-overview');
+    if (!overviewPanel) return;
+    var cta = document.createElement('div');
+    cta.style.cssText = 'background:linear-gradient(135deg,rgba(0,153,170,0.08),rgba(0,110,158,0.08));border:1px solid rgba(0,153,170,0.25);border-radius:12px;padding:1.8rem 2rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;';
+    cta.innerHTML = [
+      '<div style="font-size:2.5rem;flex-shrink:0">🏛️</div>',
+      '<div style="flex:1;min-width:200px">',
+        '<div style="font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:0.3rem">',
+          '<span class="t" data-zh="还没有提交律所资料" data-en="Your firm profile is not set up yet">还没有提交律所资料</span>',
+        '</div>',
+        '<div style="font-size:0.84rem;color:var(--silver-dim);line-height:1.6">',
+          '<span class="t" data-zh="提交律所基本信息，审核通过后即可出现在搜索结果中，开始接收询盘。" data-en="Submit your firm profile. Once approved, you\'ll appear in search results and receive client inquiries.">',
+            '提交律所基本信息，审核通过后即可出现在搜索结果中，开始接收询盘。',
+          '</span>',
+        '</div>',
+      '</div>',
+      '<a href="whalium_7_submit-firm.html" style="background:linear-gradient(135deg,#0099aa,#006e9e);color:#fff;padding:0.7rem 1.6rem;border-radius:8px;font-weight:700;font-size:0.9rem;text-decoration:none;white-space:nowrap;flex-shrink:0">',
+        '<span class="t" data-zh="立即提交入驻 →" data-en="Submit Your Firm →">立即提交入驻 →</span>',
+      '</a>'
+    ].join('');
+    overviewPanel.insertAdjacentElement('afterbegin', cta);
+    // 同步双语显示
+    if (window.applyLang) applyLang(window._wlang || 'zh');
+  }
+
+  /* ════════════════════════════════════════════
+     询盘数据
+  ════════════════════════════════════════════ */
+  var _allInquiries = [];
+  var _inqFilter    = 'all';
+
+  function fmtDate(iso) {
+    if (!iso) return '';
+    var d = new Date(iso), now = new Date();
+    var diff = Math.floor((now - d) / 60000);
+    if (diff < 60)   return diff + ' 分钟前';
+    if (diff < 1440) return Math.floor(diff/60) + ' 小时前';
+    if (diff < 2880) return '昨天';
+    return d.toLocaleDateString('zh-CN', { month:'numeric', day:'numeric' });
+  }
+
+  function starsHtml(n) {
+    return '★'.repeat(Math.round(n||0)) + '☆'.repeat(5 - Math.round(n||0));
+  }
+
+  function renderInqTable() {
+    var tbody = document.getElementById('inq-tbody');
+    if (!tbody) return;
+    var search = (document.getElementById('inq-search')||{}).value || '';
+    search = search.toLowerCase().replace(/^🔍\s*/, '');
+
+    var rows = _allInquiries.filter(function(q) {
+      if (_inqFilter !== 'all' && q.status !== _inqFilter) return false;
+      if (search) {
+        var hay = ((q.name||'') + (q.company||'') + (q.service_type||'') + (q.description||'')).toLowerCase();
+        if (hay.indexOf(search) === -1) return false;
+      }
+      return true;
+    });
+
+    if (rows.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:2.5rem;color:var(--silver-faint);">暂无询盘记录</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = rows.map(function(q) {
+      var statusMap = { pending:'待回复', replied:'已回复', closed:'已关闭' };
+      var badgeMap  = { pending:'badge-new', replied:'badge-replied', closed:'badge-closed' };
+      var detailId  = 'iqd-' + q.id;
+      var isPending = q.status === 'pending';
+      return [
+        '<tr onclick="toggleIqDetail(\'' + q.id + '\')" style="cursor:pointer">',
+          '<td>',
+            '<div class="td-main">' + (q.name||'客户') + '</div>',
+            '<div class="td-sub">' + (q.company||'') + '</div>',
+          '</td>',
+          '<td>' + (q.service_type||q.description||'').slice(0,30) + '</td>',
+          '<td style="color:var(--white);font-weight:600">' + (q.budget||'—') + '</td>',
+          '<td>' + fmtDate(q.created_at) + '</td>',
+          '<td><span class="badge ' + (badgeMap[q.status]||'badge-pending') + '">' + (statusMap[q.status]||q.status) + '</span></td>',
+          '<td><button class="btn-sm ' + (isPending?'btn-teal':'btn-ghost') + '" onclick="event.stopPropagation();toggleIqDetail(\'' + q.id + '\')">',
+            (isPending ? '回复' : '查看'),
+          '</button></td>',
+        '</tr>',
+        '<tr id="' + detailId + '-row" style="display:none">',
+          '<td colspan="6" style="padding:0">',
+            '<div class="inquiry-detail open" style="display:block">',
+              '<div class="detail-grid">',
+                '<div class="detail-item">',
+                  '<div class="detail-label">需求描述</div>',
+                  '<div class="detail-value">' + (q.description||'').replace(/</g,'&lt;') + '</div>',
+                '</div>',
+                '<div class="detail-item">',
+                  '<div class="detail-label">联系方式</div>',
+                  '<div class="detail-value">📧 ' + (q.email||'—') + '</div>',
+                  (q.service_type ? '<div class="detail-label" style="margin-top:0.5rem">服务类型</div><div class="detail-value">' + q.service_type + '</div>' : ''),
+                '</div>',
+              '</div>',
+              (isPending
+                ? '<textarea class="reply-box" id="reply-ta-' + q.id + '" placeholder="输入回复内容…&#10;建议包含：初步报价、流程说明、下一步行动…"></textarea>' +
+                  '<div class="reply-actions">' +
+                    '<button class="btn-sm btn-primary" onclick="sendReply(\'' + q.id + '\')">✉️ 发送回复</button>' +
+                    '<button class="btn-sm btn-ghost" style="margin-left:auto" onclick="closeInquiryById(\'' + q.id + '\')">关闭询盘</button>' +
+                  '</div>'
+                : (q.replied_at ? '<div style="font-size:0.82rem;color:var(--success)">✓ 已于 ' + fmtDate(q.replied_at) + ' 回复</div>' : '')
+              ),
+            '</div>',
+          '</td>',
+        '</tr>'
+      ].join('');
+    }).join('');
+  }
+
+  window.toggleIqDetail = function(id) {
+    var row = document.getElementById('iqd-' + id + '-row');
+    if (!row) return;
+    row.style.display = (row.style.display === 'none') ? '' : 'none';
+  };
+
+  window.filterInq = function(el) {
+    var row = el.closest('.filter-row');
+    if (!row) return;
+    row.querySelectorAll('.filter-tab').forEach(function(t){ t.classList.remove('on'); });
+    el.classList.add('on');
+    _inqFilter = el.dataset.filter || 'all';
+    renderInqTable();
+  };
+
+  window.sendReply = async function(id) {
+    var ta = document.getElementById('reply-ta-' + id);
+    if (!ta || !ta.value.trim()) { alert('请填写回复内容'); return; }
+    var res = await _sb.from('inquiries').update({
+      status: 'replied',
+      replied_at: new Date().toISOString()
+    }).eq('id', id);
+    if (res.error) { alert('发送失败：' + res.error.message); return; }
+    // 更新本地数据
+    _allInquiries.forEach(function(q){ if (q.id === id) { q.status='replied'; q.replied_at=new Date().toISOString(); } });
+    updateInqCounts();
+    renderInqTable();
+    // 更新 Overview 待回复数
+    loadStats();
+  };
+
+  window.closeInquiryById = async function(id) {
+    var res = await _sb.from('inquiries').update({ status:'closed' }).eq('id', id);
+    if (res.error) { alert('操作失败：' + res.error.message); return; }
+    _allInquiries.forEach(function(q){ if (q.id === id) q.status='closed'; });
+    updateInqCounts();
+    renderInqTable();
+  };
+
+  function updateInqCounts() {
+    var all=_allInquiries.length, pending=0, replied=0, closed=0;
+    _allInquiries.forEach(function(q){
+      if (q.status==='pending') pending++;
+      else if (q.status==='replied') replied++;
+      else if (q.status==='closed') closed++;
+    });
+    setText('inq-count-all', all);
+    setText('inq-count-pending', pending);
+    setText('inq-count-replied', replied);
+    setText('inq-count-closed', closed);
+    setText('inq-subtitle', '共 ' + all + ' 条询盘 · ' + pending + ' 条待回复');
+    // 概览页统计卡
+    setText('stat-inq-total', all);
+    setText('stat-inq-pending', pending > 0 ? '⚠ ' + pending + ' 条待回复' : '全部已处理 ✓');
+    if (pending > 0) {
+      var el = document.getElementById('stat-inq-pending');
+      if (el) el.style.color = 'var(--warn)';
+    }
+    setText('stat-inq-new', pending);
+    setText('stat-inq-new-sub', pending > 0 ? '需要回复' : '暂无待处理');
+  }
+
+  function setText(id, val) {
+    var el = document.getElementById(id);
+    if (el) el.textContent = val;
+  }
+
+  /* ════════════════════════════════════════════
+     评价数据
+  ════════════════════════════════════════════ */
+  function renderReviews(reviews) {
+    var list = document.getElementById('reviews-list');
+    if (!list) return;
+
+    if (!reviews || reviews.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:2.5rem;color:var(--silver-faint);">暂无评价记录</div>';
+      setText('rev-avg-score', '—');
+      setText('rev-stars', '☆☆☆☆☆');
+      setText('rev-count-label', '暂无评价');
+      setText('rev-subtitle', '暂无评价');
+      return;
+    }
+
+    var total = reviews.reduce(function(s,r){ return s + (r.rating||0); }, 0);
+    var avg   = (total / reviews.length).toFixed(1);
+    setText('rev-avg-score', avg);
+    setText('rev-stars', starsHtml(parseFloat(avg)));
+    setText('rev-count-label', '基于 ' + reviews.length + ' 条评价');
+    setText('rev-subtitle', '共 ' + reviews.length + ' 条评价 · 综合评分 ' + avg + ' / 5.0');
+
+    // 更新概览统计
+    setText('stat-rating', avg);
+    setText('stat-rating-sub', reviews.length + ' 条评价');
+
+    list.innerHTML = reviews.map(function(r) {
+      var initials = (r.title || '匿').slice(0,1);
+      var dateStr = r.created_at ? new Date(r.created_at).toLocaleDateString('zh-CN', { year:'numeric', month:'long' }) : '';
+      return [
+        '<div class="review-card">',
+          '<div class="review-header">',
+            '<div class="reviewer-avatar">' + initials + '</div>',
+            '<div class="reviewer-info">',
+              '<div class="reviewer-name">' + (r.title||'用户') + '</div>',
+              '<div class="reviewer-meta">' + (r.service_type||'') + (dateStr ? ' · ' + dateStr : '') + (r.verified_service?' · 已验证':'') + '</div>',
+            '</div>',
+            '<div class="stars">' + starsHtml(r.rating) + '</div>',
+          '</div>',
+          '<div class="review-body">' + (r.body||'').replace(/</g,'&lt;') + '</div>',
+          (r.tags && r.tags.length > 0
+            ? '<div class="review-tags">' + r.tags.map(function(t){ return '<span class="review-tag">'+t+'</span>'; }).join('') + '</div>'
+            : ''),
+          (r.firm_reply
+            ? '<div class="review-reply"><div class="review-reply-label">律所回复</div>' + r.firm_reply.replace(/</g,'&lt;') + '</div>'
+            : '<div style="margin-top:0.8rem">' +
+                '<textarea class="reply-box" id="rev-ta-' + r.id + '" style="min-height:60px" placeholder="回复这条评价…感谢客户反馈…"></textarea>' +
+                '<button class="btn-sm btn-primary" onclick="replyToReview(\'' + r.id + '\')">发布回复</button>' +
+              '</div>'
+          ),
+        '</div>'
+      ].join('');
+    }).join('');
+  }
+
+  window.replyToReview = async function(id) {
+    var ta = document.getElementById('rev-ta-' + id);
+    if (!ta || !ta.value.trim()) { alert('请填写回复内容'); return; }
+    var res = await _sb.from('reviews').update({
+      firm_reply: ta.value.trim(),
+      firm_replied_at: new Date().toISOString()
+    }).eq('id', id);
+    if (res.error) { alert('发布失败：' + res.error.message); return; }
+    loadReviews();
+  };
+
+  /* ════════════════════════════════════════════
+     审核状态 + 统计
+  ════════════════════════════════════════════ */
+  function updateFirmStatus(firm) {
+    if (!firm) return;
+    var statusEl   = document.getElementById('stat-status');
+    var statusSub  = document.getElementById('stat-status-sub');
+    if (firm.active) {
+      if (statusEl) { statusEl.textContent = '已上线'; statusEl.style.color = 'var(--success)'; }
+      if (statusSub) statusSub.textContent = '可被客户搜索到';
+    } else if (firm.verified) {
+      if (statusEl) { statusEl.textContent = '审核中'; statusEl.style.color = 'var(--warn)'; }
+      if (statusSub) statusSub.textContent = '预计1-3个工作日';
+    } else {
+      if (statusEl) { statusEl.textContent = '待审核'; statusEl.style.color = 'var(--warn)'; }
+      if (statusSub) statusSub.textContent = '资料已提交，等待审核';
+    }
+  }
+
+  /* ════════════════════════════════════════════
+     加载询盘
+  ════════════════════════════════════════════ */
+  async function loadInquiries() {
+    if (!_myFirmId) return;
+    var res = await _sb.from('inquiries')
+      .select('*')
+      .eq('firm_id', _myFirmId)
+      .order('created_at', { ascending: false });
+    if (res.error) { console.error('加载询盘失败', res.error); return; }
+    _allInquiries = res.data || [];
+    updateInqCounts();
+    renderInqTable();
+
+    // 同步概览页的询盘预览（最新3条）
+    var previewEl = document.getElementById('inq-preview-list');
+    if (previewEl && _allInquiries.length > 0) {
+      previewEl.innerHTML = _allInquiries.slice(0,3).map(function(q) {
+        var isPending = q.status === 'pending';
+        return '<div style="display:flex;align-items:center;gap:0.8rem;padding:0.6rem;background:' +
+          (isPending ? 'rgba(240,180,41,0.05)' : 'rgba(255,255,255,0.02)') +
+          ';border-radius:6px;border:1px solid ' + (isPending ? 'rgba(240,180,41,0.1)' : 'rgba(255,255,255,0.04)') + ';margin-bottom:0.5rem">' +
+            '<div style="flex:1"><div style="font-size:0.83rem;color:var(--white);font-weight:600">' + (q.name||'客户') + (q.company ? ' · ' + q.company : '') + '</div>' +
+            '<div style="font-size:0.72rem;color:var(--silver-faint)">' + (q.service_type||q.description||'').slice(0,20) + ' · ' + fmtDate(q.created_at) + '</div></div>' +
+            '<span class="badge ' + (isPending?'badge-new':'badge-replied') + '">' + (isPending?'新':'已回复') + '</span>' +
+          '</div>';
+      }).join('');
+    }
+  }
+
+  /* ════════════════════════════════════════════
+     加载评价
+  ════════════════════════════════════════════ */
+  async function loadReviews() {
+    if (!_myFirmId) return;
+    var res = await _sb.from('reviews')
+      .select('*')
+      .eq('firm_id', _myFirmId)
+      .in('status', ['approved','pending'])
+      .order('created_at', { ascending: false });
+    if (res.error) { console.error('加载评价失败', res.error); return; }
+    var reviews = res.data || [];
+    renderReviews(reviews);
+
+    // 概览页评价预览（最新2条）
+    var prevEl = document.getElementById('rev-preview-list');
+    if (prevEl) {
+      if (reviews.length === 0) {
+        prevEl.innerHTML = '<div style="text-align:center;padding:1.5rem;color:var(--silver-faint);font-size:0.8rem;">暂无评价</div>';
+      } else {
+        prevEl.innerHTML = reviews.slice(0,2).map(function(r) {
+          return '<div style="padding:0.7rem;background:rgba(255,255,255,0.02);border-radius:6px;margin-bottom:0.5rem">' +
+            '<div style="display:flex;justify-content:space-between;margin-bottom:0.3rem">' +
+              '<span style="font-size:0.82rem;color:var(--white);font-weight:600">' + (r.title||'用户') + '</span>' +
+              '<span style="color:var(--warn);font-size:0.82rem">' + starsHtml(r.rating) + '</span>' +
+            '</div>' +
+            '<div style="font-size:0.78rem;color:var(--silver-dim);line-height:1.5">"' + (r.body||'').slice(0,50) + (r.body&&r.body.length>50?'…':'') + '"</div>' +
+          '</div>';
+        }).join('');
+      }
+    }
+  }
+
+  /* ════════════════════════════════════════════
+     整体统计刷新（供回复后刷新用）
+  ════════════════════════════════════════════ */
+  async function loadStats() {
+    updateInqCounts();
+  }
+
+  /* ════════════════════════════════════════════
+     页面加载：检查登录 → 加载所有数据
+  ════════════════════════════════════════════ */
+  document.addEventListener('DOMContentLoaded', async function(){
+    var res = await _sb.auth.getSession();
+    var session = res.data && res.data.session;
+
+    if (!session) {
+      location.href = 'whalium_2_login.html?next=' + encodeURIComponent(location.href);
+      return;
+    }
+
+    var user = session.user;
+
+    // 页头用户名
+    var userNameEl = document.querySelector('.user-name');
+    if (userNameEl) userNameEl.textContent = (user.user_metadata && user.user_metadata.name) || user.email;
+    var userEmailEl = document.querySelector('.user-email');
+    if (userEmailEl) userEmailEl.textContent = user.email;
+
+    // 查找律所（owner_user_id）
+    var q = await _sb.from('firms').select('*').eq('owner_user_id', user.id).maybeSingle();
+    if (q.data) {
+      _myFirmId = q.data.id;
+      localStorage.setItem('wh_my_firm_id', _myFirmId);
+      // Profile 编辑区
+      populateBasic(q.data);
+      populateFeatures(q.data.badges || []);
+      (q.data.lawyers || []).forEach(function(l){ window.dbAddLawyer(l.name, l.title, l.specialty); });
+      (q.data.cases  || []).forEach(function(c){ window.dbAddCase(c.title, c.desc); });
+      // 状态卡
+      updateFirmStatus(q.data);
+      // 真实数据
+      loadInquiries();
+      loadReviews();
+    } else {
+      // 没有律所记录 → 显示入驻引导卡
+      _showNoFirmCTA();
+      setText('stat-inq-total', '—');
+      setText('stat-inq-new', '—');
+      setText('stat-rating', '—');
+      setText('stat-status', '未入驻');
+    }
+  });
+
 })();
 </script>
 </body>

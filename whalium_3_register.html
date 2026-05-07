@@ -572,57 +572,30 @@ html, body {
 </div>
 
             <div class="register-card">
-                <h1 class="register-title"><span class="t" data-zh="客户注册" data-en="Create Account">客户注册</span></h1>
-                <p class="register-subtitle"><span class="t" data-zh="创建账号，开始寻找全球律所" data-en="Create an account to find global law firms">创建账号，开始寻找全球律所</span></p>
+                <h1 class="register-title"><span class="t" data-zh="创建账号" data-en="Create Account">创建账号</span></h1>
+                <p class="register-subtitle"><span class="t" data-zh="注册后可搜索律所、发起咨询，或提交律所入驻" data-en="Search firms, send inquiries, or list your firm">注册后可搜索律所、发起咨询，或提交律所入驻</span></p>
 
                 <div class="form-group"><label class="form-label"><span class="t" data-zh="姓名" data-en="Full Name">姓名</span><span class="required">*</span></label><input id="reg-name" type="text" class="form-input" data-ph-zh="请输入您的真实姓名" data-ph-en="Your full name" placeholder="请输入您的真实姓名"></div>
                 <div class="form-group"><label class="form-label"><span class="t" data-zh="邮箱" data-en="Email">邮箱</span><span class="required">*</span></label><input id="reg-email" type="email" class="form-input" placeholder="your@email.com"></div>
-                <div class="form-group"><label class="form-label"><span class="t" data-zh="公司名称" data-en="Company">公司名称</span></label><input id="reg-company" type="text" class="form-input" data-ph-zh="请输入公司名称" data-ph-en="Your company name" placeholder="请输入公司名称"></div>
 
                 <div class="form-group">
-                    <label class="form-label"><span class="t" data-zh="手机号" data-en="Phone">手机号</span><span class="required">*</span></label>
-                    <div class="phone-group">
-                        <select class="form-input"><option>🇨🇳 +86</option><option>🇺🇸 +1</option><option>🇬🇧 +44</option></select>
-                        <input type="tel" class="form-input" placeholder="138 xxxx xxxx">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label"><span class="t" data-zh="验证码" data-en="Verification Code">验证码</span><span class="required">*</span></label>
-                    <div class="verification-group">
-                        <input type="text" class="form-input" data-ph-zh="请输入验证码" data-ph-en="Enter code" placeholder="请输入验证码">
-                        <button class="btn-verify"><span class="t" data-zh="发送验证码" data-en="Send Code">发送验证码</span></button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label"><span class="t" data-zh="需求领域" data-en="Areas of Interest">需求领域</span> <span style="font-weight:400;color:rgba(200,216,232,0.35);text-transform:none;letter-spacing:0"><span class="t" data-zh="(可多选)" data-en="(multi-select)">(可多选)</span></span></label>
-                    <div class="checkbox-grid">
-                        <div class="checkbox-item"><input type="checkbox" id="ip" checked><label for="ip"><span class="t" data-zh="🛡️ 知识产权保护" data-en="🛡️ IP Protection">🛡️ 知识产权保护</span></label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="setup"><label for="setup"><span class="t" data-zh="🚀 出海设立 & 架构" data-en="🚀 Overseas Setup">🚀 出海设立 & 架构</span></label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="trade"><label for="trade"><span class="t" data-zh="📦 贸易 & 产品合规" data-en="📦 Trade & Compliance">📦 贸易 & 产品合规</span></label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="data"><label for="data"><span class="t" data-zh="🔒 数据 & 隐私合规" data-en="🔒 Data & Privacy">🔒 数据 & 隐私合规</span></label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="risk"><label for="risk"><span class="t" data-zh="⚖️ 商业诚信 & 风险" data-en="⚖️ Business Integrity">⚖️ 商业诚信 & 风险</span></label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="ma"><label for="ma"><span class="t" data-zh="💼 融资 & 并购" data-en="💼 M&A">💼 融资 & 并购</span></label></div>
-                        <div class="checkbox-item"><input type="checkbox" id="other"><label for="other"><span class="t" data-zh="✏️ 其他" data-en="✏️ Other">✏️ 其他</span></label></div>
-                    </div>
+                    <label class="form-label"><span class="t" data-zh="手机号" data-en="Phone">手机号</span> <span style="font-weight:400;color:rgba(100,130,160,0.6);text-transform:none;letter-spacing:0;font-size:0.72rem"><span class="t" data-zh="选填" data-en="Optional">选填</span></span></label>
+                    <input id="reg-phone" type="tel" class="form-input" data-ph-zh="请含国际区号，例：+86 138 0000 0000" data-ph-en="Include country code, e.g. +1 415 000 0000" placeholder="请含国际区号，例：+86 138 0000 0000">
                 </div>
 
                 <div class="form-group">
                     <label class="form-label"><span class="t" data-zh="密码" data-en="Password">密码</span><span class="required">*</span></label>
-                    <input id="reg-password" type="password" class="form-input" data-ph-zh="至少8位，包含字母和数字" data-ph-en="At least 8 chars, letters and numbers" placeholder="至少8位，包含字母和数字">
-                    <div class="password-strength"><div class="strength-bar"></div></div>
-                    <div class="password-hint"><span class="t" data-zh="密码强度：强" data-en="Password strength: Strong">密码强度：强</span></div>
+                    <input id="reg-password" type="password" class="form-input" data-ph-zh="至少6位" data-ph-en="At least 6 characters" placeholder="至少6位">
                 </div>
                 <div class="form-group"><label class="form-label"><span class="t" data-zh="确认密码" data-en="Confirm Password">确认密码</span><span class="required">*</span></label><input id="reg-confirm" type="password" class="form-input" data-ph-zh="请再次输入密码" data-ph-en="Re-enter your password" placeholder="请再次输入密码"></div>
 
                 <div class="agreement">
                     <input type="checkbox" id="agreement" checked>
-                    <label class="agreement-text" for="agreement"><span class="t" data-zh="我已阅读并同意" data-en="I agree to the">我已阅读并同意</span> <a href="whalium_2_login.html"><span class="t" data-zh="《用户服务协议》" data-en="Terms of Service">《用户服务协议》</span></a><span class="t" data-zh="和" data-en="and">和</span> <a href="whalium_2_login.html"><span class="t" data-zh="《隐私政策》" data-en="Privacy Policy">《隐私政策》</span></a></label>
+                    <label class="agreement-text" for="agreement"><span class="t" data-zh="我已阅读并同意" data-en="I agree to the">我已阅读并同意</span> <a href="#"><span class="t" data-zh="《用户服务协议》" data-en="Terms of Service">《用户服务协议》</span></a><span class="t" data-zh="和" data-en="and">和</span> <a href="#"><span class="t" data-zh="《隐私政策》" data-en="Privacy Policy">《隐私政策》</span></a></label>
                 </div>
 
                 <button class="btn-register" onclick="handleRegister(event)"><span class="t" data-zh="立即注册" data-en="Create Account">立即注册</span></button>
-                <div class="login-link"><span class="t" data-zh="已有账号？" data-en="Already have an account?">已有账号？</span><a href="#"><span class="t" data-zh="立即登录" data-en="Sign In">立即登录</span></a></div>
+                <div class="login-link"><span class="t" data-zh="已有账号？" data-en="Already have an account?">已有账号？</span><a id="login-link-href" href="whalium_2_login.html"><span class="t" data-zh="立即登录" data-en="Sign In">立即登录</span></a></div>
             </div>
         </div>
     </div>
@@ -634,7 +607,7 @@ html, body {
         <a href="mailto:hello@whalium.com" style="color:rgba(255,255,255,0.5);margin:0 0.5rem;text-decoration:none;">hello@whalium.com</a>
     </div>
     <div class="footer-note">
-        <strong><span class="t" data-zh="核心功能展示：" data-en="Key Features:">核心功能展示：</span></strong><span class="t" data-zh="完整注册表单 · 国际区号选择 · 验证码发送 · 需求领域多选 · 密码强度检测 · 表单验证" data-en="Full form · Intl codes · Verification code · Multi-select areas · Password strength · Validation">完整注册表单 · 国际区号选择 · 验证码发送 · 需求领域多选 · 密码强度检测 · 表单验证</span>
+        <strong><span class="t" data-zh="统一注册入口：" data-en="Unified Registration:">统一注册入口：</span></strong><span class="t" data-zh="用户与律所共用同一注册页 · 注册后可入驻律所 · 支持 ?next= 跳转参数" data-en="Shared registration for users & firms · Post-signup firm onboarding · Supports ?next= redirect">用户与律所共用同一注册页 · 注册后可入驻律所 · 支持 ?next= 跳转参数</span>
     </div>
 <script>
 // ── Supabase 客户端 ──────────────────────────────────────────
@@ -643,13 +616,30 @@ var _wh_sb_reg = window.supabase.createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8'
 );
 
+// ── 已登录则直接跳过注册 ──────────────────────────────────────
+_wh_sb_reg.auth.getSession().then(function(res){
+  if (res.data && res.data.session) {
+    var next = new URLSearchParams(location.search).get('next');
+    location.href = next || 'whalium_1_index.html';
+  }
+});
+
+// ── 动态更新"立即登录"链接，保留 ?next= ───────────────────────
+(function(){
+  var nextParam = new URLSearchParams(location.search).get('next');
+  var loginHref = document.getElementById('login-link-href');
+  if (loginHref && nextParam) {
+    loginHref.href = 'whalium_2_login.html?next=' + encodeURIComponent(nextParam);
+  }
+})();
+
 function handleRegister(e) {
   e.preventDefault();
   var lang      = (window._wlang||'zh');
   var zh        = lang === 'zh';
   var nameEl    = document.getElementById('reg-name');
   var emailEl   = document.getElementById('reg-email');
-  var compEl    = document.getElementById('reg-company');
+  var phoneEl   = document.getElementById('reg-phone');
   var pwd       = document.getElementById('reg-password');
   var confirmPwd= document.getElementById('reg-confirm');
   var agreeEl   = document.getElementById('agreement');
@@ -687,12 +677,8 @@ function handleRegister(e) {
 
   if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; btn.textContent = zh ? '注册中…' : 'Creating account…'; }
 
-  // 收集需求领域
-  var areas = [];
-  document.querySelectorAll('.checkbox-grid input[type="checkbox"]:checked').forEach(function(cb){
-    var label = cb.nextElementSibling;
-    if (label) areas.push(label.textContent.replace(/[🛡️🚀📦🔒⚖️💼✏️]/gu,'').trim());
-  });
+  // 手机号（选填，用户自行填写含国际区号）
+  var phoneVal = phoneEl ? phoneEl.value.trim() : '';
 
   // ── Supabase Auth 注册 ────────────────────────────────────
   _wh_sb_reg.auth.signUp({
@@ -700,9 +686,8 @@ function handleRegister(e) {
     password: pwd.value,
     options: {
       data: {
-        full_name:    nameEl.value.trim(),
-        company:      compEl ? compEl.value.trim() : '',
-        practice_interests: areas.join(', ')
+        full_name: nameEl.value.trim(),
+        phone:     phoneVal
       }
     }
   }).then(function(res) {
@@ -713,11 +698,13 @@ function handleRegister(e) {
       if (btn) { btn.disabled = false; btn.style.opacity = '1'; btn.textContent = zh ? '立即注册' : 'Create Account'; }
       return;
     }
-    // 成功
+    // 成功 — 保留 ?next= 传递给登录页
+    var nextParam = new URLSearchParams(location.search).get('next');
+    var loginUrl  = 'whalium_2_login.html' + (nextParam ? '?next=' + encodeURIComponent(nextParam) : '');
     alert(zh
       ? '注册成功！请检查邮箱完成验证，然后登录。'
       : 'Account created! Please check your email to verify, then sign in.');
-    location.href = 'whalium_2_login.html';
+    location.href = loginUrl;
   });
 }
 </script>

@@ -319,13 +319,18 @@ h1,h2,h3,h4,.brand-name,.hero-title,.demo-title,.pricing-price,.stat-value,
      starter (firm) ¥2,800/yr  (firm listing: Starter)
      premium (firm) ¥8,000/yr  (firm listing: Professional)     */
   var PLANS = {
-    consumer: { zh:'年度会员',       en:'Annual Membership',   price:365,  orig:999,  badge:'💎',
-                tz:'解锁全球律所完整联系方式与评价', te:'Unlock full contacts & all reviews for every firm' },
-    starter:  { zh:'律所初级会员',   en:'Firm Starter Plan',   price:2800, orig:4200, badge:'🚀',
-                tz:'快速建立海外法律存在感',         te:'Get listed & start receiving Chinese client inquiries' },
-    premium:  { zh:'律所高级会员',   en:'Firm Professional',   price:8000, orig:12000, badge:'🏆',
-                tz:'专业团队首选，全面曝光',          te:'Priority ranking, full analytics & dedicated support' }
+    consumer: { zh:'年度会员',       en:'Annual Membership',   price:365,   orig:999,   badge:'💎',
+                tz:'解锁全球律所完整联系方式与评价',     te:'Unlock full contacts & all reviews for every firm' },
+    trial:    { zh:'试用包',         en:'Trial Pack',          price:6800,  orig:6800,  badge:'🚀',
+                tz:'3个月有效，10条询盘，快速测试市场',  te:'3 months, 10 inquiries — test the market fast' },
+    starter:  { zh:'初级会员',       en:'Starter Plan',        price:9800,  orig:14700, badge:'✦',
+                tz:'每月20条询盘，性价比首选',           te:'20 inquiries/month — best value to start' },
+    premium:  { zh:'高级会员',       en:'Professional',        price:28000, orig:42000, badge:'🏆',
+                tz:'无限询盘+AI加权，全面曝光',          te:'Unlimited inquiries, AI priority & full analytics' }
   };
+  var priceMap = { consumer:'365', trial:'6,800', starter:'9,800', premium:'28,000' };
+  var origMap  = { consumer:'999', trial:'6,800', starter:'14,700', premium:'42,000' };
+  var usdMap   = { consumer:'$50', trial:'$935',  starter:'$1,345', premium:'$3,845' };
   var p = PLANS[plan] || PLANS.starter;
   window._selectedPlan = plan;
   window._planData = p;
@@ -883,11 +888,11 @@ html, body {
     <div class="mtit"><span class="t" data-zh="支付成功！" data-en="Payment Successful!">支付成功！</span></div>
     <div class="msub"><span class="t" data-zh="欢迎加入 Whalium 年度会员" data-en="Welcome to Whalium Annual Plan">欢迎加入 Whalium 年度会员</span><br><span class="t" data-zh="您的权益已立即生效" data-en="Your benefits are now active">您的权益已立即生效</span></div>
     <div class="mrec">
-      <div class="mrow"><span class="k"><span class="t" data-zh="订单号" data-en="Order #">订单号</span></span><span class="v" id="r-order">—</span>
-    <div <div id="member-benefits-card"></div>
-      id="success-cta" style="margin-top:0.8rem;">
-      <a href="whalium_4_firm-detail.html" class="mbtn" style="display:block;text-align:center;padding:0.85rem;background:linear-gradient(135deg,#1a2332,#2c3e50);color:white;text-decoration:none;border-radius:8px;font-weight:700;">
-        <span class="t" data-zh="👉 立即查看 Morrison IP Law 完整资料 →" data-en="View Full Profile →">👉 立即查看 Morrison IP Law 完整资料 →</span>
+      <div class="mrow"><span class="k"><span class="t" data-zh="订单号" data-en="Order #">订单号</span></span><span class="v" id="r-order">—</span></div>
+    <div id="member-benefits-card"></div>
+    <div id="success-cta" style="margin-top:0.8rem;">
+      <a href="whalium_1_index.html" class="mbtn" style="display:block;text-align:center;padding:0.85rem;background:linear-gradient(135deg,#1a2332,#2c3e50);color:white;text-decoration:none;border-radius:8px;font-weight:700;">
+        <span class="t" data-zh="👉 立即浏览律所目录 →" data-en="Browse Firms Directory →">👉 立即浏览律所目录 →</span>
       </a>
     </div>
     <script>
@@ -957,7 +962,7 @@ function recordSubscription(method, cb) {
     var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
     var exp = new Date(); exp.setFullYear(exp.getFullYear() + 1);
     var orderNo = 'WHL-' + Date.now();
-    var amounts = { consumer: 365, starter: 2800, premium: 8000 };
+    var amounts = { consumer: 365, trial: 6800, starter: 9800, premium: 28000 };
     var amt = amounts[plan] || 365;
 
     // localStorage 备用（离线可用）
@@ -1131,17 +1136,43 @@ function showOK(method){
   document.getElementById('r-method').textContent = methodName;
   document.getElementById('r-expire').textContent = es;
 
+  // 写入已付费标记
+  try { localStorage.setItem('wh_paid', '1'); } catch(e){}
+
   // ── 动态更新成功页内容 ─────────────────────────
-  var planNames = {consumer:{zh:'年度会员',en:'Annual Member'},
-                   starter:{zh:'律所初级版',en:'Firm Starter'},
-                   premium:{zh:'律所专业版',en:'Firm Pro'}};
+  var planNames = {
+    consumer: {zh:'年度会员',    en:'Annual Member'},
+    trial:    {zh:'试用包',      en:'Trial Pack'},
+    starter:  {zh:'初级会员',    en:'Starter Plan'},
+    premium:  {zh:'高级会员',    en:'Professional'}
+  };
   var pname = planNames[plan] || planNames.consumer;
   var lang = window._wlang || 'zh';
   var titleEl = document.querySelector('#modal .mtitle');
   if(titleEl) titleEl.textContent = (lang==='zh'?'🎉 '+pname.zh+' 已开通！':'🎉 '+pname.en+' Activated!');
 
-  // ── 权益卡片（消费者版）───────────────────────
+  // ── 权益卡片 ──────────────────────────────────
   var benEl = document.getElementById('member-benefits-card');
+  // 律所套餐权益
+  if(benEl && (plan==='trial'||plan==='starter'||plan==='premium')){
+    var benefits = {
+      trial:   lang==='zh'?['10条中国客户询盘','搜索结果优先排名','客户评价展示&回复','基础询盘数据统计']:['10 Chinese client inquiries','Priority search ranking','Reviews & reply','Basic inquiry stats'],
+      starter: lang==='zh'?['每月20条询盘（年240条）','搜索结果优先排名','客户评价展示&回复','案例认证徽章','基础询盘统计']:['20 inquiries/month (240/yr)','Priority search ranking','Reviews & reply','Case badge','Basic analytics'],
+      premium: lang==='zh'?['无限询盘接收','搜索结果顶部优先排名','AI优先推荐·优先曝光','完整询盘数据&转化分析','案例认证&「热门」徽章','竞品分析报告','专属客服7×24','季度中国出海报告']:['Unlimited inquiries','Top-of-search ranking','AI priority placement','Full analytics','Case cert & Hot badge','Competitor report','24/7 support','Quarterly China report']
+    };
+    benEl.innerHTML = [
+      '<div style="background:linear-gradient(135deg,#e0f7fa,#f0fdf4);border:1.5px solid #22ccde;border-radius:10px;padding:1.2rem 1.3rem;margin:1rem 0;">',
+      '<div style="font-size:0.72rem;font-weight:800;letter-spacing:0.08em;color:#0369a1;margin-bottom:0.7rem;">',
+      lang==='zh'?'🎁 您的权益（即刻生效）':'🎁 YOUR BENEFITS (ACTIVE NOW)',
+      '</div>',
+      '<div style="display:grid;gap:0.45rem;font-size:0.83rem;color:#1a2332;">',
+      (benefits[plan]||[]).map(function(b){ return '<div>✅ '+b+'</div>'; }).join(''),
+      '<div style="margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid rgba(34,204,222,0.2);font-size:0.75rem;color:#475569;">',
+      '📅 '+(lang==='zh'?'有效期至 ':'Valid until ')+es+' &nbsp;·&nbsp; 📦 '+(lang==='zh'?'订单号 ':'Order ')+order,
+      '</div></div></div>'
+    ].join('');
+  }
+  // 消费者版权益
   if(benEl && plan==='consumer'){
     benEl.innerHTML = [
       '<div style="background:linear-gradient(135deg,#e0f7fa,#f0fdf4);border:1.5px solid #22ccde;border-radius:10px;padding:1.2rem 1.3rem;margin:1rem 0;">',
@@ -1878,11 +1909,11 @@ document.addEventListener('DOMContentLoaded',function(){
   (function(){
     document.addEventListener('DOMContentLoaded', function(){
       var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
-      var priceMap = {consumer: '365', starter: '2,800', premium: '8,000'};
+      var priceMap = {consumer:'365', trial:'6,800', starter:'9,800', premium:'28,000'};
       var el = document.getElementById('price-num');
       if(el && priceMap[plan]) el.textContent = priceMap[plan];
       // Also update orig price
-      var ORIG = {consumer:'999', starter:'4,200', premium:'12,000'};
+      var ORIG = {consumer:'999', trial:'6,800', starter:'14,700', premium:'42,000'};
       var origEl = document.querySelector('.porig');
       if(origEl && ORIG[plan]){
         origEl.innerHTML = origEl.innerHTML.replace(/[\d,]+/, ORIG[plan]);
@@ -1895,7 +1926,7 @@ document.addEventListener('DOMContentLoaded',function(){
   (function(){
     document.addEventListener('DOMContentLoaded', function(){
       var plan = new URLSearchParams(location.search).get('plan') || 'consumer';
-      var usdMap = {consumer: '$50', starter: '$385', premium: '$1,103'};
+      var usdMap = {consumer: '$50', trial: '$935', starter: '$1,345', premium: '$3,845'};
       var usdEl = document.querySelector('.pusd');
       if(usdEl && usdMap[plan]) {
         usdEl.innerHTML = usdEl.innerHTML.replace(/\$[\d,]+/, usdMap[plan]);

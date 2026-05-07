@@ -191,21 +191,23 @@
         /* ══ SERVICES ═════════════════════════════════════════ */
         .service-grid { display:flex; flex-direction:column; gap:0.7rem; }
         .service-item {
-            display:flex; align-items:flex-start; gap:1rem;
             background:#f7f9fb; border:1px solid var(--border);
-            border-radius:8px; padding:0.85rem 1.1rem;
+            border-radius:8px; padding:0.8rem 1rem;
             border-left:3px solid var(--teal);
             transition:border-color .18s, box-shadow .18s;
         }
         .service-item:hover { box-shadow:0 3px 12px rgba(0,153,170,0.1); border-left-color:var(--teal-b); }
-        .service-item-body { flex:1; min-width:0; }
-        .service-name { font-size:0.88rem; font-weight:700; color:var(--text); margin-bottom:0.25rem; }
-        .service-desc { font-size:0.77rem; color:var(--muted); line-height:1.6; }
+        .service-item-body { width:100%; }
+        .service-name {
+            display:flex; align-items:baseline; justify-content:space-between; gap:0.6rem;
+            font-size:0.88rem; font-weight:700; color:var(--text); margin-bottom:0.3rem;
+        }
+        .service-desc { font-size:0.77rem; color:var(--muted); line-height:1.65; }
         .service-price {
             flex-shrink:0; white-space:nowrap;
-            font-size:0.78rem; color:var(--teal); font-weight:700;
+            font-size:0.75rem; color:var(--teal); font-weight:700;
             background:rgba(0,200,200,0.07); border:1px solid rgba(0,200,200,0.2);
-            border-radius:5px; padding:0.2rem 0.6rem; align-self:flex-start;
+            border-radius:5px; padding:0.15rem 0.5rem;
         }
 
         /* ══ RATINGS ══════════════════════════════════════════ */
@@ -820,45 +822,39 @@ html, body {
                 <div class="service-grid" id="services-list">
                     <div class="service-item">
                         <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="🏷️ 美国商标注册" data-en="🏷️ US Trademark Reg.">🏷️ 美国商标注册</span></div>
+                            <div class="service-name"><span class="t" data-zh="🏷️ 美国商标注册" data-en="🏷️ US Trademark Reg.">🏷️ 美国商标注册</span><div class="service-price"><span class="t" data-zh="$800–$1,200/类" data-en="$800–$1,200/class">$800–$1,200/类</span></div></div>
                             <div class="service-desc"><span class="t" data-zh="全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。" data-en="Full USPTO trademark registration: filing, examination replies, and opposition responses.">全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。</span></div>
                         </div>
-                        <div class="service-price"><span class="t" data-zh="$800–$1,200/类" data-en="$800–$1,200/class">$800–$1,200/类</span></div>
                     </div>
                     <div class="service-item">
                         <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="📋 驳回答辩" data-en="📋 Office Action Response">📋 驳回答辩</span></div>
+                            <div class="service-name"><span class="t" data-zh="📋 驳回答辩" data-en="📋 Office Action Response">📋 驳回答辩</span><div class="service-price">$1,500–$2,500</div></div>
                             <div class="service-desc"><span class="t" data-zh="针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。" data-en="Professional office action responses with 78% success rate, including TTAB appeals.">针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。</span></div>
                         </div>
-                        <div class="service-price">$1,500–$2,500</div>
                     </div>
                     <div class="service-item">
                         <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="💡 发明专利申请" data-en="💡 Invention Patent Filing">💡 发明专利申请</span></div>
+                            <div class="service-name"><span class="t" data-zh="💡 发明专利申请" data-en="💡 Invention Patent Filing">💡 发明专利申请</span><div class="service-price">$3,000–$6,000</div></div>
                             <div class="service-desc"><span class="t" data-zh="发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。" data-en="Utility and design patent filing: technical assessment + claim drafting.">发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。</span></div>
                         </div>
-                        <div class="service-price">$3,000–$6,000</div>
                     </div>
                     <div class="service-item">
                         <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="⚔️ 商标侵权维权" data-en="⚔️ TM Enforcement">⚔️ 商标侵权维权</span></div>
+                            <div class="service-name"><span class="t" data-zh="⚔️ 商标侵权维权" data-en="⚔️ TM Enforcement">⚔️ 商标侵权维权</span><div class="service-price"><span class="t" data-zh="按案件报价" data-en="Case-by-Case">按案件报价</span></div></div>
                             <div class="service-desc"><span class="t" data-zh="电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。" data-en="E-commerce infringement (Amazon/eBay/Walmart), C&D letters, court litigation.">电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。</span></div>
                         </div>
-                        <div class="service-price"><span class="t" data-zh="按案件报价" data-en="Case-by-Case">按案件报价</span></div>
                     </div>
                     <div class="service-item">
                         <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="©️ 版权登记" data-en="©️ Copyright Reg.">©️ 版权登记</span></div>
+                            <div class="service-name"><span class="t" data-zh="©️ 版权登记" data-en="©️ Copyright Reg.">©️ 版权登记</span><div class="service-price">$300–$500</div></div>
                             <div class="service-desc"><span class="t" data-zh="软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。" data-en="US Copyright registration for software, art & literary works. 5-day expedited processing.">软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。</span></div>
                         </div>
-                        <div class="service-price">$300–$500</div>
                     </div>
                     <div class="service-item">
                         <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="🌐 国际商标延伸" data-en="🌐 International TM">🌐 国际商标延伸</span></div>
+                            <div class="service-name"><span class="t" data-zh="🌐 国际商标延伸" data-en="🌐 International TM">🌐 国际商标延伸</span><div class="service-price"><span class="t" data-zh="$500–$900/国" data-en="$500–$900/country">$500–$900/国</span></div></div>
                             <div class="service-desc"><span class="t" data-zh="马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。" data-en="Madrid Protocol TM registration — EU, UK, Australia & more in one application.">马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。</span></div>
                         </div>
-                        <div class="service-price"><span class="t" data-zh="$500–$900/国" data-en="$500–$900/country">$500–$900/国</span></div>
                     </div>
                 </div>
             </div>
@@ -1037,58 +1033,124 @@ html, body {
             <div class="card-body">
                 <!-- Review form -->
                 <div id="review-form">
-                    <!-- Step 1: Service type -->
+                    <!-- Step 1: Service type — Group 4a (10 core) + Group 4b (15 specialist, collapsed) -->
                     <div class="review-section-label"><span class="t" data-zh="① 您使用了哪项服务？" data-en="① Which service did you use?">① 您使用了哪项服务？</span></div>
-                    <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-bottom:1.4rem;">
-                        <button class="rev-svc active" onclick="selectSvc(this)"><span class="t" data-zh="商标注册" data-en="Trademark Registration">商标注册</span></button>
-                        <button class="rev-svc" onclick="selectSvc(this)"><span class="t" data-zh="驳回答辩" data-en="Office Action Response">驳回答辩</span></button>
-                        <button class="rev-svc" onclick="selectSvc(this)"><span class="t" data-zh="专利申请" data-en="Patent Application">专利申请</span></button>
-                        <button class="rev-svc" onclick="selectSvc(this)"><span class="t" data-zh="版权登记" data-en="Copyright Registration">版权登记</span></button>
-                        <button class="rev-svc" onclick="selectSvc(this)"><span class="t" data-zh="其他" data-en="Other">其他</span></button>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem;" id="svc-group4a">
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="trademark" style="display:none"><span class="t" data-zh="🏷️ 商标注册与维权" data-en="🏷️ Trademark">🏷️ 商标注册与维权</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="patent" style="display:none"><span class="t" data-zh="💊 专利申请与保护" data-en="💊 Patent">💊 专利申请与保护</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="copyright" style="display:none"><span class="t" data-zh="©️ 版权与内容合规" data-en="©️ Copyright">©️ 版权与内容合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ecommerce" style="display:none"><span class="t" data-zh="🛒 跨境电商" data-en="🛒 E-commerce">🛒 跨境电商</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="entity" style="display:none"><span class="t" data-zh="🏢 公司设立与架构" data-en="🏢 Entity Setup">🏢 公司设立与架构</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="tax" style="display:none"><span class="t" data-zh="💰 跨境税务筹划" data-en="💰 Cross-border Tax">💰 跨境税务筹划</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="data" style="display:none"><span class="t" data-zh="🔒 数据合规（GDPR/CCPA）" data-en="🔒 Data Compliance">🔒 数据合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="litigation" style="display:none"><span class="t" data-zh="⚖️ 跨境诉讼与仲裁" data-en="⚖️ Litigation">⚖️ 跨境诉讼</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="criminal" style="display:none"><span class="t" data-zh="🚨 跨境刑事风险防范" data-en="🚨 Criminal Risk">🚨 刑事风险防范</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="sanctions" style="display:none"><span class="t" data-zh="🌐 出口管制与经济制裁" data-en="🌐 Export Controls &amp; Sanctions">🌐 出口管制与制裁</span></label>
+                    </div>
+                    <button type="button" id="svc-more-btn" onclick="toggleSvcMore(this)" style="background:none;border:1px dashed #cbd5e1;border-radius:16px;padding:0.22rem 0.7rem;font-size:0.72rem;color:#64748b;cursor:pointer;margin-bottom:1rem;font-family:inherit;">
+                        ＋ <span class="t" data-zh="显示更多专项服务（15个）" data-en="Show more specialist services (15)">显示更多专项服务（15个）</span>
+                    </button>
+                    <div id="svc-group4b" style="display:none;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem;">
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ma" style="display:none"><span class="t" data-zh="🤝 海外投资与并购" data-en="🤝 Overseas M&amp;A">🤝 海外投资与并购</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="trade_remedy" style="display:none"><span class="t" data-zh="⚓ 337调查" data-en="⚓ ITC 337">⚓ 进出口管制与337调查</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="antidumping" style="display:none"><span class="t" data-zh="📉 反倾销与贸易救济" data-en="📉 Anti-dumping">📉 反倾销与贸易救济</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="supply_chain" style="display:none"><span class="t" data-zh="🔗 供应链尽职调查" data-en="🔗 Supply Chain Due Diligence">🔗 供应链尽职调查</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="labor" style="display:none"><span class="t" data-zh="👥 海外劳工与雇佣法" data-en="👥 Employment Law">👥 海外劳工与雇佣法</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="arbitration" style="display:none"><span class="t" data-zh="🏛️ 国际仲裁（ICC/SIAC）" data-en="🏛️ International Arbitration">🏛️ 国际仲裁</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="product_cert" style="display:none"><span class="t" data-zh="🏭 产品认证与合规" data-en="🏭 Product Certification">🏭 产品认证与合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="fcpa" style="display:none"><span class="t" data-zh="🔍 反腐败合规（FCPA）" data-en="🔍 Anti-Corruption (FCPA)">🔍 反腐败合规（FCPA）</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="aml" style="display:none"><span class="t" data-zh="🏦 反洗钱合规（AML）" data-en="🏦 Anti-Money Laundering">🏦 反洗钱合规（AML）</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="financing" style="display:none"><span class="t" data-zh="📈 跨境融资与上市" data-en="📈 Cross-border Financing">📈 跨境融资与上市</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="new_energy" style="display:none"><span class="t" data-zh="⚡ 新能源合规" data-en="⚡ New Energy Compliance">⚡ 新能源与绿色能源合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="med_device" style="display:none"><span class="t" data-zh="🏥 医疗器械注册" data-en="🏥 Medical Device Registration">🏥 医疗器械注册与合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="gaming" style="display:none"><span class="t" data-zh="🎮 游戏与数字内容出海" data-en="🎮 Gaming &amp; Digital Content">🎮 游戏与数字内容出海</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ev" style="display:none"><span class="t" data-zh="🚗 新能源汽车合规" data-en="🚗 EV Compliance">🚗 新能源汽车合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="franchise" style="display:none"><span class="t" data-zh="🤝 特许经营与分销协议" data-en="🤝 Franchise &amp; Distribution">🤝 特许经营与分销协议</span></label>
                     </div>
 
-                    <!-- Step 2: Dimension ratings -->
-                    <div class="review-section-label"><span class="t" data-zh="② 请对以下维度打分" data-en="② Rate each dimension">② 请对以下维度打分</span></div>
+                    <!-- Step 2: 委托验证 -->
+                    <div class="review-section-label"><span class="t" data-zh="② 委托信息（选填，有助于审核）" data-en="② Engagement info (optional, aids verification)">② 委托信息（选填，有助于审核）</span></div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1.4rem;">
+                        <div>
+                            <label style="font-size:0.75rem;color:#64748b;display:block;margin-bottom:0.3rem;"><span class="t" data-zh="委托大致时间" data-en="Approximate engagement time">委托大致时间</span></label>
+                            <div style="display:flex;gap:0.35rem;">
+                                <select id="rev-year" style="flex:1;min-width:0;padding:0.48rem 0.4rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;color:#1a2332;font-size:0.82rem;font-family:inherit;">
+                                    <option value=""><span class="t" data-zh="年份" data-en="Year">年份</span></option>
+                                </select>
+                                <select id="rev-month" style="flex:1;min-width:0;padding:0.48rem 0.4rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;color:#1a2332;font-size:0.82rem;font-family:inherit;">
+                                    <option value="">月份</option>
+                                    <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+                                    <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+                                    <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+                                    <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label style="font-size:0.75rem;color:#64748b;display:block;margin-bottom:0.3rem;"><span class="t" data-zh="实际支付费用区间" data-en="Actual fee range paid">实际支付费用区间</span></label>
+                            <div style="display:flex;flex-direction:column;gap:0.18rem;padding:0.42rem 0.65rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;font-size:0.78rem;color:#1a2332;">
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="lt500" style="margin:0;"> &lt;$500</label>
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="500-2k" style="margin:0;"> $500–$2,000</label>
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="2k-5k" style="margin:0;"> $2,000–$5,000</label>
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="5k-20k" style="margin:0;"> $5,000–$20,000</label>
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="gt20k" style="margin:0;"> &gt;$20,000</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Dimension ratings (weighted) -->
+                    <div class="review-section-label"><span class="t" data-zh="③ 请对以下维度打分" data-en="③ Rate each dimension">③ 请对以下维度打分</span></div>
                     <div class="rating-dims">
+                        <!-- 按权重从高到低排列：专业度30% → 结果满意度25% → 性价比20% → 响应速度15% → 中文沟通10% -->
                         <div class="dim-row">
                             <span class="dim-label"><span class="t" data-zh="专业度" data-en="Professionalism">专业度</span></span>
                             <div class="star-row" id="stars-pro">
-                                <span class="s" onclick="rate('pro',1)">★</span><span class="s" onclick="rate('pro',2)">★</span><span class="s on" onclick="rate('pro',3)">★</span><span class="s on" onclick="rate('pro',4)">★</span><span class="s on" onclick="rate('pro',5)">★</span>
+                                <span class="s" onclick="rate('pro',1)">★</span><span class="s" onclick="rate('pro',2)">★</span><span class="s" onclick="rate('pro',3)">★</span><span class="s" onclick="rate('pro',4)">★</span><span class="s" onclick="rate('pro',5)">★</span>
                             </div>
-                            <span class="dim-hint"><span class="t" data-zh="法律建议是否专业准确" data-en="Quality of legal advice & accuracy">法律建议是否专业准确</span></span>
-                        </div>
-                        <div class="dim-row">
-                            <span class="dim-label"><span class="t" data-zh="响应速度" data-en="Response Speed">响应速度</span></span>
-                            <div class="star-row" id="stars-spd">
-                                <span class="s" onclick="rate('spd',1)">★</span><span class="s on" onclick="rate('spd',2)">★</span><span class="s on" onclick="rate('spd',3)">★</span><span class="s on" onclick="rate('spd',4)">★</span><span class="s" onclick="rate('spd',5)">★</span>
-                            </div>
-                            <span class="dim-hint"><span class="t" data-zh="邮件 / 微信回复是否及时" data-en="Email / WeChat reply speed">邮件 / 微信回复是否及时</span></span>
-                        </div>
-                        <div class="dim-row">
-                            <span class="dim-label"><span class="t" data-zh="性价比" data-en="Value for Money">性价比</span></span>
-                            <div class="star-row" id="stars-val">
-                                <span class="s" onclick="rate('val',1)">★</span><span class="s" onclick="rate('val',2)">★</span><span class="s on" onclick="rate('val',3)">★</span><span class="s on" onclick="rate('val',4)">★</span><span class="s on" onclick="rate('val',5)">★</span>
-                            </div>
-                            <span class="dim-hint"><span class="t" data-zh="费用是否透明合理" data-en="Pricing transparency & fairness">费用是否透明合理</span></span>
-                        </div>
-                        <div class="dim-row">
-                            <span class="dim-label"><span class="t" data-zh="中文沟通" data-en="Mandarin Service">中文沟通</span></span>
-                            <div class="star-row" id="stars-cn">
-                                <span class="s on" onclick="rate('cn',1)">★</span><span class="s on" onclick="rate('cn',2)">★</span><span class="s on" onclick="rate('cn',3)">★</span><span class="s on" onclick="rate('cn',4)">★</span><span class="s on" onclick="rate('cn',5)">★</span>
-                            </div>
-                            <span class="dim-hint"><span class="t" data-zh="中文流利度，是否提供中文文件" data-en="Fluency in Mandarin; Chinese documents available">中文流利度，是否提供中文文件</span></span>
+                            <span class="dim-weight">30%</span>
+                            <span class="dim-hint"><span class="t" data-zh="法律建议是否专业准确" data-en="Quality of legal advice">法律建议是否专业准确</span></span>
                         </div>
                         <div class="dim-row">
                             <span class="dim-label"><span class="t" data-zh="结果满意度" data-en="Outcome">结果满意度</span></span>
                             <div class="star-row" id="stars-out">
-                                <span class="s" onclick="rate('out',1)">★</span><span class="s" onclick="rate('out',2)">★</span><span class="s" onclick="rate('out',3)">★</span><span class="s on" onclick="rate('out',4)">★</span><span class="s on" onclick="rate('out',5)">★</span>
+                                <span class="s" onclick="rate('out',1)">★</span><span class="s" onclick="rate('out',2)">★</span><span class="s" onclick="rate('out',3)">★</span><span class="s" onclick="rate('out',4)">★</span><span class="s" onclick="rate('out',5)">★</span>
                             </div>
-                            <span class="dim-hint"><span class="t" data-zh="最终结果是否达到预期" data-en="Did the outcome meet your expectations?">最终结果是否达到预期</span></span>
+                            <span class="dim-weight">25%</span>
+                            <span class="dim-hint"><span class="t" data-zh="最终结果是否达到预期" data-en="Did the outcome meet expectations?">最终结果是否达到预期</span></span>
+                        </div>
+                        <div class="dim-row">
+                            <span class="dim-label"><span class="t" data-zh="性价比" data-en="Value for Money">性价比</span></span>
+                            <div class="star-row" id="stars-val">
+                                <span class="s" onclick="rate('val',1)">★</span><span class="s" onclick="rate('val',2)">★</span><span class="s" onclick="rate('val',3)">★</span><span class="s" onclick="rate('val',4)">★</span><span class="s" onclick="rate('val',5)">★</span>
+                            </div>
+                            <span class="dim-weight">20%</span>
+                            <span class="dim-hint"><span class="t" data-zh="费用是否透明合理" data-en="Pricing transparency & fairness">费用是否透明合理</span></span>
+                        </div>
+                        <div class="dim-row">
+                            <span class="dim-label"><span class="t" data-zh="响应速度" data-en="Responsiveness">响应速度</span></span>
+                            <div class="star-row" id="stars-spd">
+                                <span class="s" onclick="rate('spd',1)">★</span><span class="s" onclick="rate('spd',2)">★</span><span class="s" onclick="rate('spd',3)">★</span><span class="s" onclick="rate('spd',4)">★</span><span class="s" onclick="rate('spd',5)">★</span>
+                            </div>
+                            <span class="dim-weight">15%</span>
+                            <span class="dim-hint"><span class="t" data-zh="邮件/微信回复是否及时" data-en="Email/WeChat reply speed">邮件/微信回复是否及时</span></span>
+                        </div>
+                        <div class="dim-row">
+                            <span class="dim-label"><span class="t" data-zh="中文沟通" data-en="Mandarin Service">中文沟通</span></span>
+                            <div class="star-row" id="stars-cn">
+                                <span class="s" onclick="rate('cn',1)">★</span><span class="s" onclick="rate('cn',2)">★</span><span class="s" onclick="rate('cn',3)">★</span><span class="s" onclick="rate('cn',4)">★</span><span class="s" onclick="rate('cn',5)">★</span>
+                            </div>
+                            <span class="dim-weight">10%</span>
+                            <span class="dim-hint"><span class="t" data-zh="中文流利度，是否提供中文文件" data-en="Mandarin fluency; Chinese docs available">中文流利度，是否提供中文文件</span></span>
+                        </div>
+                        <!-- 加权综合评分实时显示 -->
+                        <div id="score-preview" style="display:none;align-items:center;justify-content:space-between;padding:0.5rem 0.8rem;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1.5px solid #bae6fd;border-radius:8px;margin-top:0.3rem;">
+                            <span style="font-size:0.8rem;color:#0369a1;font-weight:600;"><span class="t" data-zh="综合评分（加权）" data-en="Weighted Score">综合评分（加权）</span></span>
+                            <span id="score-val" style="font-size:1.3rem;font-weight:800;color:#0ea5e9;">—</span>
                         </div>
                     </div>
 
-                    <!-- Step 3: Quick tags -->
-                    <div class="review-section-label" style="margin-top:1.2rem;"><span class="t" data-zh="③ 选择适用标签（可多选）" data-en="③ Pick applicable tags">③ 选择适用标签（可多选）</span></div>
+                    <!-- Step 4: Quick tags -->
+                    <div class="review-section-label" style="margin-top:1.2rem;"><span class="t" data-zh="④ 选择适用标签（可多选）" data-en="④ Pick applicable tags">④ 选择适用标签（可多选）</span></div>
                     <div class="rev-tags">
                         <button class="rev-tag on" onclick="toggleTag(this)"><span class="t" data-zh="👍 性价比高" data-en="👍 Great value">👍 性价比高</span></button>
                         <button class="rev-tag on" onclick="toggleTag(this)"><span class="t" data-zh="⚡ 响应迅速" data-en="⚡ Fast response">⚡ 响应迅速</span></button>
@@ -1104,38 +1166,24 @@ html, body {
                         <button class="rev-tag neg" onclick="toggleTag(this)"><span class="t" data-zh="💸 费用超预算" data-en="💸 Over budget">💸 费用超预算</span></button>
                     </div>
 
-                    <!-- Step 4: Written review -->
-                    <div class="review-section-label" style="margin-top:1.2rem;"><span class="t" data-zh="④ 详细评价（选填，但对其他客户非常有价值）" data-en="④ Written review (optional, very helpful to others)">④ 详细评价（选填，但对其他客户非常有价值）</span></div>
+                    <!-- Step 5: Written review -->
+                    <div class="review-section-label" style="margin-top:1.2rem;"><span class="t" data-zh="⑤ 详细评价（选填，但对其他客户非常有价值）" data-en="⑤ Written review (optional, very helpful to others)">⑤ 详细评价（选填，但对其他客户非常有价值）</span></div>
                     <div style="background:rgba(0,0,0,0.03);border-radius:6px;padding:0.6rem 0.75rem;margin-bottom:0.6rem;font-size:0.78rem;color:var(--muted);line-height:1.6;border-left:3px solid #d4af37;">
-                        <span class="t" data-zh="💡 建议描述：① 您的业务背景 ② 律所处理方式 ③ 最终结果与耗时 ④ 是否推荐" data-en="💡 Suggestions: ① Your business context ② How the firm handled it ③ Outcome & timeline ④ Would you recommend?">💡 建议描述：① 您的业务背景 ② 律所处理方式 ③ 最终结果与耗时 ④ 是否推荐</span>
+                        <span class="t" data-zh="💡 建议描述：① 您的业务背景 ② 律所处理方式 ③ 最终结果与耗时 ④ 是否推荐" data-en="💡 Suggestions: ① Your business context ② How the firm handled it ③ Outcome &amp; timeline ④ Would you recommend?">💡 建议描述：① 您的业务背景 ② 律所处理方式 ③ 最终结果与耗时 ④ 是否推荐</span>
                     </div>
                     <textarea id="rev-txt" rows="4" placeholder="例如：我们是做跨境SaaS的企业，在美国注册第9、42类商标。律师全程中文沟通，2周内完成申请，实际费用$950，无隐藏费用，3个月拿到证书。强烈推荐！" style="width:100%;padding:0.75rem;background:var(--surface,#f8f9fa);border:1.5px solid var(--border,#e0e0e0);border-radius:6px;color:var(--text,#1a2332);font-size:0.87rem;resize:vertical;font-family:inherit;line-height:1.6;"></textarea>
+                    <!-- 隐藏字段供 submitRev() 读取 -->
+                    <input type="hidden" id="rev-price">
+                    <input type="hidden" id="rev-dur">
 
-                    <!-- Step 5: Price paid + timeline -->
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;margin-top:0.75rem;">
-                        <div>
-                            <label style="font-size:0.78rem;color:var(--muted);display:block;margin-bottom:0.3rem;">
-                                <span class="t" data-zh="实际支付金额（USD，选填）" data-en="Actual amount paid (USD, optional)">实际支付金额（USD，选填）</span>
-                            </label>
-                            <input type="number" id="rev-price" placeholder="e.g. 950" style="width:100%;padding:0.55rem 0.7rem;background:var(--surface,#f8f9fa);border:1.5px solid var(--border,#e0e0e0);border-radius:6px;color:var(--text,#1a2332);font-size:0.88rem;font-family:inherit;">
-                        </div>
-                        <div>
-                            <label style="font-size:0.78rem;color:var(--muted);display:block;margin-bottom:0.3rem;">
-                                <span class="t" data-zh="服务完成时间" data-en="Time to completion">服务完成时间</span>
-                            </label>
-                            <select id="rev-dur" style="width:100%;padding:0.55rem 0.7rem;background:var(--surface,#f8f9fa);border:1.5px solid var(--border,#e0e0e0);border-radius:6px;color:var(--text,#1a2332);font-size:0.88rem;font-family:inherit;">
-                                <option value="" data-zh="请选择" data-en="Select…">请选择</option>
-                                <option value="1m" data-zh="1个月内" data-en="Within 1 month">1个月内</option>
-                                <option value="3m" data-zh="1–3个月" data-en="1–3 months">1–3个月</option>
-                                <option value="6m" data-zh="3–6个月" data-en="3–6 months">3–6个月</option>
-                                <option value="12m" data-zh="6–12个月" data-en="6–12 months">6–12个月</option>
-                                <option value="12m+" data-zh="12个月以上" data-en="Over 12 months">12个月以上</option>
-                            </select>
-                        </div>
+                    <!-- ⑥ 评价机制说明 -->
+                    <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:0.65rem 0.9rem;margin-top:1rem;font-size:0.77rem;color:#0369a1;line-height:1.65;">
+                        <strong><span class="t" data-zh="📋 评价机制说明" data-en="📋 Review Policy">📋 评价机制说明</span></strong><br>
+                        <span class="t" data-zh="律所在收到评价通知后可进行一次公开回复，回复将同时显示在评价下方。律所不能要求修改或删除客户评价。Whalium 保留对恶意或虚假评价的审核与删除权。" data-en="Firms may post one public reply after receiving review notification. Firms cannot request edits or deletions of client reviews. Whalium reserves the right to moderate and remove malicious or false reviews.">律所在收到评价通知后可进行一次公开回复，回复将同时显示在评价下方。律所不能要求修改或删除客户评价。Whalium 保留对恶意或虚假评价的审核与删除权。</span>
                     </div>
 
                     <!-- Submit -->
-                    <div style="display:flex;align-items:center;gap:1rem;margin-top:1.2rem;">
+                    <div style="display:flex;align-items:center;gap:1rem;margin-top:1rem;">
                         <button onclick="submitRev()" style="flex:1;padding:0.8rem;background:linear-gradient(135deg,#1a2332,#2c3e50);color:white;border:none;border-radius:6px;font-size:0.93rem;font-weight:600;cursor:pointer;font-family:inherit;">
                             <span class="t" data-zh="提交评价" data-en="Submit Review">提交评价</span>
                         </button>
@@ -1170,7 +1218,47 @@ html, body {
         .rev-tag.neg { border-color:#fde8e8; color:#c0392b; }
         .rev-tag.neg.on { background:#fde8e8; border-color:#c0392b; color:#c0392b; font-weight:600; }
         .rev-tag:hover { border-color:#1a2332; color:#1a2332; }
-        
+
+        /* ── 服务类型 chip（与 submit-firm 风格一致）── */
+        .rev-svc-chip { display:inline-flex; align-items:center; gap:0.25rem; padding:0.28rem 0.7rem; background:#F1F5F9; border:1.5px solid #E2E8F0; border-radius:20px; color:#475569; font-size:0.78rem; cursor:pointer; transition:all 0.18s; font-family:inherit; user-select:none; }
+        .rev-svc-chip:hover { border-color:#0EA5E9; background:#E0F2FE; }
+        .rev-svc-chip.rev-svc-selected { background:#E0F2FE; border-color:#0EA5E9; color:#0369A1; font-weight:700; }
+
+        /* ── 维度权重标签 ── */
+        .dim-weight { font-size:0.68rem; color:#94a3b8; min-width:28px; text-align:right; flex-shrink:0; }
+
+        /* ── 询盘 modal chip（预算/紧急）── */
+        .inq-chip { display:inline-flex; align-items:center; justify-content:center; padding:0.3rem 0.72rem; background:#f8fafc; border:1.5px solid #c9d5e0; border-radius:14px; font-size:0.76rem; color:#374151; cursor:pointer; transition:all 0.15s; font-family:inherit; user-select:none; font-weight:500; }
+        .inq-chip:hover { border-color:#0ea5e9; background:#e0f2fe; color:#0369a1; }
+        .inq-chip.inq-chip-selected { background:#dbeafe; border-color:#3b82f6; color:#1d4ed8; font-weight:700; }
+
+        /* ── 询盘 issue-tag ── */
+        .issue-tag { padding:0.28rem 0.65rem; background:#f8fafc; border:1.5px solid #c9d5e0; border-radius:14px; font-size:0.75rem; cursor:pointer; font-family:inherit; color:#374151; transition:all 0.15s; font-weight:500; }
+        .issue-tag:hover { border-color:#0ea5e9; background:#e0f2fe; color:#0369a1; }
+        .issue-tag.selected { background:#dbeafe; border-color:#3b82f6; color:#1d4ed8; font-weight:700; }
+
+        /* ── 询盘 modal — labels、inputs、layout ── */
+        #inquiry-modal .inq-label {
+            display:block; font-size:0.74rem; font-weight:700; color:#374151;
+            text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.38rem;
+        }
+        #inquiry-modal input[type="text"],
+        #inquiry-modal input[type="email"],
+        #inquiry-modal textarea {
+            background:#fafdff; border:1.5px solid #c9d5e0; border-radius:7px;
+            color:#1a2e4a; font-size:0.86rem; outline:none;
+            padding:0.6rem 0.85rem; width:100%; font-family:inherit; box-sizing:border-box;
+            transition:border-color .15s, box-shadow .15s;
+        }
+        #inquiry-modal input[type="text"]:focus,
+        #inquiry-modal input[type="email"]:focus,
+        #inquiry-modal textarea:focus {
+            border-color:#3b82f6; box-shadow:0 0 0 3px rgba(59,130,246,0.12);
+            background:#fff;
+        }
+        #inquiry-modal .inq-section { margin-bottom:0.9rem; }
+        #inquiry-modal .inq-divider { border:none; border-top:1px solid #eef2f7; margin:0.85rem 0; }
+
     /* ── Inquiry Tracker ── */
     .inq-tracker { display:none; background:#fff; border:1.5px solid #22ccde; border-radius:10px; padding:1rem 1.1rem; margin-top:1rem; }
     .inq-tracker.visible { display:block; }
@@ -1187,12 +1275,74 @@ html, body {
     </style>
 
         <script>
-        function selectSvc(btn){ document.querySelectorAll('.rev-svc').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); }
-        function rate(dim,val){
-            var stars=document.querySelectorAll('#stars-'+dim+' .s');
-            stars.forEach(function(s,i){ s.classList.toggle('on',i<val); });
+        // ── 服务类型 chip 选择 ─────────────────────────────────────
+        function selectSvcChip(label) {
+            document.querySelectorAll('.rev-svc-chip').forEach(function(l){ l.classList.remove('rev-svc-selected'); });
+            label.classList.add('rev-svc-selected');
+            var radio = label.querySelector('input[type=radio]');
+            if (radio) radio.checked = true;
         }
+        function toggleSvcMore(btn) {
+            var wrap = document.getElementById('svc-group4b');
+            if (!wrap) return;
+            var isOpen = wrap.style.display !== 'none';
+            wrap.style.display = isOpen ? 'none' : 'flex';
+            var zh = (window._wlang || 'zh') !== 'en';
+            btn.innerHTML = isOpen
+              ? '＋ <span class="t" data-zh="显示更多专项服务（15个）" data-en="Show more specialist services (15)">' + (zh ? '显示更多专项服务（15个）' : 'Show more specialist services (15)') + '</span>'
+              : '－ <span class="t" data-zh="收起专项服务" data-en="Collapse specialist services">' + (zh ? '收起专项服务' : 'Collapse specialist services') + '</span>';
+        }
+
+        // ── 向后兼容旧按钮式服务选择 ──────────────────────────────
+        function selectSvc(btn){ document.querySelectorAll('.rev-svc').forEach(function(b){ b.classList.remove('active'); }); btn.classList.add('active'); }
+
+        // ── 加权评分计算（专业度30%·结果满意度25%·性价比20%·响应速度15%·中文沟通10%）──
+        var DIM_WEIGHTS = { pro:0.30, out:0.25, val:0.20, spd:0.15, cn:0.10 };
+        function calcScore() {
+            var total = 0, wsum = 0;
+            var allRated = true;
+            Object.keys(DIM_WEIGHTS).forEach(function(d) {
+                var on = document.querySelectorAll('#stars-' + d + ' .s.on').length;
+                if (on > 0) {
+                    total += on * DIM_WEIGHTS[d];
+                    wsum  += DIM_WEIGHTS[d];
+                } else {
+                    allRated = false;
+                }
+            });
+            var preview = document.getElementById('score-preview');
+            var scoreEl = document.getElementById('score-val');
+            if (!preview || !scoreEl) return;
+            if (wsum === 0) {
+                preview.style.display = 'none';
+                return;
+            }
+            var score = (total / wsum).toFixed(1);
+            preview.style.display = 'flex';
+            scoreEl.textContent = '⭐ ' + score + ' / 5.0';
+            scoreEl.style.color = score >= 4.0 ? '#16a34a' : score >= 3.0 ? '#d97706' : '#dc2626';
+        }
+
+        function rate(dim, val) {
+            var stars = document.querySelectorAll('#stars-' + dim + ' .s');
+            stars.forEach(function(s, i){ s.classList.toggle('on', i < val); });
+            calcScore();
+        }
+
         function toggleTag(btn){ btn.classList.toggle('on'); }
+
+        // ── 年份下拉初始化 ────────────────────────────────────────
+        (function initYears(){
+            var sel = document.getElementById('rev-year');
+            if (!sel) return;
+            var cur = new Date().getFullYear();
+            for (var y = cur; y >= cur - 5; y--) {
+                var opt = document.createElement('option');
+                opt.value = y;
+                opt.textContent = y + '年';
+                sel.appendChild(opt);
+            }
+        })();
 
         function submitRev(){
           var lang = window._wlang || 'zh';
@@ -1209,20 +1359,29 @@ html, body {
             }
 
             // ── 2. 收集表单数据 ──────────────────────────────────────
-            var svcBtn = document.querySelector('.rev-svc.active');
-            var serviceType = svcBtn ? svcBtn.textContent.trim() : null;
+            // 服务类型：优先取新chip选择，否则取旧按钮
+            var svcChip = document.querySelector('.rev-svc-chip.rev-svc-selected input[type=radio]');
+            var svcBtn  = document.querySelector('.rev-svc.active');
+            var serviceType = svcChip ? svcChip.value : (svcBtn ? svcBtn.textContent.trim() : null);
 
-            var dims = ['pro','spd','val','cn','out'];
+            // 维度打分（加权）
+            var dims = ['pro','out','val','spd','cn'];
             var breakdown = {};
-            var total = 0, count = 0;
+            var wTotal = 0, wSum = 0, countRated = 0;
             dims.forEach(function(d){
-              var on = document.querySelectorAll('#stars-'+d+' .s.on').length;
+              var on = document.querySelectorAll('#stars-' + d + ' .s.on').length;
               breakdown[d] = on;
-              if (on > 0){ total += on; count++; }
+              if (on > 0) {
+                wTotal += on * (DIM_WEIGHTS[d] || 0.2);
+                wSum   += (DIM_WEIGHTS[d] || 0.2);
+                countRated++;
+              }
             });
 
-            if (count === 0) { alert(zh ? '请至少给一项打分' : 'Please rate at least one dimension'); return; }
-            var avgRating = Math.max(1, Math.min(5, Math.round(total / count)));
+            if (countRated === 0) { alert(zh ? '请至少给一项打分' : 'Please rate at least one dimension'); return; }
+            // 加权综合评分，四舍五入到整数（1–5）
+            var weightedScore = wSum > 0 ? wTotal / wSum : 0;
+            var avgRating = Math.max(1, Math.min(5, Math.round(weightedScore)));
 
             var body = (document.getElementById('rev-txt') || {}).value;
             if (!body || body.trim().length < 5) {
@@ -1233,8 +1392,14 @@ html, body {
             var tags = [];
             document.querySelectorAll('.rev-tag.on').forEach(function(t){ tags.push(t.textContent.trim()); });
 
-            var priceEl = document.getElementById('rev-price');
-            var durEl   = document.getElementById('rev-dur');
+            // 费用区间 → 记录字符串值
+            var feeRadio = document.querySelector('input[name=rev-fee]:checked');
+            var feeRange = feeRadio ? feeRadio.value : null;
+            // 委托时间
+            var yearEl  = document.getElementById('rev-year');
+            var monthEl = document.getElementById('rev-month');
+            var engageTime = (yearEl && yearEl.value) ? yearEl.value + (monthEl && monthEl.value ? '-' + monthEl.value : '') : null;
+
             var verifiedCb = document.getElementById('commissioned-confirm');
 
             var firm = window._wh_firm || {};
@@ -1242,9 +1407,11 @@ html, body {
               firm_id:          firm.id  || null,
               user_id:          session.user.id,
               rating:           avgRating,
+              rating_breakdown: breakdown,
               body:             body.trim(),
               service_type:     serviceType,
-              amount_paid:      priceEl && priceEl.value ? parseFloat(priceEl.value) : null,
+              fee_range:        feeRange,
+              engage_time:      engageTime,
               tags:             tags,
               verified_service: !!(verifiedCb && verifiedCb.checked),
               status:           'pending'
@@ -1392,15 +1559,17 @@ html, body {
             </div>
         </div>
 
-        <!-- 特色服务 -->
-        <div class="side-card">
+        <!-- 特色服务（内容由 JS 动态渲染，无 slug 时保留演示数据） -->
+        <div class="side-card" id="features-side-card">
             <div class="side-card-title"><span class="t" data-zh="特色服务" data-en="Key Features">特色服务</span></div>
-            <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="全程中文服务" data-en="Full Mandarin-speaking Service">全程中文服务</span></div>
-            <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="华裔律师对接" data-en="Chinese-American Attorney">华裔律师对接</span></div>
-            <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="固定报价透明" data-en="Fixed & Transparent Pricing">固定报价透明</span></div>
-            <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="免费初次咨询（30分钟）" data-en="Free Initial Consultation (30 min)">免费初次咨询（30分钟）</span></div>
-            <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="支持人民币付款" data-en="CNY Payment Accepted">支持人民币付款</span></div>
-            <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="24小时响应保证" data-en="24-hour Response Guarantee">24小时响应保证</span></div>
+            <div class="features-body">
+                <!-- 无 slug 时的演示数据，有 slug 时由 JS 覆盖 -->
+                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="全程中文服务" data-en="Full Mandarin-speaking Service">全程中文服务</span></div>
+                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="华裔律师对接" data-en="Chinese-American Attorney">华裔律师对接</span></div>
+                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="固定报价透明" data-en="Fixed & Transparent Pricing">固定报价透明</span></div>
+                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="免费初次咨询（30分钟）" data-en="Free Initial Consultation (30 min)">免费初次咨询（30分钟）</span></div>
+                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="24小时响应保证" data-en="24-hour Response Guarantee">24小时响应保证</span></div>
+            </div>
         </div>
 
         <!-- 认证资质 -->
@@ -1430,76 +1599,111 @@ html, body {
     <div style="background:#fff;border-radius:14px;width:100%;max-width:480px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.25)">
         <div style="background:linear-gradient(135deg,#1a2e4a,#1e3858);padding:1.3rem 1.6rem;display:flex;justify-content:space-between;align-items:center">
             <div>
-                <div style="color:#fff;font-size:1rem;font-weight:700"><span class="t" data-zh="发送询盘" data-en="Send Inquiry">发送询盘</span> · Morrison IP Law</div>
-                <div style="color:rgba(200,225,240,0.6);font-size:0.75rem;margin-top:0.15rem">
+                <div style="color:#fff;font-size:1rem;font-weight:700"><span class="t" data-zh="发送询盘" data-en="Send Inquiry">发送询盘</span> · <span id="inq-modal-firm-name">律所</span></div>
+                <div style="color:rgba(200,225,240,0.88);font-size:0.75rem;margin-top:0.2rem">
                     <span class="t" data-zh="律所通常在 24 小时内用中文回复" data-en="Firms typically reply within 24 hours">律所通常在 24 小时内用中文回复</span>
                 </div>
             </div>
-            <button onclick="document.getElementById('inquiry-modal').style.display='none'" style="background:none;border:none;color:rgba(255,255,255,0.5);font-size:1.4rem;cursor:pointer;line-height:1">×</button>
+            <button onclick="document.getElementById('inquiry-modal').style.display='none'" style="background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.85);font-size:1.3rem;cursor:pointer;line-height:1;border-radius:6px;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,0.2)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">×</button>
         </div>
-        <div style="padding:1.5rem">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
+        <div style="padding:1.4rem 1.5rem">
+            <div class="inq-section" style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
                 <div>
-                    <label style="display:block;font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em"><span class="t" data-zh="您的姓名 *" data-en="Name *">您的姓名 *</span></label>
-                    <input type="text" id="inq-name" placeholder="请输入姓名" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.86rem;outline:none;color:var(--text);font-family:inherit;" data-ph-zh="请输入姓名" data-ph-en="Your name">
-                </div>
-                <div>
-                    <label style="display:block;font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em"><span class="t" data-zh="公司名称" data-en="Company">公司名称</span></label>
-                    <input type="text" id="inq-company" placeholder="（选填）公司名称" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.86rem;outline:none;color:var(--text);font-family:inherit;" data-ph-zh="（选填）公司名称" data-ph-en="Company name (optional)">
-                </div>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin-bottom:0.75rem;">
-                <div>
-                    <label style="display:block;font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em"><span class="t" data-zh="邮箱地址 *" data-en="Email *">邮箱地址 *</span></label>
-                    <input type="email" id="inq-email" placeholder="your@email.com" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.86rem;outline:none;color:var(--text);font-family:inherit;">
+                    <label class="inq-label"><span class="t" data-zh="您的姓名 *" data-en="Name *">您的姓名 *</span></label>
+                    <input type="text" id="inq-name" placeholder="请输入姓名" data-ph-zh="请输入姓名" data-ph-en="Your name">
                 </div>
                 <div>
-                    <label style="display:block;font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em"><span class="t" data-zh="预算范围" data-en="Budget">预算范围</span></label>
-                    <select id="inq-budget" style="width:100%;padding:0.6rem 0.8rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.86rem;outline:none;color:var(--text);background:#fff;font-family:inherit;">
-                        <option value="" data-zh="请选择" data-en="Select…">请选择</option>
-                        <option value="under500" data-zh="$500以下" data-en="Under $500">$500以下</option>
-                        <option value="500-1500">$500–1,500</option>
-                        <option value="1500-5000">$1,500–5,000</option>
-                        <option value="over5000" data-zh="$5,000以上" data-en="Over $5,000">$5,000以上</option>
-                        <option value="unknown" data-zh="暂不确定" data-en="Not sure yet">暂不确定</option>
-                    </select>
+                    <label class="inq-label"><span class="t" data-zh="公司名称" data-en="Company">公司名称</span></label>
+                    <input type="text" id="inq-company" placeholder="（选填）公司名称" data-ph-zh="（选填）公司名称" data-ph-en="Company name (optional)">
                 </div>
             </div>
-            <div style="margin-bottom:0.75rem;">
-                <label style="display:block;font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em"><span class="t" data-zh="法律需求类型" data-en="Legal Issue Type">法律需求类型</span></label>
-                <div style="display:flex;gap:0.4rem;flex-wrap:wrap;" id="inq-issue-tags">
-                    <button type="button" class="issue-tag" onclick="toggleIssueTag(this)" style="padding:0.28rem 0.7rem;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:14px;font-size:0.75rem;cursor:pointer;font-family:inherit;color:var(--text);">🏷️ <span class="t" data-zh="商标注册" data-en="Trademark">商标注册</span></button>
-                    <button type="button" class="issue-tag" onclick="toggleIssueTag(this)" style="padding:0.28rem 0.7rem;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:14px;font-size:0.75rem;cursor:pointer;font-family:inherit;color:var(--text);">📋 <span class="t" data-zh="驳回答辩" data-en="Office Action">驳回答辩</span></button>
-                    <button type="button" class="issue-tag" onclick="toggleIssueTag(this)" style="padding:0.28rem 0.7rem;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:14px;font-size:0.75rem;cursor:pointer;font-family:inherit;color:var(--text);">🏢 <span class="t" data-zh="公司设立" data-en="Entity Setup">公司设立</span></button>
-                    <button type="button" class="issue-tag" onclick="toggleIssueTag(this)" style="padding:0.28rem 0.7rem;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:14px;font-size:0.75rem;cursor:pointer;font-family:inherit;color:var(--text);">📊 <span class="t" data-zh="税务合规" data-en="Tax/Compliance">税务合规</span></button>
-                    <button type="button" class="issue-tag" onclick="toggleIssueTag(this)" style="padding:0.28rem 0.7rem;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:14px;font-size:0.75rem;cursor:pointer;font-family:inherit;color:var(--text);">⚖️ <span class="t" data-zh="合同/诉讼" data-en="Contract/Dispute">合同/诉讼</span></button>
-                    <button type="button" class="issue-tag" onclick="toggleIssueTag(this)" style="padding:0.28rem 0.7rem;background:#f1f5f9;border:1.5px solid #e2e8f0;border-radius:14px;font-size:0.75rem;cursor:pointer;font-family:inherit;color:var(--text);">🔒 <span class="t" data-zh="其他" data-en="Other">其他</span></button>
+            <!-- 邮箱 行 -->
+            <div class="inq-section">
+                <label class="inq-label"><span class="t" data-zh="邮箱地址 *" data-en="Email *">邮箱地址 *</span></label>
+                <input type="email" id="inq-email" placeholder="your@email.com">
+            </div>
+
+            <hr class="inq-divider">
+
+            <!-- 预算范围 chip 单选 -->
+            <div class="inq-section">
+                <label class="inq-label"><span class="t" data-zh="预算范围（选填）" data-en="Budget Range (optional)">预算范围（选填）</span></label>
+                <div style="display:flex;flex-wrap:wrap;gap:0.35rem;" id="inq-budget-chips">
+                    <label class="inq-chip"><input type="radio" name="inq-budget" value="lt500" style="display:none"> <span>&lt;$500</span></label>
+                    <label class="inq-chip"><input type="radio" name="inq-budget" value="500-2k" style="display:none"> <span>$500–$2K</span></label>
+                    <label class="inq-chip"><input type="radio" name="inq-budget" value="2k-5k" style="display:none"> <span>$2K–$5K</span></label>
+                    <label class="inq-chip"><input type="radio" name="inq-budget" value="5k-20k" style="display:none"> <span>$5K–$20K</span></label>
+                    <label class="inq-chip"><input type="radio" name="inq-budget" value="gt20k" style="display:none"> <span>&gt;$20K</span></label>
+                    <label class="inq-chip"><input type="radio" name="inq-budget" value="unknown" style="display:none"> <span class="t" data-zh="待定" data-en="TBD">待定</span></label>
                 </div>
             </div>
-            <div style="margin-bottom:0.75rem;">
-                <label style="display:block;font-size:0.72rem;font-weight:700;color:var(--muted);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em"><span class="t" data-zh="需求描述 *" data-en="Describe Your Needs *">需求描述 *</span></label>
-                <textarea id="inq-body" rows="3" placeholder="请简要描述您的法律问题和背景，律所可以更快给出有针对性的回复。" style="width:100%;padding:0.65rem 0.85rem;border:1.5px solid var(--border);border-radius:7px;font-size:0.86rem;outline:none;color:var(--text);resize:vertical;font-family:inherit;" data-ph-zh="请简要描述您的法律问题和背景，律所可以更快给出有针对性的回复。" data-ph-en="Briefly describe your legal issue and context — this helps the firm respond more specifically."></textarea>
-            </div>
-            <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:0.6rem 0.85rem;margin-bottom:0.8rem;font-size:0.77rem;color:#1e40af;line-height:1.65;">
-                <span class="t" data-zh="✅ 律所将用中文回复  ·  ✅ 第一次咨询免费  ·  ✅ 发送询盘不构成委托关系，无任何法律责任" data-en="✅ Firm will reply in English  ·  ✅ First consultation free  ·  ✅ Inquiry does not create attorney-client relationship">✅ 律所将用中文回复  ·  ✅ 第一次咨询免费  ·  ✅ 发送询盘不构成委托关系，无任何法律责任</span>
-            </div>
-            <button onclick="submitInquiry()" style="width:100%;padding:0.85rem;background:linear-gradient(135deg,#00c8d8,#0088b8);color:#fff;border:none;border-radius:8px;font-size:0.92rem;font-weight:700;cursor:pointer;transition:filter .18s"><span class="t" data-zh="发送询盘" data-en="Send Inquiry">发送询盘</span></button>
-            <!-- Cold-start: direct email channel — no login required -->
-            <div style="margin-top:0.9rem;padding-top:0.9rem;border-top:1px dashed rgba(0,0,0,0.1);">
-                <div style="text-align:center;font-size:0.72rem;color:#888;margin-bottom:0.55rem;">
-                    <span class="t" data-zh="— 或者，跳过平台直接发邮件 —" data-en="— Or contact the firm directly by email —">— 或者，跳过平台直接发邮件 —</span>
+
+            <!-- 法律需求类型 — Group4a(10) 默认展示 + 折叠 Group4b(15) -->
+            <div class="inq-section">
+                <label class="inq-label"><span class="t" data-zh="法律需求类型（可多选）" data-en="Legal Issue Type (multi-select)">法律需求类型（可多选）</span></label>
+                <div style="display:flex;gap:0.35rem;flex-wrap:wrap;" id="inq-issue-tags">
+                    <button type="button" class="issue-tag" data-svc="trademark" onclick="toggleIssueTag(this)">🏷️ <span class="t" data-zh="商标注册与维权" data-en="Trademark">商标</span></button>
+                    <button type="button" class="issue-tag" data-svc="patent"    onclick="toggleIssueTag(this)">💊 <span class="t" data-zh="专利申请" data-en="Patent">专利</span></button>
+                    <button type="button" class="issue-tag" data-svc="copyright" onclick="toggleIssueTag(this)">©️ <span class="t" data-zh="版权合规" data-en="Copyright">版权</span></button>
+                    <button type="button" class="issue-tag" data-svc="entity"    onclick="toggleIssueTag(this)">🏢 <span class="t" data-zh="公司设立与架构" data-en="Entity Setup">公司设立</span></button>
+                    <button type="button" class="issue-tag" data-svc="tax"       onclick="toggleIssueTag(this)">💰 <span class="t" data-zh="跨境税务筹划" data-en="Tax Planning">税务筹划</span></button>
+                    <button type="button" class="issue-tag" data-svc="ecommerce" onclick="toggleIssueTag(this)">🛒 <span class="t" data-zh="跨境电商" data-en="E-commerce">跨境电商</span></button>
+                    <button type="button" class="issue-tag" data-svc="data"      onclick="toggleIssueTag(this)">🔒 <span class="t" data-zh="数据合规" data-en="Data Compliance">数据合规</span></button>
+                    <button type="button" class="issue-tag" data-svc="sanctions" onclick="toggleIssueTag(this)">🌐 <span class="t" data-zh="出口管制与制裁" data-en="Sanctions">制裁合规</span></button>
+                    <button type="button" class="issue-tag" data-svc="litigation" onclick="toggleIssueTag(this)">⚖️ <span class="t" data-zh="跨境诉讼" data-en="Litigation">跨境诉讼</span></button>
+                    <button type="button" class="issue-tag" data-svc="arbitration" onclick="toggleIssueTag(this)">🏛️ <span class="t" data-zh="国际仲裁" data-en="Arbitration">国际仲裁</span></button>
                 </div>
-                <a id="cold-mailto-btn" href="#" onclick="openColdMailto(event)"
-                   style="display:block;text-align:center;padding:0.65rem;
-                          background:#f8fafc;border:1.5px solid #e2e8f0;
-                          border-radius:7px;font-size:0.82rem;color:#374151;
-                          text-decoration:none;font-weight:600;">
-                    <span class="t" data-zh="📧 直接发邮件给律所（无需注册）" data-en="📧 Email the firm directly (no account needed)">📧 直接发邮件给律所（无需注册）</span>
-                </a>
-                <div style="text-align:center;font-size:0.69rem;color:#aaa;margin-top:0.4rem;">
-                    <span class="t" data-zh="将打开你的邮件客户端，发给 contact@morrison-ip.com" data-en="Opens your email app — sends to contact@morrison-ip.com">将打开你的邮件客户端，发给 contact@morrison-ip.com</span>
+                <button type="button" id="inq-svc-more-btn" onclick="toggleInqSvcMore(this)" style="margin-top:0.4rem;background:none;border:1px dashed #cbd5e1;border-radius:14px;padding:0.2rem 0.6rem;font-size:0.7rem;color:#64748b;cursor:pointer;font-family:inherit;">
+                    ＋ <span class="t" data-zh="更多专项服务" data-en="More services">更多专项服务</span>
+                </button>
+                <div id="inq-svc-more" style="display:none;flex-wrap:wrap;gap:0.35rem;margin-top:0.4rem;">
+                    <button type="button" class="issue-tag" data-svc="ma"           onclick="toggleIssueTag(this)">🤝 <span class="t" data-zh="海外并购" data-en="M&amp;A">海外并购</span></button>
+                    <button type="button" class="issue-tag" data-svc="trade_remedy" onclick="toggleIssueTag(this)">⚓ <span class="t" data-zh="337调查" data-en="ITC 337">337调查</span></button>
+                    <button type="button" class="issue-tag" data-svc="antidumping"  onclick="toggleIssueTag(this)">📉 <span class="t" data-zh="反倾销" data-en="Anti-dumping">反倾销</span></button>
+                    <button type="button" class="issue-tag" data-svc="supply_chain" onclick="toggleIssueTag(this)">🔗 <span class="t" data-zh="供应链尽调" data-en="Supply Chain">供应链尽调</span></button>
+                    <button type="button" class="issue-tag" data-svc="labor"        onclick="toggleIssueTag(this)">👥 <span class="t" data-zh="劳工法" data-en="Employment Law">劳工法</span></button>
+                    <button type="button" class="issue-tag" data-svc="product_cert" onclick="toggleIssueTag(this)">🏭 <span class="t" data-zh="产品认证" data-en="Product Cert">产品认证</span></button>
+                    <button type="button" class="issue-tag" data-svc="fcpa"         onclick="toggleIssueTag(this)">🔍 <span class="t" data-zh="FCPA合规" data-en="FCPA">FCPA合规</span></button>
+                    <button type="button" class="issue-tag" data-svc="aml"          onclick="toggleIssueTag(this)">🏦 <span class="t" data-zh="反洗钱" data-en="AML">反洗钱</span></button>
+                    <button type="button" class="issue-tag" data-svc="financing"    onclick="toggleIssueTag(this)">📈 <span class="t" data-zh="跨境融资" data-en="Financing">跨境融资</span></button>
+                    <button type="button" class="issue-tag" data-svc="new_energy"   onclick="toggleIssueTag(this)">⚡ <span class="t" data-zh="新能源合规" data-en="New Energy">新能源合规</span></button>
+                    <button type="button" class="issue-tag" data-svc="med_device"   onclick="toggleIssueTag(this)">🏥 <span class="t" data-zh="医疗器械" data-en="Medical Device">医疗器械</span></button>
+                    <button type="button" class="issue-tag" data-svc="gaming"       onclick="toggleIssueTag(this)">🎮 <span class="t" data-zh="游戏出海" data-en="Gaming">游戏出海</span></button>
+                    <button type="button" class="issue-tag" data-svc="criminal"     onclick="toggleIssueTag(this)">🚨 <span class="t" data-zh="刑事风险" data-en="Criminal Risk">刑事风险</span></button>
+                    <button type="button" class="issue-tag" data-svc="ev"           onclick="toggleIssueTag(this)">🚗 <span class="t" data-zh="新能源汽车" data-en="EV Compliance">新能源汽车</span></button>
+                    <button type="button" class="issue-tag" data-svc="franchise"    onclick="toggleIssueTag(this)">🤝 <span class="t" data-zh="特许经营" data-en="Franchise">特许经营</span></button>
                 </div>
             </div>
+
+            <!-- 微信 + 紧急程度 同行 -->
+            <div class="inq-section" style="display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;">
+                <div>
+                    <label class="inq-label"><span class="t" data-zh="微信号（选填）" data-en="WeChat ID (optional)">微信号（选填）</span></label>
+                    <input type="text" id="inq-wechat" placeholder="WeChat ID">
+                </div>
+                <div>
+                    <label class="inq-label"><span class="t" data-zh="紧急程度" data-en="Urgency">紧急程度</span></label>
+                    <div style="display:flex;gap:0.4rem;padding-top:0.1rem;">
+                        <label class="inq-chip inq-chip-selected" id="inq-urg-normal" style="flex:1;justify-content:center;"><input type="radio" name="inq-urgency" value="normal" checked style="display:none"><span class="t" data-zh="普通" data-en="Normal">普通</span></label>
+                        <label class="inq-chip" id="inq-urg-urgent" style="flex:1;justify-content:center;border-color:#fca5a5;color:#dc2626;"><input type="radio" name="inq-urgency" value="urgent" style="display:none"><span class="t" data-zh="🔴 紧急" data-en="🔴 Urgent">🔴 紧急</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="inq-divider">
+
+            <!-- 需求描述 -->
+            <div class="inq-section">
+                <label class="inq-label"><span class="t" data-zh="需求描述 *" data-en="Describe Your Needs *">需求描述 *</span></label>
+                <textarea id="inq-body" rows="3" placeholder="请简要描述您的法律问题和背景，律所可以更快给出有针对性的回复。" style="resize:vertical;" data-ph-zh="请简要描述您的法律问题和背景，律所可以更快给出有针对性的回复。" data-ph-en="Briefly describe your legal issue and context — this helps the firm respond more specifically."></textarea>
+            </div>
+
+            <!-- Trust banner（动态：free_consult badge 控制）-->
+            <div id="inq-trust-banner" style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;padding:0.55rem 0.85rem;margin-bottom:0.85rem;font-size:0.78rem;color:#0369a1;line-height:1.6;font-weight:500;">
+                <span id="inq-trust-text">✅ 发送询盘不构成委托关系，无任何法律责任</span>
+            </div>
+
+            <button onclick="submitInquiry()" style="width:100%;padding:0.9rem;background:linear-gradient(135deg,#1d4ed8,#0ea5e9);color:#fff;border:none;border-radius:9px;font-size:0.94rem;font-weight:700;cursor:pointer;transition:filter .18s;letter-spacing:0.02em;box-shadow:0 2px 8px rgba(14,165,233,0.3)"><span class="t" data-zh="发送询盘" data-en="Send Inquiry">发送询盘</span></button>
         </div>
     </div>
 </div>
@@ -1530,16 +1734,18 @@ function openColdMailto(e) {
 
 此邮件由 Whalium 华里安（whalium.com）询盘引导发送。'
     );
-    window.location.href = 'mailto:contact@morrison-ip.com?subject=' + subject + '&body=' + body;
+    var firm = window._wh_firm || {};
+    var firmEmail = firm.email || 'inquiries@whalium.com';
+    window.location.href = 'mailto:' + firmEmail + '?subject=' + subject + '&body=' + body;
 }
 
 function submitInquiry() {
   var lang = (window._wlang||'zh');
-  var nameEl   = document.getElementById('inq-name');
-  var emailEl  = document.getElementById('inq-email');
-  var bodyEl   = document.getElementById('inq-body');
-  var compEl   = document.getElementById('inq-company');
-  var budgetEl = document.getElementById('inq-budget');
+  var nameEl  = document.getElementById('inq-name');
+  var emailEl = document.getElementById('inq-email');
+  var bodyEl  = document.getElementById('inq-body');
+  var compEl  = document.getElementById('inq-company');
+  var wechatEl = document.getElementById('inq-wechat');
 
   if(!nameEl||!nameEl.value.trim()){
     alert(lang==='zh'?'请填写您的姓名':'Please enter your name');
@@ -1554,11 +1760,20 @@ function submitInquiry() {
     if(bodyEl) bodyEl.focus(); return;
   }
 
-  // Collect issue tags
-  var tags = [];
-  document.querySelectorAll('.issue-tag.selected').forEach(function(t){
-    tags.push(t.textContent.trim());
+  // Collect service type chips (data-svc attribute)
+  var svcTags = [];
+  document.querySelectorAll('.inq-svc-chip.selected, .issue-tag.selected').forEach(function(t){
+    var svc = t.getAttribute('data-svc') || t.textContent.trim();
+    if(svc) svcTags.push(svc);
   });
+
+  // Collect budget (radio input)
+  var budgetRadio = document.querySelector('input[name="inq-budget"]:checked');
+  var budgetVal = budgetRadio ? budgetRadio.value : '';
+
+  // Collect urgency (radio input)
+  var urgencyRadio = document.querySelector('input[name="inq-urgency"]:checked');
+  var urgencyVal = urgencyRadio ? urgencyRadio.value : '';
 
   // Disable button + show loading
   var sBtn = document.querySelector('#inquiry-modal button[onclick*="submitInquiry"]');
@@ -1566,14 +1781,17 @@ function submitInquiry() {
 
   // ── 写入 Supabase inquiries 表 ──────────────────────────────
   var firm = window._wh_firm || {};
+  var wechat = wechatEl ? wechatEl.value.trim() : '';
+  var descRaw = bodyEl.value.trim();
+  var descFull = wechat ? ('【微信】' + wechat + '\n' + descRaw) : descRaw;
   var record = {
     firm_id:      firm.id || null,
     name:         nameEl.value.trim(),
     email:        emailEl.value.trim(),
     company:      compEl && compEl.value.trim() ? compEl.value.trim() : null,
-    budget:       budgetEl && budgetEl.value ? budgetEl.value : null,
-    service_type: tags.length ? tags.join(', ') : null,
-    description:  bodyEl.value.trim(),
+    budget:       budgetVal || null,
+    service_type: svcTags.length ? svcTags.join(',') : null,
+    description:  descFull,
     status:       'pending'
   };
   if (window._wh_sb) {
@@ -1583,15 +1801,17 @@ function submitInquiry() {
   }
 
   // Build summary (for fallback mailto / session storage)
-  var firmName = firm.name || 'Morrison IP Law';
+  var firmName = firm.name || 'Whalium律所';
   var summary = [
     '【Whalium询盘】' + firmName,
     '姓名: ' + nameEl.value.trim(),
-    compEl&&compEl.value ? '公司: ' + compEl.value.trim() : '',
+    compEl&&compEl.value.trim() ? '公司: ' + compEl.value.trim() : '',
     '邮箱: ' + emailEl.value.trim(),
-    budgetEl&&budgetEl.value ? '预算: ' + budgetEl.options[budgetEl.selectedIndex].text : '',
-    tags.length ? '需求类型: ' + tags.join(', ') : '',
-    '需求描述: ' + bodyEl.value.trim(),
+    wechat ? '微信: ' + wechat : '',
+    budgetVal ? '预算: ' + budgetVal : '',
+    urgencyVal ? '紧急程度: ' + urgencyVal : '',
+    svcTags.length ? '需求类型: ' + svcTags.join(', ') : '',
+    '需求描述: ' + descFull,
     '---',
     '来源: Whalium.com · ' + new Date().toISOString().slice(0,10)
   ].filter(Boolean).join('\n');
@@ -1604,7 +1824,7 @@ function submitInquiry() {
       // mailto fallback — routes inquiry to Whalium team inbox
       // In production, replace with fetch() to actual API
       var mailtoLink = 'mailto:inquiries@whalium.com'
-        + '?subject=' + encodeURIComponent('询盘 · Morrison IP Law · ' + nameEl.value.trim())
+        + '?subject=' + encodeURIComponent('询盘 · ' + firmName + ' · ' + nameEl.value.trim())
         + '&body=' + encodeURIComponent(summary);
       
       // Store in sessionStorage for confirmation display
@@ -1630,16 +1850,16 @@ function submitInquiry() {
             '</div>',
             '<div style="font-size:0.85rem;color:#475569;line-height:1.75;margin-bottom:1.5rem;">',
             lang==='zh'
-              ? 'Hi ' + nameDisp + '，我们已收到您的询盘，<strong>将在 24 小时内</strong>将您的需求转发给 Morrison IP Law。<br><br>律所会直接回复到您的邮箱 <strong>' + emailDisp + '</strong>。<br>如果 72 小时内未收到回复，请邮件联系 <a href="mailto:support@whalium.com" style="color:#0ea5e9;">support@whalium.com</a>，我们会主动跟进。'
-              : 'Hi ' + nameDisp + ', we have received your inquiry and will forward it to Morrison IP Law within <strong>24 hours</strong>.<br><br>The firm will reply directly to <strong>' + emailDisp + '</strong>.<br>If you don't hear back within 72 hours, email <a href="mailto:support@whalium.com" style="color:#0ea5e9;">support@whalium.com</a> and we'll follow up.',
+              ? 'Hi ' + nameDisp + '，我们已收到您的询盘，<strong>将在 24 小时内</strong>将您的需求转发给 ' + firmName + '。<br><br>律所会直接回复到您的邮箱 <strong>' + emailDisp + '</strong>。<br>如果 72 小时内未收到回复，请邮件联系 <a href="mailto:support@whalium.com" style="color:#0ea5e9;">support@whalium.com</a>，我们会主动跟进。'
+              : 'Hi ' + nameDisp + ', we have received your inquiry and will forward it to ' + firmName + ' within <strong>24 hours</strong>.<br><br>The firm will reply directly to <strong>' + emailDisp + '</strong>.<br>If you don't hear back within 72 hours, email <a href="mailto:support@whalium.com" style="color:#0ea5e9;">support@whalium.com</a> and we'll follow up.',
             '</div>',
             '<div style="background:#f8fafc;border-radius:8px;padding:0.85rem;margin-bottom:1.2rem;font-size:0.8rem;color:#64748b;text-align:left;line-height:1.7;">',
             '<div style="font-weight:700;color:#334155;margin-bottom:0.4rem;">' + (lang==='zh'?'📋 后续流程：':'📋 What happens next:') + '</div>',
             lang==='zh'
-              ? '1. Whalium 将您的需求脱敏处理后转发律所<br>2. Morrison IP Law 用中文邮件回复（通常 24h 内）<br>3. 您与律所直接沟通，确认是否合适<br>4. 签约前可免费咨询，不构成委托关系'
-              : '1. Whalium forwards your (anonymized) inquiry to the firm<br>2. Morrison IP Law replies by email (usually within 24h)<br>3. You communicate directly with the firm to assess fit<br>4. Free pre-engagement consultation — no attorney-client relationship',
+              ? '1. Whalium 将您的需求脱敏处理后转发律所<br>2. ' + firmName + ' 用中文邮件回复（通常 24h 内）<br>3. 您与律所直接沟通，确认是否合适<br>4. 签约前可免费咨询，不构成委托关系'
+              : '1. Whalium forwards your (anonymized) inquiry to the firm<br>2. ' + firmName + ' replies by email (usually within 24h)<br>3. You communicate directly with the firm to assess fit<br>4. Free pre-engagement consultation — no attorney-client relationship',
             '</div>',
-            '<button onclick="document.getElementById('inquiry-modal').style.display='none'" style="padding:0.75rem 2rem;background:linear-gradient(135deg,#1a2e4a,#1e3858);color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;">',
+            '<button onclick="document.getElementById(\'inquiry-modal\').style.display=\'none\'" style="padding:0.75rem 2rem;background:linear-gradient(135deg,#1a2e4a,#1e3858);color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:700;cursor:pointer;font-family:inherit;">',
             lang==='zh' ? '好的，知道了' : 'Got it, thanks',
             '</button>',
             '</div>'
@@ -1661,7 +1881,7 @@ function submitInquiry() {
   }
   try {
     sessionStorage.setItem('wh_inq_sent', new Date().toISOString());
-    sessionStorage.setItem('wh_inq_firm', 'Morrison IP Law');
+    sessionStorage.setItem('wh_inq_firm', firmName);
   } catch(e){}
         }
       }
@@ -1675,18 +1895,36 @@ function submitInquiry() {
 
 function toggleIssueTag(btn) {
   btn.classList.toggle('selected');
-  if(btn.classList.contains('selected')){
-    btn.style.background='#e0f2fe';
-    btn.style.borderColor='#0ea5e9';
-    btn.style.color='#0369a1';
-    btn.style.fontWeight='600';
-  } else {
-    btn.style.background='#f1f5f9';
-    btn.style.borderColor='#e2e8f0';
-    btn.style.color='var(--text)';
-    btn.style.fontWeight='400';
-  }
 }
+
+function toggleInqSvcMore(btn) {
+  var moreDiv = document.getElementById('inq-svc-more');
+  if(!moreDiv) return;
+  var expanded = moreDiv.style.display !== 'none';
+  moreDiv.style.display = expanded ? 'none' : 'flex';
+  btn.textContent = expanded ? (window._wlang==='en' ? '+ More areas' : '+ 更多领域') : (window._wlang==='en' ? '− Less' : '− 收起');
+}
+
+// Chip visual selection: sync inq-chip-selected class with radio state
+(function(){
+  function syncChipGroup(radioName) {
+    var inputs = document.querySelectorAll('input[name="' + radioName + '"]');
+    inputs.forEach(function(input){
+      input.addEventListener('change', function(){
+        inputs.forEach(function(inp){
+          var lbl = inp.closest ? inp.closest('label') : inp.parentElement;
+          if(lbl) lbl.classList.toggle('inq-chip-selected', inp.checked);
+        });
+      });
+    });
+  }
+  function tryInit(){
+    syncChipGroup('inq-budget');
+    syncChipGroup('inq-urgency');
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tryInit);
+  else tryInit();
+})();
 // 点外部关闭
 document.getElementById('inquiry-modal').addEventListener('click', function(e) {
     if (e.target === this) this.style.display = 'none';
@@ -2532,7 +2770,9 @@ window.addEventListener('load', function() {
 function toggleReviewForm(cb){
   var reviewCard = document.getElementById('review-form');
   if(!reviewCard) return;
-  var formFields = reviewCard.querySelectorAll('.rev-svc, .star-row, textarea, .submit-review-btn, [id^="rev-"]');
+  var formFields = reviewCard.querySelectorAll(
+    '.rev-svc, .rev-svc-chip, #svc-more-btn, .star-row, textarea, .submit-review-btn, [id^="rev-"], [id^="svc-"], [id^="score-"], select, input[type=radio]'
+  );
   var on = cb.checked;
   formFields.forEach(function(el){
     el.style.opacity = on ? '1' : '0.3';
@@ -2558,11 +2798,33 @@ function toggleReviewForm(cb){
   if (!slug) return; // 无 slug → 保持硬编码的 Morrison IP Law 演示数据
 
   var COUNTRY_ZH = { USA:'美国', Singapore:'新加坡', UK:'英国', Germany:'德国' };
+
+  // badge key → 卡片顶部徽章（与 DB badges 数组值完全一致）
   var BADGE_INFO = {
-    chambers_certified: '🏆 Chambers认证',
-    chinese_service:    '🇨🇳 中文服务',
-    china_practice:     '🌏 中国业务',
-    legal500:           '🏅 Legal 500',
+    'Chambers认证': { label:'🏆 Chambers', cls:'badge-cert' },
+    'Legal500':     { label:'🏅 Legal 500', cls:'badge-cert' },
+    '中文服务':     { label:'🇨🇳 中文服务', cls:'badge-value' },
+    '中国律师':     { label:'👤 华裔律师',  cls:'badge-value' },
+    '双语合同':     { label:'📄 双语合同',  cls:'badge-value' },
+    '24h响应':      { label:'⚡ 24h响应',   cls:'badge-value' },
+    '固定报价':     { label:'💰 透明报价',  cls:'badge-value' },
+    '免费咨询':     { label:'🆓 免费咨询', cls:'badge-value' },
+    '中国律所合作': { label:'🤝 中国合作',  cls:'badge-value' },
+    '跨境电商':     { label:'🛒 跨境电商', cls:'badge-value' },
+  };
+
+  // badge key → 特色服务侧边栏展示文字
+  var FEATURE_DETAIL = {
+    '中文服务':     { zh:'全程中文服务',     en:'Full Chinese Service' },
+    '中国律师':     { zh:'中国/华裔律师对接', en:'Chinese-American Attorney' },
+    '双语合同':     { zh:'中英双语合同',     en:'Bilingual Contracts (CN/EN)' },
+    '24h响应':      { zh:'24小时响应保证',   en:'24-hour Response Guarantee' },
+    '固定报价':     { zh:'固定报价透明',     en:'Fixed & Transparent Pricing' },
+    '免费咨询':     { zh:'免费初次咨询',     en:'Free Initial Consultation' },
+    'Chambers认证': { zh:'Chambers 认证律所', en:'Chambers Certified' },
+    'Legal500':     { zh:'Legal 500 认证律所', en:'Legal 500 Certified' },
+    '中国律所合作': { zh:'与中国律所深度合作', en:'China Law Firm Partner' },
+    '跨境电商':     { zh:'跨境电商IP经验',   en:'Cross-border E-commerce IP' },
   };
 
   function starStr(rating) {
@@ -2613,15 +2875,39 @@ function toggleReviewForm(cb){
           ratingCount.textContent = en ? ratingCount.dataset.en : ratingCount.dataset.zh;
         }
 
-        // ── Badges ───────────────────────────────────────────
+        // ── Badges（英雄区顶部彩色徽章）────────────────────────
         var heroBadges = document.querySelector('.hero-badges');
-        if (heroBadges && f.badges && f.badges.length) {
-          var badgeHtml = (f.chambers_rank ? '<span class="badge badge-cert">🏆 Chambers ' + f.chambers_rank + '</span>' : '')
-            + (f.verified ? '<span class="badge badge-cert"><span class="t" data-zh="✓ 已认证" data-en="✓ Verified">✓ 已认证</span></span>' : '');
-          f.badges.forEach(function(b){
-            if (BADGE_INFO[b]) badgeHtml = '<span class="badge badge-value">' + BADGE_INFO[b] + '</span>' + badgeHtml;
-          });
-          heroBadges.innerHTML = badgeHtml;
+        if (heroBadges) {
+          var badgeHtml = '';
+          // 先展示 Chambers / Legal500 认证徽章
+          if (f.chambers_rank) badgeHtml += '<span class="badge badge-cert">🏆 Chambers ' + f.chambers_rank + '</span>';
+          if (f.verified)      badgeHtml += '<span class="badge badge-cert">✓ 已认证</span>';
+          // 再展示其他特色徽章（限 4 个，避免溢出）
+          (f.badges || []).filter(function(b){ return b !== 'Chambers认证' && b !== 'Legal500'; })
+            .slice(0, 4).forEach(function(b){
+              var info = BADGE_INFO[b];
+              if (info) badgeHtml += '<span class="badge ' + info.cls + '">' + info.label + '</span>';
+            });
+          if (badgeHtml) heroBadges.innerHTML = badgeHtml;
+        }
+
+        // ── 特色服务侧边栏（动态渲染）────────────────────────
+        var featCard = document.getElementById('features-side-card');
+        if (featCard && f.badges && f.badges.length) {
+          var featRowsHtml = f.badges.map(function(b){
+            var fd = FEATURE_DETAIL[b];
+            if (!fd) return '';
+            return '<div class="feature-row"><div class="feature-dot"></div><span>' + (en ? fd.en : fd.zh) + '</span></div>';
+          }).filter(Boolean).join('');
+          if (featRowsHtml) {
+            featCard.style.display = '';
+            var body = featCard.querySelector('.features-body');
+            if (body) body.innerHTML = featRowsHtml;
+          } else {
+            featCard.style.display = 'none';
+          }
+        } else if (featCard) {
+          featCard.style.display = 'none';
         }
 
         // ── 业务领域 ─────────────────────────────────────────
@@ -2686,6 +2972,60 @@ function toggleReviewForm(cb){
           if (desc2El) desc2El.style.display = 'none'; // 隐藏第二段（Morrison专属）
         }
 
+        // ── 统计数字栏（动态填充）────────────────────────────
+        // 数据来源：firms 表的 cases_per_year / recommend_rate / cn_client_pct / years_exp / min_price_usd
+        (function updateStatsBar() {
+          var cells = document.querySelectorAll('.stats-inner .stat-cell');
+          // 定义5格的数据映射（顺序与 HTML 一致）
+          var stats = [
+            { val: f.cases_per_year,  suffix: '+',    prefix: '',  zh: '年处理案件', en: 'Cases/Yr' },
+            { val: f.recommend_rate,  suffix: '%',    prefix: '',  zh: '客户推荐率', en: 'Recommend Rate' },
+            { val: f.cn_client_pct,   suffix: '%',    prefix: '',  zh: '中国客户占比', en: 'CN Clients' },
+            { val: f.years_exp,       suffix: en?' yrs':'年', prefix: '', zh: '执业经验', en: 'Experience' },
+            { val: f.min_price_usd,   suffix: en ? '+' : '起', prefix: '$', zh: '商标服务起价', en: 'Starting Price' },
+          ];
+          var hasAny = false;
+          cells.forEach(function(cell, i) {
+            var s = stats[i];
+            if (!s) return;
+            if (s.val != null && s.val !== '') {
+              hasAny = true;
+              var numEl = cell.querySelector('.stat-num');
+              var lblEl = cell.querySelector('.stat-lbl span.t');
+              if (numEl) {
+                numEl.textContent = s.prefix + s.val + s.suffix;
+              }
+              if (lblEl) {
+                lblEl.dataset.zh = s.zh;
+                lblEl.dataset.en = s.en;
+                lblEl.textContent = en ? s.en : s.zh;
+              }
+              cell.style.display = '';
+            } else {
+              // 该格无数据则隐藏，避免显示硬编码演示值
+              cell.style.display = 'none';
+            }
+          });
+          // 若5格全无数据，隐藏整个 stats-bar
+          var bar = document.querySelector('.stats-bar');
+          if (bar && !hasAny) bar.style.display = 'none';
+        })();
+
+        // ── 询盘弹窗律所名称 ──────────────────────────────────────
+        var inqFirmNameEl = document.getElementById('inq-modal-firm-name');
+        if (inqFirmNameEl) inqFirmNameEl.textContent = en ? (f.name || '律所') : (f.name_cn || f.name || '律所');
+
+        // ── 动态信任横幅（有免费咨询 badge 才显示） ──────────────
+        (function updateTrustBanner() {
+          var trustEl = document.getElementById('inq-trust-text');
+          if (!trustEl) return;
+          var hasFree = (f.badges || []).indexOf('free_consult') > -1 ||
+                        (f.badges || []).indexOf('免费咨询') > -1;
+          trustEl.textContent = hasFree
+            ? '✅ 第一次咨询免费  ·  ✅ 发送询盘不构成委托关系，无任何法律责任'
+            : '✅ 发送询盘不构成委托关系，无任何法律责任';
+        })();
+
         // ── 动态加载服务项目 ──────────────────────────────────
         if (f.services && f.services.length) loadServices(f.services, en);
 
@@ -2704,10 +3044,11 @@ function toggleReviewForm(cb){
       var price = en ? (s.price_en || s.price) : s.price;
       return '<div class="service-item">'
         + '<div class="service-item-body">'
-        + '<div class="service-name">' + name + '</div>'
+        + '<div class="service-name">' + name
+        + (price ? '<div class="service-price">' + price + '</div>' : '')
+        + '</div>'
         + '<div class="service-desc">' + desc + '</div>'
         + '</div>'
-        + (price ? '<div class="service-price">' + price + '</div>' : '')
         + '</div>';
     }).join('');
   }
@@ -2744,7 +3085,8 @@ function toggleReviewForm(cb){
             ? (isEn ? ' · ✅ Verified Service' : ' · ✅ 已验证服务') : '';
           var dateStr = r.created_at ? r.created_at.slice(0,7).replace('-','年') + '月' : '';
           var tagsHtml = (r.tags||[]).map(function(t){ return '<span class="rev-tag" style="background:rgba(0,200,200,0.07);border:1px solid rgba(0,200,200,0.2);color:var(--teal);padding:0.15rem 0.5rem;border-radius:12px;font-size:0.72rem;margin-right:0.3rem;">'+t+'</span>'; }).join('');
-          var amtHtml = r.amount_paid ? ' · ' + (isEn?'Paid $':'实付 $') + r.amount_paid : '';
+          var feeLabels = { lt500:'<$500', '500-2k':'$500–$2K', '2k-5k':'$2K–$5K', '5k-20k':'$5K–$20K', gt20k:'>$20K' };
+          var amtHtml = r.fee_range ? ' · ' + (isEn?'Fee: ':'费用: ') + (feeLabels[r.fee_range] || r.fee_range) : (r.amount_paid ? ' · ' + (isEn?'Paid $':'实付 $') + r.amount_paid : '');
           var svcHtml = r.service_type ? '📌 ' + r.service_type + amtHtml : '';
           var replyHtml = r.firm_reply
             ? '<div class="rev-firm-reply"><div class="rev-reply-label">'+(isEn?'Firm Reply':'律所回复')+'</div><div class="rev-reply-text">'+r.firm_reply+'</div></div>'

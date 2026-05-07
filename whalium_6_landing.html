@@ -80,7 +80,7 @@
 
         /* Pricing */
         .pricing-section { padding: 3rem; background: var(--navy-mid); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; max-width: 1020px; margin: 0 auto; }
+        .pricing-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; max-width: 1320px; margin: 0 auto; }
         .pricing-card { background: var(--navy); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 2rem; text-align: center; position: relative; }
         .pricing-card.featured { border-color: var(--teal-dim); box-shadow: 0 0 30px rgba(0,200,200,0.1); }
         .pricing-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--teal) 0%, #006e9e 100%); color: var(--navy); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.75rem; font-weight: 800; font-family: 'Helvetica Neue', 'Arial', 'PingFang SC', 'Microsoft YaHei', sans-serif; white-space: nowrap; }
@@ -600,7 +600,7 @@ html, body {
         <h1 class="hero-title"><span class="t" data-zh="连接全球" data-en="Connect with Global">Connect with Global</span><span class="hero-highlight"><span class="t" data-zh="中国客户" data-en="Chinese Clients">Chinese Clients</span></span><br><span class="t" data-zh="拓展您的国际业务" data-en="& Grow Your International Practice">& Grow Your International Practice</span></h1>
         <p class="hero-subtitle">Whalium is the #1 platform for Chinese companies seeking overseas legal services<br><span class="t" data-zh="已有 287 家全球律所入驻，每月服务 2,000" data-en="287 global firms, 2,000+ CN clients/mo">287 global firms listed, serving 2,000</span>+ 中国客户</p>
         <div class="cta-buttons">
-            <button style="background:linear-gradient(135deg,#22ccde,#0a8eb0);border:none;color:#0a1628;font-weight:700;border-radius:8px;" class="btn-primary" onclick="location.href='whalium_7_submit-firm.html'"><span class="t" data-zh="免费入驻" data-en="List for Free">List for Free</span></button>
+            <button style="background:linear-gradient(135deg,#22ccde,#0a8eb0);border:none;color:#0a1628;font-weight:700;border-radius:8px;" class="btn-primary" onclick="goJoinAsFirm()"><span class="t" data-zh="免费入驻" data-en="List for Free">List for Free</span></button>
             <button class="btn-secondary" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})"><span class="t" data-zh="了解详情" data-en="Learn More">Learn More</span></button>
         </div>
     </div>
@@ -630,7 +630,7 @@ html, body {
             <p class="section-subtitle"><span class="t" data-zh="选择最适合您的入驻方案" data-en="Choose the plan that works best for you">Choose the plan that works best for you</span></p>
         </div>
         <div class="pricing-grid">
-            <!-- 基础版 -->
+            <!-- 基础版 Free -->
             <div class="pricing-card">
                 <div class="pricing-name"><span class="t" data-zh="基础版" data-en="Free">Free</span></div>
                 <div class="pricing-price"><span class="t" data-zh="免费" data-en="Free">Free</span></div>
@@ -638,60 +638,76 @@ html, body {
                 <div class="pricing-divider"></div>
                 <div class="pricing-features">
                     <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="律所 Profile 公开展示" data-en="Public Firm Profile">Public Firm Profile</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="每月 5 条询盘" data-en="5 inquiries/month">5 inquiries/month</span></span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="基础搜索收录" data-en="Basic Search Listing">Basic Search Listing</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="客户评价展示" data-en="Client Reviews">Client Reviews</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="搜索结果优先排名" data-en="Priority Search Ranking">Priority Search Ranking</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="AI 智能推荐流量" data-en="AI Smart Matching traffic">AI Smart Matching traffic</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="询盘数据分析" data-en="Inquiry Analytics">Inquiry Analytics</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="案例认证徽章" data-en="Case Badge">Case Badge</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="专属客服支持" data-en="Dedicated Support">Dedicated Support</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="季度行业报告" data-en="Quarterly Report">Quarterly Report</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="基础搜索收录（排在付费律所之后）" data-en="Basic search listing (below paid firms)">Basic search listing</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="显示综合评分" data-en="Show overall rating">Show overall rating</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="询盘接收（0 条）" data-en="Inquiries (0)">Inquiries (0)</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="搜索优先排名" data-en="Priority ranking">Priority ranking</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="AI 智能推荐流量" data-en="AI matching traffic">AI matching traffic</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="询盘数据统计" data-en="Inquiry analytics">Inquiry analytics</span></div>
                 </div>
-                <button class="btn-plan outline" onclick=\"location.href='whalium_7_submit-firm.html'\"><span class="t" data-zh="免费入驻" data-en="List for Free">List for Free</span></button>
+                <button class="btn-plan outline" onclick="goJoinAsFirm()"><span class="t" data-zh="免费入驻" data-en="List for Free">List for Free</span></button>
             </div>
 
-            <!-- 初级会员 -->
+            <!-- 试用包 Trial -->
             <div class="pricing-card">
-                <div class="pricing-name"><span class="t" data-zh="初级会员" data-en="Starter">Starter</span></div>
-                <div class="pricing-price">¥2,800</div>
-                <div class="pricing-period"><span class="t" data-zh="/年 · 约 ¥233/月" data-en="/yr · ~¥233/mo">/yr · ~¥233/mo</span></div>
+                <div class="pricing-badge" style="background:rgba(251,146,60,0.15);color:#f97316;border:1px solid rgba(249,115,22,0.3);">🚀 <span class="t" data-zh="冷启动首选" data-en="Best to Start">Best to Start</span></div>
+                <div class="pricing-name"><span class="t" data-zh="试用包" data-en="Trial Pack">Trial Pack</span></div>
+                <div class="pricing-price">¥6,800</div>
+                <div class="pricing-period"><span class="t" data-zh="一次性 · 3 个月有效" data-en="One-time · 3 months">One-time · 3 months</span></div>
                 <div class="pricing-divider"></div>
                 <div class="pricing-features">
                     <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="律所 Profile 公开展示" data-en="Public Firm Profile">Public Firm Profile</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="每月 30 条询盘" data-en="30 inquiries/month">30 inquiries/month</span></span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><strong>10</strong> <span class="t" data-zh="条中国客户询盘" data-en="client inquiries">client inquiries</span></div>
                     <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="搜索结果优先排名" data-en="Priority search ranking"><strong>Priority</strong> search ranking</span></div>
                     <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="客户评价展示 & 回复" data-en="Client reviews & replies">Client reviews &amp; replies</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="基础询盘数据统计" data-en="Basic Inquiry Stats">Basic Inquiry Stats</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="案例认证徽章" data-en="Case Badge">Case Badge</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="AI 智能推荐优先流量" data-en="AI Priority Match traffic">AI Priority Match traffic</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="竞品对比分析报告" data-en="Competitor Analysis">Competitor Analysis</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="专属客服支持" data-en="Dedicated Support">Dedicated Support</span></div>
-                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="季度行业报告" data-en="Quarterly Report">Quarterly Report</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="基础询盘数据统计" data-en="Basic inquiry stats">Basic inquiry stats</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="AI 智能推荐优先流量" data-en="AI priority traffic">AI priority traffic</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="竞品对比分析报告" data-en="Competitor analysis">Competitor analysis</span></div>
                 </div>
-                <button class="btn-plan" onclick="location.href='whalium_5_payment.html?plan=starter'"><span class="t" data-zh="选择初级会员 · ¥2,800/年" data-en="Get Starter Plan · ¥2,800/yr">Get Starter Plan · ¥2,800/yr</span></button>
+                <button class="btn-plan" style="background:linear-gradient(135deg,#f97316,#ea580c);" onclick="location.href='whalium_5_payment.html?plan=trial'"><span class="t" data-zh="开始试用 · ¥6,800" data-en="Start Trial · ¥6,800">Start Trial · ¥6,800</span></button>
             </div>
 
-            <!-- 高级会员 -->
+            <!-- 初级会员 Starter -->
+            <div class="pricing-card">
+                <div class="pricing-name"><span class="t" data-zh="初级会员" data-en="Starter">Starter</span></div>
+                <div class="pricing-price">¥9,800</div>
+                <div class="pricing-period"><span class="t" data-zh="/年 · 约 ¥817/月" data-en="/yr · ~¥817/mo">/yr · ~¥817/mo</span></div>
+                <div class="pricing-divider"></div>
+                <div class="pricing-features">
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="律所 Profile 公开展示" data-en="Public Firm Profile">Public Firm Profile</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="每月 20 条询盘（年 240 条）" data-en="20 inquiries/month (240/yr)">20 inquiries/month (240/yr)</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="搜索结果优先排名" data-en="Priority search ranking"><strong>Priority</strong> search ranking</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="客户评价展示 & 回复" data-en="Client reviews & replies">Client reviews &amp; replies</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="基础询盘数据统计" data-en="Basic inquiry stats">Basic inquiry stats</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="案例认证徽章" data-en="Case badge">Case badge</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="AI 智能推荐优先流量" data-en="AI priority traffic">AI priority traffic</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="竞品对比分析报告" data-en="Competitor analysis">Competitor analysis</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="专属客服支持" data-en="Dedicated support">Dedicated support</span></div>
+                    <div class="pricing-feature"><span class="fi dis">✗</span><span class="t" data-zh="季度行业报告" data-en="Quarterly report">Quarterly report</span></div>
+                </div>
+                <button class="btn-plan" onclick="location.href='whalium_5_payment.html?plan=starter'"><span class="t" data-zh="选择初级会员 · ¥9,800/年" data-en="Get Starter · ¥9,800/yr">Get Starter · ¥9,800/yr</span></button>
+            </div>
+
+            <!-- 高级会员 Professional -->
             <div class="pricing-card featured">
                 <div class="pricing-badge"><span class="t" data-zh="🔥 最受欢迎" data-en="🔥 Most Popular">🔥 Most Popular</span></div>
                 <div class="pricing-name"><span class="t" data-zh="高级会员" data-en="Professional">Professional</span></div>
-                <div class="pricing-price">¥8,000</div>
-                <div class="pricing-period"><span class="t" data-zh="/年 · 约 ¥667/月" data-en="/yr · ~¥667/mo">/yr · ~¥667/mo</span></div>
+                <div class="pricing-price">¥28,000</div>
+                <div class="pricing-period"><span class="t" data-zh="/年 · 约 ¥2,333/月" data-en="/yr · ~¥2,333/mo">/yr · ~¥2,333/mo</span></div>
                 <div class="pricing-divider"></div>
                 <div class="pricing-features">
                     <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="律所 Profile 公开展示" data-en="Public Firm Profile">Public Firm Profile</span></div>
                     <div class="pricing-feature"><span class="fi">✓</span><strong><span class="t" data-zh="无限" data-en="Unlimited">Unlimited</span></strong> <span class="t" data-zh="询盘接收" data-en="inquiries">inquiries</span></div>
                     <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="搜索结果顶部优先排名" data-en="Top-of-search ranking"><strong>Top-of-search</strong> ranking</span></div>
                     <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="客户评价展示 & 回复" data-en="Client reviews & replies">Client reviews &amp; replies</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><strong><span class="t" data-zh="AI 优先推荐" data-en="AI Priority Match">AI Priority Match</span></strong> <span class="t" data-zh="优先曝光排名" data-en="— high-priority placement">— high-priority placement</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="完整询盘数据 & 转化分析" data-en="Full Analytics">Full Analytics</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="案例认证 & 「热门」徽章" data-en="Case Cert &amp; Badge">Case Cert & "Hot" Badge</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="竞品对比分析报告" data-en="Competitor Analysis">Competitor Analysis</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="专属客服 7×24 支持" data-en="24/7 Dedicated Support">24/7 Dedicated Support</span></div>
-                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="季度中国出海行业报告" data-en="Quarterly China Report">Quarterly China Report</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><strong><span class="t" data-zh="AI 优先推荐" data-en="AI Priority Match">AI Priority Match</span></strong> <span class="t" data-zh="· 优先曝光" data-en="· top placement">· top placement</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="完整询盘数据 & 转化分析" data-en="Full analytics">Full analytics</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="案例认证 & 「热门」徽章" data-en="Case cert & Hot badge">Case cert &amp; "Hot" badge</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="竞品对比分析报告" data-en="Competitor analysis">Competitor analysis</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="专属客服 7×24 支持" data-en="24/7 dedicated support">24/7 dedicated support</span></div>
+                    <div class="pricing-feature"><span class="fi">✓</span><span class="t" data-zh="季度中国出海行业报告" data-en="Quarterly China report">Quarterly China report</span></div>
                 </div>
-                <button class="btn-plan" onclick="location.href='whalium_5_payment.html?plan=premium'"><span class="t" data-zh="立即升级高级会员 · ¥8,000/年" data-en="Get Professional Plan · ¥8,000/yr">立即升级高级会员 · ¥8,000/年</span></button>
+                <button class="btn-plan" style="background:linear-gradient(135deg,var(--teal),var(--blue));border:none;" onclick="location.href='whalium_5_payment.html?plan=premium'"><span class="t" data-zh="立即升级 · ¥28,000/年" data-en="Get Professional · ¥28,000/yr">Get Professional · ¥28,000/yr</span></button>
             </div>
         </div>
     </div>
@@ -1713,5 +1729,33 @@ html, body {
     } catch(e){}
   });
 })();
+</script>
+
+<!-- ── 律所入驻入口：检查登录状态再跳转 ── -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+function goJoinAsFirm() {
+  var SB_URL = 'https://cenmhxewrmjpibkokuls.supabase.co';
+  var SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlbm1oeGV3cm1qcGlia29rdWxzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE5MjE5MDYsImV4cCI6MjA4NzQ5NzkwNn0.StDZuUGKoD09kcHyN4-8nQlMcUNcqp2rBHN7fkpZdf8';
+  var sb = window.supabase.createClient(SB_URL, SB_KEY);
+  sb.auth.getSession().then(function(res) {
+    var session = res.data && res.data.session;
+    if (session) {
+      // 已登录：检查是否已有律所
+      sb.from('firms').select('id').eq('owner_user_id', session.user.id).maybeSingle().then(function(q) {
+        if (q.data) {
+          // 已有律所 → 进 Dashboard 管理
+          location.href = 'whalium_8_dashboard.html';
+        } else {
+          // 已登录但无律所 → 填写入驻资料
+          location.href = 'whalium_7_submit-firm.html';
+        }
+      });
+    } else {
+      // 未登录 → 注册，注册完后跳到入驻页
+      location.href = 'whalium_3_register.html?next=' + encodeURIComponent('whalium_7_submit-firm.html');
+    }
+  });
+}
 </script>
 </body> &nbsp;·&nbsp; <a href="whalium_9_about.html" style="color:inherit;opacity:0.65;text-decoration:none;"><span class="t" data-zh="关于我们" data-en="About Us">About Us</span></a>
