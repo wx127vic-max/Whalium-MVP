@@ -197,10 +197,9 @@
         .firm-info-label { font-size:0.7rem; color:#94a3b8; margin-bottom:0.1rem; }
         .firm-info-val { font-size:0.83rem; font-weight:600; color:#1a2332; }
 
-        /* ── 询盘 CTA 主栏卡片 ──────────────────────────────────── */
-        .inq-cta-card { background:linear-gradient(135deg,#f0f9ff,#e8f4fd) !important; border:1.5px solid #bae6fd !important; }
-        .btn-inquiry-cta { padding:0.65rem 1.3rem; background:linear-gradient(135deg,#1d4ed8,#0ea5e9); color:#fff; border:none; border-radius:8px; font-size:0.88rem; font-weight:700; cursor:pointer; font-family:inherit; white-space:nowrap; flex-shrink:0; transition:filter .15s; }
-        .btn-inquiry-cta:hover { filter:brightness(1.1); }
+        /* ── 撰写评价全宽区域 ────────────────────────────────────── */
+        .review-fullwidth-wrap { background:#f1f5f9; border-top:1px solid var(--border); padding:2.5rem 0 3rem; }
+        .review-fullwidth-inner { max-width:1160px; margin:0 auto; padding:0 3rem; }
 
         /* ── 律所简介折叠 ──────────────────────────────────────────── */
         .intro-fold { max-height:4.8em; overflow:hidden; position:relative; transition:max-height 0.35s ease; }
@@ -1125,200 +1124,6 @@ html, body {
             </div><!-- /card-body -->
         </div><!-- /reviews card -->
 
-        <!-- 询盘 CTA（主栏，撰写评价上方） -->
-        <div class="card inq-cta-card">
-            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;">
-                <div>
-                    <div style="font-size:1rem;font-weight:700;color:#1a2332;margin-bottom:0.2rem;">📩 <span class="t" data-zh="联系这家律所" data-en="Contact This Firm">联系这家律所</span></div>
-                    <div style="font-size:0.8rem;color:#64748b;"><span class="t" data-zh="律所通常在 24 小时内用中文回复，不构成委托关系" data-en="Firms typically reply within 24h · No obligation">律所通常在 24 小时内用中文回复，不构成委托关系</span></div>
-                </div>
-                <button class="btn-inquiry-cta" onclick="document.getElementById('inquiry-modal').style.display='flex'">
-                    <span class="t" data-zh="立即询盘 →" data-en="Send Inquiry →">立即询盘 →</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- ══ Write a Review ══ -->
-        <div class="card" id="write-review-card">
-            <div class="card-header">
-                <span style="font-size:1rem">✍️</span>
-                <span class="card-title">
-                    <span class="t" data-zh="撰写评价" data-en="Write a Review">撰写评价</span>
-                </span>
-                <span style="margin-left:auto;font-size:0.78rem;color:var(--faint)">
-                    <span class="t" data-zh="仅限已服务客户" data-en="Verified clients only">仅限已服务客户</span>
-                </span>
-            </div>
-            <div class="card-body">
-                <!-- Review form -->
-                <div id="review-form">
-                    <!-- Step 1: Service type — Group 4a (10 core) + Group 4b (15 specialist, collapsed) -->
-                    <div class="review-section-label"><span class="t" data-zh="① 您使用了哪项服务？" data-en="① Which service did you use?">① 您使用了哪项服务？</span></div>
-                    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem;" id="svc-group4a">
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="trademark" style="display:none"><span class="t" data-zh="🏷️ 商标注册与维权" data-en="🏷️ Trademark">🏷️ 商标注册与维权</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="patent" style="display:none"><span class="t" data-zh="💊 专利申请与保护" data-en="💊 Patent">💊 专利申请与保护</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="copyright" style="display:none"><span class="t" data-zh="©️ 版权与内容合规" data-en="©️ Copyright">©️ 版权与内容合规</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ecommerce" style="display:none"><span class="t" data-zh="🛒 跨境电商" data-en="🛒 E-commerce">🛒 跨境电商</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="entity" style="display:none"><span class="t" data-zh="🏢 公司设立与架构" data-en="🏢 Entity Setup">🏢 公司设立与架构</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="tax" style="display:none"><span class="t" data-zh="💰 跨境税务筹划" data-en="💰 Cross-border Tax">💰 跨境税务筹划</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="data" style="display:none"><span class="t" data-zh="🔒 数据合规（GDPR/CCPA）" data-en="🔒 Data Compliance">🔒 数据合规</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="litigation" style="display:none"><span class="t" data-zh="⚖️ 跨境诉讼与仲裁" data-en="⚖️ Litigation">⚖️ 跨境诉讼</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="criminal" style="display:none"><span class="t" data-zh="🚨 跨境刑事风险防范" data-en="🚨 Criminal Risk">🚨 刑事风险防范</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="sanctions" style="display:none"><span class="t" data-zh="🌐 出口管制与经济制裁" data-en="🌐 Export Controls &amp; Sanctions">🌐 出口管制与制裁</span></label>
-                    </div>
-                    <button type="button" id="svc-more-btn" onclick="toggleSvcMore(this)" style="background:none;border:1px dashed #cbd5e1;border-radius:16px;padding:0.22rem 0.7rem;font-size:0.72rem;color:#64748b;cursor:pointer;margin-bottom:1rem;font-family:inherit;">
-                        ＋ <span class="t" data-zh="显示更多专项服务（15个）" data-en="Show more specialist services (15)">显示更多专项服务（15个）</span>
-                    </button>
-                    <div id="svc-group4b" style="display:none;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem;">
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ma" style="display:none"><span class="t" data-zh="🤝 海外投资与并购" data-en="🤝 Overseas M&amp;A">🤝 海外投资与并购</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="trade_remedy" style="display:none"><span class="t" data-zh="⚓ 337调查" data-en="⚓ ITC 337">⚓ 进出口管制与337调查</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="antidumping" style="display:none"><span class="t" data-zh="📉 反倾销与贸易救济" data-en="📉 Anti-dumping">📉 反倾销与贸易救济</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="supply_chain" style="display:none"><span class="t" data-zh="🔗 供应链尽职调查" data-en="🔗 Supply Chain Due Diligence">🔗 供应链尽职调查</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="labor" style="display:none"><span class="t" data-zh="👥 海外劳工与雇佣法" data-en="👥 Employment Law">👥 海外劳工与雇佣法</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="arbitration" style="display:none"><span class="t" data-zh="🏛️ 国际仲裁（ICC/SIAC）" data-en="🏛️ International Arbitration">🏛️ 国际仲裁</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="product_cert" style="display:none"><span class="t" data-zh="🏭 产品认证与合规" data-en="🏭 Product Certification">🏭 产品认证与合规</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="fcpa" style="display:none"><span class="t" data-zh="🔍 反腐败合规（FCPA）" data-en="🔍 Anti-Corruption (FCPA)">🔍 反腐败合规（FCPA）</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="aml" style="display:none"><span class="t" data-zh="🏦 反洗钱合规（AML）" data-en="🏦 Anti-Money Laundering">🏦 反洗钱合规（AML）</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="financing" style="display:none"><span class="t" data-zh="📈 跨境融资与上市" data-en="📈 Cross-border Financing">📈 跨境融资与上市</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="new_energy" style="display:none"><span class="t" data-zh="⚡ 新能源合规" data-en="⚡ New Energy Compliance">⚡ 新能源与绿色能源合规</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="med_device" style="display:none"><span class="t" data-zh="🏥 医疗器械注册" data-en="🏥 Medical Device Registration">🏥 医疗器械注册与合规</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="gaming" style="display:none"><span class="t" data-zh="🎮 游戏与数字内容出海" data-en="🎮 Gaming &amp; Digital Content">🎮 游戏与数字内容出海</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ev" style="display:none"><span class="t" data-zh="🚗 新能源汽车合规" data-en="🚗 EV Compliance">🚗 新能源汽车合规</span></label>
-                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="franchise" style="display:none"><span class="t" data-zh="🤝 特许经营与分销协议" data-en="🤝 Franchise &amp; Distribution">🤝 特许经营与分销协议</span></label>
-                    </div>
-
-                    <!-- Step 2: 委托验证 -->
-                    <div class="review-section-label"><span class="t" data-zh="② 委托信息（选填，有助于审核）" data-en="② Engagement info (optional, aids verification)">② 委托信息（选填，有助于审核）</span></div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1.4rem;">
-                        <div>
-                            <label style="font-size:0.75rem;color:#64748b;display:block;margin-bottom:0.3rem;"><span class="t" data-zh="委托大致时间" data-en="Approximate engagement time">委托大致时间</span></label>
-                            <div style="display:flex;gap:0.35rem;">
-                                <select id="rev-year" style="flex:1;min-width:0;padding:0.48rem 0.4rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;color:#1a2332;font-size:0.82rem;font-family:inherit;">
-                                    <option value=""><span class="t" data-zh="年份" data-en="Year">年份</span></option>
-                                </select>
-                                <select id="rev-month" style="flex:1;min-width:0;padding:0.48rem 0.4rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;color:#1a2332;font-size:0.82rem;font-family:inherit;">
-                                    <option value="">月份</option>
-                                    <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
-                                    <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
-                                    <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
-                                    <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <label style="font-size:0.75rem;color:#64748b;display:block;margin-bottom:0.3rem;"><span class="t" data-zh="实际支付费用区间" data-en="Actual fee range paid">实际支付费用区间</span></label>
-                            <div style="display:flex;flex-direction:column;gap:0.18rem;padding:0.42rem 0.65rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;font-size:0.78rem;color:#1a2332;">
-                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="lt500" style="margin:0;"> &lt;$500</label>
-                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="500-2k" style="margin:0;"> $500–$2,000</label>
-                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="2k-5k" style="margin:0;"> $2,000–$5,000</label>
-                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="5k-20k" style="margin:0;"> $5,000–$20,000</label>
-                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="gt20k" style="margin:0;"> &gt;$20,000</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Step 3: Dimension ratings (weighted) -->
-                    <div class="review-section-label"><span class="t" data-zh="③ 请对以下维度打分" data-en="③ Rate each dimension">③ 请对以下维度打分</span></div>
-                    <div class="rating-dims">
-                        <!-- 按权重从高到低排列：专业度30% → 结果满意度25% → 性价比20% → 响应速度15% → 中文沟通10% -->
-                        <div class="dim-row">
-                            <span class="dim-label"><span class="t" data-zh="专业度" data-en="Professionalism">专业度</span></span>
-                            <div class="star-row" id="stars-pro">
-                                <span class="s" onclick="rate('pro',1)">★</span><span class="s" onclick="rate('pro',2)">★</span><span class="s" onclick="rate('pro',3)">★</span><span class="s" onclick="rate('pro',4)">★</span><span class="s" onclick="rate('pro',5)">★</span>
-                            </div>
-                            <span class="dim-weight">30%</span>
-                            <span class="dim-hint"><span class="t" data-zh="法律建议是否专业准确" data-en="Quality of legal advice">法律建议是否专业准确</span></span>
-                        </div>
-                        <div class="dim-row">
-                            <span class="dim-label"><span class="t" data-zh="结果满意度" data-en="Outcome">结果满意度</span></span>
-                            <div class="star-row" id="stars-out">
-                                <span class="s" onclick="rate('out',1)">★</span><span class="s" onclick="rate('out',2)">★</span><span class="s" onclick="rate('out',3)">★</span><span class="s" onclick="rate('out',4)">★</span><span class="s" onclick="rate('out',5)">★</span>
-                            </div>
-                            <span class="dim-weight">25%</span>
-                            <span class="dim-hint"><span class="t" data-zh="最终结果是否达到预期" data-en="Did the outcome meet expectations?">最终结果是否达到预期</span></span>
-                        </div>
-                        <div class="dim-row">
-                            <span class="dim-label"><span class="t" data-zh="性价比" data-en="Value for Money">性价比</span></span>
-                            <div class="star-row" id="stars-val">
-                                <span class="s" onclick="rate('val',1)">★</span><span class="s" onclick="rate('val',2)">★</span><span class="s" onclick="rate('val',3)">★</span><span class="s" onclick="rate('val',4)">★</span><span class="s" onclick="rate('val',5)">★</span>
-                            </div>
-                            <span class="dim-weight">20%</span>
-                            <span class="dim-hint"><span class="t" data-zh="费用是否透明合理" data-en="Pricing transparency & fairness">费用是否透明合理</span></span>
-                        </div>
-                        <div class="dim-row">
-                            <span class="dim-label"><span class="t" data-zh="响应速度" data-en="Responsiveness">响应速度</span></span>
-                            <div class="star-row" id="stars-spd">
-                                <span class="s" onclick="rate('spd',1)">★</span><span class="s" onclick="rate('spd',2)">★</span><span class="s" onclick="rate('spd',3)">★</span><span class="s" onclick="rate('spd',4)">★</span><span class="s" onclick="rate('spd',5)">★</span>
-                            </div>
-                            <span class="dim-weight">15%</span>
-                            <span class="dim-hint"><span class="t" data-zh="邮件/微信回复是否及时" data-en="Email/WeChat reply speed">邮件/微信回复是否及时</span></span>
-                        </div>
-                        <div class="dim-row">
-                            <span class="dim-label"><span class="t" data-zh="中文沟通" data-en="Mandarin Service">中文沟通</span></span>
-                            <div class="star-row" id="stars-cn">
-                                <span class="s" onclick="rate('cn',1)">★</span><span class="s" onclick="rate('cn',2)">★</span><span class="s" onclick="rate('cn',3)">★</span><span class="s" onclick="rate('cn',4)">★</span><span class="s" onclick="rate('cn',5)">★</span>
-                            </div>
-                            <span class="dim-weight">10%</span>
-                            <span class="dim-hint"><span class="t" data-zh="中文流利度，是否提供中文文件" data-en="Mandarin fluency; Chinese docs available">中文流利度，是否提供中文文件</span></span>
-                        </div>
-                        <!-- 加权综合评分实时显示 -->
-                        <div id="score-preview" style="display:none;align-items:center;justify-content:space-between;padding:0.5rem 0.8rem;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1.5px solid #bae6fd;border-radius:8px;margin-top:0.3rem;">
-                            <span style="font-size:0.8rem;color:#0369a1;font-weight:600;"><span class="t" data-zh="综合评分（加权）" data-en="Weighted Score">综合评分（加权）</span></span>
-                            <span id="score-val" style="font-size:1.3rem;font-weight:800;color:#0ea5e9;">—</span>
-                        </div>
-                    </div>
-
-                    <!-- Step 4: Quick tags -->
-                    <div class="review-section-label" style="margin-top:1.2rem;"><span class="t" data-zh="④ 选择适用标签（可多选）" data-en="④ Pick applicable tags">④ 选择适用标签（可多选）</span></div>
-                    <div class="rev-tags">
-                        <button class="rev-tag on" onclick="toggleTag(this)"><span class="t" data-zh="👍 性价比高" data-en="👍 Great value">👍 性价比高</span></button>
-                        <button class="rev-tag on" onclick="toggleTag(this)"><span class="t" data-zh="⚡ 响应迅速" data-en="⚡ Fast response">⚡ 响应迅速</span></button>
-                        <button class="rev-tag on" onclick="toggleTag(this)"><span class="t" data-zh="🎯 专业可靠" data-en="🎯 Reliable & expert">🎯 专业可靠</span></button>
-                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="🗣️ 中文流利" data-en="🗣️ Fluent Mandarin">🗣️ 中文流利</span></button>
-                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="📋 流程清晰" data-en="📋 Clear process">📋 流程清晰</span></button>
-                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="💰 价格透明" data-en="💰 Transparent pricing">💰 价格透明</span></button>
-                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="🏆 结果超预期" data-en="🏆 Exceeded expectations">🏆 结果超预期</span></button>
-                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="🤝 态度友善" data-en="🤝 Friendly team">🤝 态度友善</span></button>
-                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="📝 文件规范" data-en="📝 Thorough documentation">📝 文件规范</span></button>
-                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="🔄 会再次委托" data-en="🔄 Would hire again">🔄 会再次委托</span></button>
-                        <button class="rev-tag neg" onclick="toggleTag(this)"><span class="t" data-zh="⏱️ 回复较慢" data-en="⏱️ Slow replies">⏱️ 回复较慢</span></button>
-                        <button class="rev-tag neg" onclick="toggleTag(this)"><span class="t" data-zh="💸 费用超预算" data-en="💸 Over budget">💸 费用超预算</span></button>
-                    </div>
-
-                    <!-- Step 5: Written review -->
-                    <div class="review-section-label" style="margin-top:1.2rem;"><span class="t" data-zh="⑤ 详细评价（选填，但对其他客户非常有价值）" data-en="⑤ Written review (optional, very helpful to others)">⑤ 详细评价（选填，但对其他客户非常有价值）</span></div>
-                    <div style="background:rgba(0,0,0,0.03);border-radius:6px;padding:0.6rem 0.75rem;margin-bottom:0.6rem;font-size:0.78rem;color:var(--muted);line-height:1.6;border-left:3px solid #d4af37;">
-                        <span class="t" data-zh="💡 建议描述：① 您的业务背景 ② 律所处理方式 ③ 最终结果与耗时 ④ 是否推荐" data-en="💡 Suggestions: ① Your business context ② How the firm handled it ③ Outcome &amp; timeline ④ Would you recommend?">💡 建议描述：① 您的业务背景 ② 律所处理方式 ③ 最终结果与耗时 ④ 是否推荐</span>
-                    </div>
-                    <textarea id="rev-txt" rows="4" placeholder="例如：我们是做跨境SaaS的企业，在美国注册第9、42类商标。律师全程中文沟通，2周内完成申请，实际费用$950，无隐藏费用，3个月拿到证书。强烈推荐！" style="width:100%;padding:0.75rem;background:var(--surface,#f8f9fa);border:1.5px solid var(--border,#e0e0e0);border-radius:6px;color:var(--text,#1a2332);font-size:0.87rem;resize:vertical;font-family:inherit;line-height:1.6;"></textarea>
-                    <!-- 隐藏字段供 submitRev() 读取 -->
-                    <input type="hidden" id="rev-price">
-                    <input type="hidden" id="rev-dur">
-
-                    <!-- ⑥ 评价机制说明 -->
-                    <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:0.65rem 0.9rem;margin-top:1rem;font-size:0.77rem;color:#0369a1;line-height:1.65;">
-                        <strong><span class="t" data-zh="📋 评价机制说明" data-en="📋 Review Policy">📋 评价机制说明</span></strong><br>
-                        <span class="t" data-zh="律所在收到评价通知后可进行一次公开回复，回复将同时显示在评价下方。律所不能要求修改或删除客户评价。Whalium 保留对恶意或虚假评价的审核与删除权。" data-en="Firms may post one public reply after receiving review notification. Firms cannot request edits or deletions of client reviews. Whalium reserves the right to moderate and remove malicious or false reviews.">律所在收到评价通知后可进行一次公开回复，回复将同时显示在评价下方。律所不能要求修改或删除客户评价。Whalium 保留对恶意或虚假评价的审核与删除权。</span>
-                    </div>
-
-                    <!-- Submit -->
-                    <div style="margin-top:1rem;">
-                        <button onclick="submitRev()" style="width:100%;padding:0.85rem;background:linear-gradient(135deg,#1a2332,#2c3e50);color:white;border:none;border-radius:6px;font-size:0.93rem;font-weight:600;cursor:pointer;font-family:inherit;">
-                            <span class="t" data-zh="提交评价" data-en="Submit Review">提交评价</span>
-                        </button>
-                        <p style="font-size:0.73rem;color:var(--muted);line-height:1.5;text-align:center;margin:0.5rem 0 0;">
-                            <span class="t" data-zh="经人工审核后发布 · 公司名脱敏显示" data-en="Moderated before publishing · Company name anonymized">经人工审核后发布 · 公司名脱敏显示</span>
-                        </p>
-                    </div>
-                    <div id="rev-ok" style="display:none;margin-top:1rem;padding:1rem;background:rgba(0,180,80,0.08);border:1px solid rgba(0,180,80,0.25);border-radius:8px;text-align:center;">
-                        <div style="font-size:1.4rem;margin-bottom:0.3rem;">✅</div>
-                        <div style="font-weight:600;color:#00b450;margin-bottom:0.25rem;"><span class="t" data-zh="评价已提交！" data-en="Review submitted!">评价已提交！</span></div>
-                        <div style="font-size:0.8rem;color:var(--muted);"><span class="t" data-zh="审核通过后1–2个工作日内公开显示。" data-en="Will appear within 1–2 business days after moderation.">审核通过后1–2个工作日内公开显示。</span></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <style>
         .review-section-label { font-size:0.8rem; font-weight:700; color:#d4af37; margin-bottom:0.65rem; letter-spacing:0.03em; }
         .rev-svc { padding:0.32rem 0.85rem; background:transparent; border:1.5px solid #e0e0e0; border-radius:20px; color:#666; font-size:0.8rem; cursor:pointer; transition:all 0.18s; font-family:inherit; }
@@ -1651,6 +1456,144 @@ html, body {
 
     </div><!-- /sidebar -->
 </div><!-- /page-body -->
+
+<!-- ══ 撰写评价 · 全宽区域 ══════════════════════════════════════ -->
+<div class="review-fullwidth-wrap">
+    <div class="review-fullwidth-inner">
+        <div class="card" id="write-review-card" style="border-radius:12px;">
+            <div class="card-header">
+                <span style="font-size:1rem">✍️</span>
+                <span class="card-title"><span class="t" data-zh="撰写评价" data-en="Write a Review">撰写评价</span></span>
+                <span style="margin-left:auto;font-size:0.78rem;color:var(--faint)"><span class="t" data-zh="仅限已服务客户" data-en="Verified clients only">仅限已服务客户</span></span>
+            </div>
+            <div class="card-body">
+                <div id="review-form">
+                    <!-- ① 服务类型 -->
+                    <div class="review-section-label"><span class="t" data-zh="① 您使用了哪项服务？" data-en="① Which service did you use?">① 您使用了哪项服务？</span></div>
+                    <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-bottom:0.5rem;" id="svc-group4a">
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="trademark" style="display:none"><span class="t" data-zh="🏷️ 商标注册与维权" data-en="🏷️ Trademark">🏷️ 商标注册与维权</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="patent" style="display:none"><span class="t" data-zh="💊 专利申请与保护" data-en="💊 Patent">💊 专利申请与保护</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="copyright" style="display:none"><span class="t" data-zh="©️ 版权与内容合规" data-en="©️ Copyright">©️ 版权与内容合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ecommerce" style="display:none"><span class="t" data-zh="🛒 跨境电商" data-en="🛒 E-commerce">🛒 跨境电商</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="entity" style="display:none"><span class="t" data-zh="🏢 公司设立与架构" data-en="🏢 Entity Setup">🏢 公司设立与架构</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="tax" style="display:none"><span class="t" data-zh="💰 跨境税务筹划" data-en="💰 Cross-border Tax">💰 跨境税务筹划</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="data" style="display:none"><span class="t" data-zh="🔒 数据合规（GDPR/CCPA）" data-en="🔒 Data Compliance">🔒 数据合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="litigation" style="display:none"><span class="t" data-zh="⚖️ 跨境诉讼与仲裁" data-en="⚖️ Litigation">⚖️ 跨境诉讼</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="criminal" style="display:none"><span class="t" data-zh="🚨 跨境刑事风险防范" data-en="🚨 Criminal Risk">🚨 刑事风险防范</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="sanctions" style="display:none"><span class="t" data-zh="🌐 出口管制与经济制裁" data-en="🌐 Export Controls &amp; Sanctions">🌐 出口管制与制裁</span></label>
+                    </div>
+                    <button type="button" id="svc-more-btn" onclick="toggleSvcMore(this)" style="background:none;border:1px dashed #cbd5e1;border-radius:16px;padding:0.22rem 0.7rem;font-size:0.72rem;color:#64748b;cursor:pointer;margin-bottom:1rem;font-family:inherit;">
+                        ＋ <span class="t" data-zh="显示更多专项服务（15个）" data-en="Show more specialist services (15)">显示更多专项服务（15个）</span>
+                    </button>
+                    <div id="svc-group4b" style="display:none;flex-wrap:wrap;gap:0.4rem;margin-bottom:1rem;">
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ma" style="display:none"><span class="t" data-zh="🤝 海外投资与并购" data-en="🤝 Overseas M&amp;A">🤝 海外投资与并购</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="trade_remedy" style="display:none"><span class="t" data-zh="⚓ 337调查" data-en="⚓ ITC 337">⚓ 进出口管制与337调查</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="antidumping" style="display:none"><span class="t" data-zh="📉 反倾销与贸易救济" data-en="📉 Anti-dumping">📉 反倾销与贸易救济</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="supply_chain" style="display:none"><span class="t" data-zh="🔗 供应链尽职调查" data-en="🔗 Supply Chain Due Diligence">🔗 供应链尽职调查</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="labor" style="display:none"><span class="t" data-zh="👥 海外劳工与雇佣法" data-en="👥 Employment Law">👥 海外劳工与雇佣法</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="arbitration" style="display:none"><span class="t" data-zh="🏛️ 国际仲裁（ICC/SIAC）" data-en="🏛️ International Arbitration">🏛️ 国际仲裁</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="product_cert" style="display:none"><span class="t" data-zh="🏭 产品认证与合规" data-en="🏭 Product Certification">🏭 产品认证与合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="fcpa" style="display:none"><span class="t" data-zh="🔍 反腐败合规（FCPA）" data-en="🔍 Anti-Corruption (FCPA)">🔍 反腐败合规（FCPA）</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="aml" style="display:none"><span class="t" data-zh="🏦 反洗钱合规（AML）" data-en="🏦 Anti-Money Laundering">🏦 反洗钱合规（AML）</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="financing" style="display:none"><span class="t" data-zh="📈 跨境融资与上市" data-en="📈 Cross-border Financing">📈 跨境融资与上市</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="new_energy" style="display:none"><span class="t" data-zh="⚡ 新能源合规" data-en="⚡ New Energy Compliance">⚡ 新能源与绿色能源合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="med_device" style="display:none"><span class="t" data-zh="🏥 医疗器械注册" data-en="🏥 Medical Device Registration">🏥 医疗器械注册与合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="gaming" style="display:none"><span class="t" data-zh="🎮 游戏与数字内容出海" data-en="🎮 Gaming &amp; Digital Content">🎮 游戏与数字内容出海</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="ev" style="display:none"><span class="t" data-zh="🚗 新能源汽车合规" data-en="🚗 EV Compliance">🚗 新能源汽车合规</span></label>
+                        <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="franchise" style="display:none"><span class="t" data-zh="🤝 特许经营与分销协议" data-en="🤝 Franchise &amp; Distribution">🤝 特许经营与分销协议</span></label>
+                    </div>
+
+                    <!-- ② 委托信息 + 打分 — 并排两列 -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.4rem;">
+                        <div>
+                            <div class="review-section-label"><span class="t" data-zh="② 委托信息（选填）" data-en="② Engagement info (optional)">② 委托信息（选填）</span></div>
+                            <label style="font-size:0.75rem;color:#64748b;display:block;margin-bottom:0.3rem;"><span class="t" data-zh="委托大致时间" data-en="Approximate engagement time">委托大致时间</span></label>
+                            <div style="display:flex;gap:0.35rem;margin-bottom:0.75rem;">
+                                <select id="rev-year" style="flex:1;min-width:0;padding:0.48rem 0.4rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;color:#1a2332;font-size:0.82rem;font-family:inherit;">
+                                    <option value=""><span class="t" data-zh="年份" data-en="Year">年份</span></option>
+                                </select>
+                                <select id="rev-month" style="flex:1;min-width:0;padding:0.48rem 0.4rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;color:#1a2332;font-size:0.82rem;font-family:inherit;">
+                                    <option value="">月份</option>
+                                    <option value="1">1月</option><option value="2">2月</option><option value="3">3月</option>
+                                    <option value="4">4月</option><option value="5">5月</option><option value="6">6月</option>
+                                    <option value="7">7月</option><option value="8">8月</option><option value="9">9月</option>
+                                    <option value="10">10月</option><option value="11">11月</option><option value="12">12月</option>
+                                </select>
+                            </div>
+                            <label style="font-size:0.75rem;color:#64748b;display:block;margin-bottom:0.3rem;"><span class="t" data-zh="实际支付费用区间" data-en="Actual fee range paid">实际支付费用区间</span></label>
+                            <div style="display:flex;flex-direction:column;gap:0.18rem;padding:0.42rem 0.65rem;background:#f8f9fa;border:1.5px solid #e0e0e0;border-radius:6px;font-size:0.78rem;color:#1a2332;">
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="lt500" style="margin:0;"> &lt;$500</label>
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="500-2k" style="margin:0;"> $500–$2,000</label>
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="2k-5k" style="margin:0;"> $2,000–$5,000</label>
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="5k-20k" style="margin:0;"> $5,000–$20,000</label>
+                                <label style="cursor:pointer;display:flex;align-items:center;gap:0.35rem;"><input type="radio" name="rev-fee" value="gt20k" style="margin:0;"> &gt;$20,000</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="review-section-label"><span class="t" data-zh="③ 请对以下维度打分" data-en="③ Rate each dimension">③ 请对以下维度打分</span></div>
+                            <div class="rating-dims">
+                                <div class="dim-row"><span class="dim-label"><span class="t" data-zh="专业度" data-en="Professionalism">专业度</span></span><div class="star-row" id="stars-pro"><span class="s" onclick="rate('pro',1)">★</span><span class="s" onclick="rate('pro',2)">★</span><span class="s" onclick="rate('pro',3)">★</span><span class="s" onclick="rate('pro',4)">★</span><span class="s" onclick="rate('pro',5)">★</span></div><span class="dim-weight">30%</span></div>
+                                <div class="dim-row"><span class="dim-label"><span class="t" data-zh="结果满意度" data-en="Outcome">结果满意度</span></span><div class="star-row" id="stars-out"><span class="s" onclick="rate('out',1)">★</span><span class="s" onclick="rate('out',2)">★</span><span class="s" onclick="rate('out',3)">★</span><span class="s" onclick="rate('out',4)">★</span><span class="s" onclick="rate('out',5)">★</span></div><span class="dim-weight">25%</span></div>
+                                <div class="dim-row"><span class="dim-label"><span class="t" data-zh="性价比" data-en="Value">性价比</span></span><div class="star-row" id="stars-val"><span class="s" onclick="rate('val',1)">★</span><span class="s" onclick="rate('val',2)">★</span><span class="s" onclick="rate('val',3)">★</span><span class="s" onclick="rate('val',4)">★</span><span class="s" onclick="rate('val',5)">★</span></div><span class="dim-weight">20%</span></div>
+                                <div class="dim-row"><span class="dim-label"><span class="t" data-zh="响应速度" data-en="Responsiveness">响应速度</span></span><div class="star-row" id="stars-spd"><span class="s" onclick="rate('spd',1)">★</span><span class="s" onclick="rate('spd',2)">★</span><span class="s" onclick="rate('spd',3)">★</span><span class="s" onclick="rate('spd',4)">★</span><span class="s" onclick="rate('spd',5)">★</span></div><span class="dim-weight">15%</span></div>
+                                <div class="dim-row"><span class="dim-label"><span class="t" data-zh="中文沟通" data-en="Mandarin">中文沟通</span></span><div class="star-row" id="stars-cn"><span class="s" onclick="rate('cn',1)">★</span><span class="s" onclick="rate('cn',2)">★</span><span class="s" onclick="rate('cn',3)">★</span><span class="s" onclick="rate('cn',4)">★</span><span class="s" onclick="rate('cn',5)">★</span></div><span class="dim-weight">10%</span></div>
+                                <div id="score-preview" style="display:none;align-items:center;justify-content:space-between;padding:0.5rem 0.8rem;background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:1.5px solid #bae6fd;border-radius:8px;margin-top:0.3rem;">
+                                    <span style="font-size:0.8rem;color:#0369a1;font-weight:600;"><span class="t" data-zh="综合评分（加权）" data-en="Weighted Score">综合评分（加权）</span></span>
+                                    <span id="score-val" style="font-size:1.3rem;font-weight:800;color:#0ea5e9;">—</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ④ 标签 -->
+                    <div class="review-section-label"><span class="t" data-zh="④ 选择适用标签（可多选）" data-en="④ Pick applicable tags">④ 选择适用标签（可多选）</span></div>
+                    <div class="rev-tags" style="margin-bottom:1.2rem;">
+                        <button class="rev-tag on" onclick="toggleTag(this)"><span class="t" data-zh="👍 性价比高" data-en="👍 Great value">👍 性价比高</span></button>
+                        <button class="rev-tag on" onclick="toggleTag(this)"><span class="t" data-zh="⚡ 响应迅速" data-en="⚡ Fast response">⚡ 响应迅速</span></button>
+                        <button class="rev-tag on" onclick="toggleTag(this)"><span class="t" data-zh="🎯 专业可靠" data-en="🎯 Reliable & expert">🎯 专业可靠</span></button>
+                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="🗣️ 中文流利" data-en="🗣️ Fluent Mandarin">🗣️ 中文流利</span></button>
+                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="📋 流程清晰" data-en="📋 Clear process">📋 流程清晰</span></button>
+                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="💰 价格透明" data-en="💰 Transparent pricing">💰 价格透明</span></button>
+                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="🏆 结果超预期" data-en="🏆 Exceeded expectations">🏆 结果超预期</span></button>
+                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="🤝 态度友善" data-en="🤝 Friendly team">🤝 态度友善</span></button>
+                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="📝 文件规范" data-en="📝 Thorough documentation">📝 文件规范</span></button>
+                        <button class="rev-tag" onclick="toggleTag(this)"><span class="t" data-zh="🔄 会再次委托" data-en="🔄 Would hire again">🔄 会再次委托</span></button>
+                        <button class="rev-tag neg" onclick="toggleTag(this)"><span class="t" data-zh="⏱️ 回复较慢" data-en="⏱️ Slow replies">⏱️ 回复较慢</span></button>
+                        <button class="rev-tag neg" onclick="toggleTag(this)"><span class="t" data-zh="💸 费用超预算" data-en="💸 Over budget">💸 费用超预算</span></button>
+                    </div>
+
+                    <!-- ⑤ 详细评价 -->
+                    <div class="review-section-label"><span class="t" data-zh="⑤ 详细评价（选填，但对其他客户非常有价值）" data-en="⑤ Written review (optional, very helpful to others)">⑤ 详细评价（选填，但对其他客户非常有价值）</span></div>
+                    <div style="background:rgba(0,0,0,0.03);border-radius:6px;padding:0.6rem 0.75rem;margin-bottom:0.6rem;font-size:0.78rem;color:var(--muted);line-height:1.6;border-left:3px solid #d4af37;">
+                        <span class="t" data-zh="💡 建议描述：① 您的业务背景 ② 律所处理方式 ③ 最终结果与耗时 ④ 是否推荐" data-en="💡 Suggestions: ① Your business context ② How the firm handled it ③ Outcome &amp; timeline ④ Would you recommend?">💡 建议描述：① 您的业务背景 ② 律所处理方式 ③ 最终结果与耗时 ④ 是否推荐</span>
+                    </div>
+                    <textarea id="rev-txt" rows="4" placeholder="例如：我们是做跨境SaaS的企业，在美国注册第9、42类商标。律师全程中文沟通，2周内完成申请，实际费用$950，无隐藏费用，3个月拿到证书。强烈推荐！" style="width:100%;padding:0.75rem;background:var(--surface,#f8f9fa);border:1.5px solid var(--border,#e0e0e0);border-radius:6px;color:var(--text,#1a2332);font-size:0.87rem;resize:vertical;font-family:inherit;line-height:1.6;box-sizing:border-box;"></textarea>
+                    <input type="hidden" id="rev-price">
+                    <input type="hidden" id="rev-dur">
+
+                    <!-- ⑥ 评价机制说明 + 提交 -->
+                    <div style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;margin-top:1rem;">
+                        <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:0.65rem 0.9rem;font-size:0.77rem;color:#0369a1;line-height:1.65;">
+                            <strong><span class="t" data-zh="📋 评价机制说明" data-en="📋 Review Policy">📋 评价机制说明</span></strong><br>
+                            <span class="t" data-zh="律所在收到评价通知后可进行一次公开回复，回复将同时显示在评价下方。律所不能要求修改或删除客户评价。Whalium 保留对恶意或虚假评价的审核与删除权。" data-en="Firms may post one public reply after receiving review notification. Firms cannot request edits or deletions of client reviews. Whalium reserves the right to moderate and remove malicious or false reviews.">律所在收到评价通知后可进行一次公开回复，回复将同时显示在评价下方。律所不能要求修改或删除客户评价。Whalium 保留对恶意或虚假评价的审核与删除权。</span>
+                        </div>
+                        <div style="text-align:center;">
+                            <button onclick="submitRev()" style="padding:0.85rem 2.5rem;background:linear-gradient(135deg,#1a2332,#2c3e50);color:white;border:none;border-radius:6px;font-size:0.93rem;font-weight:600;cursor:pointer;font-family:inherit;white-space:nowrap;">
+                                <span class="t" data-zh="提交评价" data-en="Submit Review">提交评价</span>
+                            </button>
+                            <p style="font-size:0.72rem;color:var(--muted);margin:0.4rem 0 0;white-space:nowrap;"><span class="t" data-zh="经人工审核后发布 · 公司名脱敏显示" data-en="Moderated · Name anonymized">经人工审核后发布 · 公司名脱敏显示</span></p>
+                        </div>
+                    </div>
+                    <div id="rev-ok" style="display:none;margin-top:1rem;padding:1rem;background:rgba(0,180,80,0.08);border:1px solid rgba(0,180,80,0.25);border-radius:8px;text-align:center;">
+                        <div style="font-size:1.4rem;margin-bottom:0.3rem;">✅</div>
+                        <div style="font-weight:600;color:#00b450;margin-bottom:0.25rem;"><span class="t" data-zh="评价已提交！" data-en="Review submitted!">评价已提交！</span></div>
+                        <div style="font-size:0.8rem;color:var(--muted);"><span class="t" data-zh="审核通过后1–2个工作日内公开显示。" data-en="Will appear within 1–2 business days after moderation.">审核通过后1–2个工作日内公开显示。</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="footer">© 2025 Whalium <span class="t" data-zh="华里安" data-en=""></span> &nbsp;·&nbsp; <span class="t" data-zh="洞察全球律所，安行海外航路" data-en="Global Insights, Secure Navigation">洞察全球律所，安行海外航路</span> &nbsp;·&nbsp; <a href="whalium_9_about.html" style="color:inherit;opacity:0.65;text-decoration:none;"><span class="t" data-zh="关于我们" data-en="About Us">关于我们</span></a> &nbsp;·&nbsp; <span class="t" data-zh="律所信息由 Whalium 编辑团队核实" data-en="Firm info verified by Whalium editorial team">律所信息由 Whalium 编辑团队核实</span></div>
 
