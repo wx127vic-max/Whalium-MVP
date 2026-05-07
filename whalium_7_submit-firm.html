@@ -1714,22 +1714,44 @@ html, body {
             </div>
         </div>
 
-        <!-- 最佳案例（选填，移至最后）-->
+        <!-- 经营数据（选填）-->
         <div class="form-card">
             <div class="card-title">
-                <span>⚖️</span> <span class="t" data-zh="最佳案例" data-en="Featured Cases">最佳案例</span>
-                <span class="optional-tag"><span class="t" data-zh="选填 · 上传后排名预计提升25位" data-en="Optional · Boosts ranking by ~25 spots">选填 · 上传后排名预计提升25位</span></span>
+                <span>📊</span>
+                <span class="t" data-zh="经营数据" data-en="Business Stats">经营数据</span>
+                <span class="optional-tag"><span class="t" data-zh="选填 · 填写后展示在详情页统计栏" data-en="Optional · Shown in firm stats bar">选填 · 填写后展示在详情页统计栏</span></span>
             </div>
-            <div style="font-size:0.78rem;color:var(--silver-dim);margin-bottom:1rem;line-height:1.6">
-                <span class="t" data-zh="上传代表性案件材料（PDF/DOCX），AI自动提取案件类型、策略与结果。文件请提前脱敏处理当事人信息，可稍后在后台上传。" data-en="Upload representative case files (PDF/DOCX). AI extracts case type, strategy & outcome. Redact client info before uploading. You can also do this later in your dashboard.">上传代表性案件材料（PDF/DOCX），AI自动提取案件类型、策略与结果。文件请提前脱敏处理当事人信息，可稍后在后台上传。</span>
+            <p style="font-size:0.78rem;color:var(--silver-dim);margin-bottom:1rem;line-height:1.6">
+                <span class="t" data-zh="以下数据将显示在您的律所详情页统计栏，有助于提升客户信任度。如实填写，平台会进行合理性核查。" data-en="These stats appear in your firm profile's highlight bar and help build client trust. Fill accurately — Whalium may verify reasonableness.">以下数据将显示在您的律所详情页统计栏，有助于提升客户信任度。如实填写，平台会进行合理性核查。</span>
+            </p>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="t" data-zh="年处理案件量" data-en="Annual Cases Handled">年处理案件量</span>
+                    </label>
+                    <div class="input-icon-wrap">
+                        <input type="number" id="sf-cases-per-year" class="form-input" min="1" max="99999"
+                            data-ph-zh="例：500" data-ph-en="e.g. 500"
+                            placeholder="例：500"
+                            style="padding-right:2.5rem">
+                        <span style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);font-size:0.78rem;color:var(--silver-dim);pointer-events:none">
+                            <span class="t" data-zh="件/年" data-en="cases/yr">件/年</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">
+                        <span class="t" data-zh="中国客户占比" data-en="Chinese Client %">中国客户占比</span>
+                    </label>
+                    <div class="input-icon-wrap">
+                        <input type="number" id="sf-cn-client-pct" class="form-input" min="1" max="100"
+                            data-ph-zh="例：35" data-ph-en="e.g. 35"
+                            placeholder="例：35"
+                            style="padding-right:2rem">
+                        <span style="position:absolute;right:0.75rem;top:50%;transform:translateY(-50%);font-size:0.88rem;font-weight:700;color:var(--silver-dim);pointer-events:none">%</span>
+                    </div>
+                </div>
             </div>
-            <div class="upload-area" onclick="document.getElementById('caseFileInput').click()">
-                <div class="upload-icon">📂</div>
-                <div class="upload-text"><span class="t" data-zh="点击或拖拽上传案件材料" data-en="Click or drag to upload case files">点击或拖拽上传案件材料</span></div>
-                <div class="upload-hint"><span class="t" data-zh="支持 PDF / DOCX · 每文件 ≤ 20MB · 1–3个" data-en="PDF / DOCX · Max 20MB each · 1–3 files">支持 PDF / DOCX · 每文件 ≤ 20MB · 1–3个</span></div>
-            </div>
-            <input type="file" id="caseFileInput" accept=".pdf,.docx" multiple style="display:none" onchange="handleCaseFiles(this)">
-            <div id="caseFileList" style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.6rem"></div>
         </div>
 
         <div class="form-actions">
@@ -2055,18 +2077,24 @@ html, body {
     // 特色服务+认证（第1/2/3组）存入 badges
     var badges = allTagIds.filter(function(id){ return group4Tags.indexOf(id) === -1; });
 
+    // 经营数据
+    var casesPerYearVal = parseInt((document.getElementById('sf-cases-per-year') || {}).value, 10);
+    var cnClientPctVal  = parseInt((document.getElementById('sf-cn-client-pct')  || {}).value, 10);
+
     return {
-      name:           (document.getElementById('sf-name')           || {}).value || '',
-      name_cn:        (document.getElementById('sf-name-cn')        || {}).value || '',
-      website:        (document.getElementById('sf-website')        || {}).value || '',
-      country:        country,
-      city:           (document.getElementById('sf-city')           || {}).value || '',
-      email:          (document.getElementById('sf-email')          || {}).value || '',
-      phone:          phone,
-      description:    (document.getElementById('sf-description')    || {}).value || '',
-      description_cn: (document.getElementById('sf-description-cn') || {}).value || '',
-      practice_areas: practiceAreas.concat(areas).concat(subtags),
-      badges:         badges,
+      name:            (document.getElementById('sf-name')           || {}).value || '',
+      name_cn:         (document.getElementById('sf-name-cn')        || {}).value || '',
+      website:         (document.getElementById('sf-website')        || {}).value || '',
+      country:         country,
+      city:            (document.getElementById('sf-city')           || {}).value || '',
+      email:           (document.getElementById('sf-email')          || {}).value || '',
+      phone:           phone,
+      description:     (document.getElementById('sf-description')    || {}).value || '',
+      description_cn:  (document.getElementById('sf-description-cn') || {}).value || '',
+      practice_areas:  practiceAreas.concat(areas).concat(subtags),
+      badges:          badges,
+      cases_per_year:  isNaN(casesPerYearVal) ? null : casesPerYearVal,
+      cn_client_pct:   isNaN(cnClientPctVal)  ? null : cnClientPctVal,
     };
   }
 

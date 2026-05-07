@@ -3039,16 +3039,30 @@ function toggleReviewForm(cb){
         }
 
         // ── 统计数字栏（动态填充）────────────────────────────
-        // 数据来源：firms 表的 cases_per_year / recommend_rate / cn_client_pct / years_exp / min_price_usd
         (function updateStatsBar() {
+          // 执业经验：优先 years_exp 字段，否则 founded_year 推算
+          var yearsExp = f.years_exp || (f.founded_year ? (new Date().getFullYear() - f.founded_year) : null);
+
+          // 商标服务起价：优先 min_price_usd，否则扫描 services jsonb 取最低价
+          var minPrice = f.min_price_usd || null;
+          if (!minPrice && f.services && f.services.length) {
+            f.services.forEach(function(s) {
+              var p = String(s.price || s.price_en || '');
+              var m = p.match(/\$?([\d,]+)/);
+              if (m) {
+                var n = parseInt(m[1].replace(/,/g, ''), 10);
+                if (!isNaN(n) && (!minPrice || n < minPrice)) minPrice = n;
+              }
+            });
+          }
+
           var cells = document.querySelectorAll('.stats-inner .stat-cell');
-          // 定义5格的数据映射（顺序与 HTML 一致）
           var stats = [
-            { val: f.cases_per_year,  suffix: '+',    prefix: '',  zh: '年处理案件', en: 'Cases/Yr' },
-            { val: f.recommend_rate,  suffix: '%',    prefix: '',  zh: '客户推荐率', en: 'Recommend Rate' },
-            { val: f.cn_client_pct,   suffix: '%',    prefix: '',  zh: '中国客户占比', en: 'CN Clients' },
-            { val: f.years_exp,       suffix: en?' yrs':'年', prefix: '', zh: '执业经验', en: 'Experience' },
-            { val: f.min_price_usd,   suffix: en ? '+' : '起', prefix: '$', zh: '商标服务起价', en: 'Starting Price' },
+            { val: f.cases_per_year,  suffix: '+',              prefix: '',  zh: '年处理案件',    en: 'Cases/Yr' },
+            { val: f.recommend_rate,  suffix: '%',              prefix: '',  zh: '客户推荐率',    en: 'Recommend Rate' },
+            { val: f.cn_client_pct,   suffix: '%',              prefix: '',  zh: '中国客户占比',  en: 'CN Clients' },
+            { val: yearsExp,          suffix: en?' yrs':'年',   prefix: '',  zh: '执业经验',      en: 'Experience' },
+            { val: minPrice,          suffix: en?'+':'起',      prefix: '$', zh: '商标服务起价',  en: 'Starting Price' },
           ];
           var hasAny = false;
           cells.forEach(function(cell, i) {
