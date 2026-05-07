@@ -989,29 +989,141 @@ html, body {
         <p class="ai-search-sub"><span class="t" data-zh="无需知道具体术语，直接告诉我们您的情况，AI 将为您匹配最合适的律所" data-en="No legal jargon needed — just describe your situation and AI finds the best firms">无需知道具体术语，直接告诉我们您的情况，AI 将为您匹配最合适的律所</span></p>
 
         <div class="ai-input-wrap">
-            <input type="text" class="ai-input" 
-                data-ph-zh="描述您的需求，例如：美国商标注册，预算5000元..." data-ph-en="e.g. I need to register a US trademark for my software startup..." placeholder="描述您的需求，例如：美国商标注册，预算5000元..." 
-                data-val-zh="我需要在美国注册商标，主要是软件类产品，有中文服务优先" data-val-en="I need to register a US trademark for software products, prefer Chinese-speaking attorneys" value="我需要在美国注册商标，主要是软件类产品，有中文服务优先">
-            <button class="ai-send-btn">
+            <input type="text" class="ai-input" id="ai-query-input"
+                data-ph-zh="描述您的需求，例如：美国商标注册，预算5000元..." data-ph-en="e.g. I need to register a US trademark for my software startup..." placeholder="描述您的需求，例如：美国商标注册，预算5000元...">
+            <button class="ai-send-btn" id="ai-send-btn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                 <span class="t" data-zh="AI 检索" data-en="Search">AI 检索</span>
             </button>
         </div>
 
-
-
-        <!-- AI Response -->
-        <div class="ai-response">
+        <!-- AI Response — hidden by default, shown after user submits a query -->
+        <div class="ai-response" id="ai-response-box" style="display:none;">
             <div class="ai-response-header">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:#00c8c8"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
                 <span class="t" data-zh="WHALIUM AI 分析结果" data-en="WHALIUM AI Analysis">WHALIUM AI 分析结果</span>
             </div>
-            <div class="ai-response-text">
-                <span class="t" data-zh="根据您的需求，我为您筛选出 " data-en="Based on your query, I found ">根据您的需求，我为您筛选出 </span><span class="ai-highlight">5</span><span class="t" data-zh=" 家专注于" data-en=" firms specializing in "> 家专注于</span><span class="ai-highlight"><span class="t" data-zh="美国知识产权" data-en="US IP law">美国知识产权</span></span><span class="t" data-zh="且提供" data-en=" with ">且提供</span><span class="ai-highlight"><span class="t" data-zh="中文服务" data-en="Mandarin service">中文服务</span></span><span class="t" data-zh="的律所。" data-en=".">的律所。</span>
-                <span class="t" data-zh="推荐优先考虑 " data-en="Top picks: ">推荐优先考虑 </span><span class="ai-highlight">Morrison IP Law</span><span class="t" data-zh="（性价比高，商标注册经验丰富）和 " data-en=" (best value, trademark expertise) and ">（性价比高，商标注册经验丰富）和 </span><span class="ai-highlight">Sterling &amp; Partners</span><span class="t" data-zh="（评分最高，适合复杂商标案件）。" data-en=" (highest rated, complex cases).">（评分最高，适合复杂商标案件）。</span>
-                <span class="t" data-zh="软件类产品通常需要注册 第9类 商标，官费约 $350/类，律师费用区间已在卡片中标注。" data-en="Software products typically need Class 9 trademark. USPTO fee ~$350/class; attorney fees shown on each card.">软件类产品通常需要注册 第9类 商标，官费约 $350/类，律师费用区间已在卡片中标注。</span>
+            <div class="ai-response-text" id="ai-response-text">
+                <!-- dynamically filled by AI search handler -->
             </div>
         </div>
+
+        <script>
+        // ── AI Search Handler ─────────────────────────────────────────
+        (function(){
+          // Keyword → country filter value
+          var COUNTRY_KW = [
+            [/美国|USPTO|US\b/i, '美国'],
+            [/英国|UK\b/i,       '英国'],
+            [/德国|Germany/i,    '德国'],
+            [/法国|France/i,     '法国'],
+            [/新加坡|Singapore/i,'新加坡'],
+            [/日本|Japan/i,      '日本'],
+            [/韩国|Korea/i,      '韩国'],
+            [/加拿大|Canada/i,   '加拿大'],
+            [/澳大利亚|Australia/i,'澳大利亚'],
+            [/欧盟|EU\b|欧洲/i,  '欧盟'],
+            [/印度|India/i,      '印度'],
+            [/泰国|Thailand/i,   '泰国'],
+            [/越南|Vietnam/i,    '越南'],
+            [/马来西亚|Malaysia/i,'马来西亚'],
+            [/阿联酋|UAE/i,      '阿联酋'],
+          ];
+          // Keyword → area filter value
+          var AREA_KW = [
+            [/商标|trademark/i,        'ip'],
+            [/专利|patent/i,           'ip'],
+            [/版权|copyright/i,        'ip'],
+            [/知识产权|IP\b/i,         'ip'],
+            [/公司|设立|架构|entity/i,  'setup'],
+            [/税务|tax/i,              'setup'],
+            [/贸易|trade|337|反倾销/i,  'trade'],
+            [/合规|compliance|GDPR/i,  'compliance'],
+            [/电商|ecommerce|亚马逊/i,  'ecommerce'],
+            [/诉讼|仲裁|litigation/i,   'dispute'],
+          ];
+          // Keyword → feature checkbox value
+          var FEAT_KW = [
+            [/中文|中国|Chinese|普通话|华人/i, 'zh_service'],
+            [/免费咨询|free consult/i,        'free_consult'],
+            [/透明|固定报价|fixed price/i,     'transparent_pricing'],
+            [/24.?小时|24.?hour/i,            'response_24h'],
+          ];
+
+          function uncheckAll(sel) {
+            document.querySelectorAll(sel + ' input[type=checkbox]').forEach(function(cb){ cb.checked = false; });
+          }
+          function setCheck(sel, val) {
+            var cb = document.querySelector(sel + ' input[value="' + val + '"]');
+            if (cb) cb.checked = true;
+          }
+
+          function doAISearch() {
+            var input = document.getElementById('ai-query-input');
+            var q = (input.value || '').trim();
+            if (!q) return;
+            var en = (window._wlang || 'zh') === 'en';
+
+            // Reset all filters
+            uncheckAll('#msel-country');
+            uncheckAll('#msel-area');
+            uncheckAll('#msel-feat');
+
+            var detectedCountry = '';
+            var detectedArea = '';
+            var detectedFeats = [];
+
+            COUNTRY_KW.forEach(function(pair){ if(pair[0].test(q) && !detectedCountry) { detectedCountry = pair[1]; setCheck('#msel-country', pair[1]); } });
+            AREA_KW.forEach(function(pair){ if(pair[0].test(q) && !detectedArea) { detectedArea = pair[1]; setCheck('#msel-area', pair[1]); } });
+            FEAT_KW.forEach(function(pair){ if(pair[0].test(q)) { detectedFeats.push(pair[1]); setCheck('#msel-feat', pair[1]); } });
+
+            // Update multi-select display labels
+            if (window.mselUpdateDisplay) {
+              window.mselUpdateDisplay('msel-country');
+              window.mselUpdateDisplay('msel-area');
+              window.mselUpdateDisplay('msel-feat');
+            }
+
+            // Show AI result box (with loading text)
+            var box = document.getElementById('ai-response-box');
+            var txt = document.getElementById('ai-response-text');
+            box.style.display = '';
+            txt.innerHTML = en ? '<span style="color:#888">Searching…</span>' : '<span style="color:#888">正在检索…</span>';
+
+            // Trigger firm fetch
+            window._firmPage = 0;
+            if (window.fetchFirms) window.fetchFirms(true);
+
+            // After fetch completes, update AI summary (poll _firmTotal)
+            var attempts = 0;
+            var prevTotal = window._firmTotal;
+            var poll = setInterval(function(){
+              attempts++;
+              if (window._firmTotal !== prevTotal || attempts > 15) {
+                clearInterval(poll);
+                var total = window._firmTotal || 0;
+                var qShort = q.length > 30 ? q.slice(0,30) + '…' : q;
+                if (en) {
+                  txt.innerHTML = 'Found <span class="ai-highlight">' + total + '</span> firms matching your query'
+                    + (detectedCountry ? ' in <span class="ai-highlight">' + detectedCountry + '</span>' : '')
+                    + (detectedArea    ? ' for <span class="ai-highlight">' + detectedArea + '</span>' : '')
+                    + '. Results are ranked by rating below.';
+                } else {
+                  txt.innerHTML = '根据您的需求「<span class="ai-highlight">' + qShort + '」</span>'
+                    + '，为您找到 <span class="ai-highlight">' + total + '</span> 家律所'
+                    + (detectedCountry ? '（国家：<span class="ai-highlight">' + detectedCountry + '</span>）' : '')
+                    + (detectedArea    ? '（领域：<span class="ai-highlight">' + detectedArea + '</span>）' : '')
+                    + '，已按评分排序，请查看下方结果。';
+                }
+              }
+            }, 200);
+          }
+
+          // Wire up button click and Enter key
+          document.getElementById('ai-send-btn').onclick = doAISearch;
+          document.getElementById('ai-query-input').onkeydown = function(e){ if(e.key==='Enter') doAISearch(); };
+        })();
+        </script>
     </div>
 
 
@@ -2195,7 +2307,7 @@ function loadMore() {
     var features  = Array.from(document.querySelectorAll('#msel-feat input:checked')).map(function(c){return c.value;});
     var ratingVal = (document.querySelector('.filter-select')||{}).value || '';
 
-    var q = supabase.from('firms').select('*', {count:'exact'}).eq('active', true).order('rating', {ascending:false});
+    var q = supabase.from('firms').select('*', {count:'exact'}).or('active.eq.true,active.is.null').order('rating', {ascending:false});
 
     if (countries.length) q = q.in('country', countries);
 
@@ -2335,6 +2447,7 @@ function loadMore() {
 
     if (reset) {
       window._firmPage = 0;
+      window._firmTotal = 0;  // reset so AI polling detects new result
       list.innerHTML = '<div style="padding:2rem;text-align:center;color:#888;">'
         + (en ? 'Loading…' : '加载中…') + '</div>';
     }
@@ -2345,8 +2458,14 @@ function loadMore() {
       .range(page * PAGE_SIZE, (page + 1) * PAGE_SIZE - 1)
       .then(function(res) {
         if (res.error) {
-          list.innerHTML = '<div style="padding:2rem;text-align:center;color:#e74c3c;">'
-            + (en ? 'Failed to load. Please refresh.' : '加载失败，请刷新重试。') + '</div>';
+          if (!reset) {
+            // load-more error: don't wipe the existing list, just re-enable the button
+            if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+          } else {
+            list.innerHTML = '<div style="padding:2rem;text-align:center;color:#e74c3c;">'
+              + (en ? 'Failed to load. Please refresh.' : '加载失败，请刷新重试。') + '</div>';
+          }
+          console.error('fetchFirms error:', res.error);
           return;
         }
         var firms = res.data || [];
