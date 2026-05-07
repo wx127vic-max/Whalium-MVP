@@ -231,6 +231,19 @@
         .service-price.price-unlocked .sp-lock  { display:none; }
 
         /* ══ RATINGS ══════════════════════════════════════════ */
+        /* ══ LAWYER CARDS ═════════════════════════════════════ */
+        .lawyer-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(270px,1fr)); gap:1rem; }
+        .lawyer-card { display:flex; gap:0.85rem; padding:0.9rem 1rem; background:#f8fafc; border-radius:10px; border:1px solid var(--border); transition:box-shadow 0.18s; }
+        .lawyer-card:hover { box-shadow:0 3px 12px rgba(0,153,170,0.1); border-color:var(--teal-dim); }
+        .lawyer-avatar { width:46px; height:46px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--navy)); display:flex; align-items:center; justify-content:center; font-size:1.05rem; font-weight:800; color:#fff; flex-shrink:0; }
+        .lawyer-info { flex:1; min-width:0; }
+        .lawyer-name { font-size:0.87rem; font-weight:700; color:var(--text); margin-bottom:0.12rem; }
+        .lawyer-title { font-size:0.73rem; color:var(--muted); margin-bottom:0.38rem; line-height:1.35; }
+        .lawyer-bio { font-size:0.74rem; color:var(--muted); line-height:1.6; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+        .lawyer-bio.expanded { display:block; }
+        .lawyer-bio-toggle { font-size:0.71rem; color:var(--teal); cursor:pointer; margin-top:0.25rem; display:inline-block; text-decoration:underline; text-decoration-style:dotted; }
+        .lawyer-disclaimer { font-size:0.68rem; color:var(--faint); margin-top:0.85rem; padding-top:0.55rem; border-top:1px solid var(--border); }
+
         .rating-row { display:flex; align-items:center; gap:0.9rem; margin-bottom:0.8rem; }
         .rating-label { width:72px; font-size:0.8rem; color:var(--muted); flex-shrink:0; }
         .bar-track { flex:1; height:5px; background:#eef0f3; border-radius:3px; overflow:hidden; }
@@ -429,16 +442,14 @@
         el.classList.add('price-unlocked');
         el.style.cursor='default';
       });
-      // 替换"锁定"联系区为真实内容
+      // 替换"锁定"联系区为动态联系方式容器
       var lockedBox = document.querySelector('.contact-locked');
       if(lockedBox){
         lockedBox.style.cssText='background:#f0fdf4;border:1.5px solid #22ccde;border-radius:10px;padding:1rem 1.1rem;';
         lockedBox.innerHTML = [
           '<div style="font-size:0.7rem;font-weight:800;color:#0369a1;letter-spacing:0.06em;margin-bottom:0.65rem;">✦ 会员专属联系方式</div>',
-          '<div style="display:grid;gap:0.5rem;font-size:0.84rem;">',
-          '<a href="mailto:d.morrison@morrison-ip.com" style="color:#0369a1;font-weight:600;text-decoration:none;">📧 d.morrison@morrison-ip.com</a>',
-          '<div style="color:#334155;">📞 +1 (213) 555-0182 &nbsp;<span style="font-size:0.72rem;color:#64748b;">（太平洋时间 9:00–18:00）</span></div>',
-          '<a href="#" style="display:inline-block;margin-top:0.3rem;background:linear-gradient(135deg,#22ccde,#0a8eb0);color:#0a1628;padding:0.45rem 1rem;border-radius:6px;font-size:0.8rem;font-weight:700;text-decoration:none;">📅 预约免费咨询（30分钟）</a>',
+          '<div id="member-contact-inner" style="display:grid;gap:0.5rem;font-size:0.84rem;">',
+          '<span style="color:#94a3b8;font-size:0.8rem;">⏳ 加载中…</span>',
           '</div>'
         ].join('');
       }
@@ -882,6 +893,18 @@ html, body {
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- 核心律师团队（内容由 JS 动态渲染） -->
+        <div class="card" id="lawyers-card" style="display:none">
+            <div class="card-header">
+                <span style="font-size:1rem">👤</span>
+                <span class="card-title"><span class="t" data-zh="核心律师团队" data-en="Key Attorneys">核心律师团队</span></span>
+            </div>
+            <div class="card-body">
+                <div class="lawyer-grid" id="lawyers-list"></div>
+                <p class="lawyer-disclaimer">* <span class="t" data-zh="律师信息由平台整理，仅供参考，以律所官网为准" data-en="Attorney info compiled by Whalium for reference only; verify via firm's official website">律师信息由平台整理，仅供参考，以律所官网为准</span></p>
             </div>
         </div>
 
@@ -2992,21 +3015,18 @@ function toggleReviewForm(cb){
         var locSideEl = document.getElementById('detail-location');
         if (locSideEl) locSideEl.textContent = loc;
 
-        // ── 电话 ─────────────────────────────────────────────
-        if (f.phone) {
-          var phoneRow = document.getElementById('detail-phone-row');
-          var phoneEl  = document.getElementById('detail-phone');
-          if (phoneRow) phoneRow.style.display = '';
-          if (phoneEl)  phoneEl.innerHTML = '<a href="tel:' + f.phone + '" style="color:var(--teal);text-decoration:none">' + f.phone + '</a>';
-        }
-
-        // ── 邮件 ─────────────────────────────────────────────
-        if (f.email) {
-          var emailRow = document.getElementById('detail-email-row');
-          var emailEl  = document.getElementById('detail-email');
-          if (emailRow) emailRow.style.display = '';
-          if (emailEl)  emailEl.innerHTML = '<a href="mailto:' + f.email + '" style="color:var(--teal);text-decoration:none">' + f.email + '</a>';
-        }
+        // ── 会员解锁联系方式（email / phone 仅会员可见）──────────
+        (function fillMemberContact() {
+          var paid = false; try { paid = localStorage.getItem('wh_paid') === '1'; } catch(e) {}
+          if (!paid) return; // 非会员：保持锁定状态
+          var contactInner = document.getElementById('member-contact-inner');
+          if (!contactInner) return;
+          var html = '';
+          if (f.email) html += '<a href="mailto:' + f.email + '" style="color:#0369a1;font-weight:600;text-decoration:none;">📧 ' + f.email + '</a>';
+          if (f.phone) html += '<div style="color:#334155;">📞 ' + f.phone + '</div>';
+          if (!html) html = '<span style="color:#64748b;font-size:0.8rem;">' + (en ? 'Contact info not yet provided. Use inquiry form above.' : '联系方式待律所填写，请通过询盘联系') + '</span>';
+          contactInner.innerHTML = html;
+        })();
 
         // ── 律所简介（动态覆盖） ──────────────────────────────
         if (f.description) {
@@ -3074,6 +3094,41 @@ function toggleReviewForm(cb){
 
         // ── 动态加载服务项目 ──────────────────────────────────
         if (f.services && f.services.length) loadServices(f.services, en);
+
+        // ── 律师团队渲染 ──────────────────────────────────────
+        (function renderLawyers() {
+          var lawyers = f.lawyers;
+          if (!lawyers || !lawyers.length) return;
+          var card = document.getElementById('lawyers-card');
+          var list = document.getElementById('lawyers-list');
+          if (!card || !list) return;
+          card.style.display = '';
+          list.innerHTML = lawyers.map(function(l, idx) {
+            var initial = (l.name || '?').replace(/[一-龥]/g,'').trim().charAt(0).toUpperCase()
+                       || (l.name || '?').charAt(0);
+            var photoHtml = (l.photo_url && l.photo_url.length > 4)
+              ? '<img src="' + l.photo_url + '" style="width:46px;height:46px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\'">'
+              : '<div class="lawyer-avatar">' + initial + '</div>';
+            var bioId = 'lbio_' + idx;
+            var expandLabel = en ? 'Read more' : '展开';
+            var collapseLabel = en ? 'Show less' : '收起';
+            var bioHtml = l.bio
+              ? '<div class="lawyer-bio" id="' + bioId + '">' + l.bio + '</div>'
+                + '<span class="lawyer-bio-toggle" onclick="(function(){'
+                + 'var b=document.getElementById(\'' + bioId + '\');'
+                + 'b.classList.toggle(\'expanded\');'
+                + 'this.textContent=b.classList.contains(\'expanded\')?\''+collapseLabel+'\':\''+expandLabel+'\';'
+                + '}).call(this)">' + expandLabel + '</span>'
+              : '';
+            return '<div class="lawyer-card">'
+              + photoHtml
+              + '<div class="lawyer-info">'
+              + '<div class="lawyer-name">' + (l.name || '') + '</div>'
+              + '<div class="lawyer-title">' + (l.title || '') + '</div>'
+              + bioHtml
+              + '</div></div>';
+          }).join('');
+        })();
 
         // ── 动态加载评价 ──────────────────────────────────────
         if (f.id) loadReviews(f.id, en);
