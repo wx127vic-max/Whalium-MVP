@@ -161,7 +161,7 @@
         .stat-lbl { font-size:0.7rem; color:var(--faint); margin-top:0.25rem; text-transform:uppercase; letter-spacing:0.06em; }
 
         /* ══ LAYOUT ═══════════════════════════════════════════ */
-        .page-body { max-width:1100px; margin:0 auto; padding:2rem 3rem 4rem; display:grid; grid-template-columns:1fr 310px; gap:1.8rem; align-items:start; }
+        .page-body { max-width:1160px; margin:0 auto; padding:2rem 3rem 4rem; display:grid; grid-template-columns:1fr 400px; gap:1.8rem; align-items:start; }
 
         /* ══ CARDS ════════════════════════════════════════════ */
         .card {
@@ -837,84 +837,6 @@ html, body {
             </div>
         </div>
 
-        <!-- 服务项目 -->
-        <div class="card">
-            <div class="card-header">
-                <span style="font-size:1rem">⚖️</span>
-                <span class="card-title"><span class="t" data-zh="服务项目" data-en="Services">服务项目</span></span>
-            </div>
-            <div class="card-body">
-                <div class="service-grid" id="services-list">
-                    <div class="service-item">
-                        <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="🏷️ 美国商标注册" data-en="🏷️ US Trademark Reg.">🏷️ 美国商标注册</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val"><span class="t" data-zh="$800–$1,200/类" data-en="$800–$1,200/class">$800–$1,200/类</span></span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
-                            <div class="service-desc"><span class="t" data-zh="全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。" data-en="Full USPTO trademark registration: filing, examination replies, and opposition responses.">全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。</span></div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="📋 驳回答辩" data-en="📋 Office Action Response">📋 驳回答辩</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val">$1,500–$2,500</span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
-                            <div class="service-desc"><span class="t" data-zh="针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。" data-en="Professional office action responses with 78% success rate, including TTAB appeals.">针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。</span></div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="💡 发明专利申请" data-en="💡 Invention Patent Filing">💡 发明专利申请</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val">$3,000–$6,000</span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
-                            <div class="service-desc"><span class="t" data-zh="发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。" data-en="Utility and design patent filing: technical assessment + claim drafting.">发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。</span></div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="⚔️ 商标侵权维权" data-en="⚔️ TM Enforcement">⚔️ 商标侵权维权</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val"><span class="t" data-zh="按案件报价" data-en="Case-by-Case">按案件报价</span></span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
-                            <div class="service-desc"><span class="t" data-zh="电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。" data-en="E-commerce infringement (Amazon/eBay/Walmart), C&D letters, court litigation.">电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。</span></div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="©️ 版权登记" data-en="©️ Copyright Reg.">©️ 版权登记</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val">$300–$500</span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
-                            <div class="service-desc"><span class="t" data-zh="软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。" data-en="US Copyright registration for software, art & literary works. 5-day expedited processing.">软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。</span></div>
-                        </div>
-                    </div>
-                    <div class="service-item">
-                        <div class="service-item-body">
-                            <div class="service-name"><span class="t" data-zh="🌐 国际商标延伸" data-en="🌐 International TM">🌐 国际商标延伸</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val"><span class="t" data-zh="$500–$900/国" data-en="$500–$900/country">$500–$900/国</span></span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
-                            <div class="service-desc"><span class="t" data-zh="马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。" data-en="Madrid Protocol TM registration — EU, UK, Australia & more in one application.">马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-        // ── 服务价格门控：未登录→登录页；已登录未付费→开通页 ──────────────
-        window.priceGateClick = function() {
-          var paid = false;
-          try { paid = localStorage.getItem('wh_paid') === '1'; } catch(e) {}
-          if (paid) return; // 已是会员，不应点到这里
-          var en = (window._wlang || 'zh') === 'en';
-          var sb = window._wh_sb;
-          if (!sb) {
-            location.href = 'whalium_2_login.html?next=' + encodeURIComponent(location.href);
-            return;
-          }
-          sb.auth.getSession().then(function(r) {
-            var session = r.data && r.data.session;
-            if (!session) {
-              // 未登录
-              location.href = 'whalium_2_login.html?next=' + encodeURIComponent(location.href);
-            } else {
-              // 已登录但未付费
-              var msg = en
-                ? 'Pricing details are available to Whalium members (¥365/yr). Upgrade now?'
-                : '价格信息为会员专属（¥365/年）。立即开通会员查看完整报价？';
-              if (confirm(msg)) {
-                location.href = 'whalium_5_payment.html';
-              }
-            }
-          });
-        };
-        </script>
-
         <!-- 评分详情 -->
         <div class="card">
             <div class="card-header">
@@ -1538,6 +1460,75 @@ html, body {
 
     <!-- 右侧边栏 -->
     <div class="sidebar">
+
+        <!-- 服务项目（会员价格门控） -->
+        <div class="card">
+            <div class="card-header">
+                <span style="font-size:1rem">⚖️</span>
+                <span class="card-title"><span class="t" data-zh="服务项目" data-en="Services">服务项目</span></span>
+            </div>
+            <div class="card-body" style="padding-top:0.5rem;">
+                <div class="service-grid" id="services-list">
+                    <div class="service-item">
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="🏷️ 美国商标注册" data-en="🏷️ US Trademark Reg.">🏷️ 美国商标注册</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val"><span class="t" data-zh="$800–$1,200/类" data-en="$800–$1,200/class">$800–$1,200/类</span></span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
+                            <div class="service-desc"><span class="t" data-zh="全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。" data-en="Full USPTO trademark registration: filing, examination replies, and opposition responses.">全程代理 USPTO 商标注册，包括申请、审查回复、公告异议应对至最终注册。</span></div>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="📋 驳回答辩" data-en="📋 Office Action Response">📋 驳回答辩</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val">$1,500–$2,500</span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
+                            <div class="service-desc"><span class="t" data-zh="针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。" data-en="Professional office action responses with 78% success rate, including TTAB appeals.">针对审查官驳回通知进行专业答辩，成功率高达 78%，含复审程序。</span></div>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="💡 发明专利申请" data-en="💡 Invention Patent Filing">💡 发明专利申请</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val">$3,000–$6,000</span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
+                            <div class="service-desc"><span class="t" data-zh="发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。" data-en="Utility and design patent filing: technical assessment + claim drafting.">发明专利、实用新型全类别申请代理，技术背景评估 + 权利要求撰写。</span></div>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="⚔️ 商标侵权维权" data-en="⚔️ TM Enforcement">⚔️ 商标侵权维权</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val"><span class="t" data-zh="按案件报价" data-en="Case-by-Case">按案件报价</span></span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
+                            <div class="service-desc"><span class="t" data-zh="电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。" data-en="E-commerce infringement (Amazon/eBay/Walmart), C&D letters, court litigation.">电商平台侵权投诉（亚马逊/eBay/Walmart）、C&D 律师函、法院诉讼代理。</span></div>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="©️ 版权登记" data-en="©️ Copyright Reg.">©️ 版权登记</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val">$300–$500</span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
+                            <div class="service-desc"><span class="t" data-zh="软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。" data-en="US Copyright registration for software, art & literary works. 5-day expedited processing.">软件、美术作品、文字作品美国版权局登记，快速通道 5 个工作日出证。</span></div>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <div class="service-item-body">
+                            <div class="service-name"><span class="t" data-zh="🌐 国际商标延伸" data-en="🌐 International TM">🌐 国际商标延伸</span><div class="service-price" onclick="priceGateClick()"><span class="sp-val"><span class="t" data-zh="$500–$900/国" data-en="$500–$900/country">$500–$900/国</span></span><span class="sp-lock">🔒 <span class="t" data-zh="会员查看" data-en="Members only">会员查看</span></span></div></div>
+                            <div class="service-desc"><span class="t" data-zh="马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。" data-en="Madrid Protocol TM registration — EU, UK, Australia & more in one application.">马德里协议国际商标注册，单次申请覆盖欧盟、英国、澳大利亚等多国。</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        // ── 服务价格门控：未登录→登录页；已登录未付费→开通页 ──────────────
+        window.priceGateClick = function() {
+          var paid = false;
+          try { paid = localStorage.getItem('wh_paid') === '1'; } catch(e) {}
+          if (paid) return;
+          var en = (window._wlang || 'zh') === 'en';
+          var sb = window._wh_sb;
+          if (!sb) { location.href = 'whalium_2_login.html?next=' + encodeURIComponent(location.href); return; }
+          sb.auth.getSession().then(function(r) {
+            var session = r.data && r.data.session;
+            if (!session) {
+              location.href = 'whalium_2_login.html?next=' + encodeURIComponent(location.href);
+            } else {
+              var msg = en ? 'Pricing is available to Whalium members (¥365/yr). Upgrade now?' : '价格信息为会员专属（¥365/年）。立即开通会员查看？';
+              if (confirm(msg)) location.href = 'whalium_5_payment.html';
+            }
+          });
+        };
+        </script>
 
         <!-- 联系卡片 -->
         <div class="contact-card">
@@ -3093,15 +3084,29 @@ function toggleReviewForm(cb){
   function loadServices(services, en) {
     var el = document.getElementById('services-list');
     if (!el || !services || !services.length) return;
+    var paid = false; try { paid = localStorage.getItem('wh_paid') === '1'; } catch(e) {}
+    var lockLabel = en ? 'Members only' : '会员查看';
     el.innerHTML = services.map(function(s){
       var name  = en ? (s.name_en  || s.name)  : s.name;
       var desc  = en ? (s.desc_en  || s.desc)  : s.desc;
       var price = en ? (s.price_en || s.price) : s.price;
+      var priceHtml = '';
+      if (price) {
+        if (paid) {
+          priceHtml = '<div class="service-price price-unlocked">'
+            + '<span class="sp-val">' + price + '</span>'
+            + '<span class="sp-lock">🔒 ' + lockLabel + '</span>'
+            + '</div>';
+        } else {
+          priceHtml = '<div class="service-price" onclick="priceGateClick()">'
+            + '<span class="sp-val">' + price + '</span>'
+            + '<span class="sp-lock">🔒 ' + lockLabel + '</span>'
+            + '</div>';
+        }
+      }
       return '<div class="service-item">'
         + '<div class="service-item-body">'
-        + '<div class="service-name">' + name
-        + (price ? '<div class="service-price">' + price + '</div>' : '')
-        + '</div>'
+        + '<div class="service-name">' + name + priceHtml + '</div>'
         + '<div class="service-desc">' + desc + '</div>'
         + '</div>'
         + '</div>';
