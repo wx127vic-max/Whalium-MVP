@@ -202,8 +202,6 @@
         .feature-chip { display:inline-flex; align-items:center; padding:0.22rem 0.6rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; font-size:0.74rem; color:#475569; white-space:nowrap; }
 
         /* ── 撰写评价全宽区域 ────────────────────────────────────── */
-        .review-fullwidth-wrap { background:#f1f5f9; border-top:1px solid var(--border); padding:2.5rem 0 3rem; }
-        .review-fullwidth-inner { max-width:1160px; margin:0 auto; padding:0 3rem; }
 
         /* ── 发送询盘全宽区域 ────────────────────────────────────── */
 
@@ -1384,37 +1382,7 @@ html, body {
     <!-- 右侧边栏 -->
     <div class="sidebar">
 
-        <!-- 相似律所推荐 -->
-        <div class="side-card">
-            <div class="side-card-title"><span class="t" data-zh="相似律所推荐" data-en="Similar Firms">相似律所推荐</span></div>
-            <div style="display:flex;flex-direction:column;gap:0.6rem;padding:0 0 0.25rem;">
-                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
-                    <div class="sim-name">Sterling &amp; Partners LLP</div>
-                    <div class="sim-loc">📍 <span class="t" data-zh="美国 · 纽约" data-en="USA · New York">美国 · 纽约</span></div>
-                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="公司设立" data-en="Entity Setup">公司设立</span></span><span class="sim-tag"><span class="t" data-zh="税务" data-en="Tax">税务</span></span></div>
-                    <div class="sim-bottom"><span class="sim-rating">★ 4.6</span><span class="sim-price">$1,200<span class="t" data-zh="起" data-en="+">起</span></span></div>
-                </div>
-                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
-                    <div class="sim-name">Pacific IP Group</div>
-                    <div class="sim-loc">📍 <span class="t" data-zh="美国 · 旧金山" data-en="USA · San Francisco">美国 · 旧金山</span></div>
-                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="商标" data-en="Trademark">商标</span></span><span class="sim-tag"><span class="t" data-zh="专利" data-en="Patent">专利</span></span></div>
-                    <div class="sim-bottom"><span class="sim-rating">★ 4.4</span><span class="sim-price">$700<span class="t" data-zh="起" data-en="+">起</span></span></div>
-                </div>
-                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
-                    <div class="sim-name">Asia Pacific Legal</div>
-                    <div class="sim-loc">📍 <span class="t" data-zh="新加坡" data-en="Singapore">新加坡</span></div>
-                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="东南亚商标" data-en="SEA Trademark">东南亚商标</span></span></div>
-                    <div class="sim-bottom"><span class="sim-rating">★ 4.5</span><span class="sim-price">$600<span class="t" data-zh="起" data-en="+">起</span></span></div>
-                </div>
-            </div>
-        </div>
-
-    </div><!-- /sidebar -->
-</div><!-- /page-body -->
-
-<!-- ══ 撰写评价 · 全宽区域 ══════════════════════════════════════ -->
-<div class="review-fullwidth-wrap">
-    <div class="review-fullwidth-inner">
+        <!-- 撰写评价 -->
         <div class="card" id="write-review-card" style="border-radius:12px;">
             <div class="card-header">
                 <span style="font-size:1rem">✍️</span>
@@ -1458,8 +1426,8 @@ html, body {
                         <label class="rev-svc-chip" onclick="selectSvcChip(this)"><input type="radio" name="svc" value="franchise" style="display:none"><span class="t" data-zh="🤝 特许经营与分销协议" data-en="🤝 Franchise &amp; Distribution">🤝 特许经营与分销协议</span></label>
                     </div>
 
-                    <!-- ② 委托信息 + 打分 — 并排两列 -->
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-bottom:1.4rem;">
+                    <!-- ② 委托信息 + 打分 — 单列 -->
+                    <div style="display:grid;grid-template-columns:1fr;gap:1.2rem;margin-bottom:1.4rem;">
                         <div>
                             <div class="review-section-label"><span class="t" data-zh="② 委托信息（选填）" data-en="② Engagement info (optional)">② 委托信息（选填）</span></div>
                             <label style="font-size:0.75rem;color:#64748b;display:block;margin-bottom:0.3rem;"><span class="t" data-zh="委托大致时间" data-en="Approximate engagement time">委托大致时间</span></label>
@@ -1527,7 +1495,7 @@ html, body {
                     <input type="hidden" id="rev-dur">
 
                     <!-- ⑥ 评价机制说明 + 提交 -->
-                    <div style="display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:end;margin-top:1rem;">
+                    <div style="display:flex;flex-direction:column;gap:0.85rem;margin-top:1rem;">
                         <div style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:6px;padding:0.65rem 0.9rem;font-size:0.77rem;color:#0369a1;line-height:1.65;">
                             <strong><span class="t" data-zh="📋 评价机制说明" data-en="📋 Review Policy">📋 评价机制说明</span></strong><br>
                             <span class="t" data-zh="律所在收到评价通知后可进行一次公开回复，回复将同时显示在评价下方。律所不能要求修改或删除客户评价。Whalium 保留对恶意或虚假评价的审核与删除权。" data-en="Firms may post one public reply after receiving review notification. Firms cannot request edits or deletions of client reviews. Whalium reserves the right to moderate and remove malicious or false reviews.">律所在收到评价通知后可进行一次公开回复，回复将同时显示在评价下方。律所不能要求修改或删除客户评价。Whalium 保留对恶意或虚假评价的审核与删除权。</span>
@@ -1547,8 +1515,34 @@ html, body {
                 </div>
             </div>
         </div>
-    </div>
-</div>
+
+        <!-- 相似律所推荐 -->
+        <div class="side-card">
+            <div class="side-card-title"><span class="t" data-zh="相似律所推荐" data-en="Similar Firms">相似律所推荐</span></div>
+            <div style="display:flex;flex-direction:column;gap:0.6rem;padding:0 0 0.25rem;">
+                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
+                    <div class="sim-name">Sterling &amp; Partners LLP</div>
+                    <div class="sim-loc">📍 <span class="t" data-zh="美国 · 纽约" data-en="USA · New York">美国 · 纽约</span></div>
+                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="公司设立" data-en="Entity Setup">公司设立</span></span><span class="sim-tag"><span class="t" data-zh="税务" data-en="Tax">税务</span></span></div>
+                    <div class="sim-bottom"><span class="sim-rating">★ 4.6</span><span class="sim-price">$1,200<span class="t" data-zh="起" data-en="+">起</span></span></div>
+                </div>
+                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
+                    <div class="sim-name">Pacific IP Group</div>
+                    <div class="sim-loc">📍 <span class="t" data-zh="美国 · 旧金山" data-en="USA · San Francisco">美国 · 旧金山</span></div>
+                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="商标" data-en="Trademark">商标</span></span><span class="sim-tag"><span class="t" data-zh="专利" data-en="Patent">专利</span></span></div>
+                    <div class="sim-bottom"><span class="sim-rating">★ 4.4</span><span class="sim-price">$700<span class="t" data-zh="起" data-en="+">起</span></span></div>
+                </div>
+                <div class="similar-card" onclick="location.href='whalium_1_index.html'" style="cursor:pointer;">
+                    <div class="sim-name">Asia Pacific Legal</div>
+                    <div class="sim-loc">📍 <span class="t" data-zh="新加坡" data-en="Singapore">新加坡</span></div>
+                    <div class="sim-tags"><span class="sim-tag"><span class="t" data-zh="东南亚商标" data-en="SEA Trademark">东南亚商标</span></span></div>
+                    <div class="sim-bottom"><span class="sim-rating">★ 4.5</span><span class="sim-price">$600<span class="t" data-zh="起" data-en="+">起</span></span></div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- /sidebar -->
+</div><!-- /page-body -->
 
 <div class="footer">© 2025 Whalium <span class="t" data-zh="华里安" data-en=""></span> &nbsp;·&nbsp; <span class="t" data-zh="洞察全球律所，安行海外航路" data-en="Global Insights, Secure Navigation">洞察全球律所，安行海外航路</span> &nbsp;·&nbsp; <a href="whalium_9_about.html" style="color:inherit;opacity:0.65;text-decoration:none;"><span class="t" data-zh="关于我们" data-en="About Us">关于我们</span></a> &nbsp;·&nbsp; <span class="t" data-zh="律所信息由 Whalium 编辑团队核实" data-en="Firm info verified by Whalium editorial team">律所信息由 Whalium 编辑团队核实</span></div>
 
