@@ -206,10 +206,6 @@
         .review-fullwidth-inner { max-width:1160px; margin:0 auto; padding:0 3rem; }
 
         /* ── 发送询盘全宽区域 ────────────────────────────────────── */
-        .inquiry-fullwidth-wrap { background:linear-gradient(135deg,#1a2e4a 0%,#1e3858 60%,#0f4c75 100%); padding:2.5rem 0; }
-        .inquiry-fullwidth-inner { max-width:1160px; margin:0 auto; padding:0 3rem; }
-        .btn-inquiry-fullwidth { padding:0.9rem 2rem; background:linear-gradient(135deg,#0ea5e9,#38bdf8); color:#fff; border:none; border-radius:9px; font-size:1rem; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:0.02em; box-shadow:0 4px 14px rgba(14,165,233,0.4); transition:filter .15s; }
-        .btn-inquiry-fullwidth:hover { filter:brightness(1.08); }
 
         /* ── 律所简介折叠 ──────────────────────────────────────────── */
         .intro-fold { max-height:4.8em; overflow:hidden; position:relative; transition:max-height 0.35s ease; }
@@ -1548,41 +1544,6 @@ html, body {
                         <div style="font-weight:600;color:#00b450;margin-bottom:0.25rem;"><span class="t" data-zh="评价已提交！" data-en="Review submitted!">评价已提交！</span></div>
                         <div style="font-size:0.8rem;color:var(--muted);"><span class="t" data-zh="审核通过后1–2个工作日内公开显示。" data-en="Will appear within 1–2 business days after moderation.">审核通过后1–2个工作日内公开显示。</span></div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- ══ 发送询盘 · 全宽区域（撰写评价下方）═══════════════════════ -->
-<div class="inquiry-fullwidth-wrap">
-    <div class="inquiry-fullwidth-inner">
-        <div style="display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
-            <div>
-                <div style="font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:0.35rem;">📩 <span class="t" data-zh="发送询盘，获得专属报价" data-en="Send an inquiry for a custom quote">发送询盘，获得专属报价</span></div>
-                <div style="font-size:0.88rem;color:rgba(200,225,240,0.9);line-height:1.6;">
-                    <span class="t" data-zh="律所通常在 24 小时内用中文回复 · 发送询盘不构成委托关系，无任何法律责任" data-en="Firms typically reply within 24h in Chinese · Sending an inquiry creates no legal obligation">律所通常在 24 小时内用中文回复 · 发送询盘不构成委托关系，无任何法律责任</span>
-                </div>
-                <!-- 询盘进度追踪（发送后显示） -->
-                <div class="inq-tracker" id="inq-tracker" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.25);margin-top:1rem;">
-                    <div class="inq-tracker-title" style="color:rgba(200,225,240,0.9);">📬 <span class="t" data-zh="询盘进度追踪" data-en="Inquiry Status">询盘进度追踪</span></div>
-                    <div class="inq-step"><div class="inq-step-dot dot-done">✓</div><div class="inq-step-body"><div class="inq-step-label" style="color:#fff;"><span class="t" data-zh="询盘已发送" data-en="Inquiry Sent">询盘已发送</span></div><div class="inq-step-time" id="inq-sent-time">—</div></div></div>
-                    <div class="inq-step"><div class="inq-step-dot dot-active">⟳</div><div class="inq-step-body"><div class="inq-step-label" style="color:#fff;"><span class="t" data-zh="Whalium 转发中（24h内）" data-en="Whalium Forwarding">Whalium 转发中（24h内）</span></div><div class="inq-step-time"><span class="t" data-zh="我们会将您的需求脱敏后转交律所" data-en="Your inquiry will be anonymized and forwarded">我们会将您的需求脱敏后转交律所</span></div></div></div>
-                    <div class="inq-step"><div class="inq-step-dot dot-wait">3</div><div class="inq-step-body"><div class="inq-step-label" style="color:rgba(200,225,240,0.7);"><span class="t" data-zh="等待律所中文回复" data-en="Awaiting Firm Reply">等待律所中文回复</span></div><div class="inq-step-time"><span class="t" data-zh="律所通常在 24h 内回复至您邮箱" data-en="Firm typically replies within 24h">律所通常在 24h 内回复至您邮箱</span></div></div></div>
-                    <div style="margin-top:0.75rem;padding-top:0.7rem;border-top:1px solid rgba(255,255,255,0.15);font-size:0.75rem;color:rgba(200,225,240,0.75);line-height:1.6;">
-                        <span class="t" data-zh="⏰ 如 72 小时内未收到回复，请联系" data-en="⏰ No reply after 72h? Contact">⏰ 如 72 小时内未收到回复，请联系</span>
-                        <a href="mailto:support@whalium.com" style="color:#7dd3fc;">support@whalium.com</a>
-                    </div>
-                </div>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:0.75rem;flex-shrink:0;min-width:220px;">
-                <button class="btn-inquiry-fullwidth" onclick="document.getElementById('inquiry-modal').style.display='flex'">
-                    <span class="t" data-zh="立即发送询盘" data-en="Send Inquiry Now">立即发送询盘</span>
-                </button>
-                <div style="text-align:center;font-size:0.78rem;color:rgba(200,225,240,0.8);">— <span class="t" data-zh="或直接联系" data-en="or contact directly">或直接联系</span> —</div>
-                <div id="member-contact-inner" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:0.7rem 1rem;font-size:0.82rem;color:rgba(200,225,240,0.7);text-align:center;">
-                    🔒 <span class="t" data-zh="开通会员查看邮箱、电话" data-en="Subscribe to view email & phone">开通会员查看邮箱、电话</span><br>
-                    <a href="whalium_5_payment.html" style="color:#7dd3fc;font-weight:600;font-size:0.8rem;text-decoration:none;"><span class="t" data-zh="开通会员 · ¥365/年 →" data-en="Subscribe · ¥365/yr →">开通会员 · ¥365/年 →</span></a>
                 </div>
             </div>
         </div>
