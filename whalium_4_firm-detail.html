@@ -197,9 +197,19 @@
         .firm-info-label { font-size:0.7rem; color:#94a3b8; margin-bottom:0.1rem; }
         .firm-info-val { font-size:0.83rem; font-weight:600; color:#1a2332; }
 
+        /* ── 特色服务标签（律所简介内）──────────────────────────── */
+        .firm-feature-tags { display:flex; flex-wrap:wrap; gap:0.35rem; padding:0 1.25rem 0.85rem; border-top:1px solid #f1f5f9; margin-top:-0.1rem; padding-top:0.65rem; }
+        .feature-chip { display:inline-flex; align-items:center; padding:0.22rem 0.6rem; background:#f8fafc; border:1px solid #e2e8f0; border-radius:14px; font-size:0.74rem; color:#475569; white-space:nowrap; }
+
         /* ── 撰写评价全宽区域 ────────────────────────────────────── */
         .review-fullwidth-wrap { background:#f1f5f9; border-top:1px solid var(--border); padding:2.5rem 0 3rem; }
         .review-fullwidth-inner { max-width:1160px; margin:0 auto; padding:0 3rem; }
+
+        /* ── 发送询盘全宽区域 ────────────────────────────────────── */
+        .inquiry-fullwidth-wrap { background:linear-gradient(135deg,#1a2e4a 0%,#1e3858 60%,#0f4c75 100%); padding:2.5rem 0; }
+        .inquiry-fullwidth-inner { max-width:1160px; margin:0 auto; padding:0 3rem; }
+        .btn-inquiry-fullwidth { padding:0.9rem 2rem; background:linear-gradient(135deg,#0ea5e9,#38bdf8); color:#fff; border:none; border-radius:9px; font-size:1rem; font-weight:700; cursor:pointer; font-family:inherit; letter-spacing:0.02em; box-shadow:0 4px 14px rgba(14,165,233,0.4); transition:filter .15s; }
+        .btn-inquiry-fullwidth:hover { filter:brightness(1.08); }
 
         /* ── 律所简介折叠 ──────────────────────────────────────────── */
         .intro-fold { max-height:4.8em; overflow:hidden; position:relative; transition:max-height 0.35s ease; }
@@ -872,6 +882,14 @@ html, body {
                 <span class="cred-tag cred-legal500">🏅 Legal 500 · Recommended</span>
                 <span class="cred-tag cred-verified">✅ <span class="t" data-zh="Whalium 已认证" data-en="Whalium Verified">Whalium 已认证</span></span>
             </div>
+            <!-- 特色服务标签 -->
+            <div class="firm-feature-tags" id="firm-feature-tags">
+                <span class="feature-chip">🗣️ <span class="t" data-zh="全程中文服务" data-en="Full Mandarin Service">全程中文服务</span></span>
+                <span class="feature-chip">👤 <span class="t" data-zh="华裔律师对接" data-en="Chinese-American Attorney">华裔律师对接</span></span>
+                <span class="feature-chip">💰 <span class="t" data-zh="固定报价透明" data-en="Transparent Fixed Pricing">固定报价透明</span></span>
+                <span class="feature-chip">🆓 <span class="t" data-zh="免费初次咨询30分钟" data-en="Free 30-min Consultation">免费初次咨询 30min</span></span>
+                <span class="feature-chip">⚡ <span class="t" data-zh="24小时响应" data-en="24h Response Guarantee">24h 响应</span></span>
+            </div>
                 <div class="card-body" id="firm-intro-body">
                     <div class="intro-fold" id="intro-fold-wrap">
                         <p class="intro-text" id="firm-description">
@@ -1370,65 +1388,6 @@ html, body {
     <!-- 右侧边栏 -->
     <div class="sidebar">
 
-        <!-- 联系卡片 -->
-        <div class="contact-card">
-            <div class="contact-header">
-                <div class="contact-header-title">📩 <span class="t" data-zh="发送询盘" data-en="Send Inquiry">发送询盘</span></div>
-                <div class="contact-header-sub"><span class="t" data-zh="律所通常在 24 小时内回复" data-en="Firms typically reply within 24 hours">律所通常在 24 小时内回复</span></div>
-            </div>
-            <div class="contact-body">
-                <button class="btn-inquiry-big" onclick="document.getElementById('inquiry-modal').style.display='flex'"><span class="t" data-zh="立即发送询盘" data-en="Send Inquiry Now">立即发送询盘</span></button>
-                <div class="contact-divider"><span class="t" data-zh="— 或直接联系 —" data-en="— Or contact directly —">— 或直接联系 —</span></div>
-                <div class="contact-locked">
-                    <div class="contact-locked-icon">🔒</div>
-                    <div class="contact-locked-text"><span class="t" data-zh="开通会员查看邮箱、电话和直接预约链接" data-en="Subscribe to view email, phone & booking link">开通会员查看邮箱、电话和直接预约链接</span></div>
-                    <button class="btn-unlock-sm" onclick="location.href='whalium_5_payment.html'"><span class="t" data-zh="开通会员 · ¥365/年" data-en="Subscribe · ¥365/yr">开通会员 · ¥365/年</span></button>
-                </div>
-    <!-- ══ 询盘进度追踪卡 ══ -->
-    <div class="inq-tracker" id="inq-tracker">
-      <div class="inq-tracker-title">📬 <span class="t" data-zh="询盘进度追踪" data-en="Inquiry Status">询盘进度追踪</span></div>
-      <div class="inq-step">
-        <div class="inq-step-dot dot-done">✓</div>
-        <div class="inq-step-body">
-          <div class="inq-step-label"><span class="t" data-zh="询盘已发送" data-en="Inquiry Sent">询盘已发送</span></div>
-          <div class="inq-step-time" id="inq-sent-time">—</div>
-        </div>
-      </div>
-      <div class="inq-step">
-        <div class="inq-step-dot dot-active">⟳</div>
-        <div class="inq-step-body">
-          <div class="inq-step-label"><span class="t" data-zh="Whalium 转发中（24h内）" data-en="Whalium Forwarding (within 24h)">Whalium 转发中（24h内）</span></div>
-          <div class="inq-step-time"><span class="t" data-zh="我们会将您的需求脱敏后转交律所" data-en="Your inquiry will be anonymized and forwarded">我们会将您的需求脱敏后转交律所</span></div>
-        </div>
-      </div>
-      <div class="inq-step">
-        <div class="inq-step-dot dot-wait">3</div>
-        <div class="inq-step-body">
-          <div class="inq-step-label" style="color:#94a3b8;"><span class="t" data-zh="等待律所中文回复" data-en="Awaiting Firm Reply">等待律所中文回复</span></div>
-          <div class="inq-step-time"><span class="t" data-zh="律所通常在 24h 内回复至您邮箱" data-en="Firm typically replies within 24h">律所通常在 24h 内回复至您邮箱</span></div>
-        </div>
-      </div>
-      <div style="margin-top:0.75rem;padding-top:0.7rem;border-top:1px solid #e2e8f0;font-size:0.75rem;color:#64748b;line-height:1.6;">
-        <span class="t" data-zh="⏰ 如 72 小时内未收到回复，请联系" data-en="⏰ No reply after 72h? Contact">⏰ 如 72 小时内未收到回复，请联系</span>
-        <a href="mailto:support@whalium.com" style="color:#0ea5e9;">support@whalium.com</a>
-      </div>
-    </div>
-            </div>
-        </div>
-
-        <!-- 特色服务（内容由 JS 动态渲染，无 slug 时保留演示数据） -->
-        <div class="side-card" id="features-side-card">
-            <div class="side-card-title"><span class="t" data-zh="特色服务" data-en="Key Features">特色服务</span></div>
-            <div class="features-body">
-                <!-- 无 slug 时的演示数据，有 slug 时由 JS 覆盖 -->
-                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="全程中文服务" data-en="Full Mandarin-speaking Service">全程中文服务</span></div>
-                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="华裔律师对接" data-en="Chinese-American Attorney">华裔律师对接</span></div>
-                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="固定报价透明" data-en="Fixed & Transparent Pricing">固定报价透明</span></div>
-                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="免费初次咨询（30分钟）" data-en="Free Initial Consultation (30 min)">免费初次咨询（30分钟）</span></div>
-                <div class="feature-row"><div class="feature-dot"></div><span class="t" data-zh="24小时响应保证" data-en="24-hour Response Guarantee">24小时响应保证</span></div>
-            </div>
-        </div>
-
         <!-- 相似律所推荐 -->
         <div class="side-card">
             <div class="side-card-title"><span class="t" data-zh="相似律所推荐" data-en="Similar Firms">相似律所推荐</span></div>
@@ -1589,6 +1548,41 @@ html, body {
                         <div style="font-weight:600;color:#00b450;margin-bottom:0.25rem;"><span class="t" data-zh="评价已提交！" data-en="Review submitted!">评价已提交！</span></div>
                         <div style="font-size:0.8rem;color:var(--muted);"><span class="t" data-zh="审核通过后1–2个工作日内公开显示。" data-en="Will appear within 1–2 business days after moderation.">审核通过后1–2个工作日内公开显示。</span></div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ══ 发送询盘 · 全宽区域（撰写评价下方）═══════════════════════ -->
+<div class="inquiry-fullwidth-wrap">
+    <div class="inquiry-fullwidth-inner">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;">
+            <div>
+                <div style="font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:0.35rem;">📩 <span class="t" data-zh="发送询盘，获得专属报价" data-en="Send an inquiry for a custom quote">发送询盘，获得专属报价</span></div>
+                <div style="font-size:0.88rem;color:rgba(200,225,240,0.9);line-height:1.6;">
+                    <span class="t" data-zh="律所通常在 24 小时内用中文回复 · 发送询盘不构成委托关系，无任何法律责任" data-en="Firms typically reply within 24h in Chinese · Sending an inquiry creates no legal obligation">律所通常在 24 小时内用中文回复 · 发送询盘不构成委托关系，无任何法律责任</span>
+                </div>
+                <!-- 询盘进度追踪（发送后显示） -->
+                <div class="inq-tracker" id="inq-tracker" style="background:rgba(255,255,255,0.1);border-color:rgba(255,255,255,0.25);margin-top:1rem;">
+                    <div class="inq-tracker-title" style="color:rgba(200,225,240,0.9);">📬 <span class="t" data-zh="询盘进度追踪" data-en="Inquiry Status">询盘进度追踪</span></div>
+                    <div class="inq-step"><div class="inq-step-dot dot-done">✓</div><div class="inq-step-body"><div class="inq-step-label" style="color:#fff;"><span class="t" data-zh="询盘已发送" data-en="Inquiry Sent">询盘已发送</span></div><div class="inq-step-time" id="inq-sent-time">—</div></div></div>
+                    <div class="inq-step"><div class="inq-step-dot dot-active">⟳</div><div class="inq-step-body"><div class="inq-step-label" style="color:#fff;"><span class="t" data-zh="Whalium 转发中（24h内）" data-en="Whalium Forwarding">Whalium 转发中（24h内）</span></div><div class="inq-step-time"><span class="t" data-zh="我们会将您的需求脱敏后转交律所" data-en="Your inquiry will be anonymized and forwarded">我们会将您的需求脱敏后转交律所</span></div></div></div>
+                    <div class="inq-step"><div class="inq-step-dot dot-wait">3</div><div class="inq-step-body"><div class="inq-step-label" style="color:rgba(200,225,240,0.7);"><span class="t" data-zh="等待律所中文回复" data-en="Awaiting Firm Reply">等待律所中文回复</span></div><div class="inq-step-time"><span class="t" data-zh="律所通常在 24h 内回复至您邮箱" data-en="Firm typically replies within 24h">律所通常在 24h 内回复至您邮箱</span></div></div></div>
+                    <div style="margin-top:0.75rem;padding-top:0.7rem;border-top:1px solid rgba(255,255,255,0.15);font-size:0.75rem;color:rgba(200,225,240,0.75);line-height:1.6;">
+                        <span class="t" data-zh="⏰ 如 72 小时内未收到回复，请联系" data-en="⏰ No reply after 72h? Contact">⏰ 如 72 小时内未收到回复，请联系</span>
+                        <a href="mailto:support@whalium.com" style="color:#7dd3fc;">support@whalium.com</a>
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;flex-shrink:0;min-width:220px;">
+                <button class="btn-inquiry-fullwidth" onclick="document.getElementById('inquiry-modal').style.display='flex'">
+                    <span class="t" data-zh="立即发送询盘" data-en="Send Inquiry Now">立即发送询盘</span>
+                </button>
+                <div style="text-align:center;font-size:0.78rem;color:rgba(200,225,240,0.8);">— <span class="t" data-zh="或直接联系" data-en="or contact directly">或直接联系</span> —</div>
+                <div id="member-contact-inner" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:8px;padding:0.7rem 1rem;font-size:0.82rem;color:rgba(200,225,240,0.7);text-align:center;">
+                    🔒 <span class="t" data-zh="开通会员查看邮箱、电话" data-en="Subscribe to view email & phone">开通会员查看邮箱、电话</span><br>
+                    <a href="whalium_5_payment.html" style="color:#7dd3fc;font-weight:600;font-size:0.8rem;text-decoration:none;"><span class="t" data-zh="开通会员 · ¥365/年 →" data-en="Subscribe · ¥365/yr →">开通会员 · ¥365/年 →</span></a>
                 </div>
             </div>
         </div>
@@ -2894,23 +2888,17 @@ function toggleReviewForm(cb){
           if (badgeHtml) heroBadges.innerHTML = badgeHtml;
         }
 
-        // ── 特色服务侧边栏（动态渲染）────────────────────────
-        var featCard = document.getElementById('features-side-card');
-        if (featCard && f.badges && f.badges.length) {
-          var featRowsHtml = f.badges.map(function(b){
+        // ── 特色服务标签（律所简介内，动态渲染）──────────────
+        var featTagsWrap = document.getElementById('firm-feature-tags');
+        if (featTagsWrap && f.badges && f.badges.length) {
+          var featChipsHtml = f.badges.map(function(b){
             var fd = FEATURE_DETAIL[b];
             if (!fd) return '';
-            return '<div class="feature-row"><div class="feature-dot"></div><span>' + (en ? fd.en : fd.zh) + '</span></div>';
+            var icons = { zh_service:'🗣️', cn_lawyer:'👤', bilingual_contract:'📄', free_consult:'🆓', chambers:'🏆', legal500:'🏅', fixed_price:'💰', response_24h:'⚡' };
+            var ico = icons[b] || '✦';
+            return '<span class="feature-chip">' + ico + ' ' + (en ? fd.en : fd.zh) + '</span>';
           }).filter(Boolean).join('');
-          if (featRowsHtml) {
-            featCard.style.display = '';
-            var body = featCard.querySelector('.features-body');
-            if (body) body.innerHTML = featRowsHtml;
-          } else {
-            featCard.style.display = 'none';
-          }
-        } else if (featCard) {
-          featCard.style.display = 'none';
+          if (featChipsHtml) featTagsWrap.innerHTML = featChipsHtml;
         }
 
         // ── 业务领域 ─────────────────────────────────────────
